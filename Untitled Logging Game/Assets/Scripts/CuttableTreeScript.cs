@@ -22,6 +22,33 @@ public class IntersectionComparer : IComparer<Vector3>
 
         return x.CompareTo(y);
     }
+
+}
+
+public class IndexDirectionComparer : IComparer<int>
+{
+    private Vector3 baseDirection;
+    private Vector3 basePosition;
+    private Mesh mesh;
+
+    public IndexDirectionComparer(Vector3 baseDirection, Vector3 basePosition,Mesh mesh)
+    {
+        this.baseDirection = baseDirection;
+        this.basePosition = basePosition;
+        this.mesh = mesh;
+    }
+
+    public int Compare(int indexA, int indexB)
+    {
+
+        float x = Vector3.Dot(baseDirection, mesh.vertices[indexA] - basePosition);
+        float y = Vector3.Dot(baseDirection, mesh.vertices[indexB] - basePosition);
+
+        return x.CompareTo(y);
+    }
+
+
+
 }
 
 
@@ -124,7 +151,6 @@ public enum PointSplitState
     AbovePlane
 }
 
-
 public struct IndividualVertex
 {
     public Vector3 position;
@@ -206,7 +232,6 @@ public class IndividualFace
 
     public bool isFaceComplete = false;
 }
-
 
 public class PrimitiveMesh
 {
@@ -713,6 +738,11 @@ public class CuttableTreeScript : MonoBehaviour
 
         }
 
+
+
+
+
+
         List<int> uniqueTrianglesAboveSplittingPlane = GetUniqueVertices(trianglesAboveSplittingPlane);
         List<int> uniqueTrianglesBelowSplittingPlane = GetUniqueVertices(trianglesBelowSplittingPlane);
         List<Vector3> uniqueIntersectionPoints = GetUniqueVector3Collection(foundIntersectionPoint);
@@ -727,6 +757,27 @@ public class CuttableTreeScript : MonoBehaviour
         Debug.Log("---------------------------------------");
         bool foundOrdering = GetOrderingPositionAndDirection(out basePosition, out baseDirection,  mesh,  uniqueTrianglesBelowSplittingPlane, uniqueTrianglesAboveSplittingPlane);
 
+        Vector3 min, max;
+        GetMinMaxOfVertices(out min, out max, worldTrianglePointPositions);
+        baseDirection = max - min;
+
+
+       
+
+        //////////////////////////////////////////
+
+        if (!foundOrdering) { return; }
+        Debug.Log("Continuing face rearangge");
+
+        IndexDirectionComparer idc = new IndexDirectionComparer(baseDirection, basePosition, mesh);
+
+        IntersectionComparer ic = new IntersectionComparer
+            (baseDirection, basePosition);
+
+        uniqueIntersectionPoints.Sort(ic);
+        uniqueTrianglesBelowSplittingPlane.Sort(idc);
+        uniqueTrianglesAboveSplittingPlane.Sort(idc);
+
         //Debug.Log("Found Position and Ordering " + basePosition + "," + baseDirection);
         Debug.Log("uniqueTrianglesAboveSplittingPlane ");
         DEBUG_logIndicesList(mesh, world, uniqueTrianglesAboveSplittingPlane);
@@ -735,12 +786,6 @@ public class CuttableTreeScript : MonoBehaviour
         Debug.Log("uniqueIntersectionPoints ");
         DEBUG_logVertices(uniqueIntersectionPoints);
 
-        if (!foundOrdering) { return; }
-        Debug.Log("Continuing face rearangge");
-        IntersectionComparer ic = new IntersectionComparer
-            (baseDirection, basePosition);
-
-        uniqueIntersectionPoints.Sort(ic);
 
         List<Vector3> intersectionPoints = new List<Vector3>();
         intersectionPoints.Add(uniqueIntersectionPoints[0]);
@@ -753,7 +798,6 @@ public class CuttableTreeScript : MonoBehaviour
 
         assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesBelowSplittingPlane, false, world, lowerPrimitiveMesh);
 
-        uniqueTrianglesAboveSplittingPlane.Reverse();
         assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesAboveSplittingPlane, true, world, upperPrimitiveMesh);
     }
 
@@ -851,7 +895,7 @@ public class CuttableTreeScript : MonoBehaviour
                         flippedVertexStore = upperLeftVertex;
                     }
 
-                    if(tri2.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 0, 2))
+                    if (tri2.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 0, 2))
                     {
                         isTriangleFlipped = true;
                         tri2.V1 = upperRightVertex;
@@ -922,16 +966,18 @@ public class CuttableTreeScript : MonoBehaviour
                 IndividualVertex bottomRightVertex;
                 IndividualVertex upperRightVertex;
 
-                if(nextIntersectionPointExist)
+                int currentTriangleIndex = GetCurrentIndex(trianglesInSplitPlane.Count, i);
+
+                if (nextIntersectionPointExist)
                 {
                     Vector3 nextObjectSpaceIntersectionPoint = inverseWorld.MultiplyPoint(uniqueIntersectionPoints.ElementAt(i + 1));
 
-                    int currentTriangleIndex = GetCurrentIndex(trianglesInSplitPlane.Count, i);
+                    
 
                     //all intersection points are bottom, triangles points are upper
                     if (isIntersectionPointBottomLeftVertex)
                     {
-                        
+
                         upperLeftVertex.position = mesh.vertices[trianglesInSplitPlane.ElementAt(currentTriangleIndex)];
                         upperLeftVertex.normal = mesh.normals[trianglesInSplitPlane.ElementAt(currentTriangleIndex)];
                         upperLeftVertex.UV = mesh.uv[trianglesInSplitPlane.ElementAt(currentTriangleIndex)];
@@ -944,20 +990,21 @@ public class CuttableTreeScript : MonoBehaviour
                         bottomRightVertex.normal = upperLeftVertex.normal;
                         bottomRightVertex.UV = new Vector2(1, 1);
 
-                        IndividualTriangle tri1 = new IndividualTriangle(upperLeftVertex, bottomRightVertex,bottomLeftVertex);
+                        IndividualTriangle tri1 = new IndividualTriangle(upperLeftVertex, bottomRightVertex, bottomLeftVertex);
 
-                        if(isTriangleFlipped)
+                        if (isTriangleFlipped)
                         {
                             isTriangleFlipped = false;
                             tri1.V0 = flippedVertexStore;
-                            //tri1.FlipTriangle(1, 2);
-                            //tri1.FlipTriangle(0, 2);
+
                         }
-                        
+
+                        tri1.AttemptNormalBasedVertexCorrection(upperLeftVertex.normal, 1, 2);
+
                         meshToPopulate.AddFaceFromSingularTriangle(tri1);
 
                     }
-                    //all intersection points are upper, triangles points are upper
+                    //all intersection points are upper, triangles points are bottom
                     else
                     {
                         bottomLeftVertex.position = mesh.vertices[trianglesInSplitPlane.ElementAt(currentTriangleIndex)];
@@ -974,6 +1021,16 @@ public class CuttableTreeScript : MonoBehaviour
 
                         IndividualTriangle tri1 = new IndividualTriangle(bottomLeftVertex, upperLeftVertex, upperRightVertex);
                         meshToPopulate.AddFaceFromSingularTriangle(tri1);
+
+                        if (isTriangleFlipped)
+                        {
+                            isTriangleFlipped = false;
+                            tri1.V1 = flippedVertexStore;
+                        }
+
+                        tri1.AttemptNormalBasedVertexCorrection(upperLeftVertex.normal, 1, 2);
+
+                        meshToPopulate.AddFaceFromSingularTriangle(tri1);
                     }
                 }
                 //
@@ -982,7 +1039,17 @@ public class CuttableTreeScript : MonoBehaviour
                     //all intersection points are bottom, triangles points are upper
                     if (isIntersectionPointBottomLeftVertex)
                     {
+                        bottomLeftVertex.position = mesh.vertices[trianglesInSplitPlane.ElementAt(currentTriangleIndex)];
+                        bottomLeftVertex.normal = mesh.normals[trianglesInSplitPlane.ElementAt(currentTriangleIndex)];
+                        bottomLeftVertex.UV = mesh.uv[trianglesInSplitPlane.ElementAt(currentTriangleIndex)];
 
+                        upperRightVertex.position = objectSpaceItersectionPoint;
+                        upperRightVertex.normal = bottomLeftVertex.normal;
+                        upperRightVertex.UV = new Vector2(1, 1);
+
+                        bottomLeftVertex.position = mesh.vertices[trianglesInSplitPlane.ElementAt(currentTriangleIndex + 1)];
+                        bottomLeftVertex.normal = mesh.normals[trianglesInSplitPlane.ElementAt(currentTriangleIndex + 1)];
+                        bottomLeftVertex.UV = mesh.uv[trianglesInSplitPlane.ElementAt(currentTriangleIndex + 1)];
 
 
                     }
