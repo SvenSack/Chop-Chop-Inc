@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,7 +18,8 @@ public class CutMechanic : MonoBehaviour
     
     public GraphicRaycaster gRaycaster;
     public EventSystem eventSystem;
-    
+    public float marginOfError;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,9 +42,33 @@ public class CutMechanic : MonoBehaviour
                     // Debug.Log("I hit " + castHits[i].gameObject.name);
                     if (castHits[i].gameObject.GetComponent<CutTarget>() != null)
                     {
-                        // ### check for position on cutTarget, only start cut when at near the start
-                        // ### start cut sound
-                        currentCut = castHits[i].gameObject;
+                        RectTransform rec = castHits[i].gameObject.GetComponent<RectTransform>();
+                        Vector3[] corners = new Vector3[4];
+                        rec.GetWorldCorners(corners);
+                        float width = Vector3.Distance(Vector3.Lerp(corners[2],corners[3],0.5f),Vector3.Lerp(corners[0],corners[1],0.5f));
+                        switch (castHits[i].gameObject.GetComponent<CutTarget>().goesLeft)
+                        { 
+                            case true:
+                                float dist = Vector2.Distance(Vector3.Lerp(corners[2],corners[3],0.5f),
+                                    Input.mousePosition);
+                                if (dist < width / 5)
+                                {
+                                    // ### start cut sound
+                                    currentCut = castHits[i].gameObject;
+                                }
+                                Debug.DrawLine(corners[2],corners[3],Color.cyan,1000);
+                                break;
+                            case false:
+                                float dist1 = Vector2.Distance(Vector3.Lerp(corners[0],corners[1],0.5f),
+                                    Input.mousePosition);
+                                if (dist1 < width / 5)
+                                {
+                                    // ### start cut sound
+                                    currentCut = castHits[i].gameObject;
+                                }
+                                Debug.DrawLine(corners[0],corners[1],Color.cyan,1000);
+                                break;
+                        }
                     }
                 }
             }
@@ -54,7 +80,8 @@ public class CutMechanic : MonoBehaviour
             {
                 // Debug.Log("Stopped cutting because click lift");
                 // ### stop cut sound and particles
-                currentCut = null; 
+                currentCut = null;
+                isCutting = false; 
             }
             else
             {
@@ -79,7 +106,8 @@ public class CutMechanic : MonoBehaviour
                 {
                     // Debug.Log("Stopped cutting because click left");
                     // ### stop cut sound and particles
-                    currentCut = null; 
+                    currentCut = null;
+                    isCutting = false;
                 }
             }
             
@@ -119,11 +147,13 @@ public class CutMechanic : MonoBehaviour
                 {
                     float dist = Vector2.Distance(cutStart, Input.mousePosition);
                     Debug.Log("stopped hitting tree at distance " + dist);
-                    // ### add bugfix for same side cuts
-                    GameObject cutPlane = InitiateCut(cutStart, cutUpdate);
-                    CuttableTreeScript target = currentCut.GetComponent<CutTarget>().target;
-                    target.CutAt(cutPlane.transform.position, cutPlane.transform.up);
-                    Destroy(cutPlane);
+                    if (Mathf.Abs(dist) > marginOfError)
+                    {
+                        GameObject cutPlane = InitiateCut(cutStart, cutUpdate);
+                        CuttableTreeScript target = currentCut.GetComponent<CutTarget>().target;
+                        target.CutAt(cutPlane.transform.position, cutPlane.transform.up);
+                        Destroy(cutPlane); // you can comment this for debugging
+                    }
                     // ### stop cut sound and particles
                     currentCut = null;
                     isCutting = false;
@@ -138,12 +168,12 @@ public class CutMechanic : MonoBehaviour
         
         Ray ray = Camera.main.ScreenPointToRay(start);
         Physics.Raycast(ray, out hit);
-        // ### add mask and layer for cut-able trees
+        // ### add mask and layer for cut-able trees to avoid bug
         Vector3 startPoint = hit.point;
         
         Ray ray2 = Camera.main.ScreenPointToRay(finish);
         Physics.Raycast(ray2, out hit);
-        // ### add mask and layer for cut-able trees
+        // ### add mask and layer for cut-able trees to avoid bug
         Vector3 finishPoint = hit.point;
         
         Vector3 targetLocation = Vector3.Lerp(startPoint, finishPoint, 0.5f);

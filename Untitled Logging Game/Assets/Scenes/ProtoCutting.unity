@@ -668,6 +668,7 @@ MonoBehaviour:
   - {fileID: 1483415237}
   gRaycaster: {fileID: 593527777}
   eventSystem: {fileID: 997470339}
+  marginOfError: 10
 --- !u!4 &1192508982
 Transform:
   m_ObjectHideFlags: 0
@@ -859,17 +860,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483415237}
-  m_LocalRotation: {x: -0, y: -0, z: -0.08021726, w: 0.9967774}
+  m_LocalRotation: {x: 0, y: 0, z: 0.10452846, w: 0.9945219}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.382, y: 0.28401, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 593527778}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -9.202001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 12}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 61, y: -106}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 150, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1483415241
 MonoBehaviour:
@@ -884,6 +885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 6001463293185148542}
+  goesLeft: 0
 --- !u!1001 &1516567035
 PrefabInstance:
   m_ObjectHideFlags: 0

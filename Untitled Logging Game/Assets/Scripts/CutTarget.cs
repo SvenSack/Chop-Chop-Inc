@@ -6,6 +6,8 @@ public class CutTarget : MonoBehaviour
 {
 
     public CuttableTreeScript target;
+
+    public bool goesLeft;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +17,5 @@ public class CutTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
