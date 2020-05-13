@@ -20,6 +20,13 @@ public class CutMechanic : MonoBehaviour
     public EventSystem eventSystem;
     public float marginOfError;
 
+    private SoundMan soundMan;
+    
+    private void Awake()
+    {
+        soundMan = FindObjectOfType<SoundMan>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
