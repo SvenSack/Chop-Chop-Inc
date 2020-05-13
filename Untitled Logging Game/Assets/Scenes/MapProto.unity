@@ -280,9 +280,9 @@ MonoBehaviour:
   mainCam: {fileID: 1893158384}
   zoomTime: 0.5
   sceneLoads:
-  - SampleScene
-  - SampleScene
-  - SampleScene
+  - Scene_Amazon
+  - Scene_Finland
+  - Scene_Savannah
   defaultZoom: {fileID: 2076390201}
 --- !u!4 &213624133
 Transform:
