@@ -60,7 +60,7 @@ public class CutMechanic : MonoBehaviour
                                     Input.mousePosition);
                                 if (dist < width / 5)
                                 {
-                                    // ### start cut sound
+                                    soundMan.StartCut();
                                     currentCut = castHits[i].gameObject;
                                 }
                                 Debug.DrawLine(corners[2],corners[3],Color.cyan,1000);
@@ -70,7 +70,7 @@ public class CutMechanic : MonoBehaviour
                                     Input.mousePosition);
                                 if (dist1 < width / 5)
                                 {
-                                    // ### start cut sound
+                                    soundMan.StartCut();
                                     currentCut = castHits[i].gameObject;
                                 }
                                 Debug.DrawLine(corners[0],corners[1],Color.cyan,1000);
@@ -86,7 +86,8 @@ public class CutMechanic : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 // Debug.Log("Stopped cutting because click lift");
-                // ### stop cut sound and particles
+                // ### stop cut particles
+                soundMan.StopCut();
                 currentCut = null;
                 isCutting = false; 
             }
@@ -112,7 +113,8 @@ public class CutMechanic : MonoBehaviour
                 if (!hit)
                 {
                     // Debug.Log("Stopped cutting because click left");
-                    // ### stop cut sound and particles
+                    // ### stop cut particles
+                    soundMan.StopCut();
                     currentCut = null;
                     isCutting = false;
                 }
@@ -133,13 +135,17 @@ public class CutMechanic : MonoBehaviour
                     if (!isCutting)
                     {
                         // Debug.Log("hit tree");
+                        // ### start cut particles
                         isCutting = true;
+                        soundMan.ToggleWood();
+                        soundMan.chainsawSoundObject.transform.position = hit.point;
                         cutStart = Input.mousePosition;
                     }
                     else
                     {
                         // Debug.Log("still hitting tree");
                         cutUpdate = Input.mousePosition;
+                        soundMan.chainsawSoundObject.transform.position = hit.point;
                     }
                 }
                 else
@@ -161,7 +167,8 @@ public class CutMechanic : MonoBehaviour
                         target.CutAt(cutPlane.transform.position, cutPlane.transform.up);
                         Destroy(cutPlane); // you can comment this for debugging
                     }
-                    // ### stop cut sound and particles
+                    // ### stop cut particles
+                    soundMan.StopCut();
                     currentCut = null;
                     isCutting = false;
                 }
