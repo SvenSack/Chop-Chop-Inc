@@ -115,7 +115,7 @@ public class CutMechanic : MonoBehaviour
 
                 if (!hit)
                 {
-                    // Debug.Log("Stopped cutting because click left");
+                    Debug.Log("Stopped cutting because click left");
                     // ### stop cut particles
                     soundMan.StopCut();
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
