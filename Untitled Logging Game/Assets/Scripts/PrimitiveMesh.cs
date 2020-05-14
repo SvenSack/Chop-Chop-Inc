@@ -26,10 +26,17 @@ public class IndividualVertex
         normal = mesh.normals[i];
         UV = mesh.uv[i];
     }
+
+    public void SetNormal(Vector3 normal)
+    {
+        this.normal = normal;
+    }
 }
+
 
 public class IndividualTriangle
 {
+    //vertices are stored in object space
     public IndividualVertex V0;
     public IndividualVertex V1;
     public IndividualVertex V2;
@@ -74,6 +81,11 @@ public class IndividualTriangle
         }
     }
 
+    public Vector3 GetObjectSpaceCentroid()
+    {
+        return (V0.position + V1.position + V2.position) / 3;
+    }
+
     public void FlipTriangle(int flipIndexA, int flipIndexB)
     {
         IndividualVertex[] vertices = new IndividualVertex[3];
@@ -91,6 +103,22 @@ public class IndividualTriangle
         V0 = vertices[0];
         V1 = vertices[1];
         V2 = vertices[2];
+    }
+
+    public void SetNormals(Vector3 normal)
+    {
+        V0.SetNormal(normal);
+        V1.SetNormal(normal);
+        V2.SetNormal(normal);
+    }
+
+    public IndividualTriangle Clone()
+    {
+        IndividualVertex v0 = new IndividualVertex(V0.position, V0.normal, V0.UV);
+        IndividualVertex v1 = new IndividualVertex(V1.position, V1.normal, V1.UV);
+        IndividualVertex v2 = new IndividualVertex(V2.position, V2.normal, V2.UV);
+
+        return new IndividualTriangle(v0,v1,v2);
     }
 
 

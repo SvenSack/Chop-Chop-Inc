@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+public struct ConnectionTypeToCentroid
+{
+    public TriangleConnectionType tct;
+    public Vector3 objectSpaceCentroid;
+}
+
+public enum TriangleConnectionType
+{
+    DoubleIntersection,
+    DoubleOriginalPoint,
+    DefaultNoType
+
+}
+
+
 public class MeshLidPairing
 {
     public IndividualVertex v0;
@@ -25,7 +40,7 @@ public class MeshLidPairing
 public class IntersectionComparer : IComparer<Vector3>
 {
     private Vector3 baseDirection;
-    private Vector3 basePosition;
+    public Vector3 basePosition;
     private Matrix4x4 world;
 
 
@@ -49,7 +64,7 @@ public class IntersectionComparer : IComparer<Vector3>
 public class IndexDirectionComparer : IComparer<int>
 {
     private Vector3 baseDirection;
-    private Vector3 basePosition;
+    public Vector3 basePosition;
     private Mesh mesh;
     private Matrix4x4 world;
 
@@ -64,8 +79,8 @@ public class IndexDirectionComparer : IComparer<int>
     public int Compare(int indexA, int indexB)
     {
 
-        float x = Vector3.Dot(baseDirection, (world.MultiplyPoint( mesh.vertices[indexA]) - basePosition).normalized);
-        float y = Vector3.Dot(baseDirection, (world.MultiplyPoint(mesh.vertices[indexB]) - basePosition).normalized);
+        float x = Vector3.Dot(baseDirection, (world.MultiplyPoint( mesh.vertices[indexA]) - basePosition));
+        float y = Vector3.Dot(baseDirection, (world.MultiplyPoint(mesh.vertices[indexB]) - basePosition));
 
         return x.CompareTo(y);
     }
@@ -355,8 +370,8 @@ public class CuttableTreeScript : MonoBehaviour
 
         Vector3 min, max;
 
-        GetMinMaxOfVertices(out min, out max, vertexPositions);
-        Vector3 direction = new Vector3(max.x - min.x,max.y - min.y,0);
+       // GetMinMaxOfVertices(out min, out max, vertexPositions);
+        
   
         //Vector3 vecToMidOfMinFace = new Vector3(max.x - min.x * 0.5f, max.y - min.y * 0.5f);
         //vecToMidOfMinFace += min;
@@ -374,13 +389,25 @@ public class CuttableTreeScript : MonoBehaviour
         foreach(MeshLidPairing lidPairing in lidPairings)
         {
             IndividualTriangle tri = lidPairing.CreateTriangle(vertex);
-            tri.AttemptDirectionOrderingBasedVertexCorrection(min, direction);
-            tri.RecalculateNormals();
 
-           //tri.AttemptNormalBasedVertexCorrection(tri.V0.normal, 0, 2);
+            Vector3 ObjectSpaceCentroid = tri.GetObjectSpaceCentroid();
+            Vector3 direction = Vector3.Cross(Vector3.up, ObjectSpaceCentroid - centerPoint).normalized;
 
-            FacesSplitAbove.AddFaceFromSingularTriangle(tri);
+            tri.AttemptDirectionOrderingBasedVertexCorrection(ObjectSpaceCentroid, direction);
+            tri.SetNormals(normal);
+
+            //tri.AttemptNormalBasedVertexCorrection(tri.V0.normal, 0, 2);
             FacesSplitBelow.AddFaceFromSingularTriangle(tri);
+
+
+
+
+
+            IndividualTriangle tri2 = tri.Clone();
+            tri2.FlipTriangle(0, 2);
+            tri2.SetNormals(-normal);
+            FacesSplitAbove.AddFaceFromSingularTriangle(tri2);
+            
         }
 
 
@@ -554,21 +581,29 @@ public class CuttableTreeScript : MonoBehaviour
         //Debug.Log("baseDirection" + baseDirection.ToString("F2"));
         //Debug.Log("uniqueIntersectionPoints[0] " + worldTrianglePointPositions[0].ToString("F2"));
 
-        IndexDirectionComparer idc = new IndexDirectionComparer(baseDirection, basePosition, mesh,world);
+        
 
         //Quaternion.loo
 
         IntersectionComparer ic = new IntersectionComparer
             (baseDirection, basePosition,world);
 
+        IndexDirectionComparer idc = new IndexDirectionComparer((uniqueIntersectionPoints[uniqueIntersectionPoints.Count-1]- uniqueIntersectionPoints[0]).normalized
+            , basePosition, mesh, world);
+
         uniqueIntersectionPoints.Sort(ic);
+
+        Vector3 belowTriangleCentroid = GetWorldTriangleCentroid(mesh, uniqueTrianglesBelowSplittingPlane, world);
+        Vector3 aboveTriangleCentroid = GetWorldTriangleCentroid(mesh, uniqueTrianglesAboveSplittingPlane, world);
+
+        idc.basePosition = uniqueIntersectionPoints[0];
         uniqueTrianglesBelowSplittingPlane.Sort(idc);
+
+        idc.basePosition = uniqueIntersectionPoints[0];
         uniqueTrianglesAboveSplittingPlane.Sort(idc);
 
 
         List<Vector3> intersectionPoints = new List<Vector3>();
-
-
 
         intersectionPoints.Add(uniqueIntersectionPoints[0]);
         intersectionPoints.Add(uniqueIntersectionPoints[uniqueIntersectionPoints.Count-1]);
@@ -669,6 +704,8 @@ public class CuttableTreeScript : MonoBehaviour
         bool isTriangleFlipped = false;
 
         IndividualVertex flippedVertexStore = new IndividualVertex();
+
+        List<ConnectionTypeToCentroid> types =new List<ConnectionTypeToCentroid>();
         
 
         for (int i = 0; i < iterationCount-1; i++)
@@ -685,6 +722,8 @@ public class CuttableTreeScript : MonoBehaviour
 
             if (nextTrianglePointExist && nextIntersectionPointExist)
             {
+
+
                 IndividualVertex bottomRightVertex;
                 IndividualVertex upperRightVertex;
                 //IndividualTriangle tri2 = new IndividualTriangle();
@@ -708,6 +747,9 @@ public class CuttableTreeScript : MonoBehaviour
                     bottomRightVertex.UV = new Vector2(1, 1);
 
                     IndividualTriangle tri1 = new IndividualTriangle(bottomLeftVertex, upperLeftVertex, upperRightVertex);
+                    
+
+
                     IndividualTriangle tri2 = new IndividualTriangle(bottomLeftVertex, upperRightVertex,bottomRightVertex);
 
 
@@ -727,11 +769,24 @@ public class CuttableTreeScript : MonoBehaviour
                     //if(tri2.AttemptNormalBasedVertexCorrection())
 
                     meshToPopulate.AddFaceFromTriangles(tri1, tri2);
-                    Debug.Log("----------------------- Creating Quad------------------------------------s ");
+                    Debug.Log("----------------------- Creating Upper Quad------------------------------------s ");
                     Debug.Log(" upperLeftVertex.position " + world.MultiplyPoint(upperLeftVertex.position).ToString("F2"));
                     Debug.Log(" upperRightVertex.position  " + world.MultiplyPoint(upperRightVertex.position).ToString("F2"));
                     Debug.Log(" bottomLeftVertex.position " + world.MultiplyPoint(bottomLeftVertex.position).ToString("F2"));
                     Debug.Log(" bottomRightVertex.position " + world.MultiplyPoint(bottomRightVertex.position).ToString("F2"));
+
+                    //store its position and connection type
+                    ConnectionTypeToCentroid tri1Type;
+                    tri1Type.objectSpaceCentroid = tri1.GetObjectSpaceCentroid();
+                    tri1Type.tct = TriangleConnectionType.DoubleOriginalPoint;
+
+                    ConnectionTypeToCentroid tri2Type;
+                    tri2Type.objectSpaceCentroid = tri2.GetObjectSpaceCentroid();
+                    tri2Type.tct = TriangleConnectionType.DoubleIntersection;
+
+
+                    types.Add(tri1Type);
+                    types.Add(tri2Type);
 
                 }
                 //all intersection points are upper, triangles points are bottom
@@ -777,6 +832,17 @@ public class CuttableTreeScript : MonoBehaviour
                     //Debug.Log(" bottomLeftVertex.position " + world.MultiplyPoint(bottomLeftVertex.position).ToString("F2"));
                     //Debug.Log(" bottomRightVertex.position " + world.MultiplyPoint(bottomRightVertex.position).ToString("F2"));
 
+                    ConnectionTypeToCentroid tri1Type;
+                    tri1Type.objectSpaceCentroid = tri1.GetObjectSpaceCentroid();
+                    tri1Type.tct = TriangleConnectionType.DoubleIntersection;
+
+                    ConnectionTypeToCentroid tri2Type;
+                    tri2Type.objectSpaceCentroid = tri2.GetObjectSpaceCentroid();
+                    tri2Type.tct = TriangleConnectionType.DoubleOriginalPoint;
+
+                    types.Add(tri1Type);
+                    types.Add(tri2Type);
+
                 }
 
 
@@ -811,6 +877,8 @@ public class CuttableTreeScript : MonoBehaviour
 
                         IndividualTriangle tri1 = new IndividualTriangle(upperLeftVertex, bottomRightVertex, bottomLeftVertex);
 
+                        
+                        
                         //if (isTriangleFlipped)
                         //{
                         //    isTriangleFlipped = false;
@@ -860,34 +928,41 @@ public class CuttableTreeScript : MonoBehaviour
                     {
 
                         bottomLeftVertex = new IndividualVertex(mesh, trianglesInSplitPlane.ElementAt(currentTriangleIndex));
+                        bottomRightVertex = new IndividualVertex(mesh, trianglesInSplitPlane.ElementAt(currentTriangleIndex + 1));
 
-                        upperRightVertex = new IndividualVertex();
-                        upperRightVertex.position = objectSpaceItersectionPoint;
-                        upperRightVertex.normal = bottomLeftVertex.normal;
-                        upperRightVertex.UV = new Vector2(1, 1);
+                        //getConnectionType(average,list)
+                        TriangleConnectionType tct = GetClosestConnectionType(bottomLeftVertex.position + bottomRightVertex.position / 2, types);
 
-                        bottomRightVertex = new IndividualVertex();
-                        bottomRightVertex.position = mesh.vertices[trianglesInSplitPlane.ElementAt(currentTriangleIndex + 1)];
-                        bottomRightVertex.normal = mesh.normals[trianglesInSplitPlane.ElementAt(currentTriangleIndex + 1)];
-                        bottomRightVertex.UV = mesh.uv[trianglesInSplitPlane.ElementAt(currentTriangleIndex + 1)];
+                        upperRightVertex = new IndividualVertex(mesh, trianglesInSplitPlane.ElementAt(currentTriangleIndex - 1));
+
+                        Debug.Log("found tct " + tct.ToString());//tct.ToString()
+                       
+                        if (tct == TriangleConnectionType.DoubleOriginalPoint)
+                        {
+                            //connects to intersection
+                            upperRightVertex = new IndividualVertex(objectSpaceItersectionPoint, bottomLeftVertex.normal, new Vector2(1, 1));
+                            
+                            
+                        }
+                        else if(tct == TriangleConnectionType.DoubleIntersection)
+                        {
+                            //connects to previous triangle
+                            upperRightVertex = new IndividualVertex(mesh, trianglesInSplitPlane.ElementAt(currentTriangleIndex - 1));
+
+                        }
+
 
                         IndividualTriangle tri1 = new IndividualTriangle(bottomLeftVertex, upperRightVertex, bottomRightVertex);
 
 
-                        //if (isTriangleFlipped)
-                        //{
-                        //    isTriangleFlipped = false;
-                        //    tri1.V1 = flippedVertexStore;
-                        //}
-
-
-
                         tri1.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 0, 2);
-                        //Debug.Log("----------------------- Creating Triangle leftover------------------------------------s ");
-                        //Debug.Log(" bottomLeftVertex.position " + world.MultiplyPoint(bottomLeftVertex.position).ToString("F2"));
-                        //Debug.Log(" upperRightVertex.position  " + world.MultiplyPoint(upperRightVertex.position).ToString("F2"));
-                        
-                        //Debug.Log(" bottomRightVertex.position " + world.MultiplyPoint(bottomRightVertex.position).ToString("F2"));
+
+                        Debug.Log("----------------------- Creating Triangle leftover------------------------------------s ");
+                        Debug.Log(" bottomLeftVertex.position " + world.MultiplyPoint(bottomLeftVertex.position).ToString("F2"));
+                        Debug.Log(" upperRightVertex.position  " + world.MultiplyPoint(upperRightVertex.position).ToString("F2"));
+
+                        Debug.Log(" bottomRightVertex.position " + world.MultiplyPoint(bottomRightVertex.position).ToString("F2"));
+
                         meshToPopulate.AddFaceFromSingularTriangle(tri1);
 
                     }
@@ -905,11 +980,6 @@ public class CuttableTreeScript : MonoBehaviour
 
                         IndividualTriangle tri1 = new IndividualTriangle(bottomLeftVertex, upperLeftVertex, upperRightVertex);
 
-                        //if (isTriangleFlipped)
-                        //{
-                        //    isTriangleFlipped = false;
-                        //    tri1.V1 = flippedVertexStore;
-                        //}
 
                         tri1.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 1, 2);
                         meshToPopulate.AddFaceFromSingularTriangle(tri1);
@@ -1204,6 +1274,44 @@ public class CuttableTreeScript : MonoBehaviour
         }
 
         return uniqueCollection;
+    }
+
+    private Vector3 GetWorldTriangleCentroid(Mesh mesh, List<int> indices,Matrix4x4 world)
+    {
+        Vector3 result = Vector3.zero;
+        foreach(var x in indices)
+        {
+            result += mesh.vertices[x];
+        }
+
+        result /= indices.Count;
+
+
+        return world.MultiplyPoint(result);
+    }
+
+    private TriangleConnectionType GetClosestConnectionType(Vector3 averagePoint,List<ConnectionTypeToCentroid> cttc)
+    {
+        TriangleConnectionType tct = TriangleConnectionType.DefaultNoType;
+        float closestConnectionLength = float.MaxValue;
+
+        Debug.Log("------------- Finding clocsest connection type--------------------");
+
+
+        foreach(ConnectionTypeToCentroid singleTypeToCentroid in cttc)
+        {
+            float currentFoundClosest = Vector3.Distance(singleTypeToCentroid.objectSpaceCentroid ,averagePoint);
+            Debug.Log("Found " + singleTypeToCentroid.tct.ToString() + "with val " + currentFoundClosest);
+
+            if (currentFoundClosest < closestConnectionLength)
+            {
+                closestConnectionLength = currentFoundClosest;
+                tct = singleTypeToCentroid.tct;
+            }
+
+        }
+        return tct;
+
     }
 
 
