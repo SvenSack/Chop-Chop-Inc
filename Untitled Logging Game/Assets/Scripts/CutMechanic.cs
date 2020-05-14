@@ -20,6 +20,13 @@ public class CutMechanic : MonoBehaviour
     public EventSystem eventSystem;
     public float marginOfError;
 
+    private SoundMan soundMan;
+    
+    private void Awake()
+    {
+        soundMan = FindObjectOfType<SoundMan>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,8 +60,9 @@ public class CutMechanic : MonoBehaviour
                                     Input.mousePosition);
                                 if (dist < width / 5)
                                 {
-                                    // ### start cut sound
+                                    soundMan.StartCut();
                                     currentCut = castHits[i].gameObject;
+                                    soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                                 }
                                 Debug.DrawLine(corners[2],corners[3],Color.cyan,1000);
                                 break;
@@ -63,8 +71,9 @@ public class CutMechanic : MonoBehaviour
                                     Input.mousePosition);
                                 if (dist1 < width / 5)
                                 {
-                                    // ### start cut sound
+                                    soundMan.StartCut();
                                     currentCut = castHits[i].gameObject;
+                                    soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                                 }
                                 Debug.DrawLine(corners[0],corners[1],Color.cyan,1000);
                                 break;
@@ -79,7 +88,9 @@ public class CutMechanic : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 // Debug.Log("Stopped cutting because click lift");
-                // ### stop cut sound and particles
+                // ### stop cut particles
+                soundMan.StopCut();
+                soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                 currentCut = null;
                 isCutting = false; 
             }
@@ -104,8 +115,10 @@ public class CutMechanic : MonoBehaviour
 
                 if (!hit)
                 {
-                    // Debug.Log("Stopped cutting because click left");
-                    // ### stop cut sound and particles
+                    Debug.Log("Stopped cutting because click left");
+                    // ### stop cut particles
+                    soundMan.StopCut();
+                    soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     currentCut = null;
                     isCutting = false;
                 }
@@ -126,13 +139,17 @@ public class CutMechanic : MonoBehaviour
                     if (!isCutting)
                     {
                         // Debug.Log("hit tree");
+                        // ### start cut particles
                         isCutting = true;
+                        soundMan.ToggleWood();
+                        soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                         cutStart = Input.mousePosition;
                     }
                     else
                     {
                         // Debug.Log("still hitting tree");
                         cutUpdate = Input.mousePosition;
+                        soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     }
                 }
                 else
@@ -154,7 +171,9 @@ public class CutMechanic : MonoBehaviour
                         target.CutAt(cutPlane.transform.position, cutPlane.transform.up);
                         Destroy(cutPlane); // you can comment this for debugging
                     }
-                    // ### stop cut sound and particles
+                    // ### stop cut particles
+                    soundMan.StopCut();
+                    soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     currentCut = null;
                     isCutting = false;
                 }
@@ -185,5 +204,14 @@ public class CutMechanic : MonoBehaviour
         plane.transform.position = targetLocation;
         plane.transform.Rotate(targetRotation);
         return plane;
+    }
+
+    private Vector3 GetMouseWorld()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float dist = Vector3.Distance(Camera.main.transform.position,
+            currentCut.GetComponent<CutTarget>().target.transform.position);
+        Debug.DrawRay(ray.origin, ray.direction * dist, Color.yellow, 10f);
+        return ray.GetPoint(dist);
     }
 }
