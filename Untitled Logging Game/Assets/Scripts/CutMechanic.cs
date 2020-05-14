@@ -17,10 +17,6 @@ public class CutMechanic : MonoBehaviour
     public float marginOfError;
     private int trunkMask;
 
-    private void Awake()
-    {
-        trunkMask = LayerMask.GetMask("Trunks");
-    }
 
 
     private SoundMan soundMan;
@@ -28,6 +24,7 @@ public class CutMechanic : MonoBehaviour
     private void Awake()
     {
         soundMan = FindObjectOfType<SoundMan>();
+        trunkMask = LayerMask.GetMask("Trunks");
     }
 
     // Start is called before the first frame update
