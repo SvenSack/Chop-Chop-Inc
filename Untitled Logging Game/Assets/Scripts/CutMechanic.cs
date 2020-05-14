@@ -7,10 +7,6 @@ using UnityEngine.UI;
 
 public class CutMechanic : MonoBehaviour
 {
-
-    public CuttableTreeScript[] trees = new CuttableTreeScript[1];
-    public GameObject[] cutIndicators = new GameObject[1];
-    
     private GameObject currentCut;
     private Vector2 cutStart;
     private Vector2 cutUpdate;
@@ -19,6 +15,13 @@ public class CutMechanic : MonoBehaviour
     public GraphicRaycaster gRaycaster;
     public EventSystem eventSystem;
     public float marginOfError;
+    private int trunkMask;
+
+    private void Awake()
+    {
+        trunkMask = LayerMask.GetMask("Trunks");
+    }
+
 
     private SoundMan soundMan;
     
@@ -130,7 +133,7 @@ public class CutMechanic : MonoBehaviour
         {
             RaycastHit hit; 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, 100, trunkMask))
             {
                 if (hit.collider.gameObject.GetComponent<CuttableTreeScript>() ==
                     currentCut.GetComponent<CutTarget>().target)
