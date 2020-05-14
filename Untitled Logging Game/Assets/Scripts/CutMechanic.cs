@@ -130,12 +130,12 @@ public class CutMechanic : MonoBehaviour
         {
             RaycastHit hit; 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100, trunkMask))
+            if (Physics.Raycast(ray, out hit, 100000, trunkMask))
             {
                 if (hit.collider.gameObject.GetComponent<CuttableTreeScript>() ==
                     currentCut.GetComponent<CutTarget>().target)
                 {
-                    Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.green, 10f);
+                    Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.green, 100f);
                     if (!isCutting)
                     {
                         // Debug.Log("hit tree");
@@ -159,7 +159,7 @@ public class CutMechanic : MonoBehaviour
             }
             else
             {
-                Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.red, 10f);
+                Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.red, 100f);
                 if (isCutting)
                 {
                     float dist = Vector2.Distance(cutStart, Input.mousePosition);

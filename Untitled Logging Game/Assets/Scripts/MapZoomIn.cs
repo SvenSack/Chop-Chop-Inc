@@ -65,7 +65,7 @@ public class MapZoomIn : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         asyncLoad.allowSceneActivation = false;
         sceneMan.prevScene = SceneManager.GetActiveScene().name;
-        while(!asyncLoad.isDone && timeElapsed < zoomTime)
+        while(!asyncLoad.isDone && timeElapsed < zoomTime+.5f)
         {
             // Debug.Log(" Time remaining is " + (zoomTime-timeElapsed));
             timeElapsed += Time.deltaTime;
