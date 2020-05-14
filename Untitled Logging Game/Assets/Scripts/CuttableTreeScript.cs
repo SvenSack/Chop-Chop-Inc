@@ -56,6 +56,8 @@ public class IntersectionComparer : IComparer<Vector3>
         float x = Vector3.Dot(baseDirection, intersectionPoint1 - basePosition);
         float y = Vector3.Dot(baseDirection, intersectionPoint2 - basePosition);
 
+
+
         return x.CompareTo(y);
     }
 
@@ -78,9 +80,22 @@ public class IndexDirectionComparer : IComparer<int>
 
     public int Compare(int indexA, int indexB)
     {
+        Vector3 worldIndexA = world.MultiplyPoint(mesh.vertices[indexA]);
+        Vector3 worldIndexB = world.MultiplyPoint(mesh.vertices[indexB]);
 
-        float x = Vector3.Dot(baseDirection, (world.MultiplyPoint( mesh.vertices[indexA]) - basePosition));
-        float y = Vector3.Dot(baseDirection, (world.MultiplyPoint(mesh.vertices[indexB]) - basePosition));
+
+        float x = Vector3.Dot(baseDirection, (worldIndexA - basePosition).normalized);
+        float y = Vector3.Dot(baseDirection, (worldIndexB - basePosition).normalized);
+
+        if(Mathf.Abs(y-x) < 0.001f)
+        {
+            float xLength = Vector3.Distance(worldIndexA, basePosition);
+            float yLength = Vector3.Distance(worldIndexB, basePosition);
+
+            return xLength.CompareTo(yLength);
+
+        }
+
 
         return x.CompareTo(y);
     }
@@ -196,7 +211,7 @@ public class CuttableTreeScript : MonoBehaviour
 
     List<Vector3> upperVertices = new List<Vector3>();
     List<Vector3> bottomVertices = new List<Vector3>();
-    List<Vector3> intersectionVertices = new List<Vector3>();
+    List<Vector3> DEBUG_intersectionVertices = new List<Vector3>();
 
     [SerializeField] int debugShowIndex = 2;
     [SerializeField] float debugSphereSize = 1.0f;
@@ -222,7 +237,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         upperVertices.Clear();
         bottomVertices.Clear();
-        intersectionVertices.Clear();
+        DEBUG_intersectionVertices.Clear();
 
 
         preCutCentroid = new Vector3(0, 0, 0);
@@ -244,7 +259,7 @@ public class CuttableTreeScript : MonoBehaviour
 
             upperVertices.Clear();
             bottomVertices.Clear();
-            intersectionVertices.Clear();
+            DEBUG_intersectionVertices.Clear();
 
             Debug.Log("Cut");
             CutAt(DebugObjectTest.transform.position, DebugObjectTest.transform.up);
@@ -611,17 +626,25 @@ public class CuttableTreeScript : MonoBehaviour
 
         //------------------------------- create bottom part----------------------------------------------------//
 
-        //Vector3 intersectionDirection = uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0];
+        Vector3 intersectionDirection = intersectionPoints[1] - intersectionPoints[0];
 
+        Vector3 vertexDirection =
+             world.MultiplyPoint(mesh.vertices[uniqueTrianglesBelowSplittingPlane[uniqueTrianglesBelowSplittingPlane.Count - 1]]) -
+             world.MultiplyPoint(mesh.vertices[uniqueTrianglesBelowSplittingPlane[0]])
+           ;
 
-        //Vector3 vertexDirection =
-        //    world.MultiplyPoint(mesh.vertices[uniqueTrianglesBelowSplittingPlane[uniqueTrianglesBelowSplittingPlane.Count - 1]]) -
-        //    world.MultiplyPoint(mesh.vertices[uniqueTrianglesBelowSplittingPlane[0]]);
+        if (Vector3.Dot(intersectionDirection, baseDirection) < 0)
+        {
+            intersectionPoints.Reverse();
+        }
 
-        //if (Vector3.Dot(intersectionDirection, vertexDirection) < 0)
-        //{
-        //    uniqueTrianglesBelowSplittingPlane.Reverse();
-        //}
+        if (Vector3.Dot(vertexDirection, intersectionDirection) < 0)
+        {
+            uniqueTrianglesBelowSplittingPlane.Reverse();
+        }
+
+        Debug.Log("------------below splitting plane vertex list");
+        DEBUG_logIndicesList(mesh, world, uniqueTrianglesBelowSplittingPlane);
 
         assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesBelowSplittingPlane, false, world, lowerPrimitiveMesh);
 
@@ -639,11 +662,11 @@ public class CuttableTreeScript : MonoBehaviour
             intersectionPoints.Reverse();
         }
 
-        if (Vector3.Dot(vertexDirection2, baseDirection) < 0)
+        if (Vector3.Dot(vertexDirection2, intersectionDirection2) < 0)
         {
             uniqueTrianglesAboveSplittingPlane.Reverse();
         }
-        Debug.Log("above splitting plane vertex list");
+        Debug.Log("------------above splitting plane vertex list");
         DEBUG_logIndicesList(mesh, world, uniqueTrianglesAboveSplittingPlane);
         
 
@@ -661,8 +684,8 @@ public class CuttableTreeScript : MonoBehaviour
 
         lidPairings.Add(lidPairing);
 
-        intersectionVertices.Add(intersectionPoints[0]);
-        intersectionVertices.Add(intersectionPoints[intersectionPoints.Count - 1]);
+        DEBUG_intersectionVertices.Add(intersectionPoints[0]);
+        DEBUG_intersectionVertices.Add(intersectionPoints[intersectionPoints.Count - 1]);
     }
 
 
@@ -699,7 +722,8 @@ public class CuttableTreeScript : MonoBehaviour
         Matrix4x4 inverseWorld = Matrix4x4.Inverse(world);
 
         int iterationCount = uniqueIntersectionPoints.Count > trianglesInSplitPlane.Count ? uniqueIntersectionPoints.Count : trianglesInSplitPlane.Count;
-       
+        
+        
 
         bool isTriangleFlipped = false;
 
@@ -826,11 +850,11 @@ public class CuttableTreeScript : MonoBehaviour
 
 
                     meshToPopulate.AddFaceFromTriangles(tri1, tri2);
-
-                    //Debug.Log(" upperLeftVertex.position " + world.MultiplyPoint(upperLeftVertex.position).ToString("F2"));
-                    //Debug.Log(" upperRightVertex.position  " + world.MultiplyPoint(upperRightVertex.position).ToString("F2"));
-                    //Debug.Log(" bottomLeftVertex.position " + world.MultiplyPoint(bottomLeftVertex.position).ToString("F2"));
-                    //Debug.Log(" bottomRightVertex.position " + world.MultiplyPoint(bottomRightVertex.position).ToString("F2"));
+                    Debug.Log("----------------------- Creating Below Quad------------------------------------s ");
+                    Debug.Log(" upperLeftVertex.position " + world.MultiplyPoint(upperLeftVertex.position).ToString("F2"));
+                    Debug.Log(" upperRightVertex.position  " + world.MultiplyPoint(upperRightVertex.position).ToString("F2"));
+                    Debug.Log(" bottomLeftVertex.position " + world.MultiplyPoint(bottomLeftVertex.position).ToString("F2"));
+                    Debug.Log(" bottomRightVertex.position " + world.MultiplyPoint(bottomRightVertex.position).ToString("F2"));
 
                     ConnectionTypeToCentroid tri1Type;
                     tri1Type.objectSpaceCentroid = tri1.GetObjectSpaceCentroid();
@@ -931,7 +955,12 @@ public class CuttableTreeScript : MonoBehaviour
                         bottomRightVertex = new IndividualVertex(mesh, trianglesInSplitPlane.ElementAt(currentTriangleIndex + 1));
 
                         //getConnectionType(average,list)
-                        TriangleConnectionType tct = GetClosestConnectionType(bottomLeftVertex.position + bottomRightVertex.position / 2, types);
+
+                       // Debug.Log("Ordering line starts at " + intersectionVertices[0].ToString("F2") + " and ends at " + intersectionVertices[1].ToString("F2"));
+                        
+                        TriangleConnectionType tct = GetClosestConnectionTypeByCentroidProjection(uniqueIntersectionPoints[0], (uniqueIntersectionPoints[1] - uniqueIntersectionPoints[0]).normalized, types);
+                        //GetClosestConnectionType((bottomLeftVertex.position + bottomRightVertex.position) / 2, types);
+
 
                         upperRightVertex = new IndividualVertex(mesh, trianglesInSplitPlane.ElementAt(currentTriangleIndex - 1));
 
@@ -940,14 +969,12 @@ public class CuttableTreeScript : MonoBehaviour
                         if (tct == TriangleConnectionType.DoubleOriginalPoint)
                         {
                             //connects to intersection
-                            upperRightVertex = new IndividualVertex(objectSpaceItersectionPoint, bottomLeftVertex.normal, new Vector2(1, 1));
-                            
-                            
+                            upperRightVertex = new IndividualVertex(mesh, trianglesInSplitPlane.ElementAt(currentTriangleIndex - 1));
                         }
                         else if(tct == TriangleConnectionType.DoubleIntersection)
                         {
                             //connects to previous triangle
-                            upperRightVertex = new IndividualVertex(mesh, trianglesInSplitPlane.ElementAt(currentTriangleIndex - 1));
+                            upperRightVertex = new IndividualVertex(objectSpaceItersectionPoint, bottomLeftVertex.normal, new Vector2(1, 1));
 
                         }
 
@@ -957,7 +984,7 @@ public class CuttableTreeScript : MonoBehaviour
 
                         tri1.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 0, 2);
 
-                        Debug.Log("----------------------- Creating Triangle leftover------------------------------------s ");
+                        Debug.Log("----------------------- Creating Triangle leftover Above------------------------------------s ");
                         Debug.Log(" bottomLeftVertex.position " + world.MultiplyPoint(bottomLeftVertex.position).ToString("F2"));
                         Debug.Log(" upperRightVertex.position  " + world.MultiplyPoint(upperRightVertex.position).ToString("F2"));
 
@@ -983,6 +1010,13 @@ public class CuttableTreeScript : MonoBehaviour
 
                         tri1.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 1, 2);
                         meshToPopulate.AddFaceFromSingularTriangle(tri1);
+
+                        Debug.Log("----------------------- Creating Triangle leftover Below------------------------------------s ");
+                        Debug.Log(" bottomLeftVertex.position " + world.MultiplyPoint(bottomLeftVertex.position).ToString("F2"));
+                        Debug.Log(" upperRightVertex.position  " + world.MultiplyPoint(upperRightVertex.position).ToString("F2"));
+
+                        Debug.Log(" bottomRightVertex.position " + world.MultiplyPoint(upperLeftVertex.position).ToString("F2"));
+
 
                     }
                 }
@@ -1028,7 +1062,7 @@ public class CuttableTreeScript : MonoBehaviour
 
                 foreach (var intersectionPoint in triangleIntersectionPoints)
                 {
-                    intersectionVertices.Add(intersectionPoint);
+                    DEBUG_intersectionVertices.Add(intersectionPoint);
                 }
 
                 break;
@@ -1190,7 +1224,7 @@ public class CuttableTreeScript : MonoBehaviour
 
     private int GetCurrentIndex(int maxIndex, int requestedIndex)
     {
-        return requestedIndex >= maxIndex - 1 ? maxIndex - 1 : requestedIndex; 
+        return requestedIndex > maxIndex - 1 ? maxIndex - 1 : requestedIndex; 
     }
 
     private bool IsPointAbovePlane(Vector3 pointPosition,Vector3 planePosition,Vector3 normal)
@@ -1295,13 +1329,17 @@ public class CuttableTreeScript : MonoBehaviour
         TriangleConnectionType tct = TriangleConnectionType.DefaultNoType;
         float closestConnectionLength = float.MaxValue;
 
+        Matrix4x4 world = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
+
         Debug.Log("------------- Finding clocsest connection type--------------------");
+        Debug.Log("average point is " +  world.MultiplyPoint(averagePoint).ToString("F2"));
 
 
-        foreach(ConnectionTypeToCentroid singleTypeToCentroid in cttc)
+        foreach (ConnectionTypeToCentroid singleTypeToCentroid in cttc)
         {
             float currentFoundClosest = Vector3.Distance(singleTypeToCentroid.objectSpaceCentroid ,averagePoint);
             Debug.Log("Found " + singleTypeToCentroid.tct.ToString() + "with val " + currentFoundClosest);
+            Debug.Log("The centroid is on " + world.MultiplyPoint(singleTypeToCentroid.objectSpaceCentroid).ToString("F2"));
 
             if (currentFoundClosest < closestConnectionLength)
             {
@@ -1313,60 +1351,89 @@ public class CuttableTreeScript : MonoBehaviour
         return tct;
 
     }
+    //base position and desiredDirection is expressed in world space
+    private TriangleConnectionType GetClosestConnectionTypeByCentroidProjection(Vector3 basePosition,Vector3 desiredDirection, List<ConnectionTypeToCentroid> cttc)
+    {
+        TriangleConnectionType tct = TriangleConnectionType.DefaultNoType;
+        float closestConnectionLength = float.MinValue;
+
+        Matrix4x4 world = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
 
 
 
-  //  private void GetMinMaxOfVertices(out Vector3 min ,out Vector3 max,Vector3[] vectors)
-  //  {
-  //      Vector3 minResult = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-  //      Vector3 maxResult = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+        foreach (ConnectionTypeToCentroid singleTypeToCentroid in cttc)
+        {
+            Vector3 worldSpaceCentroid = world.MultiplyPoint(singleTypeToCentroid.objectSpaceCentroid);
+            Vector3 currentDirection = (worldSpaceCentroid - basePosition).normalized;
 
-  //      foreach(Vector3 vertex in vectors)
-		//{
-  //          //check for minResult
-  //          if (vertex.x < minResult.x)
-  //          {
-  //              minResult.x = vertex.x;
-  //          }
+            float currentFoundClosest = Vector3.Dot(currentDirection, desiredDirection);
 
-  //          if (vertex.y < minResult.y)
-  //          {
-  //              minResult.y = vertex.y;
-  //          }
+            Debug.Log("Found " + singleTypeToCentroid.tct.ToString() + "with val " + currentFoundClosest);
+            Debug.Log("The centroid is on " + worldSpaceCentroid.ToString("F2"));
 
-  //          if (vertex.z < minResult.z)
-  //          {
-  //              minResult.z = vertex.z;
-  //          }
+            if (currentFoundClosest > closestConnectionLength)
+            {
+                closestConnectionLength = currentFoundClosest;
+                tct = singleTypeToCentroid.tct;
+            }
+
+        }
+        return tct;
+    }
 
 
 
-  //          //check for maxResult
-  //          if (vertex.x > maxResult.x)
-  //          {
-  //              maxResult.x = vertex.x;
-  //          }
+        //  private void GetMinMaxOfVertices(out Vector3 min ,out Vector3 max,Vector3[] vectors)
+        //  {
+        //      Vector3 minResult = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+        //      Vector3 maxResult = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
-  //          if (vertex.y > maxResult.y)
-  //          {
-  //              maxResult.y = vertex.y;
-  //          }
+        //      foreach(Vector3 vertex in vectors)
+        //{
+        //          //check for minResult
+        //          if (vertex.x < minResult.x)
+        //          {
+        //              minResult.x = vertex.x;
+        //          }
 
-  //          if (vertex.z > maxResult.z)
-  //          {
-  //              maxResult.z = vertex.z;
-  //          }
+        //          if (vertex.y < minResult.y)
+        //          {
+        //              minResult.y = vertex.y;
+        //          }
 
-  //      }
+        //          if (vertex.z < minResult.z)
+        //          {
+        //              minResult.z = vertex.z;
+        //          }
 
-  //      min = minResult;
-  //      max = maxResult;
+
+
+        //          //check for maxResult
+        //          if (vertex.x > maxResult.x)
+        //          {
+        //              maxResult.x = vertex.x;
+        //          }
+
+        //          if (vertex.y > maxResult.y)
+        //          {
+        //              maxResult.y = vertex.y;
+        //          }
+
+        //          if (vertex.z > maxResult.z)
+        //          {
+        //              maxResult.z = vertex.z;
+        //          }
+
+        //      }
+
+        //      min = minResult;
+        //      max = maxResult;
 
 
 
-  //  }
+        //  }
 
-    private void GetMinMaxOfVertices<T>(out Vector3 min, out Vector3 max, T collection) where T : ICollection<Vector3>
+        private void GetMinMaxOfVertices<T>(out Vector3 min, out Vector3 max, T collection) where T : ICollection<Vector3>
     {
         Vector3 minResult = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
         Vector3 maxResult = new Vector3(float.MinValue, float.MinValue, float.MinValue);
@@ -1440,7 +1507,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         Gizmos.color = new Color(1,0,1);
 
-        foreach (var position in intersectionVertices)
+        foreach (var position in DEBUG_intersectionVertices)
         {
 
             Gizmos.DrawSphere(position, debugSphereSize);
