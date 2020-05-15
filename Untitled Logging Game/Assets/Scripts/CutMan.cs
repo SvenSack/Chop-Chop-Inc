@@ -22,7 +22,7 @@ public class CutMan : MonoBehaviour
     private GameObject cutParticleInstance;
 
     public CuttableTreeScript[] trees;
-    private int[] treeHps;
+    public int[] treeHps;
     private CutTarget[] cutTargets;
     public GameObject cutTargetPrefab;
 
@@ -202,7 +202,7 @@ public class CutMan : MonoBehaviour
                         Destroy(cutPlane); // you can comment this for debugging
                         for (int i = 0; i < trees.Length; i++)
                         {
-                            if (trees[i] = currentCut.GetComponent<CutTarget>().target)
+                            if (trees[i] == currentCut.GetComponent<CutTarget>().target)
                                 treeHps[i]--;
                         }
                         Destroy(currentCut);
@@ -273,23 +273,38 @@ public class CutMan : MonoBehaviour
                 else
                     cutTargets[i].goesLeft = false;
                 Transform tempTrans = cutTargets[i].transform;
-                // ### figure out the treeshape somehow (treecamera ?)
-                // ### check for large branches on trunk, if found place on those
-                // ### divide the remaining trunk in thirds somehow, place on the one corresponding to switch from bottom up
-                // ### convert world to Ui space to place correctly
+                BoxCollider[] boxes = trees[i].transform.parent.GetComponentsInChildren<BoxCollider>();
+                Vector3 targetPosition = Vector3.zero;
                 switch (treeHps[i])
                 {
                     case 3:
+                        Vector3 roof = boxes[3].transform.position + new Vector3(0, .5f * boxes[3].transform.localScale.y, 0);
+                        Vector3 floor = boxes[3].transform.position - new Vector3(0, .5f * boxes[3].transform.localScale.y, 0);
+                        targetPosition = boxes[3].transform.position;
+                        Debug.DrawLine(roof,floor,Color.red,100f);
+                        targetPosition.y = UnityEngine.Random.Range(roof.y, floor.y);
                         break;
                     case 2:
+                        Vector3 roof1 = boxes[2].transform.position + new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
+                        Vector3 floor1 = boxes[2].transform.position - new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
+                        targetPosition = boxes[2].transform.position;
+                        Debug.DrawLine(roof1,floor1,Color.red,100f);
+                        targetPosition.y = UnityEngine.Random.Range(roof1.y, floor1.y);
                         break;
                     case 1:
+                        Vector3 roof2 = boxes[1].transform.position + new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
+                        Vector3 floor2 = boxes[1].transform.position - new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
+                        targetPosition = boxes[1].transform.position;
+                        Debug.DrawLine(roof2,floor2,Color.red,100f);
+                        targetPosition.y = UnityEngine.Random.Range(roof2.y, floor2.y);
                         break;
                 }
-                //tempTrans.position;
+                tempTrans.position = Camera.main.WorldToScreenPoint(targetPosition);
                 tempTrans.rotation = Quaternion.Euler(0,0,UnityEngine.Random.Range(-20f,20f));
                 
             }
         }
     }
+    
+    
 }
