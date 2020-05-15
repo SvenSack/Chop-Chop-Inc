@@ -17,6 +17,8 @@ public class CutMechanic : MonoBehaviour
     public float marginOfError;
     private int trunkMask;
 
+    public GameObject particleObject;
+    private GameObject cutParticleInstance;
 
 
     private SoundMan soundMan;
@@ -88,8 +90,11 @@ public class CutMechanic : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 // Debug.Log("Stopped cutting because click lift");
-                // ### stop cut particles
                 soundMan.StopCut();
+                foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
+                {
+                    part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                }
                 soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                 currentCut = null;
                 isCutting = false; 
@@ -116,8 +121,11 @@ public class CutMechanic : MonoBehaviour
                 if (!hit)
                 {
                     Debug.Log("Stopped cutting because click left");
-                    // ### stop cut particles
                     soundMan.StopCut();
+                    foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
+                    {
+                        part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                    }
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     currentCut = null;
                     isCutting = false;
@@ -139,17 +147,25 @@ public class CutMechanic : MonoBehaviour
                     if (!isCutting)
                     {
                         // Debug.Log("hit tree");
-                        // ### start cut particles
                         isCutting = true;
                         soundMan.ToggleWood();
-                        soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
+                        cutParticleInstance = Instantiate(particleObject);
+                        if(currentCut.GetComponent<CutTarget>().goesLeft)
+                            cutParticleInstance.transform.rotation = Quaternion.Euler(0,0,180);
+                        foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
+                        {
+                            part.Play();
+                        }
+                        cutParticleInstance.transform.position = hit.point;
+                        soundMan.chainsawSoundObject.transform.position = hit.point;
                         cutStart = Input.mousePosition;
                     }
                     else
                     {
                         // Debug.Log("still hitting tree");
                         cutUpdate = Input.mousePosition;
-                        soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
+                        cutParticleInstance.transform.position = hit.point;
+                        soundMan.chainsawSoundObject.transform.position = hit.point;
                     }
                 }
                 else
@@ -171,8 +187,15 @@ public class CutMechanic : MonoBehaviour
                         target.CutAt(cutPlane.transform.position, cutPlane.transform.up);
                         Destroy(cutPlane); // you can comment this for debugging
                     }
-                    // ### stop cut particles
+                    foreach (var part in cutParticleInstance.GetComponents<ParticleSystem>())
+                    {
+                        part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                    }
                     soundMan.StopCut();
+                    foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
+                    {
+                        part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                    }
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     currentCut = null;
                     isCutting = false;
