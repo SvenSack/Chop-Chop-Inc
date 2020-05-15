@@ -149,23 +149,23 @@ public class CutMechanic : MonoBehaviour
                         // Debug.Log("hit tree");
                         isCutting = true;
                         soundMan.ToggleWood();
-                        Vector3 temp = GetMouseWorld();
                         cutParticleInstance = Instantiate(particleObject);
+                        if(currentCut.GetComponent<CutTarget>().goesLeft)
+                            cutParticleInstance.transform.rotation = Quaternion.Euler(0,0,180);
                         foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
                         {
                             part.Play();
                         }
-                        cutParticleInstance.transform.position = temp;
-                        soundMan.chainsawSoundObject.transform.position = temp;
+                        cutParticleInstance.transform.position = hit.point;
+                        soundMan.chainsawSoundObject.transform.position = hit.point;
                         cutStart = Input.mousePosition;
                     }
                     else
                     {
                         // Debug.Log("still hitting tree");
                         cutUpdate = Input.mousePosition;
-                        Vector3 temp = GetMouseWorld();
-                        cutParticleInstance.transform.position = temp;
-                        soundMan.chainsawSoundObject.transform.position = temp;
+                        cutParticleInstance.transform.position = hit.point;
+                        soundMan.chainsawSoundObject.transform.position = hit.point;
                     }
                 }
                 else
