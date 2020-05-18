@@ -125,7 +125,7 @@ public class CuttableTreeScript : MonoBehaviour
 
     private List<TreeSplitCollisionBox> collisionBoxes;
 
-    public CuttableMeshPhysicsManager meshColliderGenerator;
+    [HideInInspector] public CuttableMeshPhysicsManager meshColliderGenerator;
 
     List<Vector3> upperVertices = new List<Vector3>();
     List<Vector3> bottomVertices = new List<Vector3>();
@@ -137,12 +137,14 @@ public class CuttableTreeScript : MonoBehaviour
     MeshFilter meshFilter;
     Mesh mesh;
 
-    [SerializeField]GameObject DebugObjectTest;
+    [HideInInspector] public GameObject DebugObjectTest;
 
     private List<MeshLidPairing> lidPairings = new List<MeshLidPairing>();
 
     private Vector3 preCutCentroid;
     private Vector3 objectSpacePreCutCentroid;
+
+    public int leafParticleIndex;
 
 
     private void Start()
@@ -204,7 +206,7 @@ public class CuttableTreeScript : MonoBehaviour
         return mesh;
     }
 
-    public void CutAt(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
+    public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
     {
         Matrix4x4 worldMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
         preCutCentroid = worldMatrix.MultiplyPoint(preCutCentroid);
@@ -296,6 +298,7 @@ public class CuttableTreeScript : MonoBehaviour
 
 
             }
+
         }
 
         //do vertex rearrangment
@@ -345,8 +348,9 @@ public class CuttableTreeScript : MonoBehaviour
         {
             meshColliderGenerator.GenerateMeshColliderFromCut(mesh);
         }
-
-        var meshPhysicsManager = InstantiateTreePiece(FacesSplitAbove);
+        
+        GameObject newTree;
+            var meshPhysicsManager = InstantiateTreePiece(FacesSplitAbove, out newTree);
 
 
         float highestPoint = float.MinValue;
@@ -373,11 +377,13 @@ public class CuttableTreeScript : MonoBehaviour
 
   
         meshPhysicsManager.AddForceAt(seperationForce, normal, point);
+        
+        return newTree;
     }
 
-    public CuttableMeshPhysicsManager InstantiateTreePiece(PrimitiveMesh primitiveMesh)
+    public CuttableMeshPhysicsManager InstantiateTreePiece(PrimitiveMesh primitiveMesh, out GameObject newTree)
     {
-        GameObject newTree = new GameObject();
+        newTree = new GameObject();
         var meshRenderer = newTree.AddComponent<MeshRenderer>();
         meshRenderer.material = GetComponent<MeshRenderer>().sharedMaterial;
 
@@ -392,6 +398,8 @@ public class CuttableTreeScript : MonoBehaviour
 
 
         CuttableMeshPhysicsManager cmpm  = newTree.AddComponent<CuttableMeshPhysicsManager>();
+        newTree.AddComponent<TreeFallParticle>();
+        
 
         cmpm.GenerateMeshColliderFromCut(newMeshFilter.mesh, true);
 
@@ -579,8 +587,8 @@ public class CuttableTreeScript : MonoBehaviour
             uniqueTrianglesBelowSplittingPlane.Reverse();
         }
 
-        Debug.Log("------------below splitting plane vertex list");
-        DEBUG_logIndicesList(mesh, world, uniqueTrianglesBelowSplittingPlane);
+        // Debug.Log("------------below splitting plane vertex list");
+        // DEBUG_logIndicesList(mesh, world, uniqueTrianglesBelowSplittingPlane);
 
         assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesBelowSplittingPlane, false, world, lowerPrimitiveMesh);
 
@@ -602,8 +610,8 @@ public class CuttableTreeScript : MonoBehaviour
         {
             uniqueTrianglesAboveSplittingPlane.Reverse();
         }
-        Debug.Log("------------above splitting plane vertex list");
-        DEBUG_logIndicesList(mesh, world, uniqueTrianglesAboveSplittingPlane);
+        // Debug.Log("------------above splitting plane vertex list");
+        // DEBUG_logIndicesList(mesh, world, uniqueTrianglesAboveSplittingPlane);
         
 
         assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesAboveSplittingPlane, true, world, upperPrimitiveMesh);
