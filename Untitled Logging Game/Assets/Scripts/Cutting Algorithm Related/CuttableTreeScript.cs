@@ -146,13 +146,7 @@ public class CuttableTreeScript : MonoBehaviour
 
     public int leafParticleIndex;
     private bool isFirstTree = true;
-
-<<<<<<<
-
-
-=======
-
->>>>>>>
+    
     private void Start()
     {
         Debug.Log("Start Called for CuttableTree in Object " + gameObject.name);
@@ -349,9 +343,7 @@ public class CuttableTreeScript : MonoBehaviour
         }
         
         GameObject newTree;
-            var meshPhysicsManager = InstantiateTreePiece(FacesSplitAbove, out newTree);
-
-        var otherMeshPhysicsManager = InstantiateTreePiece(FacesSplitAbove);
+        var otherMeshPhysicsManager = InstantiateTreePiece(FacesSplitAbove, out newTree);
 
         float highestPoint = float.MinValue;
         Vector3 point = new Vector3(highestPoint, highestPoint, highestPoint);
@@ -397,7 +389,7 @@ public class CuttableTreeScript : MonoBehaviour
         foreach (Transform child in children)
         {
             Debug.Log("child is " + child.name);
-            if (child.tag != "leaf")
+            if (child.tag != "Leaves")
             {
                 continue;
             }
@@ -458,7 +450,7 @@ public class CuttableTreeScript : MonoBehaviour
 
     public CuttableMeshPhysicsManager InstantiateTreePiece(PrimitiveMesh primitiveMesh, out GameObject newTree)
     {
-        GameObject newTree = new GameObject();
+        newTree = new GameObject();
         
 
         var meshRenderer = newTree.AddComponent<MeshRenderer>();
