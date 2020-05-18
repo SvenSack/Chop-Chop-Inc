@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Utils : MonoBehaviour
 {
+
+
     static public void GetMinMaxOfVertices<T>(out Vector3 min, out Vector3 max, T collection) where T : ICollection<Vector3>
     {
         Vector3 minResult = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
@@ -85,6 +87,62 @@ public class Utils : MonoBehaviour
         }
 
         return isPointAbovePlane;
+
+    }
+
+    static public void EnsurePositionIsCentroid(Transform obj)
+    {
+        //get mesh of objects
+        
+
+        MeshFilter meshFilter = obj.GetComponent<MeshFilter>();
+
+        if(meshFilter)
+        {
+            Mesh mesh = meshFilter.mesh;
+
+            if(mesh)
+            {
+                Vector3 centroid = new Vector3();
+
+                for (int i = 0; i < mesh.triangles.Length; i++)
+                {
+                    centroid += mesh.vertices[mesh.triangles[i]];
+                }
+
+                centroid /= mesh.triangles.Length;
+
+                Vector3 worldSpaceCentroid = obj.localToWorldMatrix.MultiplyPoint(centroid);
+                Debug.Log("worldSpaceCentroid " + worldSpaceCentroid.ToString("F2"));
+                Vector3 oldPosition = obj.transform.position;
+
+                obj.transform.position = worldSpaceCentroid;
+
+
+                Vector3 centroidShiftDirection = obj.worldToLocalMatrix.MultiplyVector( oldPosition - worldSpaceCentroid);
+
+                Vector3[] vertices = mesh.vertices;
+
+                for (int i = 0; i < mesh.vertices.Length; i++)
+                {
+                    vertices[i] += centroidShiftDirection;
+                }
+
+                mesh.vertices = vertices;
+
+                mesh.MarkModified(); 
+            }
+
+            
+
+
+        }
+
+        else
+        {
+            Debug.LogError("Utils.EnsurePositionIsCentroid failed because a mesh filter of the mesh itself is missing!");
+        }
+
 
     }
 
