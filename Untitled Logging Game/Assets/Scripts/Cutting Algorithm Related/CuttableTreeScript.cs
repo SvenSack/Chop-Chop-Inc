@@ -144,9 +144,14 @@ public class CuttableTreeScript : MonoBehaviour
     private Vector3 preCutCentroid;
     private Vector3 objectSpacePreCutCentroid;
 
+    private bool isFirstTree = true;
+
+
 
     private void Start()
     {
+        Debug.Log("Start Called for CuttableTree in Object " + gameObject.name);
+
         collisionBoxes = new List<TreeSplitCollisionBox>();
 
         meshFilter = gameObject.GetComponent<MeshFilter>();
@@ -160,6 +165,7 @@ public class CuttableTreeScript : MonoBehaviour
 
 
         preCutCentroid = new Vector3(0, 0, 0);
+
         foreach(Vector3 position in mesh.vertices)
         {
             preCutCentroid += position;
@@ -170,38 +176,27 @@ public class CuttableTreeScript : MonoBehaviour
         objectSpacePreCutCentroid = preCutCentroid;
 
         meshColliderGenerator = GetMeshColliderGenerator();
-    }
 
-    private Vector3 WorldPositionToScreenSpace(Vector3 positionOfObject)
-    {
-        Camera cam = Camera.main;
-        Matrix4x4 MVP = cam.projectionMatrix * cam.worldToCameraMatrix
-            * transform.localToWorldMatrix;
-
-        return MVP.MultiplyPoint(positionOfObject);
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.C))
+        if (isFirstTree)
         {
-            upperVertices.Clear();
-            bottomVertices.Clear();
-            DEBUG_intersectionVertices.Clear();
-
-            Debug.Log("Cut");
-            CutAt(DebugObjectTest.transform.position, DebugObjectTest.transform.up,20.0f);
+            ensureCentroidLeaf();
         }
     }
 
-    private CuttableMeshPhysicsManager GetMeshColliderGenerator()
+    public void SetIsFirstTree(bool state)
     {
-        return GetComponent<CuttableMeshPhysicsManager>();
+        isFirstTree = state;
     }
 
-    public Mesh GetMesh()
+    private void ensureCentroidLeaf()
     {
-        return mesh;
+        foreach(Transform child in transform)
+        {
+            if(child.tag == "leaf")
+            {
+                Utils.EnsurePositionIsCentroid(child);
+            }
+        }
     }
 
     public void CutAt(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
@@ -260,6 +255,7 @@ public class CuttableTreeScript : MonoBehaviour
                 //if both triangles exist but do not have the same triangle split state
                 else if (isBothTrianglesExist && tri1CheckResult != tri2CheckResult)
                 {
+                    
                     Vector3 worldV0 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v0]);
                     Vector3 worldV1 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v1]);
                     Vector3 worldV2 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v2]);
@@ -346,7 +342,7 @@ public class CuttableTreeScript : MonoBehaviour
             meshColliderGenerator.GenerateMeshColliderFromCut(mesh);
         }
 
-        var meshPhysicsManager = InstantiateTreePiece(FacesSplitAbove);
+        var otherMeshPhysicsManager = InstantiateTreePiece(FacesSplitAbove);
 
 
         float highestPoint = float.MinValue;
@@ -358,7 +354,7 @@ public class CuttableTreeScript : MonoBehaviour
             Vector3 worldV0 = worldMatrix.MultiplyPoint(lidPairing.v0.position);
             Vector3 worldV2 = worldMatrix.MultiplyPoint(lidPairing.v1.position);
 
-            if(worldV0.y > highestPoint)
+            if (worldV0.y > highestPoint)
             {
                 highestPoint = worldV0.y;
                 point = worldV0;
@@ -371,17 +367,98 @@ public class CuttableTreeScript : MonoBehaviour
             }
         }
 
-  
-        meshPhysicsManager.AddForceAt(seperationForce, normal, point);
+        DisplaceLeaves(position, normal,gameObject, otherMeshPhysicsManager.gameObject);
+
+        
+
+        otherMeshPhysicsManager.AddForceAt(seperationForce, normal, point);
     }
+
+    public void DisplaceLeaves(Vector3 planePosition, Vector3 planeNormal, GameObject belowCuttingPlaneObj, GameObject aboveCuttingPlaneObj)
+    {
+        List<Transform> children = new List<Transform>();
+
+        foreach (Transform child in transform)
+        {
+            children.Add(child);
+        }
+
+        gameObject.transform.DetachChildren();
+
+        foreach (Transform child in children)
+        {
+            Debug.Log("child is " + child.name);
+            if (child.tag != "leaf")
+            {
+                continue;
+            }
+
+
+            if (Utils.IsPointAbovePlane(child.transform.position,planePosition,planeNormal))
+            {
+                child.parent = aboveCuttingPlaneObj.transform;
+            }
+            else
+            {
+                child.parent = belowCuttingPlaneObj.transform;
+            }
+
+
+        }
+
+
+        
+    }
+
+
+
+
+    private Vector3 WorldPositionToScreenSpace(Vector3 positionOfObject)
+    {
+        Camera cam = Camera.main;
+        Matrix4x4 MVP = cam.projectionMatrix * cam.worldToCameraMatrix
+            * transform.localToWorldMatrix;
+
+        return MVP.MultiplyPoint(positionOfObject);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            upperVertices.Clear();
+            bottomVertices.Clear();
+            DEBUG_intersectionVertices.Clear();
+
+            Debug.Log("Cut");
+            CutAt(DebugObjectTest.transform.position, DebugObjectTest.transform.up,20.0f);
+        }
+    }
+
+    private CuttableMeshPhysicsManager GetMeshColliderGenerator()
+    {
+        return GetComponent<CuttableMeshPhysicsManager>();
+    }
+
+    public Mesh GetMesh()
+    {
+        return mesh;
+    }
+
+    
 
     public CuttableMeshPhysicsManager InstantiateTreePiece(PrimitiveMesh primitiveMesh)
     {
         GameObject newTree = new GameObject();
+        
+
         var meshRenderer = newTree.AddComponent<MeshRenderer>();
         meshRenderer.material = GetComponent<MeshRenderer>().sharedMaterial;
 
         var newMeshFilter = newTree.AddComponent<MeshFilter>();
+
+        CuttableTreeScript cuttableTree = newTree.AddComponent<CuttableTreeScript>();
+        cuttableTree.isFirstTree = false;
 
 
         newTree.transform.position = transform.position;
@@ -390,10 +467,13 @@ public class CuttableTreeScript : MonoBehaviour
 
         primitiveMesh.PopulateMesh(newMeshFilter.mesh);
 
-
+        Utils.EnsurePositionIsCentroid(newTree.transform);
         CuttableMeshPhysicsManager cmpm  = newTree.AddComponent<CuttableMeshPhysicsManager>();
+        
 
         cmpm.GenerateMeshColliderFromCut(newMeshFilter.mesh, true);
+
+        
 
         return cmpm;
 
@@ -579,8 +659,8 @@ public class CuttableTreeScript : MonoBehaviour
             uniqueTrianglesBelowSplittingPlane.Reverse();
         }
 
-        Debug.Log("------------below splitting plane vertex list");
-        DEBUG_logIndicesList(mesh, world, uniqueTrianglesBelowSplittingPlane);
+        //Debug.Log("------------below splitting plane vertex list");
+        //DEBUG_logIndicesList(mesh, world, uniqueTrianglesBelowSplittingPlane);
 
         assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesBelowSplittingPlane, false, world, lowerPrimitiveMesh);
 
@@ -602,8 +682,8 @@ public class CuttableTreeScript : MonoBehaviour
         {
             uniqueTrianglesAboveSplittingPlane.Reverse();
         }
-        Debug.Log("------------above splitting plane vertex list");
-        DEBUG_logIndicesList(mesh, world, uniqueTrianglesAboveSplittingPlane);
+        //Debug.Log("------------above splitting plane vertex list");
+        //DEBUG_logIndicesList(mesh, world, uniqueTrianglesAboveSplittingPlane);
         
 
         assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesAboveSplittingPlane, true, world, upperPrimitiveMesh);
