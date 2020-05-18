@@ -397,11 +397,11 @@ public class CuttableTreeScript : MonoBehaviour
 
             if (Utils.IsPointAbovePlane(child.transform.position,planePosition,planeNormal))
             {
-                child.parent = aboveCuttingPlaneObj.transform;
+                child.SetParent(aboveCuttingPlaneObj.transform);
             }
             else
             {
-                child.parent = belowCuttingPlaneObj.transform;
+                child.SetParent(belowCuttingPlaneObj.transform);
             }
 
 
