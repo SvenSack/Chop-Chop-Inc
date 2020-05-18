@@ -5208,8 +5208,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshColliderGenerator: {fileID: 0}
   debugShowIndex: 2
-  debugSphereSize: 1
+  debugSphereSize: 0.01
   DebugObjectTest: {fileID: 0}
+  leafParticleIndex: 1
 --- !u!64 &2295231082632246652
 MeshCollider:
   m_ObjectHideFlags: 0

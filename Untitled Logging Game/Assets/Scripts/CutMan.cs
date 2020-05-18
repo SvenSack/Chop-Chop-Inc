@@ -18,7 +18,8 @@ public class CutMan : MonoBehaviour
     public float marginOfError;
     private int trunkMask;
 
-    public GameObject particleObject;
+    public GameObject cutParticleObject;
+    public GameObject fallParticleObject;
     private GameObject cutParticleInstance;
 
     public CuttableTreeScript[] trees;
@@ -27,6 +28,12 @@ public class CutMan : MonoBehaviour
     public GameObject cutTargetPrefab;
 
     private SoundMan soundMan;
+
+    public float[] leafScaleValues;
+    public Sprite[] leafParticles;
+
+    public float cutForce;
+    
     
     private void Awake()
     {
@@ -163,7 +170,7 @@ public class CutMan : MonoBehaviour
                         // Debug.Log("hit tree");
                         isCutting = true;
                         soundMan.ToggleWood();
-                        cutParticleInstance = Instantiate(particleObject);
+                        cutParticleInstance = Instantiate(cutParticleObject);
                         if(currentCut.GetComponent<CutTarget>().goesLeft)
                             cutParticleInstance.transform.rotation = Quaternion.Euler(0,0,180);
                         foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
@@ -198,8 +205,20 @@ public class CutMan : MonoBehaviour
                     {
                         GameObject cutPlane = InitiateCut(cutStart, cutUpdate);
                         CuttableTreeScript target = currentCut.GetComponent<CutTarget>().target;
-                        target.CutAt(cutPlane.transform.position, cutPlane.transform.up);
-                        Destroy(cutPlane); // you can comment this for debugging
+                        GameObject newTreePiece = target.CutAt(cutPlane.transform.position, cutPlane.transform.up, cutForce);
+                        Destroy(cutPlane); // you can comment this for debugging of cut plane
+                        GameObject newPartI = Instantiate(fallParticleObject, newTreePiece.transform);
+                        ParticleSystem newPart = newPartI.transform.GetChild(0).GetComponent<ParticleSystem>();
+                        int newPartIndex = target.leafParticleIndex;
+                        newPart.textureSheetAnimation.SetSprite(0,leafParticles[newPartIndex]);
+                        if (leafScaleValues[newPartIndex] != 1)
+                        {
+                            var newPartMain = newPart.main;
+                            newPartMain.startSizeMultiplier = leafScaleValues[newPartIndex];
+                        }
+                        var newPartShape = newPart.shape;
+                        newPartShape.mesh = newTreePiece.GetComponent<MeshFilter>().mesh;
+                        newPart.Play();
                         for (int i = 0; i < trees.Length; i++)
                         {
                             if (trees[i] == currentCut.GetComponent<CutTarget>().target)

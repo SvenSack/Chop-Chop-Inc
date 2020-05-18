@@ -27,12 +27,19 @@
         <e p="Scripts" t="Include">
           <e p="BackToMapButton.cs" t="Include" />
           <e p="CutMan.cs" t="Include" />
-          <e p="CuttableTreeScript.cs" t="Include" />
           <e p="CutTarget.cs" t="Include" />
+          <e p="Cutting Algorithm Related" t="Include">
+            <e p="CuttableMeshPhysicsManager.cs" t="Include" />
+            <e p="CuttableTreeScript.cs" t="Include" />
+            <e p="MeshLidPairing.cs" t="Include" />
+            <e p="SortingAlgorithmRelated.cs" t="Include" />
+          </e>
           <e p="MapZoomIn.cs" t="Include" />
           <e p="PrimitiveMesh.cs" t="Include" />
           <e p="SceneMan.cs" t="Include" />
           <e p="SoundMan.cs" t="Include" />
+          <e p="TreeFallParticle.cs" t="Include" />
+          <e p="Utils.cs" t="Include" />
           <e p="VectorDebugShow.cs" t="Include" />
           <e p="WeirdExperimentalShit" t="Include">
             <e p="MeshVisualizer.cs" t="Include" />
