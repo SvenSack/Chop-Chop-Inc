@@ -112,10 +112,11 @@ public class CutMan : MonoBehaviour
             {
                 // Debug.Log("Stopped cutting because click lift");
                 soundMan.StopCut();
-                foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
-                {
-                    part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-                }
+                if(cutParticleInstance != null)
+                    foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
+                    {
+                        part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                    }
                 soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                 currentCut = null;
                 isCutting = false; 
@@ -143,10 +144,11 @@ public class CutMan : MonoBehaviour
                 {
                     Debug.Log("Stopped cutting because click left");
                     soundMan.StopCut();
-                    foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
-                    {
-                        part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-                    }
+                    if(cutParticleInstance != null)
+                        foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
+                        {
+                            part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                        }
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     currentCut = null;
                     isCutting = false;
