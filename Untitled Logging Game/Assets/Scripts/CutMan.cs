@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = System.Random;
 
-public class CutMechanic : MonoBehaviour
+public class CutMan : MonoBehaviour
 {
     private GameObject currentCut;
     private Vector2 cutStart;
@@ -20,6 +21,10 @@ public class CutMechanic : MonoBehaviour
     public GameObject particleObject;
     private GameObject cutParticleInstance;
 
+    public CuttableTreeScript[] trees;
+    public int[] treeHps;
+    private CutTarget[] cutTargets;
+    public GameObject cutTargetPrefab;
 
     private SoundMan soundMan;
     
@@ -27,6 +32,15 @@ public class CutMechanic : MonoBehaviour
     {
         soundMan = FindObjectOfType<SoundMan>();
         trunkMask = LayerMask.GetMask("Trunks");
+        trees = FindObjectsOfType<CuttableTreeScript>();
+        treeHps = new int[trees.Length];
+        cutTargets = new CutTarget[trees.Length];
+        // ### the following should be replaced once the placement is algorithmically determined,
+        // then we could just look it up there
+        for (int i = 0; i < treeHps.Length; i++)
+        {
+            treeHps[i] = UnityEngine.Random.Range(1, 3);
+        }
     }
 
     // Start is called before the first frame update
@@ -186,6 +200,12 @@ public class CutMechanic : MonoBehaviour
                         CuttableTreeScript target = currentCut.GetComponent<CutTarget>().target;
                         target.CutAt(cutPlane.transform.position, cutPlane.transform.up);
                         Destroy(cutPlane); // you can comment this for debugging
+                        for (int i = 0; i < trees.Length; i++)
+                        {
+                            if (trees[i] == currentCut.GetComponent<CutTarget>().target)
+                                treeHps[i]--;
+                        }
+                        Destroy(currentCut);
                     }
                     foreach (var part in cutParticleInstance.GetComponents<ParticleSystem>())
                     {
@@ -202,6 +222,8 @@ public class CutMechanic : MonoBehaviour
                 }
             }
         }
+        
+        PlaceCutSpots();
     }
 
     private GameObject InitiateCut(Vector2 start, Vector2 finish)
@@ -237,4 +259,52 @@ public class CutMechanic : MonoBehaviour
         Debug.DrawRay(ray.origin, ray.direction * dist, Color.yellow, 10f);
         return ray.GetPoint(dist);
     }
+
+    private void PlaceCutSpots()
+    {
+        for (int i = 0; i < cutTargets.Length; i++)
+        {
+            if (cutTargets[i] == null && treeHps[i] > 0)
+            {
+                cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponent<CutTarget>();
+                cutTargets[i].target = trees[i];
+                if (UnityEngine.Random.Range(0, 1) == 0)
+                    cutTargets[i].goesLeft = true;
+                else
+                    cutTargets[i].goesLeft = false;
+                Transform tempTrans = cutTargets[i].transform;
+                BoxCollider[] boxes = trees[i].transform.parent.GetComponentsInChildren<BoxCollider>();
+                Vector3 targetPosition = Vector3.zero;
+                switch (treeHps[i])
+                {
+                    case 3:
+                        Vector3 roof = boxes[3].transform.position + new Vector3(0, .5f * boxes[3].transform.localScale.y, 0);
+                        Vector3 floor = boxes[3].transform.position - new Vector3(0, .5f * boxes[3].transform.localScale.y, 0);
+                        targetPosition = boxes[3].transform.position;
+                        Debug.DrawLine(roof,floor,Color.red,100f);
+                        targetPosition.y = UnityEngine.Random.Range(roof.y, floor.y);
+                        break;
+                    case 2:
+                        Vector3 roof1 = boxes[2].transform.position + new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
+                        Vector3 floor1 = boxes[2].transform.position - new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
+                        targetPosition = boxes[2].transform.position;
+                        Debug.DrawLine(roof1,floor1,Color.red,100f);
+                        targetPosition.y = UnityEngine.Random.Range(roof1.y, floor1.y);
+                        break;
+                    case 1:
+                        Vector3 roof2 = boxes[1].transform.position + new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
+                        Vector3 floor2 = boxes[1].transform.position - new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
+                        targetPosition = boxes[1].transform.position;
+                        Debug.DrawLine(roof2,floor2,Color.red,100f);
+                        targetPosition.y = UnityEngine.Random.Range(roof2.y, floor2.y);
+                        break;
+                }
+                tempTrans.position = Camera.main.WorldToScreenPoint(targetPosition);
+                tempTrans.rotation = Quaternion.Euler(0,0,UnityEngine.Random.Range(-20f,20f));
+                
+            }
+        }
+    }
+    
+    
 }
