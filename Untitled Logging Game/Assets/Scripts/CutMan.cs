@@ -299,23 +299,23 @@ public class CutMan : MonoBehaviour
                 switch (treeHps[i])
                 {
                     case 3:
-                        Vector3 roof = boxes[3].transform.position + new Vector3(0, .5f * boxes[3].transform.localScale.y, 0);
-                        Vector3 floor = boxes[3].transform.position - new Vector3(0, .5f * boxes[3].transform.localScale.y, 0);
-                        targetPosition = boxes[3].transform.position;
+                        Vector3 roof = boxes[2].transform.position + new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
+                        Vector3 floor = boxes[2].transform.position - new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
+                        targetPosition = boxes[2].transform.position;
                         Debug.DrawLine(roof,floor,Color.red,100f);
                         targetPosition.y = UnityEngine.Random.Range(roof.y, floor.y);
                         break;
                     case 2:
-                        Vector3 roof1 = boxes[2].transform.position + new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
-                        Vector3 floor1 = boxes[2].transform.position - new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
-                        targetPosition = boxes[2].transform.position;
+                        Vector3 roof1 = boxes[1].transform.position + new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
+                        Vector3 floor1 = boxes[1].transform.position - new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
+                        targetPosition = boxes[1].transform.position;
                         Debug.DrawLine(roof1,floor1,Color.red,100f);
                         targetPosition.y = UnityEngine.Random.Range(roof1.y, floor1.y);
                         break;
                     case 1:
-                        Vector3 roof2 = boxes[1].transform.position + new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
-                        Vector3 floor2 = boxes[1].transform.position - new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
-                        targetPosition = boxes[1].transform.position;
+                        Vector3 roof2 = boxes[0].transform.position + new Vector3(0, .5f * boxes[0].transform.localScale.y, 0);
+                        Vector3 floor2 = boxes[0].transform.position - new Vector3(0, .5f * boxes[0].transform.localScale.y, 0);
+                        targetPosition = boxes[0].transform.position;
                         Debug.DrawLine(roof2,floor2,Color.red,100f);
                         targetPosition.y = UnityEngine.Random.Range(roof2.y, floor2.y);
                         break;
