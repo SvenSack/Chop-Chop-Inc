@@ -388,7 +388,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         foreach (Transform child in children)
         {
-            Debug.Log("child is " + child.name);
+            // Debug.Log("child is " + child.name);
             if (child.tag != "Leaves")
             {
                 continue;
