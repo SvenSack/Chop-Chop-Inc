@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3918858455305911152}
   m_Layer: 0
-  m_Name: Spruce
+  m_Name: Spruce_Finland
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4356,6 +4356,7 @@ MonoBehaviour:
   debugSphereSize: 1
   DebugObjectTest: {fileID: 0}
   leafParticleIndex: 1
+  cutForceMultiplier: 1.3
 --- !u!1 &7975258915355772602
 GameObject:
   m_ObjectHideFlags: 0
