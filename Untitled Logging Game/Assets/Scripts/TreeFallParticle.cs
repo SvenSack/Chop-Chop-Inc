@@ -31,6 +31,5 @@ public class TreeFallParticle : MonoBehaviour
             leaves.Stop(false, ParticleSystemStopBehavior.StopEmitting);
             dust.Play();
         }
-        else dust.Play();
     }
 }
