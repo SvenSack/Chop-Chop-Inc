@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Utils : MonoBehaviour
 {
+
+
     static public void GetMinMaxOfVertices<T>(out Vector3 min, out Vector3 max, T collection) where T : ICollection<Vector3>
     {
         Vector3 minResult = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
@@ -88,11 +90,10 @@ public class Utils : MonoBehaviour
 
     }
 
-
     static public void EnsurePositionIsCentroid(Transform obj)
     {
         //get mesh of objects
-
+        
 
         MeshFilter meshFilter = obj.GetComponent<MeshFilter>();
 
@@ -132,7 +133,7 @@ public class Utils : MonoBehaviour
                 mesh.MarkModified(); 
             }
 
-
+            
 
 
         }
