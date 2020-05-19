@@ -145,6 +145,7 @@ public class CuttableTreeScript : MonoBehaviour
     private Vector3 objectSpacePreCutCentroid;
 
     public int leafParticleIndex;
+    public float cutForceMultiplier;
     private bool isFirstTree = true;
     
     private void Start()
@@ -371,7 +372,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         
 
-        otherMeshPhysicsManager.AddForceAt(seperationForce, normal, point);
+        otherMeshPhysicsManager.AddForceAt(seperationForce *cutForceMultiplier, normal, point);
         return newTree;
     }
 

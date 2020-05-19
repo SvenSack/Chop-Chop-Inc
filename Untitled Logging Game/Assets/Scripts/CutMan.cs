@@ -287,42 +287,44 @@ public class CutMan : MonoBehaviour
         {
             if (cutTargets[i] == null && treeHps[i] > 0)
             {
-                cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponent<CutTarget>();
-                cutTargets[i].target = trees[i];
-                if (UnityEngine.Random.Range(0, 1) == 0)
-                    cutTargets[i].goesLeft = true;
-                else
-                    cutTargets[i].goesLeft = false;
-                Transform tempTrans = cutTargets[i].transform;
-                BoxCollider[] boxes = trees[i].transform.parent.GetComponentsInChildren<BoxCollider>();
-                Vector3 targetPosition = Vector3.zero;
-                switch (treeHps[i])
+                if (Vector3.Distance(trees[i].transform.position, Camera.main.transform.position) < 5f)
                 {
-                    case 3:
-                        Vector3 roof = boxes[2].transform.position + new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
-                        Vector3 floor = boxes[2].transform.position - new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
-                        targetPosition = boxes[2].transform.position;
-                        Debug.DrawLine(roof,floor,Color.red,100f);
-                        targetPosition.y = UnityEngine.Random.Range(roof.y, floor.y);
-                        break;
-                    case 2:
-                        Vector3 roof1 = boxes[1].transform.position + new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
-                        Vector3 floor1 = boxes[1].transform.position - new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
-                        targetPosition = boxes[1].transform.position;
-                        Debug.DrawLine(roof1,floor1,Color.red,100f);
-                        targetPosition.y = UnityEngine.Random.Range(roof1.y, floor1.y);
-                        break;
-                    case 1:
-                        Vector3 roof2 = boxes[0].transform.position + new Vector3(0, .5f * boxes[0].transform.localScale.y, 0);
-                        Vector3 floor2 = boxes[0].transform.position - new Vector3(0, .5f * boxes[0].transform.localScale.y, 0);
-                        targetPosition = boxes[0].transform.position;
-                        Debug.DrawLine(roof2,floor2,Color.red,100f);
-                        targetPosition.y = UnityEngine.Random.Range(roof2.y, floor2.y);
-                        break;
+                    cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponent<CutTarget>();
+                    cutTargets[i].target = trees[i];
+                    if (UnityEngine.Random.Range(0, 1) == 0)
+                        cutTargets[i].goesLeft = true;
+                    else
+                        cutTargets[i].goesLeft = false;
+                    Transform tempTrans = cutTargets[i].transform;
+                    BoxCollider[] boxes = trees[i].transform.parent.GetComponentsInChildren<BoxCollider>();
+                    Vector3 targetPosition = Vector3.zero;
+                    switch (treeHps[i])
+                    {
+                        case 3:
+                            Vector3 roof = boxes[2].transform.position + new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
+                            Vector3 floor = boxes[2].transform.position - new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
+                            targetPosition = boxes[2].transform.position;
+                            Debug.DrawLine(roof,floor,Color.red,100f);
+                            targetPosition.y = UnityEngine.Random.Range(roof.y, floor.y);
+                            break;
+                        case 2:
+                            Vector3 roof1 = boxes[1].transform.position + new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
+                            Vector3 floor1 = boxes[1].transform.position - new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
+                            Debug.DrawLine(roof1,floor1,Color.red,100f);
+                            targetPosition = boxes[1].transform.position;
+                                                targetPosition.y = UnityEngine.Random.Range(roof1.y, floor1.y);
+                            break;
+                        case 1:
+                            Vector3 roof2 = boxes[0].transform.position + new Vector3(0, .5f * boxes[0].transform.localScale.y, 0);
+                            Vector3 floor2 = boxes[0].transform.position - new Vector3(0, .5f * boxes[0].transform.localScale.y, 0);
+                            targetPosition = boxes[0].transform.position;
+                            Debug.DrawLine(roof2,floor2,Color.red,100f);
+                            targetPosition.y = UnityEngine.Random.Range(roof2.y, floor2.y);
+                            break;
+                    }
+                    tempTrans.position = Camera.main.WorldToScreenPoint(targetPosition);
+                    tempTrans.rotation = Quaternion.Euler(0,0,UnityEngine.Random.Range(-20f,20f));
                 }
-                tempTrans.position = Camera.main.WorldToScreenPoint(targetPosition);
-                tempTrans.rotation = Quaternion.Euler(0,0,UnityEngine.Random.Range(-20f,20f));
-                
             }
         }
     }
