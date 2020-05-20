@@ -761,37 +761,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 1232331339116629051, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
-        type: 2}
-    - target: {fileID: 1232331339116629051, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 1232331339116629051, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1232331339116629051, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1232331339116629051, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1232331339116629051, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2256599488734795132, guid: cd2bdf465c0481c4eb9302d9be74e944,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -805,78 +774,6 @@ PrefabInstance:
     - target: {fileID: 2256599488734795132, guid: cd2bdf465c0481c4eb9302d9be74e944,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3817931697417477888, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3817931697417477888, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4685537652854399935, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
-        type: 2}
-    - target: {fileID: 4685537652854399935, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 4685537652854399935, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4685537652854399935, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4685537652854399935, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4685537652854399935, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6943207232732198758, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
-        type: 2}
-    - target: {fileID: 6943207232732198758, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 6943207232732198758, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6943207232732198758, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6943207232732198758, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6943207232732198758, guid: cd2bdf465c0481c4eb9302d9be74e944,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
