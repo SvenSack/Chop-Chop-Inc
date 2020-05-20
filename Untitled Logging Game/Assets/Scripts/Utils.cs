@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Utils : MonoBehaviour
 {
+    //static public T SelectRandomObjectFromCollection<T, TCollection>(TCollection Collection) where TCollection : ICollection<T>
+    //{
+    //    T[] collectionArray = new T[Collection.Count];
 
+    //    Collection.CopyTo(collectionArray, 0);
+
+
+    //}
 
     static public void GetMinMaxOfVertices<T>(out Vector3 min, out Vector3 max, T collection) where T : ICollection<Vector3>
     {
@@ -52,6 +59,9 @@ public class Utils : MonoBehaviour
         min = minResult;
         max = maxResult;
     }
+
+
+
 
     static public void CustomLineToPlaneIntersection(Vector3 start, Vector3 end, Vector3 planePosition, Vector3 planeNormal, out Vector3 intersection,out float t)
     {
@@ -113,7 +123,6 @@ public class Utils : MonoBehaviour
                 centroid /= mesh.triangles.Length;
 
                 Vector3 worldSpaceCentroid = obj.localToWorldMatrix.MultiplyPoint(centroid);
-                Debug.Log("worldSpaceCentroid " + worldSpaceCentroid.ToString("F2"));
                 Vector3 oldPosition = obj.transform.position;
 
                 obj.transform.position = worldSpaceCentroid;
@@ -145,4 +154,5 @@ public class Utils : MonoBehaviour
 
 
     }
+
 }
