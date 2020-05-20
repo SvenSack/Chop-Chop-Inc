@@ -195,6 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1232331338775315052}
+  - component: {fileID: 3723679924335626749}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -229,6 +230,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3723679924335626749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232331338775315053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d84e2aa0dec1cc34e851965f2cc03255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutTrees: 0
+  plantedTrees: 0
+  mapScene: Map
+  scoreSlider: {fileID: 3082028013831641778}
+  scoreValues:
+  - {fileID: 6943207232732198758}
+  - {fileID: 4685537652854399935}
+  locationText: {fileID: 1232331339116629051}
 --- !u!1 &1232331339116629053
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,9 +315,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Location
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d2e0c1e4bf66808428c4418669984cf5, type: 2}
-  m_sharedMaterial: {fileID: -4010082865369277354, guid: d2e0c1e4bf66808428c4418669984cf5,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -502,7 +522,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3240636905693736779}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3723679924335626749}
+        m_MethodName: BackToMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2793509972540716280
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,9 +761,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d2e0c1e4bf66808428c4418669984cf5, type: 2}
-  m_sharedMaterial: {fileID: -4010082865369277354, guid: d2e0c1e4bf66808428c4418669984cf5,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -963,9 +993,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d2e0c1e4bf66808428c4418669984cf5, type: 2}
-  m_sharedMaterial: {fileID: -4010082865369277354, guid: d2e0c1e4bf66808428c4418669984cf5,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1280,7 +1309,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5811509725315054211}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3723679924335626749}
+        m_MethodName: HelpButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7131986044632672777
 GameObject:
   m_ObjectHideFlags: 0
