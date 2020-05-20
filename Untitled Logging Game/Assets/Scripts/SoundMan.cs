@@ -11,7 +11,7 @@ public class SoundMan : MonoBehaviour
     private AudioSource chainsawSoundSource;
     private Coroutine cueCutLoop;
 
-    public AudioClip treeFall;
+    public AudioClip[] treeFall = new AudioClip[2];
 
     void Awake() {
         if(!instance )
@@ -93,11 +93,12 @@ public class SoundMan : MonoBehaviour
             SwapChainsawSound(chainsaw[1], true, true);
     }
 
-    public void TreeFall(GameObject tree)
+    public AudioSource TreeFall(GameObject tree)
     {
-        AudioSource temp = GenerateAudio(treeFall);
+        AudioSource temp = GenerateAudio(treeFall[0]);
         temp.Play();
         temp.spatialBlend = 0.5f;
         temp.transform.SetParent(tree.transform, false);
+        return temp;
     }
 }

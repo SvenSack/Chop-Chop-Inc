@@ -51,4 +51,6 @@ MonoBehaviour:
   audioSource: {fileID: 6093158248382917742, guid: 98602828bb989234b804827b59ca941f,
     type: 3}
   chainsawSoundObject: {fileID: 0}
-  treeFall: {fileID: 8300000, guid: 8eb3c2c8410910148b567a4443000a7f, type: 3}
+  treeFall:
+  - {fileID: 8300000, guid: 75198aee144c65f4f9c41e3fb573845c, type: 3}
+  - {fileID: 8300000, guid: 6a16f7765a8b16c4cbd2852a7de6122a, type: 3}

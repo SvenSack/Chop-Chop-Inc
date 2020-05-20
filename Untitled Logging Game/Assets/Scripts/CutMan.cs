@@ -221,7 +221,7 @@ public class CutMan : MonoBehaviour
                         var newPartShape = newPart.shape;
                         newPartShape.mesh = newTreePiece.GetComponent<MeshFilter>().mesh;
                         newPart.Play();
-                        soundMan.TreeFall(newTreePiece);
+                        newTreePiece.GetComponent<TreeFallParticle>().fallSound = soundMan.TreeFall(newTreePiece);
                         for (int i = 0; i < trees.Length; i++)
                         {
                             if (trees[i] == currentCut.GetComponent<CutTarget>().target)
