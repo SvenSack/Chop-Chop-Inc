@@ -28,6 +28,7 @@ public class CutMan : MonoBehaviour
     public GameObject cutTargetPrefab;
 
     private SoundMan soundMan;
+    private UIMan uiMan;
 
     public float[] leafScaleValues;
     public Sprite[] leafParticles;
@@ -38,6 +39,7 @@ public class CutMan : MonoBehaviour
     private void Awake()
     {
         soundMan = FindObjectOfType<SoundMan>();
+        uiMan = FindObjectOfType<UIMan>();
         trunkMask = LayerMask.GetMask("Trunks");
         trees = FindObjectsOfType<CuttableTreeScript>();
         treeHps = new int[trees.Length];
@@ -225,7 +227,11 @@ public class CutMan : MonoBehaviour
                         for (int i = 0; i < trees.Length; i++)
                         {
                             if (trees[i] == currentCut.GetComponent<CutTarget>().target)
+                            {
                                 treeHps[i]--;
+                                if(treeHps[i] == 0)
+                                    uiMan.IncreaseScore(true);
+                            }
                         }
                         Destroy(currentCut);
                     }
