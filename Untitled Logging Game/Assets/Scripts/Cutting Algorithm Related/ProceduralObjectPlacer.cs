@@ -19,8 +19,6 @@ public class ObjectToSpawnChance
     }
 }
 
-
-
 [RequireComponent(typeof(DebugDrawerInterface))]
 public class ProceduralObjectPlacer : MonoBehaviour
 {
@@ -71,10 +69,6 @@ public class ProceduralObjectPlacer : MonoBehaviour
     {
         terrain = GetComponent<Terrain>();
         debugDrawer = GetComponent<DebugDrawerInterface>();
-
-
-
-
     }
 
     public void Init()

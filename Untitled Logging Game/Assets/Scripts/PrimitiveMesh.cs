@@ -252,6 +252,8 @@ public class PrimitiveMesh
 
 
         mesh.Clear();
+  
+
         mesh.vertices = verticesList.ToArray();
         mesh.triangles = indicesList.ToArray();
         mesh.normals = normalList.ToArray();

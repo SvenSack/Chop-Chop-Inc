@@ -13,7 +13,22 @@ public class CuttableMeshPhysicsManager : MonoBehaviour
 
     public void GenerateMeshColliderFromCut(Mesh newCutMesh,bool rigidbodyNeeded = false)
     {
-        cutCollider = gameObject.AddComponent<MeshCollider>();
+        //check if it already has a mesh collider
+        cutCollider = gameObject.GetComponent<MeshCollider>();
+
+        if(cutCollider == null)
+        {
+            cutCollider = gameObject.AddComponent<MeshCollider>();
+        }
+        else
+        {
+            cutCollider.sharedMesh = null;
+            cutCollider.sharedMesh = gameObject.GetComponent<MeshFilter>().mesh;
+
+        }
+
+        
+
         cutCollider.convex = true;
 
         if(rigidbodyNeeded)

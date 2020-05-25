@@ -15,8 +15,13 @@ public class TreeFallParticle : MonoBehaviour
     void Start()
     {
         ParticleSystem[] temp = transform.GetComponentsInChildren<ParticleSystem>();
-        leaves = temp[0];
-        dust = temp[1];
+
+        if(temp.Length >= 2)
+        {
+            leaves = temp[0];
+            dust = temp[1];
+        }
+        
         soundMan = FindObjectOfType<SoundMan>();
     }
 
