@@ -26,6 +26,11 @@ public struct Triangle
         v2 = -1;
     }
 
+    public int[] ToIntArray()
+    {
+        return new int[] {v0,v1,v2 };
+    }
+
     public void InsureVertexOrdering(int indexA,int indexB,Mesh mesh)
     {
         Vector3 trueNormal = mesh.normals[v0];
@@ -638,14 +643,10 @@ public class CuttableTreeScript : MonoBehaviour
         UnOptimizedGetFaceToPlaneIntersectionPoints(world, face, position, normal, out foundIntersectionPoint);
 
         int[] faceIndices = face.ToIntArray();
-        bool[] triangleState = new bool[6];
 
-        triangleState[0] = Utils.IsPointAbovePlane(worldTrianglePointPositions[0], position, normal);
-        triangleState[1] = Utils.IsPointAbovePlane(worldTrianglePointPositions[1], position, normal);
-        triangleState[2] = Utils.IsPointAbovePlane(worldTrianglePointPositions[2], position, normal);
-        triangleState[3] = Utils.IsPointAbovePlane(worldTrianglePointPositions[3], position, normal);
-        triangleState[4] = Utils.IsPointAbovePlane(worldTrianglePointPositions[4], position, normal);
-        triangleState[5] = Utils.IsPointAbovePlane(worldTrianglePointPositions[5], position, normal);
+        bool[] triangleState = CheckIfPointsAreAbovePlane(worldTrianglePointPositions, position, normal);
+
+
 
         List<int> trianglesAboveSplittingPlane = new List<int>();
         List<int> trianglesBelowSplittingPlane = new List<int>();
@@ -674,8 +675,6 @@ public class CuttableTreeScript : MonoBehaviour
 
         if(uniqueTrianglesBelowSplittingPlane.Count < 2 && uniqueTrianglesAboveSplittingPlane.Count < 2) { return; }
         if (uniqueIntersectionPoints.Count < 2) { return; }
-
-        //Debug.Log("---------------- Getting ordering Direction --------------------------");
 
         basePosition = preCutCentroid;
         baseDirection = Vector3.Cross(Vector3.up, (worldTrianglePointPositions[0] - preCutCentroid)).normalized;
@@ -733,11 +732,10 @@ public class CuttableTreeScript : MonoBehaviour
         Vector3 intersectionDirection2 = intersectionPoints[1] - intersectionPoints[0];
 
         Vector3 vertexDirection2 =
-             world.MultiplyPoint(mesh.vertices[uniqueTrianglesAboveSplittingPlane[uniqueTrianglesAboveSplittingPlane.Count - 1]])-
-             world.MultiplyPoint(mesh.vertices[uniqueTrianglesAboveSplittingPlane[0]]) 
-           ;
+             world.MultiplyPoint(mesh.vertices[uniqueTrianglesAboveSplittingPlane[uniqueTrianglesAboveSplittingPlane.Count - 1]]) -
+             world.MultiplyPoint(mesh.vertices[uniqueTrianglesAboveSplittingPlane[0]]);
 
-        if(Vector3.Dot(intersectionDirection2,baseDirection) < 0)
+        if (Vector3.Dot(intersectionDirection2, baseDirection) < 0)
         {
             intersectionPoints.Reverse();
         }
@@ -746,9 +744,10 @@ public class CuttableTreeScript : MonoBehaviour
         {
             uniqueTrianglesAboveSplittingPlane.Reverse();
         }
+
         // Debug.Log("------------above splitting plane vertex list");
         // DEBUG_logIndicesList(mesh, world, uniqueTrianglesAboveSplittingPlane);
-        
+
 
         assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesAboveSplittingPlane, true, world, upperPrimitiveMesh);
 
@@ -1034,15 +1033,19 @@ public class CuttableTreeScript : MonoBehaviour
 
             case TriangleSplitState.IntersectionOnPlane:
 
+                //List<Vector3> triangleIntersectionPoints = UnOptimizedFindTriangleToPlaneIntersectionPoint(worldV0, worldV1, worldV2, position, normal);
 
-                List<Vector3> triangleIntersectionPoints = UnOptimizedFindTriangleToPlaneIntersectionPoint(worldV0, worldV1, worldV2, position, normal);
+                //foreach (var intersectionPoint in triangleIntersectionPoints)
+                //{
+                //    DEBUG_intersectionVertices.Add(intersectionPoint);
+                //}
 
-                foreach (var intersectionPoint in triangleIntersectionPoints)
-                {
-                    DEBUG_intersectionVertices.Add(intersectionPoint);
-                }
+                Vector3[] worldTrianglePointPositions = new Vector3[3];
+                worldTrianglePointPositions[0] = worldV0;
+                worldTrianglePointPositions[1] = worldV1;
+                worldTrianglePointPositions[2] = worldV2;
 
-                //intersectingTriangleSplit(world,tri, position, normal, Vector3[] worldTrianglePointPositions,lowerMesh, upperMesh)
+                intersectingTriangleSplit(world, tri, position, normal, worldTrianglePointPositions , lowerMesh, upperMesh);
 
                 break;
         }
@@ -1050,6 +1053,111 @@ public class CuttableTreeScript : MonoBehaviour
 
     private void intersectingTriangleSplit(Matrix4x4 world, Triangle tri, Vector3 position, Vector3 normal, Vector3[] worldTrianglePointPositions, PrimitiveMesh lowerPrimitiveMesh, PrimitiveMesh upperPrimitiveMesh)
     {
+        //find unique intersection points
+        List<Vector3> uniqueIntersectionPoints = UnOptimizedFindTriangleToPlaneIntersectionPoint
+            (worldTrianglePointPositions[0], worldTrianglePointPositions[1], worldTrianglePointPositions[2], position, normal);
+
+
+        if (uniqueIntersectionPoints.Count < 2) { return; }
+
+        //----------- Get Points that are above the splitting plane and below the splitting plane--------------//
+
+        bool[] triangleState = CheckIfPointsAreAbovePlane(worldTrianglePointPositions, position, normal);
+
+        List<int> uniqueTrianglesAboveSplittingPlane = new List<int>();
+        List<int> uniqueTrianglesBelowSplittingPlane = new List<int>();
+
+        int[] faceIndices = tri.ToIntArray();
+        //for each triangleState
+        for (int i = 0; i < triangleState.Length; i++)
+        {
+            if (triangleState[i])
+            {
+                uniqueTrianglesAboveSplittingPlane.Add(faceIndices[i]);
+            }
+            else
+            {
+                uniqueTrianglesBelowSplittingPlane.Add(faceIndices[i]);
+            }
+
+        }
+
+
+        //sort unique intersection points based on the vector parallel to the vector resulting from the cross product of the world up (0,1,0) and one of the vertices of the intersection points
+
+        Vector3 basePosition = preCutCentroid;
+        Vector3 baseDirection = Vector3.Cross(Vector3.up, (worldTrianglePointPositions[0] - preCutCentroid)).normalized;
+
+        IntersectionComparer ic = new IntersectionComparer(baseDirection, basePosition, world);
+        uniqueIntersectionPoints.Sort(ic);
+
+        //sort the points above and below the splitting plane based on the vector created by the last element of the intersectionPoint Collection and the first element in the Vector3 Collection
+
+        baseDirection = (uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0]).normalized;
+
+        IndexDirectionComparer idc = new IndexDirectionComparer(baseDirection
+            , basePosition, mesh, world);
+
+        uniqueTrianglesAboveSplittingPlane.Sort(idc);
+
+
+        //check one more time, check if points and intersection points are ordered in the right direction
+
+        Vector3 intersectionDirection = uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0];
+
+        Vector3 vertexDirection =
+             world.MultiplyPoint(mesh.vertices[uniqueTrianglesBelowSplittingPlane[uniqueTrianglesBelowSplittingPlane.Count - 1]]) -
+             world.MultiplyPoint(mesh.vertices[uniqueTrianglesBelowSplittingPlane[0]])
+           ;
+
+        if (Vector3.Dot(intersectionDirection, baseDirection) < 0)
+        {
+            uniqueIntersectionPoints.Reverse();
+        }
+
+        if (Vector3.Dot(vertexDirection, intersectionDirection) < 0)
+        {
+            uniqueTrianglesBelowSplittingPlane.Reverse();
+        }
+
+
+        assembleFacesFromSplitVertices(uniqueIntersectionPoints, uniqueTrianglesBelowSplittingPlane, false, world, lowerPrimitiveMesh);
+
+        //use the points above the spllitting plane and the intersection points to create the triangle that will be placed in the upperPrimitiveMesh
+
+
+        Vector3 vertexDirection2 =
+           world.MultiplyPoint(mesh.vertices[uniqueTrianglesAboveSplittingPlane[uniqueTrianglesAboveSplittingPlane.Count - 1]]) -
+           world.MultiplyPoint(mesh.vertices[uniqueTrianglesAboveSplittingPlane[0]]);
+
+        if (Vector3.Dot(intersectionDirection, baseDirection) < 0)
+        {
+            uniqueIntersectionPoints.Reverse();
+        }
+
+        if (Vector3.Dot(vertexDirection2, intersectionDirection) < 0)
+        {
+            uniqueTrianglesAboveSplittingPlane.Reverse();
+        }
+
+        assembleFacesFromSplitVertices(uniqueIntersectionPoints, uniqueTrianglesAboveSplittingPlane, true, world, upperPrimitiveMesh);
+
+        //use the points below the splitting plane and the intersection points to create the triangle that will be placed in the lowerPrimitiveMesh
+
+
+        IndividualVertex v0 = new IndividualVertex(Matrix4x4.Inverse(world).MultiplyPoint(uniqueIntersectionPoints[0]), Vector3.up, Vector2.zero);
+        IndividualVertex v1 = new IndividualVertex(
+            Matrix4x4.Inverse(world).MultiplyPoint(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]),
+            Vector3.up, Vector2.zero);
+        MeshLidPairing lidPairing = new MeshLidPairing(v0, v1);
+
+        lidPairings.Add(lidPairing);
+
+        //DEBUG_intersectionVertices.Add(uniqueIntersectionPoints[0]);
+        //DEBUG_intersectionVertices.Add(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]);
+
+
+
 
     }
 
@@ -1317,6 +1425,18 @@ public class CuttableTreeScript : MonoBehaviour
     }
 
     //------------------------ Debugging related functions --------------------------//
+
+    private bool[] CheckIfPointsAreAbovePlane(Vector3[] worldTrianglePoints, Vector3 position, Vector3 normal)
+    {
+        bool[] result = new bool[worldTrianglePoints.Length];
+
+        for (int i = 0; i < worldTrianglePoints.Length; i++)
+        {
+            result[i] = Utils.IsPointAbovePlane(worldTrianglePoints[i],position, normal);
+        }
+
+        return result;
+    }
 
     private void OnDrawGizmos()
     {
