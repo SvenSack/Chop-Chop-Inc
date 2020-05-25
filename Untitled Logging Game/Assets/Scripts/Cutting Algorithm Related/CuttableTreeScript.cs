@@ -117,18 +117,16 @@ public enum PointSplitState
 
 
 [RequireComponent(typeof(MeshFilter))]
-
-
 public class CuttableTreeScript : MonoBehaviour
 {
 
 
     private List<TreeSplitCollisionBox> collisionBoxes;
 
-    [HideInInspector] public CuttableMeshPhysicsManager meshColliderGenerator;
+    [SerializeField] public CuttableMeshPhysicsManager meshPhysicsManager;
 
-    List<Vector3> upperVertices = new List<Vector3>();
-    List<Vector3> bottomVertices = new List<Vector3>();
+    List<Vector3> DEBUG_upperVertices = new List<Vector3>();
+    List<Vector3> DEBUG_bottomVertices = new List<Vector3>();
     List<Vector3> DEBUG_intersectionVertices = new List<Vector3>();
 
     [SerializeField] int debugShowIndex = 2;
@@ -137,7 +135,7 @@ public class CuttableTreeScript : MonoBehaviour
     MeshFilter meshFilter;
     Mesh mesh;
 
-    [HideInInspector] public GameObject DebugObjectTest;
+    [SerializeField] public GameObject DebugObjectTest;
 
     private List<MeshLidPairing> lidPairings = new List<MeshLidPairing>();
 
@@ -146,12 +144,19 @@ public class CuttableTreeScript : MonoBehaviour
 
     public int leafParticleIndex;
     public float cutForceMultiplier;
+
     private bool isFirstTree = true;
-    
+
     private void Start()
     {
+
         Debug.Log("Start Called for CuttableTree in Object " + gameObject.name);
 
+        InitializeCuttableTree();
+    }
+
+    void InitializeCuttableTree()
+    {
         collisionBoxes = new List<TreeSplitCollisionBox>();
 
         meshFilter = gameObject.GetComponent<MeshFilter>();
@@ -159,23 +164,24 @@ public class CuttableTreeScript : MonoBehaviour
 
         bruteForceCollisionBoxInitialize();
 
-        upperVertices.Clear();
-        bottomVertices.Clear();
+
+        lidPairings.Clear();
+
+        DEBUG_upperVertices.Clear();
+        DEBUG_bottomVertices.Clear();
         DEBUG_intersectionVertices.Clear();
 
 
         preCutCentroid = new Vector3(0, 0, 0);
-
-        foreach(Vector3 position in mesh.vertices)
+        foreach (Vector3 position in mesh.vertices)
         {
             preCutCentroid += position;
         }
-
         preCutCentroid /= (mesh.vertices.Length);
 
         objectSpacePreCutCentroid = preCutCentroid;
 
-        meshColliderGenerator = GetMeshColliderGenerator();
+        meshPhysicsManager = GetMeshColliderGenerator();
 
         if (isFirstTree)
         {
@@ -183,24 +189,19 @@ public class CuttableTreeScript : MonoBehaviour
         }
     }
 
-    public void SetIsFirstTree(bool state)
-    {
-        isFirstTree = state;
-    }
-
-    private void ensureCentroidLeaf()
-    {
-        foreach(Transform child in transform)
-        {
-            if(child.tag == "leaf")
-            {
-                Utils.EnsurePositionIsCentroid(child);
-            }
-        }
-    }
-
+    /// <summary>
+    /// Splits the mesh contained in this gameObject's MeshFilter based on an infinite cutting plane 
+    /// </summary>
+    /// <param name="position"> The position of the cutting plane. </param>
+    /// <param name="normal"> The normal of the cutting plane. </param>
+    /// <param name="seperationForce"> The scalar value of the force that has a direction parallel to the cutting plane normal which is 
+    /// added to the newly created mesh after it is split. </param>
+    /// <returns></returns>
     public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
     {
+
+        Debug.Log("Starting cut for " + gameObject.name);
+
         Matrix4x4 worldMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
         preCutCentroid = worldMatrix.MultiplyPoint(preCutCentroid);
 
@@ -214,6 +215,9 @@ public class CuttableTreeScript : MonoBehaviour
         PrimitiveMesh FacesSplitBelow = new PrimitiveMesh();
         FacesSplitAbove.individualFaces = new List<IndividualFace>();
         FacesSplitBelow.individualFaces = new List<IndividualFace>();
+
+        Debug.Log("This mesh has " + collisionBoxes.Count + " collision boxes");
+        Debug.Log("This mesh has " + mesh.vertices.Length + " vertices ");
 
         foreach (TreeSplitCollisionBox collisionBox in collisionBoxes)
         {
@@ -230,7 +234,7 @@ public class CuttableTreeScript : MonoBehaviour
                     Vector3 worldV1 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v1]);
                     Vector3 worldV2 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v2]);
 
-                    tri1CheckResult = TriangleToPlaneCheck(worldV0, worldV1, worldV2, position, normal);
+                    tri1CheckResult = triangleToPlaneCheck(worldV0, worldV1, worldV2, position, normal);
 
                 }
 
@@ -242,7 +246,7 @@ public class CuttableTreeScript : MonoBehaviour
                     Vector3 worldV1 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v1]);
                     Vector3 worldV2 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v2]);
 
-                    tri2CheckResult = TriangleToPlaneCheck(worldV0, worldV1, worldV2, position, normal);
+                    tri2CheckResult = triangleToPlaneCheck(worldV0, worldV1, worldV2, position, normal);
                 }
 
                 bool isBothTrianglesExist = hasTriangle1 && hasTriangle2;
@@ -250,12 +254,12 @@ public class CuttableTreeScript : MonoBehaviour
                 //if both triangles exist and have the same triangle split state
                 if (isBothTrianglesExist && tri1CheckResult == tri2CheckResult)
                 {
-                    FindDecisionForFace(worldMatrix, tri1CheckResult, face, position, normal, FacesSplitAbove, FacesSplitBelow);
+                    organizeFaceBasedOnTriangleSplitState(worldMatrix, tri1CheckResult, face, position, normal, FacesSplitAbove, FacesSplitBelow);
                 }
-                //if both triangles exist but do not have the same triangle split state
+                //if both triangles exist but one triangle is intersecting but the other is either above or below the splitting plane
                 else if (isBothTrianglesExist && tri1CheckResult != tri2CheckResult)
                 {
-                    
+
                     Vector3 worldV0 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v0]);
                     Vector3 worldV1 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v1]);
                     Vector3 worldV2 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v2]);
@@ -272,10 +276,10 @@ public class CuttableTreeScript : MonoBehaviour
                     worldTrianglePointPositions[4] = worldV4;
                     worldTrianglePointPositions[5] = worldV5;
 
-                    IntersectingFaceSplit(worldMatrix, face, position, normal, worldTrianglePointPositions, FacesSplitBelow, FacesSplitAbove);
+                    intersectingFaceSplit(worldMatrix, face, position, normal, worldTrianglePointPositions, FacesSplitBelow, FacesSplitAbove);
 
                 }
-                //one of the triangles in the face do not exist
+                //one of the triangles in the face do not exist ( this face only has one triangle)
                 else if (!isBothTrianglesExist)
                 {
                     if (hasTriangle1)
@@ -295,12 +299,12 @@ public class CuttableTreeScript : MonoBehaviour
 
         }
 
-        //do vertex rearrangment
+
         List<Vector3> vertexPositions = new List<Vector3>();
 
         Vector3 centerPoint = Vector3.zero;
 
-        //for each li
+        //------- Get center of the intersection points created from the cut------------------------//
         foreach (MeshLidPairing lidPairing in lidPairings)
         {
             centerPoint += lidPairing.v0.position;
@@ -312,11 +316,13 @@ public class CuttableTreeScript : MonoBehaviour
 
         centerPoint /= (lidPairings.Count * 2);
 
+
+
         IndividualVertex vertex = new IndividualVertex(centerPoint, Vector3.zero, Vector2.zero);
 
         List<IndividualTriangle> trianglesBelow = new List<IndividualTriangle>();
 
-        //for each lid pairing 
+        //--------------------- Create triangles using the intersection points and the centerPoint------------------------//
         foreach (MeshLidPairing lidPairing in lidPairings)
         {
             IndividualTriangle tri = lidPairing.CreateTriangle(vertex);
@@ -335,14 +341,24 @@ public class CuttableTreeScript : MonoBehaviour
             FacesSplitAbove.AddFaceFromSingularTriangle(tri2);
 
         }
+        //
+
+
+        //-------------------------- Reitialize the original mesh ------------------------------------//
 
         FacesSplitBelow.PopulateMesh(mesh);
+        InitializeCuttableTree();
 
-        if (meshColliderGenerator)
+        if (meshPhysicsManager)
         {
-            meshColliderGenerator.GenerateMeshColliderFromCut(mesh);
+            bool rigidBodyNeeded = !isFirstTree;
+            meshPhysicsManager.GenerateMeshColliderFromCut(mesh, rigidBodyNeeded);
         }
-        
+
+
+
+
+        //---------------------- Create a new mesh and assign in to the newly created mesh-------------------------------//
         GameObject newTree;
         var otherMeshPhysicsManager = InstantiateTreePiece(FacesSplitAbove, out newTree);
 
@@ -368,13 +384,28 @@ public class CuttableTreeScript : MonoBehaviour
             }
         }
 
-        DisplaceLeaves(position, normal,gameObject, otherMeshPhysicsManager.gameObject);
+        //---------------------- Re assign the leaves to its correct parent--------------------------//
+        DisplaceLeaves(position, normal, gameObject, otherMeshPhysicsManager.gameObject);
 
-        
 
-        otherMeshPhysicsManager.AddForceAt(seperationForce *cutForceMultiplier, normal, point);
+
+
+        otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal, point);
+
         return newTree;
     }
+
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="state"></param>
+    public void SetIsFirstTree(bool state)
+    {
+        isFirstTree = state;
+    }
+
+    
 
     public void DisplaceLeaves(Vector3 planePosition, Vector3 planeNormal, GameObject belowCuttingPlaneObj, GameObject aboveCuttingPlaneObj)
     {
@@ -395,7 +426,6 @@ public class CuttableTreeScript : MonoBehaviour
                 continue;
             }
 
-
             if (Utils.IsPointAbovePlane(child.transform.position,planePosition,planeNormal))
             {
                 child.SetParent(aboveCuttingPlaneObj.transform);
@@ -412,24 +442,18 @@ public class CuttableTreeScript : MonoBehaviour
         
     }
 
-
-
-
-    private Vector3 WorldPositionToScreenSpace(Vector3 positionOfObject)
+    public Mesh GetMesh()
     {
-        Camera cam = Camera.main;
-        Matrix4x4 MVP = cam.projectionMatrix * cam.worldToCameraMatrix
-            * transform.localToWorldMatrix;
-
-        return MVP.MultiplyPoint(positionOfObject);
+        return mesh;
     }
+
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.C))
         {
-            upperVertices.Clear();
-            bottomVertices.Clear();
+            DEBUG_upperVertices.Clear();
+            DEBUG_bottomVertices.Clear();
             DEBUG_intersectionVertices.Clear();
 
             Debug.Log("Cut");
@@ -437,18 +461,30 @@ public class CuttableTreeScript : MonoBehaviour
         }
     }
 
-    private CuttableMeshPhysicsManager GetMeshColliderGenerator()
+    private void ensureCentroidLeaf()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.tag == "leaf")
+            {
+                Utils.EnsurePositionIsCentroid(child);
+            }
+        }
+    }
+
+    public CuttableMeshPhysicsManager GetMeshColliderGenerator()
     {
         return GetComponent<CuttableMeshPhysicsManager>();
     }
 
-    public Mesh GetMesh()
-    {
-        return mesh;
-    }
-
     
-
+    
+    /// <summary>
+    /// Instantiates a new gameObject with a meshFilter and uses the mesh data given from the given PrimitiveMesh
+    /// </summary>
+    /// <param name="primitiveMesh"> Contains the mesh data that will be used to populate the mesh</param>
+    /// <param name="newTree"> An out parameter that will return the newly created GameObject </param>
+    /// <returns>The Mesh Physics Manager owned by the newly created object </returns>
     public CuttableMeshPhysicsManager InstantiateTreePiece(PrimitiveMesh primitiveMesh, out GameObject newTree)
     {
         newTree = new GameObject();
@@ -482,7 +518,16 @@ public class CuttableTreeScript : MonoBehaviour
 
     }
 
-    private TriangleSplitState TriangleToPlaneCheck(Vector3 transformedV0, Vector3 transformedV1,Vector3 transformedV2,Vector3 position,Vector3 normal)
+    /// <summary>
+    /// Checks if a triangle is above the splitting plane,below the splitting plane, or intersecting with it
+    /// </summary>
+    /// <param name="transformedV0"> The  world space of the first vertex of the triangle </param>
+    /// <param name="transformedV1"> The  world space of the second vertex of the triangle</param>
+    /// <param name="transformedV2"> The world space of the third vertex of the triangle</param>
+    /// <param name="position"> the world space position of the cutting plane </param>
+    /// <param name="normal"> the world space normal of the triangle </param>
+    /// <returns></returns>
+    private TriangleSplitState triangleToPlaneCheck(Vector3 transformedV0, Vector3 transformedV1,Vector3 transformedV2,Vector3 position,Vector3 normal)
     {
         bool v0AbovePlane = Utils.IsPointAbovePlane(transformedV0, position, normal);
         bool v1AbovePlane = Utils.IsPointAbovePlane(transformedV1, position, normal);
@@ -503,8 +548,17 @@ public class CuttableTreeScript : MonoBehaviour
         
     }
 
-    //at this point, we know that both triangles have the same TriangleSplitState
-    private void FindDecisionForFace(Matrix4x4 world,TriangleSplitState state, Face face, Vector3 position, 
+    /// <summary>
+    /// Given a triangle split state, decides if the triangle would be displaced to the lowerPrimitiveMesh,upperPrimitiveMesh, or would need to be split into 2
+    /// </summary>
+    /// <param name="world"></param>
+    /// <param name="state"></param>
+    /// <param name="face"></param>
+    /// <param name="position"></param>
+    /// <param name="normal"></param>
+    /// <param name="upperPrimitiveMesh"></param>
+    /// <param name="lowerPrimitiveMesh"></param>
+    private void organizeFaceBasedOnTriangleSplitState(Matrix4x4 world,TriangleSplitState state, Face face, Vector3 position, 
         Vector3 normal,PrimitiveMesh upperPrimitiveMesh,PrimitiveMesh lowerPrimitiveMesh)
     {
 
@@ -520,13 +574,13 @@ public class CuttableTreeScript : MonoBehaviour
         {
             case TriangleSplitState.AbovePlane:
 
-                upperVertices.Add(worldV0);
-                upperVertices.Add(worldV1);
-                upperVertices.Add(worldV2);
+                DEBUG_upperVertices.Add(worldV0);
+                DEBUG_upperVertices.Add(worldV1);
+                DEBUG_upperVertices.Add(worldV2);
 
-                upperVertices.Add(worldV3);
-                upperVertices.Add(worldV4);
-                upperVertices.Add(worldV5);
+                DEBUG_upperVertices.Add(worldV3);
+                DEBUG_upperVertices.Add(worldV4);
+                DEBUG_upperVertices.Add(worldV5);
 
                 upperPrimitiveMesh.AddFaceFrom(this, face);
 
@@ -534,13 +588,13 @@ public class CuttableTreeScript : MonoBehaviour
 
             case TriangleSplitState.BelowPlane:
 
-                bottomVertices.Add(worldV0);
-                bottomVertices.Add(worldV1);
-                bottomVertices.Add(worldV2);
+                DEBUG_bottomVertices.Add(worldV0);
+                DEBUG_bottomVertices.Add(worldV1);
+                DEBUG_bottomVertices.Add(worldV2);
 
-                bottomVertices.Add(worldV3);
-                bottomVertices.Add(worldV4);
-                bottomVertices.Add(worldV5);
+                DEBUG_bottomVertices.Add(worldV3);
+                DEBUG_bottomVertices.Add(worldV4);
+                DEBUG_bottomVertices.Add(worldV5);
 
                 lowerPrimitiveMesh.AddFaceFrom(this, face);
 
@@ -557,7 +611,7 @@ public class CuttableTreeScript : MonoBehaviour
                 worldTrianglePointPositions[5] = worldV5;
 
                 
-                IntersectingFaceSplit(world, face, position, normal, worldTrianglePointPositions, lowerPrimitiveMesh, upperPrimitiveMesh);
+                intersectingFaceSplit(world, face, position, normal, worldTrianglePointPositions, lowerPrimitiveMesh, upperPrimitiveMesh);
 
                 break;
 
@@ -566,7 +620,19 @@ public class CuttableTreeScript : MonoBehaviour
         }
     }
 
-    private void IntersectingFaceSplit(Matrix4x4 world,Face face,Vector3 position,Vector3 normal,Vector3[] worldTrianglePointPositions,PrimitiveMesh lowerPrimitiveMesh,PrimitiveMesh upperPrimitiveMesh )
+
+    /// <summary>
+    /// Given a face thats known to be intersecting with the cutting plane, creates triangles based on the intersection points of the face 
+    /// with the plane
+    /// </summary>
+    /// <param name="world"> The world space matrix of the GameObject </param>
+    /// <param name="face"> The indices of the intersecting face </param>
+    /// <param name="position"> the world space Position Of the cutting plane </param>
+    /// <param name="normal"> The world space normal of the cutting plane </param>
+    /// <param name="worldTrianglePointPositions"> the world space position of the vertices of the triangles of the face </param>
+    /// <param name="lowerPrimitiveMesh"> the Primitive Mesh that will store the vertices of the mesh below the cutting plane </param>
+    /// <param name="upperPrimitiveMesh"> the Primitice Mesh that will store the vertices of the mesh above the cutting plane </param>
+    private void intersectingFaceSplit(Matrix4x4 world,Face face,Vector3 position,Vector3 normal,Vector3[] worldTrianglePointPositions,PrimitiveMesh lowerPrimitiveMesh,PrimitiveMesh upperPrimitiveMesh )
     {
         List<Vector3> foundIntersectionPoint;
         UnOptimizedGetFaceToPlaneIntersectionPoints(world, face, position, normal, out foundIntersectionPoint);
@@ -607,17 +673,12 @@ public class CuttableTreeScript : MonoBehaviour
         Vector3 baseDirection;
 
         if(uniqueTrianglesBelowSplittingPlane.Count < 2 && uniqueTrianglesAboveSplittingPlane.Count < 2) { return; }
+        if (uniqueIntersectionPoints.Count < 2) { return; }
 
         //Debug.Log("---------------- Getting ordering Direction --------------------------");
 
         basePosition = preCutCentroid;
         baseDirection = Vector3.Cross(Vector3.up, (worldTrianglePointPositions[0] - preCutCentroid)).normalized;
-
-        //Debug.Log("precut centroid " + preCutCentroid.ToString("F2"));
-        //Debug.Log("baseDirection" + baseDirection.ToString("F2"));
-        //Debug.Log("uniqueIntersectionPoints[0] " + worldTrianglePointPositions[0].ToString("F2"));
-
-       
 
         IntersectionComparer ic = new IntersectionComparer
             (baseDirection, basePosition,world);
@@ -707,6 +768,14 @@ public class CuttableTreeScript : MonoBehaviour
         DEBUG_intersectionVertices.Add(intersectionPoints[intersectionPoints.Count - 1]);
     }
 
+    /// <summary>
+    ///  Creates faces from a list of sorted intersection points and vertex positions and adds them to the given PrimitiveMesh
+    /// </summary>
+    /// <param name="uniqueIntersectionPoints"> A list of sorted and unique intersection Points </param>
+    /// <param name="trianglesInSplitPlane"></param>
+    /// <param name="isIntersectionPointBottomLeftVertex"></param>
+    /// <param name="world"></param>
+    /// <param name="meshToPopulate"></param>
     private void assembleFacesFromSplitVertices(List<Vector3> uniqueIntersectionPoints,List<int> trianglesInSplitPlane,bool isIntersectionPointBottomLeftVertex, Matrix4x4 world,PrimitiveMesh meshToPopulate)
     {
         Matrix4x4 inverseWorld = Matrix4x4.Inverse(world);
@@ -934,6 +1003,7 @@ public class CuttableTreeScript : MonoBehaviour
         }
     }
 
+
     private void FindDecisionForSingularTriangle(Matrix4x4 world, TriangleSplitState state, Triangle tri, Vector3 position, Vector3 normal,PrimitiveMesh lowerMesh,PrimitiveMesh upperMesh)
     {
         Vector3 worldV0 = world.MultiplyPoint(mesh.vertices[tri.v0]);
@@ -944,9 +1014,9 @@ public class CuttableTreeScript : MonoBehaviour
         {
             case TriangleSplitState.AbovePlane:
 
-                upperVertices.Add(worldV0);
-                upperVertices.Add(worldV1);
-                upperVertices.Add(worldV2);
+                DEBUG_upperVertices.Add(worldV0);
+                DEBUG_upperVertices.Add(worldV1);
+                DEBUG_upperVertices.Add(worldV2);
 
                 upperMesh.AddTriangleFrom(this, tri);
 
@@ -954,9 +1024,9 @@ public class CuttableTreeScript : MonoBehaviour
 
             case TriangleSplitState.BelowPlane:
 
-                bottomVertices.Add(worldV0);
-                bottomVertices.Add(worldV1);
-                bottomVertices.Add(worldV2);
+                DEBUG_bottomVertices.Add(worldV0);
+                DEBUG_bottomVertices.Add(worldV1);
+                DEBUG_bottomVertices.Add(worldV2);
 
                 lowerMesh.AddTriangleFrom(this, tri);
 
@@ -972,9 +1042,17 @@ public class CuttableTreeScript : MonoBehaviour
                     DEBUG_intersectionVertices.Add(intersectionPoint);
                 }
 
+                //intersectingTriangleSplit(world,tri, position, normal, Vector3[] worldTrianglePointPositions,lowerMesh, upperMesh)
+
                 break;
         }
     }
+
+    private void intersectingTriangleSplit(Matrix4x4 world, Triangle tri, Vector3 position, Vector3 normal, Vector3[] worldTrianglePointPositions, PrimitiveMesh lowerPrimitiveMesh, PrimitiveMesh upperPrimitiveMesh)
+    {
+
+    }
+
 
     //assumes that face contains 2 triangles
     private void UnOptimizedGetFaceToPlaneIntersectionPoints(Matrix4x4 world, Face face, Vector3 position,Vector3 normal, out List<Vector3> intersectionPoints)
@@ -1012,6 +1090,8 @@ public class CuttableTreeScript : MonoBehaviour
 
     private void bruteForceCollisionBoxInitialize()
     {
+        collisionBoxes.Clear();
+
         TreeSplitCollisionBox tscb = new TreeSplitCollisionBox();
         tscb.faces = new List<Face>();
         collisionBoxes.Add(tscb);
@@ -1021,13 +1101,11 @@ public class CuttableTreeScript : MonoBehaviour
         for (int i = 0; i < mesh.triangles.Length; i+=6)
         {
 
-            if (i + 5 >= mesh.triangles.Length) { break; }
+            if (i + 5 > mesh.triangles.Length-1) { break; }
 
             int v0 = mesh.triangles[i];
             int v1 = mesh.triangles[i + 1];
             int v2 = mesh.triangles[i + 2];
-
-            
 
             int v3 = mesh.triangles[i + 3];
             int v4 = mesh.triangles[i + 4];
@@ -1044,8 +1122,6 @@ public class CuttableTreeScript : MonoBehaviour
             tri2.v0 = v3;
             tri2.v1 = v4;
             tri2.v2 = v5;
-
-
 
             Vector3 tri1Normal = mesh.normals[v0];
             Vector3 tri2Normal = mesh.normals[v3];
@@ -1253,14 +1329,14 @@ public class CuttableTreeScript : MonoBehaviour
 
         Gizmos.color = Color.red;
 
-        foreach(var position in upperVertices)
+        foreach(var position in DEBUG_upperVertices)
         {
             Gizmos.DrawSphere(position, debugSphereSize);
         }
 
         Gizmos.color = Color.blue;
 
-        foreach (var position in bottomVertices)
+        foreach (var position in DEBUG_bottomVertices)
         {
             Gizmos.DrawSphere(position, debugSphereSize);
         }
