@@ -104,6 +104,24 @@ public class CutMan : MonoBehaviour
                                 break;
                         }
                     }
+                    // ### put code for the seed catching here
+                }
+            }
+            else
+            {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit,Mathf.Infinity, trunkMask))
+                {
+                    if (hit.collider.gameObject.CompareTag("Trunks"))
+                    {
+                        // ### sanitize with a coroutine to rule out dragging
+                        // ### sanitize for duplicates (no multiple shakes at the same time)
+                        if (hit.collider.gameObject.GetComponent<CuttableTreeScript>().isFirstTree)
+                        {
+                            StartCoroutine(SeedSpawn(hit.collider.transform));
+                        }
+                    }
                 }
             }
         }
@@ -168,7 +186,7 @@ public class CutMan : MonoBehaviour
                 if (hit.collider.gameObject.GetComponent<CuttableTreeScript>() ==
                     currentCut.GetComponent<CutTarget>().target)
                 {
-                    Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.green, 100f);
+                    // Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.green, 100f);
                     if (!isCutting)
                     {
                         // Debug.Log("hit tree");
@@ -200,7 +218,7 @@ public class CutMan : MonoBehaviour
             }
             else
             {
-                Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.red, 100f);
+                // Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.red, 100f);
                 if (isCutting)
                 {
                     float dist = Vector2.Distance(cutStart, Input.mousePosition);
@@ -284,7 +302,7 @@ public class CutMan : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float dist = Vector3.Distance(Camera.main.transform.position,
             currentCut.GetComponent<CutTarget>().target.transform.position);
-        Debug.DrawRay(ray.origin, ray.direction * dist, Color.yellow, 10f);
+        // Debug.DrawRay(ray.origin, ray.direction * dist, Color.yellow, 10f);
         return ray.GetPoint(dist);
     }
 
@@ -311,13 +329,13 @@ public class CutMan : MonoBehaviour
                             Vector3 roof = boxes[2].transform.position + new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
                             Vector3 floor = boxes[2].transform.position - new Vector3(0, .5f * boxes[2].transform.localScale.y, 0);
                             targetPosition = boxes[2].transform.position;
-                            Debug.DrawLine(roof,floor,Color.red,100f);
+                            // Debug.DrawLine(roof,floor,Color.red,100f);
                             targetPosition.y = UnityEngine.Random.Range(roof.y, floor.y);
                             break;
                         case 2:
                             Vector3 roof1 = boxes[1].transform.position + new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
                             Vector3 floor1 = boxes[1].transform.position - new Vector3(0, .5f * boxes[1].transform.localScale.y, 0);
-                            Debug.DrawLine(roof1,floor1,Color.red,100f);
+                            // Debug.DrawLine(roof1,floor1,Color.red,100f);
                             targetPosition = boxes[1].transform.position;
                                                 targetPosition.y = UnityEngine.Random.Range(roof1.y, floor1.y);
                             break;
@@ -325,7 +343,7 @@ public class CutMan : MonoBehaviour
                             Vector3 roof2 = boxes[0].transform.position + new Vector3(0, .5f * boxes[0].transform.localScale.y, 0);
                             Vector3 floor2 = boxes[0].transform.position - new Vector3(0, .5f * boxes[0].transform.localScale.y, 0);
                             targetPosition = boxes[0].transform.position;
-                            Debug.DrawLine(roof2,floor2,Color.red,100f);
+                            // Debug.DrawLine(roof2,floor2,Color.red,100f);
                             targetPosition.y = UnityEngine.Random.Range(roof2.y, floor2.y);
                             break;
                     }
@@ -334,6 +352,17 @@ public class CutMan : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator SeedSpawn(Transform tree)
+    {
+        float currentZ = tree.rotation.z;
+        tree.LeanRotateZ(currentZ + 2, .4f);
+        yield return new WaitForSeconds(.4f);
+        // ### spawn the seed
+        tree.LeanRotateZ(currentZ - 4, .3f);
+        yield return new WaitForSeconds(.3f);
+        tree.LeanRotateZ(currentZ, .2f);
     }
     
     
