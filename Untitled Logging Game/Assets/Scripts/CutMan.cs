@@ -298,7 +298,7 @@ public class CutMan : MonoBehaviour
                 {
                     cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponent<CutTarget>();
                     cutTargets[i].target = trees[i];
-                    if (UnityEngine.Random.Range(0, 1) == 0)
+                    if (UnityEngine.Random.Range(0, 2) == 0)
                         cutTargets[i].goesLeft = true;
                     else
                         cutTargets[i].goesLeft = false;
@@ -330,7 +330,10 @@ public class CutMan : MonoBehaviour
                             break;
                     }
                     tempTrans.position = Camera.main.WorldToScreenPoint(targetPosition);
-                    tempTrans.rotation = Quaternion.Euler(0,0,UnityEngine.Random.Range(-20f,20f));
+                    if (!cutTargets[i].goesLeft)
+                        tempTrans.rotation = Quaternion.Euler(0,0,180+UnityEngine.Random.Range(-20f,20f));
+                    else
+                        tempTrans.rotation = Quaternion.Euler(0,0,UnityEngine.Random.Range(-20f,20f));
                 }
             }
         }
