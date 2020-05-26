@@ -72,13 +72,13 @@ public class CutMan : MonoBehaviour
                 for (int i = 0; i < castHits.Count; i++)
                 {
                     // Debug.Log("I hit " + castHits[i].gameObject.name);
-                    if (castHits[i].gameObject.GetComponent<CutTarget>() != null)
+                    if (castHits[i].gameObject.GetComponentInChildren<CutTarget>() != null)
                     {
                         RectTransform rec = castHits[i].gameObject.GetComponent<RectTransform>();
                         Vector3[] corners = new Vector3[4];
                         rec.GetWorldCorners(corners);
                         float width = Vector3.Distance(Vector3.Lerp(corners[2],corners[3],0.5f),Vector3.Lerp(corners[0],corners[1],0.5f));
-                        switch (castHits[i].gameObject.GetComponent<CutTarget>().goesLeft)
+                        switch (castHits[i].gameObject.GetComponentInChildren<CutTarget>().goesLeft)
                         { 
                             case true:
                                 float dist = Vector2.Distance(Vector3.Lerp(corners[2],corners[3],0.5f),
@@ -166,7 +166,7 @@ public class CutMan : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100000, trunkMask))
             {
                 if (hit.collider.gameObject.GetComponent<CuttableTreeScript>() ==
-                    currentCut.GetComponent<CutTarget>().target)
+                    currentCut.GetComponentInChildren<CutTarget>().target)
                 {
                     Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.green, 100f);
                     if (!isCutting)
@@ -175,7 +175,7 @@ public class CutMan : MonoBehaviour
                         isCutting = true;
                         soundMan.ToggleWood();
                         cutParticleInstance = Instantiate(cutParticleObject);
-                        if(currentCut.GetComponent<CutTarget>().goesLeft)
+                        if(currentCut.GetComponentInChildren<CutTarget>().goesLeft)
                             cutParticleInstance.transform.rotation = Quaternion.Euler(0,0,180);
                         foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
                         {
@@ -208,7 +208,7 @@ public class CutMan : MonoBehaviour
                     if (Mathf.Abs(dist) > marginOfError)
                     {
                         GameObject cutPlane = InitiateCut(cutStart, cutUpdate);
-                        CuttableTreeScript target = currentCut.GetComponent<CutTarget>().target;
+                        CuttableTreeScript target = currentCut.GetComponentInChildren<CutTarget>().target;
                         GameObject newTreePiece = target.CutAt(cutPlane.transform.position, cutPlane.transform.up, cutForce);
                         Destroy(cutPlane); // you can comment this for debugging of cut plane
                         GameObject newPartI = Instantiate(fallParticleObject, newTreePiece.transform);
@@ -226,7 +226,7 @@ public class CutMan : MonoBehaviour
                         newTreePiece.GetComponent<TreeFallParticle>().fallSound = soundMan.TreeFall(newTreePiece);
                         for (int i = 0; i < trees.Length; i++)
                         {
-                            if (trees[i] == currentCut.GetComponent<CutTarget>().target)
+                            if (trees[i] == currentCut.GetComponentInChildren<CutTarget>().target)
                             {
                                 treeHps[i]--;
                                 if(treeHps[i] == 0)
@@ -283,7 +283,7 @@ public class CutMan : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float dist = Vector3.Distance(Camera.main.transform.position,
-            currentCut.GetComponent<CutTarget>().target.transform.position);
+            currentCut.GetComponentInChildren<CutTarget>().target.transform.position);
         Debug.DrawRay(ray.origin, ray.direction * dist, Color.yellow, 10f);
         return ray.GetPoint(dist);
     }
@@ -296,13 +296,13 @@ public class CutMan : MonoBehaviour
             {
                 if (Vector3.Distance(trees[i].transform.position, Camera.main.transform.position) < 5f)
                 {
-                    cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponent<CutTarget>();
+                    cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponentInChildren<CutTarget>();
                     cutTargets[i].target = trees[i];
                     if (UnityEngine.Random.Range(0, 2) == 0)
                         cutTargets[i].goesLeft = true;
                     else
                         cutTargets[i].goesLeft = false;
-                    Transform tempTrans = cutTargets[i].transform;
+                    Transform tempTrans = cutTargets[i].transform.parent;
                     BoxCollider[] boxes = trees[i].transform.parent.GetComponentsInChildren<BoxCollider>();
                     Vector3 targetPosition = Vector3.zero;
                     switch (treeHps[i])
@@ -330,10 +330,10 @@ public class CutMan : MonoBehaviour
                             break;
                     }
                     tempTrans.position = Camera.main.WorldToScreenPoint(targetPosition);
+                    float offSet = UnityEngine.Random.Range(-20f, 20f);
+                    tempTrans.rotation = Quaternion.Euler(0,0, offSet);
                     if (!cutTargets[i].goesLeft)
-                        tempTrans.rotation = Quaternion.Euler(0,0,180+UnityEngine.Random.Range(-20f,20f));
-                    else
-                        tempTrans.rotation = Quaternion.Euler(0,0,UnityEngine.Random.Range(-20f,20f));
+                        tempTrans.GetChild(0).rotation = Quaternion.Euler(0,0,180+offSet);
                 }
             }
         }
