@@ -10,11 +10,13 @@ public class NutMover : MonoBehaviour
     public float floorHeight;
     private float fade = 1;
     private Image nut;
+    private UIMan uiMan;
     
     // Start is called before the first frame update
     void Start()
     {
         nut = GetComponent<Image>();
+        uiMan = FindObjectOfType<UIMan>();
     }
 
     // Update is called once per frame
@@ -45,6 +47,7 @@ public class NutMover : MonoBehaviour
     public void GrabNut()
     {
         Debug.Log("Nut grabbed");
+        uiMan.IncreaseScore(false);
         Destroy(gameObject);
     }
 }

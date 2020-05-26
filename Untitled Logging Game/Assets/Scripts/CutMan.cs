@@ -36,6 +36,7 @@ public class CutMan : MonoBehaviour
     public float cutForce;
 
     public GameObject nutPrefab; // make this an array later
+    public GameObject treeShakeParticles;
     private int groundMask;
     private float shakeTimer;
     
@@ -362,14 +363,39 @@ public class CutMan : MonoBehaviour
         Transform[] leaves = tree.gameObject.GetComponentsInChildren<Transform>();
         if (leaves.Length != 1)
         {
-            Debug.Log(leaves.Length);
+            // Debug.Log(leaves.Length);
             float currentZ = tree.rotation.z;
             tree.LeanRotateZ(currentZ + 2, .4f);
             yield return new WaitForSeconds(.4f);
-            Vector3 nutPosition = leaves[UnityEngine.Random.Range(0, leaves.Length)].position;
+            Transform nutLocation = leaves[UnityEngine.Random.Range(0, leaves.Length)];
+            Vector3 nutPosition = nutLocation.position;
+            Transform[] locations = new []
+            {
+                nutLocation, leaves[UnityEngine.Random.Range(0,leaves.Length)], leaves[UnityEngine.Random.Range(0,leaves.Length)], leaves[UnityEngine.Random.Range(0,leaves.Length)], leaves[UnityEngine.Random.Range(0,leaves.Length)]
+                    , leaves[UnityEngine.Random.Range(0,leaves.Length)], leaves[UnityEngine.Random.Range(0,leaves.Length)]};
+            int newPartIndex = 0;
+            foreach (var loc in locations)
+            {
+                if (loc.gameObject.CompareTag("Leaves"))
+                {
+                    GameObject tempObj = Instantiate(treeShakeParticles, loc);
+                    ParticleSystem tempPart = tempObj.GetComponentInChildren<ParticleSystem>();
+                    newPartIndex = tree.GetComponent<CuttableTreeScript>().leafParticleIndex;
+                    tempPart.textureSheetAnimation.SetSprite(0,leafParticles[newPartIndex]);
+                    if (leafScaleValues[newPartIndex] != 1)
+                    {
+                        var tempPartMain = tempPart.main;
+                        tempPartMain.startSizeMultiplier = leafScaleValues[newPartIndex];
+                    }
+                    var tempPartShape = tempPart.shape;
+                    tempPartShape.mesh = loc.gameObject.GetComponent<MeshFilter>().mesh;
+                    tempPart.Play();
+                }
+            }
             GameObject newNut =  Instantiate(nutPrefab, gRaycaster.transform);
             newNut.transform.position = Camera.main.WorldToScreenPoint(nutPosition);
             NutMover newNutMove = newNut.GetComponent<NutMover>();
+            newNutMove.treeIndex = newPartIndex;
             RaycastHit hit;
             Physics.Raycast(nutPosition, Vector3.down, out hit, 100, groundMask);
             Debug.DrawRay(nutPosition,Vector3.down*10,Color.green, 5);
