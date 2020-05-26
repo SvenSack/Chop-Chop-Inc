@@ -133,6 +133,7 @@ public class Utils : MonoBehaviour
 
                 Vector3[] vertices = mesh.vertices;
 
+
                 for (int i = 0; i < mesh.vertices.Length; i++)
                 {
                     vertices[i] += centroidShiftDirection;

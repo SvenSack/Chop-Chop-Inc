@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using UnityEngine.Profiling;
 public struct ConnectionTypeToCentroid
 {
     public TriangleConnectionType tct;
@@ -130,10 +130,6 @@ public class CuttableTreeScript : MonoBehaviour
 
     [SerializeField] public CuttableMeshPhysicsManager meshPhysicsManager;
 
-    List<Vector3> DEBUG_upperVertices = new List<Vector3>();
-    List<Vector3> DEBUG_bottomVertices = new List<Vector3>();
-    List<Vector3> DEBUG_intersectionVertices = new List<Vector3>();
-
     [SerializeField] int debugShowIndex = 2;
     [SerializeField] float debugSphereSize = 1.0f;
 
@@ -162,22 +158,21 @@ public class CuttableTreeScript : MonoBehaviour
 
     void InitializeCuttableTree()
     {
+        Profiler.BeginSample("[cut] InitializeCuttableTree");
+
         collisionBoxes = new List<TreeSplitCollisionBox>();
 
         meshFilter = gameObject.GetComponent<MeshFilter>();
         mesh = meshFilter.mesh;
 
+        Profiler.BeginSample("[cut] bruteForceCollisionBoxInitialize");
         bruteForceCollisionBoxInitialize();
-
+        Profiler.EndSample();
 
         lidPairings.Clear();
 
-        DEBUG_upperVertices.Clear();
-        DEBUG_bottomVertices.Clear();
-        DEBUG_intersectionVertices.Clear();
-
-
         preCutCentroid = new Vector3(0, 0, 0);
+
         foreach (Vector3 position in mesh.vertices)
         {
             preCutCentroid += position;
@@ -188,10 +183,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         meshPhysicsManager = GetMeshColliderGenerator();
 
-        if (isFirstTree)
-        {
-            ensureCentroidLeaf();
-        }
+        Profiler.EndSample();
     }
 
     /// <summary>
@@ -204,6 +196,7 @@ public class CuttableTreeScript : MonoBehaviour
     /// <returns></returns>
     public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
     {
+        Profiler.BeginSample("[cut] Splitting The Mesh Into Primitives");
 
         Debug.Log("Starting cut for " + gameObject.name);
 
@@ -304,6 +297,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         }
 
+        
 
         List<Vector3> vertexPositions = new List<Vector3>();
 
@@ -346,10 +340,11 @@ public class CuttableTreeScript : MonoBehaviour
             FacesSplitAbove.AddFaceFromSingularTriangle(tri2);
 
         }
-        //
+
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-        //-------------------------- Reitialize the original mesh ------------------------------------//
+        //-------------------------- Reinitialize the original mesh ------------------------------------//
 
         FacesSplitBelow.PopulateMesh(mesh);
         InitializeCuttableTree();
@@ -359,9 +354,6 @@ public class CuttableTreeScript : MonoBehaviour
             bool rigidBodyNeeded = !isFirstTree;
             meshPhysicsManager.GenerateMeshColliderFromCut(mesh, rigidBodyNeeded);
         }
-
-
-
 
         //---------------------- Create a new mesh and assign in to the newly created mesh-------------------------------//
         GameObject newTree;
@@ -389,13 +381,21 @@ public class CuttableTreeScript : MonoBehaviour
             }
         }
 
+
         //---------------------- Re assign the leaves to its correct parent--------------------------//
+
+        //Profiler.BeginSample("[cut] Reinitialize new mesh");
+
         DisplaceLeaves(position, normal, gameObject, otherMeshPhysicsManager.gameObject);
 
 
 
 
         otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal, point);
+
+
+
+        Profiler.EndSample();
 
         return newTree;
     }
@@ -457,12 +457,11 @@ public class CuttableTreeScript : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.C))
         {
-            DEBUG_upperVertices.Clear();
-            DEBUG_bottomVertices.Clear();
-            DEBUG_intersectionVertices.Clear();
-
             Debug.Log("Cut");
+
+            Profiler.BeginSample("[cut] Begin Cut Total");
             CutAt(DebugObjectTest.transform.position, DebugObjectTest.transform.up,20.0f);
+            Profiler.EndSample();
         }
     }
 
@@ -492,25 +491,35 @@ public class CuttableTreeScript : MonoBehaviour
     /// <returns>The Mesh Physics Manager owned by the newly created object </returns>
     public CuttableMeshPhysicsManager InstantiateTreePiece(PrimitiveMesh primitiveMesh, out GameObject newTree)
     {
-        newTree = new GameObject();
+
         
 
+        newTree = new GameObject();
+
+        
         var meshRenderer = newTree.AddComponent<MeshRenderer>();
         meshRenderer.material = GetComponent<MeshRenderer>().sharedMaterial;
 
         var newMeshFilter = newTree.AddComponent<MeshFilter>();
 
+
+        
         CuttableTreeScript cuttableTree = newTree.AddComponent<CuttableTreeScript>();
         cuttableTree.isFirstTree = false;
 
 
+       
         newTree.transform.position = transform.position;
         newTree.transform.rotation = transform.rotation;
         newTree.transform.localScale = transform.localScale;
 
+
         primitiveMesh.PopulateMesh(newMeshFilter.mesh);
 
-        Utils.EnsurePositionIsCentroid(newTree.transform);
+        Profiler.BeginSample("[cut] EnsurePositionIsCentroid");
+
+        Profiler.EndSample();
+
         CuttableMeshPhysicsManager cmpm  = newTree.AddComponent<CuttableMeshPhysicsManager>();
         newTree.AddComponent<TreeFallParticle>();
         
@@ -578,29 +587,11 @@ public class CuttableTreeScript : MonoBehaviour
         switch (state)
         {
             case TriangleSplitState.AbovePlane:
-
-                DEBUG_upperVertices.Add(worldV0);
-                DEBUG_upperVertices.Add(worldV1);
-                DEBUG_upperVertices.Add(worldV2);
-
-                DEBUG_upperVertices.Add(worldV3);
-                DEBUG_upperVertices.Add(worldV4);
-                DEBUG_upperVertices.Add(worldV5);
-
                 upperPrimitiveMesh.AddFaceFrom(this, face);
 
                 break;
 
             case TriangleSplitState.BelowPlane:
-
-                DEBUG_bottomVertices.Add(worldV0);
-                DEBUG_bottomVertices.Add(worldV1);
-                DEBUG_bottomVertices.Add(worldV2);
-
-                DEBUG_bottomVertices.Add(worldV3);
-                DEBUG_bottomVertices.Add(worldV4);
-                DEBUG_bottomVertices.Add(worldV5);
-
                 lowerPrimitiveMesh.AddFaceFrom(this, face);
 
                 break;
@@ -763,8 +754,6 @@ public class CuttableTreeScript : MonoBehaviour
 
         lidPairings.Add(lidPairing);
 
-        DEBUG_intersectionVertices.Add(intersectionPoints[0]);
-        DEBUG_intersectionVertices.Add(intersectionPoints[intersectionPoints.Count - 1]);
     }
 
     /// <summary>
@@ -1013,19 +1002,11 @@ public class CuttableTreeScript : MonoBehaviour
         {
             case TriangleSplitState.AbovePlane:
 
-                DEBUG_upperVertices.Add(worldV0);
-                DEBUG_upperVertices.Add(worldV1);
-                DEBUG_upperVertices.Add(worldV2);
-
                 upperMesh.AddTriangleFrom(this, tri);
 
                 break;
 
             case TriangleSplitState.BelowPlane:
-
-                DEBUG_bottomVertices.Add(worldV0);
-                DEBUG_bottomVertices.Add(worldV1);
-                DEBUG_bottomVertices.Add(worldV2);
 
                 lowerMesh.AddTriangleFrom(this, tri);
 
@@ -1448,26 +1429,6 @@ public class CuttableTreeScript : MonoBehaviour
 
 
         Gizmos.color = Color.red;
-
-        foreach(var position in DEBUG_upperVertices)
-        {
-            Gizmos.DrawSphere(position, debugSphereSize);
-        }
-
-        Gizmos.color = Color.blue;
-
-        foreach (var position in DEBUG_bottomVertices)
-        {
-            Gizmos.DrawSphere(position, debugSphereSize);
-        }
-
-        Gizmos.color = new Color(1,0,1);
-
-        foreach (var position in DEBUG_intersectionVertices)
-        {
-
-            Gizmos.DrawSphere(position, debugSphereSize);
-        }
 
 
 
