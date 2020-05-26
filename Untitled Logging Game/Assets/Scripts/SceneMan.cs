@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 public class SceneMan : MonoBehaviour
 {
     
-    public static SceneMan instance = null;
+    private static SceneMan instance;
 
     public string prevScene = "";
 
@@ -13,21 +12,10 @@ public class SceneMan : MonoBehaviour
         if(!instance )
             instance = this;
         else {
-            Destroy(this.gameObject) ;
+            Destroy(gameObject) ;
             return;
         }
 
-        DontDestroyOnLoad(this.gameObject) ;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        DontDestroyOnLoad(gameObject) ;
     }
 }
