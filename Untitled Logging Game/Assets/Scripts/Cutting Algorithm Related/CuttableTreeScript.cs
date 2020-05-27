@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.Profiling;
+using Unity.Collections;
+using Unity.Jobs;
+
+
 public struct ConnectionTypeToCentroid
 {
     public TriangleConnectionType tct;
@@ -72,6 +76,11 @@ public struct Triangle
 
 public struct Face
 {
+    public bool isFilled()
+    {
+        return tri1.v0 != -1;
+    }
+
     public void Init()
     {
         tri1.Init();
@@ -124,8 +133,7 @@ public enum PointSplitState
 [RequireComponent(typeof(MeshFilter))]
 public class CuttableTreeScript : MonoBehaviour
 {
-
-
+    //public native
     private List<TreeSplitCollisionBox> collisionBoxes;
 
     [SerializeField] public CuttableMeshPhysicsManager meshPhysicsManager;
@@ -146,7 +154,7 @@ public class CuttableTreeScript : MonoBehaviour
     public int leafParticleIndex;
     public float cutForceMultiplier;
 
-    private bool isFirstTree = true;
+    [SerializeField] private bool isFirstTree = true;
 
     private void Start()
     {
@@ -158,16 +166,14 @@ public class CuttableTreeScript : MonoBehaviour
 
     void InitializeCuttableTree()
     {
-        Profiler.BeginSample("[cut] InitializeCuttableTree");
+        
 
         collisionBoxes = new List<TreeSplitCollisionBox>();
 
         meshFilter = gameObject.GetComponent<MeshFilter>();
         mesh = meshFilter.mesh;
 
-        Profiler.BeginSample("[cut] bruteForceCollisionBoxInitialize");
         bruteForceCollisionBoxInitialize();
-        Profiler.EndSample();
 
         lidPairings.Clear();
 
@@ -183,7 +189,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         meshPhysicsManager = GetMeshColliderGenerator();
 
-        Profiler.EndSample();
+        
     }
 
     /// <summary>
@@ -196,7 +202,7 @@ public class CuttableTreeScript : MonoBehaviour
     /// <returns></returns>
     public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
     {
-        Profiler.BeginSample("[cut] Splitting The Mesh Into Primitives");
+        
 
         Debug.Log("Starting cut for " + gameObject.name);
 
@@ -204,10 +210,10 @@ public class CuttableTreeScript : MonoBehaviour
         preCutCentroid = worldMatrix.MultiplyPoint(preCutCentroid);
 
         //will be usefull later for a possible optimization
-        //Matrix4x4 inverseWorldMatrix = Matrix4x4.Inverse(worldMatrix);
+        Matrix4x4 inverseWorldMatrix = Matrix4x4.Inverse(worldMatrix);
 
-        //Vector3 transformedPosition = inverseWorldMatrix.MultiplyPoint3x4(position);
-        //Vector3 transformedNormal = (Matrix4x4.Transpose(worldMatrix)).MultiplyVector(normal);
+        Vector3 transformedPosition = inverseWorldMatrix.MultiplyPoint3x4(position);
+        Vector3 transformedNormal = (Matrix4x4.Transpose(worldMatrix)).MultiplyVector(normal);
 
         PrimitiveMesh FacesSplitAbove = new PrimitiveMesh();
         PrimitiveMesh FacesSplitBelow = new PrimitiveMesh();
@@ -217,87 +223,18 @@ public class CuttableTreeScript : MonoBehaviour
         Debug.Log("This mesh has " + collisionBoxes.Count + " collision boxes");
         Debug.Log("This mesh has " + mesh.vertices.Length + " vertices ");
 
+        Profiler.BeginSample("[cut] Splitting The Mesh Into Primitives");
+
         foreach (TreeSplitCollisionBox collisionBox in collisionBoxes)
         {
             foreach (Face face in collisionBox.faces)
             {
-                TriangleSplitState tri1CheckResult = TriangleSplitState.DefaultNoTriangle;
-                TriangleSplitState tri2CheckResult = TriangleSplitState.DefaultNoTriangle;
-
-                bool hasTriangle1 = face.tri1.v0 != -1;
-
-                if (hasTriangle1)
-                {
-                    Vector3 worldV0 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v0]);
-                    Vector3 worldV1 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v1]);
-                    Vector3 worldV2 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v2]);
-
-                    tri1CheckResult = triangleToPlaneCheck(worldV0, worldV1, worldV2, position, normal);
-
-                }
-
-                bool hasTriangle2 = face.tri2.v0 != -1;
-
-                if (hasTriangle2)
-                {
-                    Vector3 worldV0 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v0]);
-                    Vector3 worldV1 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v1]);
-                    Vector3 worldV2 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v2]);
-
-                    tri2CheckResult = triangleToPlaneCheck(worldV0, worldV1, worldV2, position, normal);
-                }
-
-                bool isBothTrianglesExist = hasTriangle1 && hasTriangle2;
-
-                //if both triangles exist and have the same triangle split state
-                if (isBothTrianglesExist && tri1CheckResult == tri2CheckResult)
-                {
-                    organizeFaceBasedOnTriangleSplitState(worldMatrix, tri1CheckResult, face, position, normal, FacesSplitAbove, FacesSplitBelow);
-                }
-                //if both triangles exist but one triangle is intersecting but the other is either above or below the splitting plane
-                else if (isBothTrianglesExist && tri1CheckResult != tri2CheckResult)
-                {
-
-                    Vector3 worldV0 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v0]);
-                    Vector3 worldV1 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v1]);
-                    Vector3 worldV2 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v2]);
-
-                    Vector3 worldV3 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v0]);
-                    Vector3 worldV4 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v1]);
-                    Vector3 worldV5 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v2]);
-
-                    Vector3[] worldTrianglePointPositions = new Vector3[6];
-                    worldTrianglePointPositions[0] = worldV0;
-                    worldTrianglePointPositions[1] = worldV1;
-                    worldTrianglePointPositions[2] = worldV2;
-                    worldTrianglePointPositions[3] = worldV3;
-                    worldTrianglePointPositions[4] = worldV4;
-                    worldTrianglePointPositions[5] = worldV5;
-
-                    intersectingFaceSplit(worldMatrix, face, position, normal, worldTrianglePointPositions, FacesSplitBelow, FacesSplitAbove);
-
-                }
-                //one of the triangles in the face do not exist ( this face only has one triangle)
-                else if (!isBothTrianglesExist)
-                {
-                    if (hasTriangle1)
-                    {
-                        FindDecisionForSingularTriangle(worldMatrix, tri1CheckResult, face.tri1, position, normal, FacesSplitBelow, FacesSplitAbove);
-                    }
-                    if (hasTriangle2)
-                    {
-                        FindDecisionForSingularTriangle(worldMatrix, tri2CheckResult, face.tri2, position, normal, FacesSplitBelow, FacesSplitAbove);
-                    }
-                }
-
-
-
-
+                populatePrimitiveMesh(FacesSplitBelow, FacesSplitAbove, face, transformedPosition, transformedNormal, worldMatrix, position, normal);
             }
 
         }
 
-        
+        Profiler.EndSample();
 
         List<Vector3> vertexPositions = new List<Vector3>();
 
@@ -395,12 +332,83 @@ public class CuttableTreeScript : MonoBehaviour
 
 
 
-        Profiler.EndSample();
+       
 
         return newTree;
     }
 
-    
+    private void populatePrimitiveMesh(PrimitiveMesh lowerMesh,PrimitiveMesh upperMesh,Face face,Vector3 transformedPosition,Vector3 transformedNormal,Matrix4x4 worldMatrix,Vector3 position,Vector3 normal)
+    {
+        TriangleSplitState tri1CheckResult = TriangleSplitState.DefaultNoTriangle;
+        TriangleSplitState tri2CheckResult = TriangleSplitState.DefaultNoTriangle;
+
+        bool hasTriangle1 = face.tri1.v0 != -1;
+
+        if (hasTriangle1)
+        {
+            tri1CheckResult = triangleToPlaneCheck(
+                mesh.vertices[face.tri1.v0],
+                mesh.vertices[face.tri1.v1],
+                mesh.vertices[face.tri1.v2],
+                transformedPosition, transformedNormal);
+
+        }
+
+        bool hasTriangle2 = face.tri2.v0 != -1;
+
+        if (hasTriangle2)
+        {
+            tri2CheckResult = triangleToPlaneCheck(
+                mesh.vertices[face.tri2.v0],
+                mesh.vertices[face.tri2.v1],
+                mesh.vertices[face.tri2.v2],
+                transformedPosition, transformedNormal);
+        }
+
+        bool isBothTrianglesExist = hasTriangle1 && hasTriangle2;
+
+        //if both triangles exist and have the same triangle split state
+        if (isBothTrianglesExist && tri1CheckResult == tri2CheckResult)
+        {
+            organizeFaceBasedOnTriangleSplitState(worldMatrix, tri1CheckResult, face, position, normal,upperMesh,lowerMesh);
+        }
+        //if both triangles exist but one triangle is intersecting but the other is either above or below the splitting plane
+        else if (isBothTrianglesExist && tri1CheckResult != tri2CheckResult)
+        {
+
+            Vector3 worldV0 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v0]);
+            Vector3 worldV1 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v1]);
+            Vector3 worldV2 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v2]);
+
+            Vector3 worldV3 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v0]);
+            Vector3 worldV4 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v1]);
+            Vector3 worldV5 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v2]);
+
+            Vector3[] worldTrianglePointPositions = new Vector3[6];
+            worldTrianglePointPositions[0] = worldV0;
+            worldTrianglePointPositions[1] = worldV1;
+            worldTrianglePointPositions[2] = worldV2;
+            worldTrianglePointPositions[3] = worldV3;
+            worldTrianglePointPositions[4] = worldV4;
+            worldTrianglePointPositions[5] = worldV5;
+
+            intersectingFaceSplit(worldMatrix, face, position, normal, worldTrianglePointPositions, lowerMesh, upperMesh);
+
+        }
+        //one of the triangles in the face do not exist ( this face only has one triangle)
+        else if (!isBothTrianglesExist)
+        {
+            if (hasTriangle1)
+            {
+                FindDecisionForSingularTriangle(worldMatrix, tri1CheckResult, face.tri1, position, normal, lowerMesh, upperMesh);
+            }
+            if (hasTriangle2)
+            {
+                FindDecisionForSingularTriangle(worldMatrix, tri2CheckResult, face.tri2, position, normal, lowerMesh, upperMesh);
+            }
+        }
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -458,10 +466,7 @@ public class CuttableTreeScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log("Cut");
-
-            Profiler.BeginSample("[cut] Begin Cut Total");
             CutAt(DebugObjectTest.transform.position, DebugObjectTest.transform.up,20.0f);
-            Profiler.EndSample();
         }
     }
 
@@ -515,10 +520,6 @@ public class CuttableTreeScript : MonoBehaviour
 
 
         primitiveMesh.PopulateMesh(newMeshFilter.mesh);
-
-        Profiler.BeginSample("[cut] EnsurePositionIsCentroid");
-
-        Profiler.EndSample();
 
         CuttableMeshPhysicsManager cmpm  = newTree.AddComponent<CuttableMeshPhysicsManager>();
         newTree.AddComponent<TreeFallParticle>();
@@ -1179,70 +1180,106 @@ public class CuttableTreeScript : MonoBehaviour
 
     private void bruteForceCollisionBoxInitialize()
     {
+        Profiler.BeginSample("[cut] bruteForceCollisionBoxInitialize");
+
         collisionBoxes.Clear();
 
         TreeSplitCollisionBox tscb = new TreeSplitCollisionBox();
         tscb.faces = new List<Face>();
         collisionBoxes.Add(tscb);
 
-        Debug.Log("indice count " + mesh.triangles.Length);
+        ////Debug.Log("indice count " + mesh.triangles.Length);
 
-        for (int i = 0; i < mesh.triangles.Length; i+=6)
+        //for (int i = 0; i < mesh.triangles.Length; i += 6)
+        //{
+
+        //    if (i + 5 > mesh.triangles.Length - 1) { break; }
+
+        //    int v0 = mesh.triangles[i];
+        //    int v1 = mesh.triangles[i + 1];
+        //    int v2 = mesh.triangles[i + 2];
+
+        //    int v3 = mesh.triangles[i + 3];
+        //    int v4 = mesh.triangles[i + 4];
+        //    int v5 = mesh.triangles[i + 5];
+
+        //    Triangle tri1 = new Triangle();
+        //    tri1.v0 = v0;
+        //    tri1.v1 = v1;
+        //    tri1.v2 = v2;
+
+        //    Triangle tri2 = new Triangle();
+        //    tri2.v0 = v3;
+        //    tri2.v1 = v4;
+        //    tri2.v2 = v5;
+
+        //    Vector3 tri1Normal = mesh.normals[v0];
+        //    Vector3 tri2Normal = mesh.normals[v3];
+
+        //    if ((tri1Normal - tri2Normal).magnitude < 0.001f)
+        //    {
+        //        Face face = new Face();
+        //        face.Init();
+
+        //        face.tri1 = tri1;
+        //        face.tri2 = tri2;
+
+        //        tscb.faces.Add(face);
+        //    }
+        //    else
+        //    {
+        //        Face face1 = new Face();
+        //        face1.Init();
+        //        Face face2 = new Face();
+        //        face2.Init();
+
+        //        face1.tri1 = tri1;
+        //        face2.tri2 = tri2;
+
+        //        tscb.faces.Add(face1);
+        //        tscb.faces.Add(face2);
+        //    }
+
+
+        //}
+
+        int writeCount = mesh.triangles.Length / 6;
+
+        NativeArray<FacePairing> faces = new NativeArray<FacePairing>(writeCount, Allocator.TempJob);
+        Profiler.BeginSample("[cut] Array setup");
+
+        NativeArray<int> meshTriangles;
+        NativeArray<Vector3> meshNormals;
+        meshTriangles = Utils.GetNativeIntArrays(mesh.triangles);
+        meshNormals = Utils.GetNativeVertexArrays(mesh.normals);
+
+        Profiler.EndSample();
+
+        TriangleToFaceJob2 triangleToFace2 = new TriangleToFaceJob2();
+        triangleToFace2.faces = faces;
+        triangleToFace2.normals = meshNormals;
+        triangleToFace2.triangles = meshTriangles;
+
+        JobHandle jobHandle = triangleToFace2.Schedule(writeCount, 50);
+
+        jobHandle.Complete();
+
+        foreach (FacePairing pairing in faces)
         {
+            tscb.faces.Add(pairing.f1);
 
-            if (i + 5 > mesh.triangles.Length-1) { break; }
-
-            int v0 = mesh.triangles[i];
-            int v1 = mesh.triangles[i + 1];
-            int v2 = mesh.triangles[i + 2];
-
-            int v3 = mesh.triangles[i + 3];
-            int v4 = mesh.triangles[i + 4];
-            int v5 = mesh.triangles[i + 5];
-
-            Debug.Assert(i + 5 < mesh.triangles.Length);
-
-            Triangle tri1 = new Triangle();
-            tri1.v0 = v0;
-            tri1.v1 = v1;
-            tri1.v2 = v2;
-
-            Triangle tri2 = new Triangle();
-            tri2.v0 = v3;
-            tri2.v1 = v4;
-            tri2.v2 = v5;
-
-            Vector3 tri1Normal = mesh.normals[v0];
-            Vector3 tri2Normal = mesh.normals[v3];
-            
-            if ((tri1Normal - tri2Normal).magnitude < 0.001f)
+            if (pairing.f2.isFilled())
             {
-                Face face = new Face();
-                face.Init();
-
-                face.tri1 = tri1;
-                face.tri2 = tri2;
-
-                tscb.faces.Add(face);
+                tscb.faces.Add(pairing.f2);
             }
-            else
-            {
-                Face face1 = new Face();
-                face1.Init();
-                Face face2 = new Face();
-                face2.Init();
-
-                face1.tri1 = tri1;
-                face2.tri2 = tri2;
-
-                tscb.faces.Add(face1);
-                tscb.faces.Add(face2);
-            }
-
 
         }
 
-        Debug.Log("mesh face count " + tscb.faces.Count);
+        faces.Dispose();
+        meshTriangles.Dispose();
+        meshNormals.Dispose();
+
+        Profiler.EndSample();
     }
 
     //---------------------------------- Helper Functions----------------------------------------//
