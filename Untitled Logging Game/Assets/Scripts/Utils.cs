@@ -202,24 +202,24 @@ public class Utils : MonoBehaviour
     }
 
 
-    //public static unsafe NativeArray<T> GetNativeIntArrays<T>(T[] TArray) where T : struct
-    //{
-    //    // create a destination NativeArray to hold the vertices
-    //    NativeArray<T> verts = new NativeArray<T>(TArray.Length, Allocator.Persistent,
-    //        NativeArrayOptions.UninitializedMemory);
+    public static unsafe NativeArray<T> ToNativeArray<T>(T[] TArray) where T : unmanaged
+    {
+        // create a destination NativeArray to hold the vertices
+        NativeArray<T> verts = new NativeArray<T>(TArray.Length, Allocator.Persistent,
+            NativeArrayOptions.UninitializedMemory);
 
-    //    // pin the mesh's vertex buffer in place...
-    //    fixed (void* vertexBufferPointer = TArray)
-    //    {
-    //        // ...and use memcpy to copy the Vector3[] into a NativeArray<floar3> without casting. whould be fast!
-    //        UnsafeUtility.MemCpy(NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(verts),
-    //            vertexBufferPointer, TArray.Length * (long)UnsafeUtility.SizeOf<T>());
-    //    }
-    //    // we only hve to fix the .net array in place, the NativeArray is allocated in the C++ side of the engine and
-    //    // wont move arround unexpectedly. We have a pointer to it not a reference! thats basically what fixed does,
-    //    // we create a scope where its 'safe' to get a pointer and directly manipulate the array
+        // pin the mesh's vertex buffer in place...
+        fixed (void* vertexBufferPointer = TArray)
+        {
+            // ...and use memcpy to copy the Vector3[] into a NativeArray<floar3> without casting. whould be fast!
+            UnsafeUtility.MemCpy(NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(verts),
+                vertexBufferPointer, TArray.Length * (long)UnsafeUtility.SizeOf<T>());
+        }
+        // we only hve to fix the .net array in place, the NativeArray is allocated in the C++ side of the engine and
+        // wont move arround unexpectedly. We have a pointer to it not a reference! thats basically what fixed does,
+        // we create a scope where its 'safe' to get a pointer and directly manipulate the array
 
-    //    return verts;
-    //}
+        return verts;
+    }
 
 }

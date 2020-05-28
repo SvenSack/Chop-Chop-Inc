@@ -32,21 +32,22 @@ public class IndexDirectionComparer : IComparer<int>
 {
     private Vector3 baseDirection;
     public Vector3 basePosition;
-    private Mesh mesh;
+    private Vector3[] meshVertices;
+
     private Matrix4x4 world;
 
-    public IndexDirectionComparer(Vector3 baseDirection, Vector3 basePosition, Mesh mesh, Matrix4x4 world)
+    public IndexDirectionComparer(Vector3 baseDirection, Vector3 basePosition, Vector3[] meshVertices, Matrix4x4 world)
     {
         this.baseDirection = baseDirection;
         this.basePosition = basePosition;
-        this.mesh = mesh;
+        this.meshVertices = meshVertices;
         this.world = world;
     }
 
     public int Compare(int indexA, int indexB)
     {
-        Vector3 worldIndexA = world.MultiplyPoint(mesh.vertices[indexA]);
-        Vector3 worldIndexB = world.MultiplyPoint(mesh.vertices[indexB]);
+        Vector3 worldIndexA = world.MultiplyPoint(meshVertices[indexA]);
+        Vector3 worldIndexB = world.MultiplyPoint(meshVertices[indexB]);
 
 
         float x = Vector3.Dot(baseDirection, (worldIndexA - basePosition).normalized);

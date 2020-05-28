@@ -2,51 +2,132 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Jobs;
+using UnityEngine.Profiling;
 using Unity.Collections;
+using System.Linq;
 
-struct JobFaceGrouping
+
+public struct JobFace
 {
-
-
-
-
+    public JobTriangle jt1;
+    public JobTriangle jt2;
+    public bool isFilled;
 }
 
-struct JobFace
+public struct JobTriangle
 {
-    JobVertex v10;
-    JobVertex v11;
-    JobVertex v12;
+    public JobVertex v0;
+    public JobVertex v1;
+    public JobVertex v2;
+    public bool isFilled;
 
-    JobVertex v20;
-    JobVertex v21;
-    JobVertex v22;
+    public IndividualTriangle ToIndividualTriangle()
+    {
+        IndividualTriangle result = new IndividualTriangle(v0.ToIndividualVertex(),v1.ToIndividualVertex(),v2.ToIndividualVertex());
+
+        return result;
+    }
+
+    public void Init(JobVertex v0,JobVertex v1,JobVertex v2)
+    {
+        this.v0 = v0;
+        this.v1 = v1;
+        this.v2 = v2;
+        isFilled = true;
+    }
+
+    public bool AttemptNormalBasedVertexCorrection(Vector3 actualNormal, int flipIndexA, int flipIndexB)
+    {
+        if (Vector3.Dot(actualNormal, Vector3.Cross(v1.position - v0.position, v2.position - v0.position)) < 0)
+        {
+            FlipTriangle(flipIndexA, flipIndexB);
+            return true;
+        }
+        return false;
+
+    }
+
+    public void FlipTriangle(int flipIndexA, int flipIndexB)
+    {
+        JobVertex[] vertices = new JobVertex[3];
+        JobVertex tempVertex;
+
+        vertices[0] = v0;
+        vertices[1] = v1;
+        vertices[2] = v2;
+
+        tempVertex = vertices[flipIndexB];
+
+        vertices[flipIndexB] = vertices[flipIndexA];
+        vertices[flipIndexA] = tempVertex;
+
+        v0 = vertices[0];
+        v1 = vertices[1];
+        v2 = vertices[2];
+    }
+
+
+    public Vector3 GetObjectSpaceCentroid()
+    {
+        return (v0.position + v1.position + v2.position) / 3;
+    }
 }
 
-struct JobVertex
+public struct JobVertex
 {
-    Vector3 position;
-    Vector3 normal;
-    Vector2 uv;
+    public Vector3 position;
+    public Vector3 normal;
+    public Vector2 uv;
+
+    public IndividualVertex ToIndividualVertex()
+    {
+        IndividualVertex result = new IndividualVertex(position, normal, uv);
+        return result;
+    }
+
+    public void Init(Vector3 pPosition, Vector3 pNormal, Vector2 pUV)
+    {
+        position = pPosition;
+        normal = pNormal;
+        uv = pUV;
+    }
+
+    public void Init(NativeArray<Vector3> meshPosition, NativeArray<Vector3> meshNormals,NativeArray<Vector2> meshUVs,int triangleIndex)
+    {
+        position = meshPosition[triangleIndex];
+        normal = meshNormals[triangleIndex];
+        uv = meshUVs[triangleIndex];
+
+    }
 }
 
 
-struct faceToPrimitiveMeshJob : IJobParallelFor
+struct FaceToPrimitiveMeshJob : IJobParallelFor
 {
+    public NativeQueue<JobFace>.ParallelWriter lowerMesh;
+    public NativeQueue<JobFace>.ParallelWriter upperMesh;
+
     [ReadOnly]
-    NativeArray<Face> faces;
-
+    public NativeArray<Face> faces;
     [ReadOnly]
     public NativeArray<int> meshTriangles;
     [ReadOnly]
     public NativeArray<Vector3> meshNormals;
     [ReadOnly]
     public NativeArray<Vector3> meshVertices;
+    [ReadOnly]
+    public NativeArray<Vector2> meshUVs;
 
-    Vector3 transformedPosition;
-    Vector3 transformedNormal;
+    public Vector3 transformedPosition;
+    public Vector3 transformedNormal;
 
-    Matrix4x4 worldMatrix;
+    public Vector3 position;
+    public Vector3 normal;
+
+    public Matrix4x4 worldMatrix;
+
+    public Vector3 preCutCentroid;
+
 
     public void Execute(int i)
     {
@@ -78,46 +159,38 @@ struct faceToPrimitiveMeshJob : IJobParallelFor
 
         bool isBothTrianglesExist = hasTriangle1 && hasTriangle2;
 
-        ////if both triangles exist and have the same triangle split state
-        //if (isBothTrianglesExist && tri1CheckResult == tri2CheckResult)
-        //{
-        //    organizeFaceBasedOnTriangleSplitState(worldMatrix, tri1CheckResult, face, position, normal, upperMesh, lowerMesh);
-        //}
-        ////if both triangles exist but one triangle is intersecting but the other is either above or below the splitting plane
-        //else if (isBothTrianglesExist && tri1CheckResult != tri2CheckResult)
-        //{
+        //if both triangles exist and have the same triangle split state
+        if (isBothTrianglesExist && tri1CheckResult == tri2CheckResult)
+        {
+            organizeFaceBasedOnTriangleSplitState(worldMatrix, tri1CheckResult, faces[i]);
+        }
+        //if both triangles exist but one triangle is intersecting but the other is either above or below the splitting plane
+        else if (isBothTrianglesExist && tri1CheckResult != tri2CheckResult)
+        {
 
-        //    Vector3 worldV0 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v0]);
-        //    Vector3 worldV1 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v1]);
-        //    Vector3 worldV2 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri1.v2]);
+            Vector3[] worldTrianglePointPositions = new Vector3[6];
+            worldTrianglePointPositions[0] = worldMatrix.MultiplyPoint(meshVertices[faces[i].tri1.v0]);
+            worldTrianglePointPositions[1] = worldMatrix.MultiplyPoint(meshVertices[faces[i].tri1.v1]);
+            worldTrianglePointPositions[2] = worldMatrix.MultiplyPoint(meshVertices[faces[i].tri1.v2]);
+            worldTrianglePointPositions[3] = worldMatrix.MultiplyPoint(meshVertices[faces[i].tri2.v0]);
+            worldTrianglePointPositions[4] = worldMatrix.MultiplyPoint(meshVertices[faces[i].tri2.v1]);
+            worldTrianglePointPositions[5] = worldMatrix.MultiplyPoint(meshVertices[faces[i].tri2.v2]);
 
-        //    Vector3 worldV3 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v0]);
-        //    Vector3 worldV4 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v1]);
-        //    Vector3 worldV5 = worldMatrix.MultiplyPoint(mesh.vertices[face.tri2.v2]);
+            intersectingFaceSplit(faces[i], worldTrianglePointPositions);
 
-        //    Vector3[] worldTrianglePointPositions = new Vector3[6];
-        //    worldTrianglePointPositions[0] = worldV0;
-        //    worldTrianglePointPositions[1] = worldV1;
-        //    worldTrianglePointPositions[2] = worldV2;
-        //    worldTrianglePointPositions[3] = worldV3;
-        //    worldTrianglePointPositions[4] = worldV4;
-        //    worldTrianglePointPositions[5] = worldV5;
-
-        //    intersectingFaceSplit(worldMatrix, face, position, normal, worldTrianglePointPositions, lowerMesh, upperMesh);
-
-        //}
-        ////one of the triangles in the face do not exist ( this face only has one triangle)
-        //else if (!isBothTrianglesExist)
-        //{
-        //    if (hasTriangle1)
-        //    {
-        //        FindDecisionForSingularTriangle(worldMatrix, tri1CheckResult, face.tri1, position, normal, lowerMesh, upperMesh);
-        //    }
-        //    if (hasTriangle2)
-        //    {
-        //        FindDecisionForSingularTriangle(worldMatrix, tri2CheckResult, face.tri2, position, normal, lowerMesh, upperMesh);
-        //    }
-        //}
+        }
+        //one of the triangles in the face do not exist ( this face only has one triangle)
+        else if (!isBothTrianglesExist)
+        {
+            if (hasTriangle1)
+            {
+                FindDecisionForSingularTriangle(tri1CheckResult, faces[i].tri1,i);
+            }
+            if (hasTriangle2)
+            {
+                FindDecisionForSingularTriangle(tri2CheckResult, faces[i].tri2,i);
+            }
+        }
     }
 
     private TriangleSplitState triangleToPlaneCheck(Vector3 transformedV0, Vector3 transformedV1, Vector3 transformedV2, Vector3 position, Vector3 normal)
@@ -138,50 +211,811 @@ struct faceToPrimitiveMeshJob : IJobParallelFor
         {
             return TriangleSplitState.IntersectionOnPlane;
         }
-
+        
     }
 
-    private void organizeFaceBasedOnTriangleSplitState(Matrix4x4 world, TriangleSplitState state, Face face, Vector3 position,
-        Vector3 normal, PrimitiveMesh upperPrimitiveMesh, PrimitiveMesh lowerPrimitiveMesh)
+    private void organizeFaceBasedOnTriangleSplitState(Matrix4x4 world, TriangleSplitState state, Face face)
     {
 
-        Vector3 worldV0 = world.MultiplyPoint(meshVertices[face.tri1.v0]);
-        Vector3 worldV1 = world.MultiplyPoint(meshVertices[face.tri1.v1]);
-        Vector3 worldV2 = world.MultiplyPoint(meshVertices[face.tri1.v2]);
+        switch (state)
+        {
+            case TriangleSplitState.AbovePlane:
+                JobFace jf;
+                jf.isFilled = true;
+                jf.jt1 = face.tri1.ToJobTriangle(meshVertices, meshNormals, meshUVs);
+                jf.jt2 = face.tri2.ToJobTriangle(meshVertices, meshNormals, meshUVs);
 
-        Vector3 worldV3 = world.MultiplyPoint(meshVertices[face.tri2.v0]);
-        Vector3 worldV4 = world.MultiplyPoint(meshVertices[face.tri2.v1]);
-        Vector3 worldV5 = world.MultiplyPoint(meshVertices[face.tri2.v2]);
+                upperMesh.Enqueue(jf);
 
-        //switch (state)
-        //{
-        //    case TriangleSplitState.AbovePlane:
-        //        upperPrimitiveMesh.AddFaceFrom(this, face);
+                break;
 
-        //        break;
+            case TriangleSplitState.BelowPlane:
+                JobFace jf2;
+                jf2.isFilled = true;
+                jf2.jt1 = face.tri1.ToJobTriangle(meshVertices, meshNormals, meshUVs);
+                jf2.jt2 = face.tri2.ToJobTriangle(meshVertices, meshNormals, meshUVs);
 
-        //    case TriangleSplitState.BelowPlane:
-        //        lowerPrimitiveMesh.AddFaceFrom(this, face);
+                lowerMesh.Enqueue(jf2);
 
-        //        break;
+                break;
 
-        //    case TriangleSplitState.IntersectionOnPlane:
+            case TriangleSplitState.IntersectionOnPlane:
 
-        //        Vector3[] worldTrianglePointPositions = new Vector3[6];
-        //        worldTrianglePointPositions[0] = worldV0;
-        //        worldTrianglePointPositions[1] = worldV1;
-        //        worldTrianglePointPositions[2] = worldV2;
-        //        worldTrianglePointPositions[3] = worldV3;
-        //        worldTrianglePointPositions[4] = worldV4;
-        //        worldTrianglePointPositions[5] = worldV5;
+                Vector3[] worldTrianglePointPositions = new Vector3[6];
+                worldTrianglePointPositions[0] = worldMatrix.MultiplyPoint(meshVertices[face.tri1.v0]);
+                worldTrianglePointPositions[1] = worldMatrix.MultiplyPoint(meshVertices[face.tri1.v1]);
+                worldTrianglePointPositions[2] = worldMatrix.MultiplyPoint(meshVertices[face.tri1.v2]);
+                worldTrianglePointPositions[3] = worldMatrix.MultiplyPoint(meshVertices[face.tri2.v0]);
+                worldTrianglePointPositions[4] = worldMatrix.MultiplyPoint(meshVertices[face.tri2.v1]);
+                worldTrianglePointPositions[5] = worldMatrix.MultiplyPoint(meshVertices[face.tri2.v2]);
 
+                
+                intersectingFaceSplit( face, worldTrianglePointPositions);
 
-        //        intersectingFaceSplit(world, face, position, normal, worldTrianglePointPositions, lowerPrimitiveMesh, upperPrimitiveMesh);
-
-        //        break;
+                break;
 
 
 
-        //}
+        }
     }
+
+    private void intersectingFaceSplit( Face face, Vector3[] worldTrianglePointPositions)
+    {
+        List<Vector3> foundIntersectionPoint;
+        UnOptimizedGetFaceToPlaneIntersectionPoints( face, position, normal, out foundIntersectionPoint);
+
+        int[] faceIndices = face.ToIntArray();
+
+        bool[] triangleState = CheckIfPointsAreAbovePlane(worldTrianglePointPositions, position, normal);
+
+        List<int> trianglesAboveSplittingPlane = new List<int>();
+        List<int> trianglesBelowSplittingPlane = new List<int>();
+
+        //for each triangleState
+        for (int i = 0; i < triangleState.Length; i++)
+        {
+            if (triangleState[i])
+            {
+                trianglesAboveSplittingPlane.Add(faceIndices[i]);
+            }
+            else
+            {
+                trianglesBelowSplittingPlane.Add(faceIndices[i]);
+            }
+        }
+
+        List<int> uniqueTrianglesAboveSplittingPlane = GetUniqueVertices(trianglesAboveSplittingPlane);
+        List<int> uniqueTrianglesBelowSplittingPlane = GetUniqueVertices(trianglesBelowSplittingPlane);
+        List<Vector3> uniqueIntersectionPoints = GetUniqueVector3Collection(foundIntersectionPoint);
+
+        //create bottom faces
+        Vector3 basePosition;
+        Vector3 baseDirection;
+
+        if (uniqueTrianglesBelowSplittingPlane.Count < 2 && uniqueTrianglesAboveSplittingPlane.Count < 2) { return; }
+        if (uniqueIntersectionPoints.Count < 2) { return; }
+
+        basePosition = preCutCentroid;
+        baseDirection = Vector3.Cross(Vector3.up, (worldTrianglePointPositions[0] - preCutCentroid)).normalized;
+
+        IntersectionComparer ic = new IntersectionComparer
+            (baseDirection, basePosition, worldMatrix);
+
+        IndexDirectionComparer idc = new IndexDirectionComparer((uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0]).normalized
+        ,basePosition, meshVertices.ToArray(), worldMatrix);
+
+        uniqueIntersectionPoints.Sort(ic);
+
+        Vector3 belowTriangleCentroid = GetWorldTriangleCentroid(uniqueTrianglesBelowSplittingPlane);
+        Vector3 aboveTriangleCentroid = GetWorldTriangleCentroid(uniqueTrianglesAboveSplittingPlane);
+
+        idc.basePosition = uniqueIntersectionPoints[0];
+        uniqueTrianglesBelowSplittingPlane.Sort(idc);
+
+        idc.basePosition = uniqueIntersectionPoints[0];
+        uniqueTrianglesAboveSplittingPlane.Sort(idc);
+
+
+        List<Vector3> intersectionPoints = new List<Vector3>();
+
+        intersectionPoints.Add(uniqueIntersectionPoints[0]);
+        intersectionPoints.Add(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]);
+
+
+        //------------------------------- create bottom part----------------------------------------------------//
+
+        Vector3 intersectionDirection = intersectionPoints[1] - intersectionPoints[0];
+
+        Vector3 vertexDirection =
+             worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesBelowSplittingPlane[uniqueTrianglesBelowSplittingPlane.Count - 1]]) -
+             worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesBelowSplittingPlane[0]])
+           ;
+
+        if (Vector3.Dot(intersectionDirection, baseDirection) < 0)
+        {
+            intersectionPoints.Reverse();
+        }
+
+        if (Vector3.Dot(vertexDirection, intersectionDirection) < 0)
+        {
+            uniqueTrianglesBelowSplittingPlane.Reverse();
+        }
+
+        assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesBelowSplittingPlane, false, lowerMesh);
+
+        //------------------------------- create above part----------------------------------------------------//
+
+        Vector3 intersectionDirection2 = intersectionPoints[1] - intersectionPoints[0];
+
+        Vector3 vertexDirection2 =
+             worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesAboveSplittingPlane[uniqueTrianglesAboveSplittingPlane.Count - 1]]) -
+             worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesAboveSplittingPlane[0]]);
+
+        if (Vector3.Dot(intersectionDirection2, baseDirection) < 0)
+        {
+            intersectionPoints.Reverse();
+        }
+
+        if (Vector3.Dot(vertexDirection2, intersectionDirection2) < 0)
+        {
+            uniqueTrianglesAboveSplittingPlane.Reverse();
+        }
+
+        assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesAboveSplittingPlane, true, upperMesh);
+
+        //store vertices restoring the hole that will be generated after cutting the mesh
+        IndividualVertex v0 = new IndividualVertex(Matrix4x4.Inverse(worldMatrix).MultiplyPoint(intersectionPoints[0]), Vector3.up, Vector2.zero);
+        IndividualVertex v1 = new IndividualVertex(
+            Matrix4x4.Inverse(worldMatrix).MultiplyPoint(intersectionPoints[intersectionPoints.Count - 1]),
+            Vector3.up, Vector2.zero);
+        MeshLidPairing lidPairing = new MeshLidPairing(v0, v1);
+
+        //TODO Impelement threading for lid pairings
+        //lidPairings.Add(lidPairing);
+
+    }
+
+
+    private List<int> GetUniqueVertices(List<int> nonUniqueIndiceList)
+    {
+        List<int> uniqueVertices = new List<int>();
+        List<Vector3> seenVertices = new List<Vector3>();
+
+
+        for (int i = 0; i < nonUniqueIndiceList.Count; i++)
+        {
+            bool hasSeenVertex = false;
+            Vector3 vertexToTest = meshVertices[nonUniqueIndiceList[i]];
+
+            foreach (Vector3 vertex in seenVertices)
+            {
+                if (vertexToTest.Equals(vertex))
+                {
+                    hasSeenVertex = true;
+                    break;
+                }
+            }
+
+            if (!hasSeenVertex)
+            {
+                //Debug.Log("unique vertex found  ")
+                seenVertices.Add(meshVertices[nonUniqueIndiceList[i]]);
+                uniqueVertices.Add(nonUniqueIndiceList[i]);
+            }
+
+
+
+        }
+
+        return uniqueVertices;
+    }
+
+    private List<Vector3> GetUniqueVector3Collection(List<Vector3> nonUniqueCollection)
+    {
+        List<Vector3> uniqueCollection = new List<Vector3>();
+
+        for (int i = 0; i < nonUniqueCollection.Count; i++)
+        {
+            bool hasSeenElement = false;
+
+            foreach (var vertex in uniqueCollection)
+            {
+                if ((nonUniqueCollection[i] - vertex).magnitude < 0.001f)
+                {
+                    hasSeenElement = true;
+                    break;
+                }
+            }
+
+            if (!hasSeenElement)
+            {
+                uniqueCollection.Add(nonUniqueCollection[i]);
+            }
+
+        }
+
+        return uniqueCollection;
+    }
+
+    private void UnOptimizedGetFaceToPlaneIntersectionPoints(Face face, Vector3 position, Vector3 normal, out List<Vector3> intersectionPoints)
+    {
+        intersectionPoints = new List<Vector3>();
+
+        Vector3 worldV0 = worldMatrix.MultiplyPoint(meshVertices[face.tri1.v0]);
+        Vector3 worldV1 = worldMatrix.MultiplyPoint(meshVertices[face.tri1.v1]);
+        Vector3 worldV2 = worldMatrix.MultiplyPoint(meshVertices[face.tri1.v2]);
+
+        Vector3 worldV3 = worldMatrix.MultiplyPoint(meshVertices[face.tri2.v0]);
+        Vector3 worldV4 = worldMatrix.MultiplyPoint(meshVertices[face.tri2.v1]);
+        Vector3 worldV5 = worldMatrix.MultiplyPoint(meshVertices[face.tri2.v2]);
+
+        List<Vector3> triangleIntersectionPoints = UnOptimizedFindTriangleToPlaneIntersectionPoint
+            (worldV0, worldV1, worldV2, position, normal);
+
+        List<Vector3> secondTriangleIntersectionPoints = UnOptimizedFindTriangleToPlaneIntersectionPoint
+            (worldV3, worldV4, worldV5, position, normal);
+
+
+        foreach (var intersectionPoint in triangleIntersectionPoints)
+        {
+
+            intersectionPoints.Add(intersectionPoint);
+        }
+
+        foreach (var intersectionPoint in secondTriangleIntersectionPoints)
+        {
+            intersectionPoints.Add(intersectionPoint);
+
+        }
+
+    }
+
+    private List<Vector3> UnOptimizedFindTriangleToPlaneIntersectionPoint(Vector3 transformedV0, Vector3 transformedV1, Vector3 transformedV2, Vector3 position, Vector3 normal)
+    {
+        List<Vector3> result = new List<Vector3>();
+
+        Vector3 intersection1;
+        if (UnOptimizedFindLineToPlaneIntersection(transformedV0, transformedV1, position, normal, out intersection1) ||
+            UnOptimizedFindLineToPlaneIntersection(transformedV1, transformedV0, position, normal, out intersection1)
+            )
+        {
+            result.Add(intersection1);
+        }
+
+        Vector3 intersection2;
+        if (UnOptimizedFindLineToPlaneIntersection(transformedV1, transformedV2, position, normal, out intersection2) ||
+            UnOptimizedFindLineToPlaneIntersection(transformedV2, transformedV1, position, normal, out intersection2)
+            )
+        {
+            result.Add(intersection2);
+        }
+
+        Vector3 intersection3;
+        if (UnOptimizedFindLineToPlaneIntersection(transformedV2, transformedV0, position, normal, out intersection3) ||
+             UnOptimizedFindLineToPlaneIntersection(transformedV0, transformedV2, position, normal, out intersection3)
+            )
+        {
+            result.Add(intersection3);
+        }
+
+        return result;
+    }
+
+    private bool UnOptimizedFindLineToPlaneIntersection(Vector3 transformedV0, Vector3 transformedV1, Vector3 position, Vector3 normal, out Vector3 intersection)
+    {
+        Vector3 lineToUse = transformedV1 - transformedV0;
+
+        Vector3 P0 = transformedV0;
+        Vector3 P1 = lineToUse.normalized;
+        Vector3 A = position;
+
+        float t = (Vector3.Dot(A, normal) - Vector3.Dot(P0, normal)) / Vector3.Dot(P1, normal);
+
+        intersection = P0 + P1 * t;
+
+        return t > 0.0f && t < lineToUse.magnitude;
+
+    }
+
+    private void FindDecisionForSingularTriangle( TriangleSplitState state, Triangle tri,int executeIndex)
+    {
+        switch (state)
+        {
+            case TriangleSplitState.AbovePlane:
+                JobFace jobFace;
+                jobFace.isFilled = true;
+                jobFace.jt1 = tri.ToJobTriangle(meshVertices, meshNormals, meshUVs);
+
+                jobFace.jt2 = jobFace.jt1;
+                jobFace.jt2.isFilled = false;
+
+                upperMesh.Enqueue(jobFace);
+
+                break;
+
+            case TriangleSplitState.BelowPlane:
+                JobFace jobFace2;
+                jobFace2.isFilled = true;
+                jobFace2.jt1 = tri.ToJobTriangle(meshVertices, meshNormals, meshUVs);
+
+                jobFace2.jt2 = jobFace2.jt1;
+                jobFace2.jt2.isFilled = false;
+
+                lowerMesh.Enqueue(jobFace2);
+
+
+                break;
+
+            case TriangleSplitState.IntersectionOnPlane:
+
+                Vector3 worldV0 = worldMatrix.MultiplyPoint(meshVertices[tri.v0]);
+                Vector3 worldV1 = worldMatrix.MultiplyPoint(meshVertices[tri.v1]);
+                Vector3 worldV2 = worldMatrix.MultiplyPoint(meshVertices[tri.v2]);
+                Vector3[] worldTrianglePointPositions = new Vector3[3];
+                worldTrianglePointPositions[0] = worldV0;
+                worldTrianglePointPositions[1] = worldV1;
+                worldTrianglePointPositions[2] = worldV2;
+
+                Profiler.BeginSample("intersectingTriangleSplit");
+                intersectingTriangleSplit( tri, worldTrianglePointPositions, executeIndex);
+                Profiler.EndSample();
+
+                break;
+        }
+    }
+
+    private void intersectingTriangleSplit(Triangle tri, Vector3[] worldTrianglePointPositions,int executeIndex)
+    {
+        //find unique intersection points
+
+        Profiler.BeginSample("UnOptimizedFindTriangleToPlaneIntersectionPoint");
+
+        List<Vector3> uniqueIntersectionPoints = UnOptimizedFindTriangleToPlaneIntersectionPoint
+            (worldTrianglePointPositions[0], worldTrianglePointPositions[1], worldTrianglePointPositions[2], position, normal);
+
+        Profiler.EndSample();
+
+
+        if (uniqueIntersectionPoints.Count < 2) { return; }
+
+        //----------- Get Points that are above the splitting plane and below the splitting plane--------------//
+
+        bool[] triangleState = CheckIfPointsAreAbovePlane(worldTrianglePointPositions, position, normal);
+
+        List<int> uniqueTrianglesAboveSplittingPlane = new List<int>();
+        List<int> uniqueTrianglesBelowSplittingPlane = new List<int>();
+
+        int[] faceIndices = tri.ToIntArray();
+        //for each triangleState
+        for (int i = 0; i < triangleState.Length; i++)
+        {
+            if (triangleState[i])
+            {
+                uniqueTrianglesAboveSplittingPlane.Add(faceIndices[i]);
+            }
+            else
+            {
+                uniqueTrianglesBelowSplittingPlane.Add(faceIndices[i]);
+            }
+
+        }
+
+
+        //sort unique intersection points based on the vector parallel to the vector resulting from the cross product of the world up 
+        //(0,1,0) and one of the vertices of the intersection points
+
+        Profiler.BeginSample("Sorting");
+
+        Vector3 basePosition = preCutCentroid;
+        Vector3 baseDirection = Vector3.Cross(Vector3.up, (worldTrianglePointPositions[0] - preCutCentroid)).normalized;
+
+        IntersectionComparer ic = new IntersectionComparer(baseDirection, basePosition, worldMatrix);
+        uniqueIntersectionPoints.Sort(ic);
+
+        //sort the points above and below the splitting plane based on the vector created by the last element of the intersectionPoint 
+        //Collection and the first element in the Vector3 Collection
+
+        baseDirection = (uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0]).normalized;
+
+        IndexDirectionComparer idc = new IndexDirectionComparer(baseDirection
+            , basePosition, meshVertices.ToArray(), worldMatrix);
+
+        uniqueTrianglesAboveSplittingPlane.Sort(idc);
+
+        Profiler.EndSample();
+
+
+        //check one more time, check if points and intersection points are ordered in the right direction
+
+        Vector3 intersectionDirection = uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0];
+
+        Vector3 vertexDirection =
+             worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesBelowSplittingPlane[uniqueTrianglesBelowSplittingPlane.Count - 1]]) -
+             worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesBelowSplittingPlane[0]])
+           ;
+
+        if (Vector3.Dot(intersectionDirection, baseDirection) < 0)
+        {
+            uniqueIntersectionPoints.Reverse();
+        }
+
+        if (Vector3.Dot(vertexDirection, intersectionDirection) < 0)
+        {
+            uniqueTrianglesBelowSplittingPlane.Reverse();
+        }
+
+
+        assembleFacesFromSplitVertices(uniqueIntersectionPoints, uniqueTrianglesBelowSplittingPlane, false,lowerMesh);
+
+        //use the points above the spllitting plane and the intersection points to create the triangle that will be placed in the upperPrimitiveMesh
+
+
+        Vector3 vertexDirection2 =
+           worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesAboveSplittingPlane[uniqueTrianglesAboveSplittingPlane.Count - 1]]) -
+           worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesAboveSplittingPlane[0]]);
+
+        if (Vector3.Dot(intersectionDirection, baseDirection) < 0)
+        {
+            uniqueIntersectionPoints.Reverse();
+        }
+
+        if (Vector3.Dot(vertexDirection2, intersectionDirection) < 0)
+        {
+            uniqueTrianglesAboveSplittingPlane.Reverse();
+        }
+
+        assembleFacesFromSplitVertices(uniqueIntersectionPoints, uniqueTrianglesAboveSplittingPlane, true,  upperMesh);
+
+        //use the points below the splitting plane and the intersection points to create the triangle that will be placed in the lowerPrimitiveMesh
+
+
+        IndividualVertex v0 = new IndividualVertex(Matrix4x4.Inverse(worldMatrix).MultiplyPoint(uniqueIntersectionPoints[0]), Vector3.up, Vector2.zero);
+        IndividualVertex v1 = new IndividualVertex(
+            Matrix4x4.Inverse(worldMatrix).MultiplyPoint(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]),
+            Vector3.up, Vector2.zero);
+        MeshLidPairing lidPairing = new MeshLidPairing(v0, v1);
+
+        //lidPairings.Add(lidPairing);
+
+        //DEBUG_intersectionVertices.Add(uniqueIntersectionPoints[0]);
+        //DEBUG_intersectionVertices.Add(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]);
+
+
+
+
+    }
+
+    private bool[] CheckIfPointsAreAbovePlane(Vector3[] worldTrianglePoints, Vector3 position, Vector3 normal)
+    {
+        bool[] result = new bool[worldTrianglePoints.Length];
+
+        for (int i = 0; i < worldTrianglePoints.Length; i++)
+        {
+            result[i] = Utils.IsPointAbovePlane(worldTrianglePoints[i], position, normal);
+        }
+
+        return result;
+    }
+
+    private Vector3 GetWorldTriangleCentroid(List<int> indices)
+    {
+        Vector3 result = Vector3.zero;
+        foreach (var x in indices)
+        {
+            result += meshVertices[x];
+        }
+
+        result /= indices.Count;
+
+
+        return worldMatrix.MultiplyPoint(result);
+    }
+
+    private void assembleFacesFromSplitVertices(List<Vector3> uniqueIntersectionPoints, List<int> trianglesInSplitPlane, 
+        bool isIntersectionPointBottomLeftVertex, NativeQueue<JobFace>.ParallelWriter meshToPopulate)
+    {
+        Matrix4x4 inverseWorld = Matrix4x4.Inverse(worldMatrix);
+
+        int iterationCount = uniqueIntersectionPoints.Count > trianglesInSplitPlane.Count ? uniqueIntersectionPoints.Count : trianglesInSplitPlane.Count;
+
+        List<ConnectionTypeToCentroid> types = new List<ConnectionTypeToCentroid>();
+
+        for (int i = 0; i < iterationCount - 1; i++)
+        {
+            int currentItersectionPointI = CuttableTreeScript.GetCurrentIndex(uniqueIntersectionPoints.Count, i);
+            Vector3 objectSpaceItersectionPoint = inverseWorld.MultiplyPoint(uniqueIntersectionPoints.ElementAt(currentItersectionPointI));
+
+            bool nextIntersectionPointExist = i + 1 < uniqueIntersectionPoints.Count;
+            bool nextTrianglePointExist = i + 1 < trianglesInSplitPlane.Count;
+
+            JobVertex bottomLeftVertex;
+            JobVertex upperLeftVertex;
+
+            if (nextTrianglePointExist && nextIntersectionPointExist)
+            {
+                JobVertex bottomRightVertex;
+                JobVertex upperRightVertex;
+
+                Vector3 nextObjectSpaceIntersectionPoint = inverseWorld.MultiplyPoint(uniqueIntersectionPoints.ElementAt(i + 1));
+
+                //all intersection points are bottom, triangles points are upper
+                if (isIntersectionPointBottomLeftVertex)
+                {
+
+                    upperLeftVertex = new JobVertex();
+                    upperLeftVertex.Init(meshVertices, meshNormals, meshUVs,trianglesInSplitPlane[i]);
+
+                    upperRightVertex = new JobVertex();
+                    upperRightVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[i + 1]);
+
+                    bottomLeftVertex = new JobVertex();
+                    bottomLeftVertex.Init(objectSpaceItersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+
+                    bottomRightVertex = new JobVertex();
+                    bottomRightVertex.Init(nextObjectSpaceIntersectionPoint, upperRightVertex.normal, new Vector2(1, 1));
+
+                    JobTriangle tri1 = new JobTriangle();
+                    tri1.Init(bottomLeftVertex, upperLeftVertex, upperRightVertex);
+
+                    JobTriangle tri2 = new JobTriangle();
+                    tri2.Init(bottomLeftVertex, upperRightVertex, bottomRightVertex);
+
+                    if (tri1.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 1, 2))
+                    {
+
+                    }
+
+                    if (tri2.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 0, 2))
+                    {
+
+                    }
+
+
+                    JobFace jobFace;
+                    jobFace.jt1 = tri1;
+                    jobFace.jt2 = tri2;
+                    jobFace.isFilled = true;
+
+                    //store its position and connection type
+                    ConnectionTypeToCentroid tri1Type;
+                    tri1Type.objectSpaceCentroid = tri1.GetObjectSpaceCentroid();
+                    tri1Type.tct = TriangleConnectionType.DoubleOriginalPoint;
+
+                    ConnectionTypeToCentroid tri2Type;
+                    tri2Type.objectSpaceCentroid = tri2.GetObjectSpaceCentroid();
+                    tri2Type.tct = TriangleConnectionType.DoubleIntersection;
+
+                    types.Add(tri1Type);
+                    types.Add(tri2Type);
+
+                    meshToPopulate.Enqueue(jobFace);
+                }
+                //all intersection points are upper, triangles points are bottom
+                else
+                {
+                    bottomLeftVertex = new JobVertex();
+                    bottomLeftVertex.Init(meshVertices, meshNormals, meshUVs,trianglesInSplitPlane[i]);
+
+                    bottomRightVertex = new JobVertex();
+                    bottomRightVertex.Init(meshVertices, meshNormals, meshUVs,trianglesInSplitPlane[i+1]);
+
+                    upperLeftVertex = new JobVertex();
+                    upperLeftVertex.Init(objectSpaceItersectionPoint, bottomLeftVertex.normal, new Vector2(1, 1));
+
+                    upperRightVertex = new JobVertex();
+                    upperRightVertex.Init(nextObjectSpaceIntersectionPoint, bottomRightVertex.normal, new Vector2(1, 1));
+
+                    JobTriangle tri1= new JobTriangle();
+                    JobTriangle tri2 = new JobTriangle();
+
+                    tri1.Init(bottomLeftVertex, upperLeftVertex, upperRightVertex);
+                    tri2.Init(bottomLeftVertex, upperRightVertex, bottomRightVertex);
+
+                    if (tri1.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 1, 2))
+                    {
+                        tri2.v1 = upperLeftVertex;
+                    }
+
+                    if (tri2.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 0, 2))
+                    {
+                        tri2.v1 = upperRightVertex;
+                    }
+
+                    JobFace jobFace;
+                    jobFace.jt1 = tri1;
+                    jobFace.jt2 = tri2;
+                    
+                    jobFace.isFilled = true;
+
+                    ConnectionTypeToCentroid tri1Type;
+                    tri1Type.objectSpaceCentroid = tri1.GetObjectSpaceCentroid();
+                    tri1Type.tct = TriangleConnectionType.DoubleIntersection;
+
+                    ConnectionTypeToCentroid tri2Type;
+                    tri2Type.objectSpaceCentroid = tri2.GetObjectSpaceCentroid();
+                    tri2Type.tct = TriangleConnectionType.DoubleOriginalPoint;
+
+                    types.Add(tri1Type);
+                    types.Add(tri2Type);
+
+                    meshToPopulate.Enqueue(jobFace);
+
+                }
+
+
+            }
+            else
+            {
+                JobVertex bottomRightVertex;
+                JobVertex upperRightVertex;
+
+                int currentTriangleIndex = CuttableTreeScript.GetCurrentIndex(trianglesInSplitPlane.Count, i);
+
+                if (nextIntersectionPointExist)
+                {
+                    Vector3 nextObjectSpaceIntersectionPoint = inverseWorld.MultiplyPoint(uniqueIntersectionPoints.ElementAt(i + 1));
+
+                    //all intersection points are bottom, triangles points are upper
+                    if (isIntersectionPointBottomLeftVertex)
+                    {
+                        upperLeftVertex = new JobVertex();
+                        upperLeftVertex.Init(meshVertices, meshNormals, meshUVs,trianglesInSplitPlane[currentTriangleIndex]);
+
+                        bottomLeftVertex = new JobVertex();
+                        bottomLeftVertex.Init(objectSpaceItersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+
+                        bottomRightVertex = new JobVertex();
+                        bottomRightVertex.Init(nextObjectSpaceIntersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+
+                        JobTriangle tri1 = new JobTriangle();
+                        JobTriangle tri2 = new JobTriangle();
+
+                        tri1.Init(upperLeftVertex, bottomRightVertex, bottomLeftVertex);
+                        tri1.AttemptNormalBasedVertexCorrection(upperLeftVertex.normal, 1, 2);
+
+                        JobFace jobFace = new JobFace();
+                        jobFace.jt1 = tri1;
+                        jobFace.jt2 = tri2;
+                        jobFace.isFilled = true;
+
+                        meshToPopulate.Enqueue(jobFace);
+
+                    }
+                    //all intersection points are upper, triangles points are bottom
+                    else
+                    {
+                        bottomLeftVertex = new JobVertex();
+                        bottomLeftVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[currentTriangleIndex]);
+
+                        upperLeftVertex = new JobVertex();
+                        upperLeftVertex.Init(objectSpaceItersectionPoint, bottomLeftVertex.normal, new Vector2(1, 1));
+
+                        upperRightVertex = new JobVertex();
+                        upperRightVertex.Init(nextObjectSpaceIntersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+
+                        JobTriangle tri1 = new JobTriangle();
+                        JobTriangle tri2 = new JobTriangle();
+                        tri1.Init(bottomLeftVertex, upperLeftVertex, upperRightVertex);
+                        tri1.AttemptNormalBasedVertexCorrection(upperLeftVertex.normal, 1, 2);
+
+
+                        JobFace jobFace = new JobFace();
+                        jobFace.jt1 = tri1;
+                        jobFace.jt2 = tri2;
+                        jobFace.isFilled = true;
+
+                        meshToPopulate.Enqueue(jobFace);
+                    }
+                }
+                //
+                if (nextTrianglePointExist)
+                {
+                    //all intersection points are bottom, triangles points are upper
+                    if (isIntersectionPointBottomLeftVertex)
+                    {
+                        bottomLeftVertex = new JobVertex();
+                        bottomLeftVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[currentTriangleIndex]);
+
+                        bottomRightVertex = new JobVertex();
+                        bottomRightVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[currentTriangleIndex+1]);
+
+
+                        TriangleConnectionType tct = GetClosestConnectionTypeByCentroidProjection(uniqueIntersectionPoints[0], 
+                            (uniqueIntersectionPoints[1] - uniqueIntersectionPoints[0]).normalized, types);
+
+                        upperRightVertex = new JobVertex();
+
+                        ConnectionTypeToCentroid tri1Type = new ConnectionTypeToCentroid();
+                        
+
+                        if (tct == TriangleConnectionType.DoubleOriginalPoint)
+                        {
+
+                            tri1Type.tct = TriangleConnectionType.DoubleIntersection;
+                            upperRightVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[currentTriangleIndex - 1]);
+                        }
+                        if (tct == TriangleConnectionType.DoubleIntersection)
+                        {
+                            tri1Type.tct = TriangleConnectionType.DoubleOriginalPoint;
+                            upperRightVertex.Init(objectSpaceItersectionPoint, bottomLeftVertex.normal, new Vector2(1, 1));
+                        }
+
+
+                        JobTriangle tri1 = new JobTriangle();
+                        JobTriangle tri2 = new JobTriangle();
+
+                        tri1.Init(bottomLeftVertex, upperRightVertex, bottomRightVertex);
+                        tri1.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 0, 2);
+
+
+                        JobFace jobFace = new JobFace();
+                        jobFace.jt1 = tri1;
+                        jobFace.jt2 = tri2;
+                        jobFace.isFilled = true;
+
+                        meshToPopulate.Enqueue(jobFace);
+
+                        
+                        tri1Type.objectSpaceCentroid = tri1.GetObjectSpaceCentroid();
+                        types.Add(tri1Type);
+
+                        
+
+                    }
+                    //all intersection points are upper, triangles points are bottom
+                    else
+                    {
+                        upperLeftVertex = new JobVertex();
+                        upperLeftVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[currentTriangleIndex]);
+
+                        upperRightVertex = new JobVertex();
+                        upperRightVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[currentTriangleIndex + 1]);
+
+                        bottomLeftVertex = new JobVertex();
+                        bottomLeftVertex.Init(objectSpaceItersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+
+                        JobTriangle tri1 = new JobTriangle();
+                        JobTriangle tri2 = new JobTriangle();
+
+                        tri1.Init(bottomLeftVertex, upperLeftVertex, upperRightVertex);
+                        tri1.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 1, 2);
+
+
+                        JobFace jobFace = new JobFace();
+                        jobFace.jt1 = tri1;
+                        jobFace.jt2 = tri2;
+                        jobFace.isFilled = true;
+
+                        meshToPopulate.Enqueue(jobFace);
+
+                    }
+                }
+
+            }
+        }
+    }
+
+    public TriangleConnectionType GetClosestConnectionTypeByCentroidProjection(Vector3 basePosition, Vector3 desiredDirection, List<ConnectionTypeToCentroid> cttc)
+    {
+        TriangleConnectionType tct = TriangleConnectionType.DefaultNoType;
+        float closestConnectionLength = float.MinValue;
+
+        foreach (ConnectionTypeToCentroid singleTypeToCentroid in cttc)
+        {
+            Vector3 worldSpaceCentroid = worldMatrix.MultiplyPoint(singleTypeToCentroid.objectSpaceCentroid);
+            Vector3 currentDirection = (worldSpaceCentroid - basePosition).normalized;
+
+            float currentFoundClosest = Vector3.Dot(currentDirection, desiredDirection);
+
+            if (currentFoundClosest > closestConnectionLength)
+            {
+                closestConnectionLength = currentFoundClosest;
+                tct = singleTypeToCentroid.tct;
+            }
+
+        }
+        return tct;
+    }
+
+
 }
