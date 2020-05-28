@@ -50,7 +50,6 @@
             <e p="SortingAlgorithmRelated.cs" t="Include" />
           </e>
           <e p="DebugDrawerInterface.cs" t="Include" />
-          <e p="LayerOrganizer.cs" t="Include" />
           <e p="MapZoomIn.cs" t="Include" />
           <e p="ObjectPlacerEditor.cs" t="Include" />
           <e p="Optimizations" t="Include">
@@ -66,6 +65,7 @@
           <e p="Utils.cs" t="Include" />
           <e p="VectorDebugShow.cs" t="Include" />
           <e p="WeirdExperimentalShit" t="Include">
+            <e p="LayerOrganizer.cs" t="Include" />
             <e p="MeshVisualizer.cs" t="Include" />
             <e p="UnityJobSystemTest.cs" t="Include" />
           </e>

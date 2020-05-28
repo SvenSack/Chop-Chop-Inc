@@ -50,7 +50,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/TreeFallParticle.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
+            <state relative-caret-position="300">
               <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
               <folding>
                 <marker date="1590504131983" expanded="true" signature="65:887" ph="{...}" />
@@ -79,25 +79,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/LayerOrganizer.cs">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/WeirdExperimentalShit/LayerOrganizer.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="53" column="84" selection-start-line="53" selection-start-column="84" selection-end-line="53" selection-end-column="84" />
+            <state relative-caret-position="393">
+              <caret line="117" column="25" lean-forward="true" selection-start-line="117" selection-start-column="25" selection-end-line="117" selection-end-column="25" />
               <folding>
-                <marker date="1590594088719" expanded="true" signature="6:92" ph="..." />
-                <marker date="1590594088719" expanded="true" signature="137:1821" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="239:470" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="347:417" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="541:576" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="649:703" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="748:818" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="850:1672" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="1045:1666" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="1111:1656" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="1173:1642" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="1364:1624" ph="{...}" />
-                <marker date="1590594088719" expanded="true" signature="1411:1602" ph="/* perform magic/raycasts to figure out if the animal is actually in a location reasonably possibly behind ... */" />
-                <marker date="1590594088719" expanded="true" signature="1720:1819" ph="{...}" />
+                <marker date="1590667519982" expanded="false" signature="6:92" ph="..." />
+                <marker date="1590667519982" expanded="true" signature="137:7136" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="894:1230" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="909:1076" ph="/* AnimalSprite[] temp = FindObjectsOfType&lt;AnimalSprite&gt;(); ... */" />
+                <marker date="1590667519982" expanded="true" signature="1275:1561" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="1290:1497" ph="/* sort this newly created animal, used later on when add animals during runtime, might be smarter to pre-place ... */" />
+                <marker date="1590667519982" expanded="true" signature="1593:2100" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="1711:2094" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="1829:2084" ph="/* check against the created box with a quick sphere and then a slower more accurate cube, ... */" />
+                <marker date="1590667519982" expanded="true" signature="2141:3311" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="2172:3305" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="2285:3228" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="2451:2650" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="2694:3214" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="2810:2988" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="3018:3196" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="3359:3562" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="3374:3556" ph="/* sort all objects into foreground that appear in front of a specified animal, using the same approach as in ... */" />
+                <marker date="1590667519982" expanded="true" signature="3631:5597" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="3646:4110" ph="/* create a box defined by 8 points, 0 being the top left corner of the original boxcollider, 3 being its bottom  ... */" />
+                <marker date="1590667519982" expanded="true" signature="4743:5568" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="4949:5020" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="5037:5558" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="5178:5544" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="5317:5526" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="5650:7134" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="5665:5999" ph="/* grabs all objects with a mesh, then discards the ones that have a layer (presumably for functionality purposes ... */" />
+                <marker date="1590667519982" expanded="true" signature="6176:7095" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="6303:6520" ph="/* Bug potential with the way that the cutting placer also uses boxcolliders, can be easily avoided by ... */" />
+                <marker date="1590667519982" expanded="true" signature="6520:7085" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="6668:7071" ph="{...}" />
+                <marker date="1590667519982" expanded="true" signature="6853:7053" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -128,7 +146,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/SceneMan.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
+            <state relative-caret-position="60">
               <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
               <folding>
                 <marker date="1590504079175" expanded="true" signature="58:338" ph="{...}" />
@@ -142,8 +160,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutTarget.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state>
+              <caret lean-forward="true" />
               <folding>
                 <marker date="1590503979627" expanded="true" signature="59:129" ph="{...}" />
               </folding>
@@ -154,10 +172,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Cutting Algorithm Related/CuttableTreeScript.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1380">
+            <state relative-caret-position="-4003">
               <caret line="152" selection-start-line="152" selection-end-line="152" />
               <folding>
-                <element signature="e#0#97#0" expanded="true" />
                 <marker date="1590580873692" expanded="false" signature="6:169" ph="..." />
                 <marker date="1590580873692" expanded="true" signature="210:293" ph="{...}" />
                 <marker date="1590580873692" expanded="true" signature="329:401" ph="{...}" />
@@ -316,8 +333,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutMan.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4125">
-              <caret line="294" column="13" selection-start-line="294" selection-start-column="13" selection-end-line="294" selection-end-column="13" />
+            <state relative-caret-position="-882">
+              <caret line="152" column="42" lean-forward="true" selection-start-line="152" selection-start-column="42" selection-end-line="152" selection-end-column="42" />
               <folding>
                 <marker date="1590504597349" expanded="true" signature="6:106" ph="..." />
                 <marker date="1590504597349" expanded="true" signature="143:13643" ph="{...}" />
@@ -391,10 +408,10 @@
     <setting file="file://$USER_HOME$/Documents/projectStartup/projectStartup/Project Startup/Assets/Assets/Scripts/GameManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utils.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SoundMan.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/WeirdExperimentalShit/LayerOrganizer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/AnimalSprite.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Documents/projectStartup/projectStartup/Project Startup/Assets/Assets/Scripts/Audio/MusicManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Cutting Algorithm Related/CuttableTreeScript.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LayerOrganizer.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -414,6 +431,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/CutMan.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AnimalSprite.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/LayerOrganizer.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/WeirdExperimentalShit/LayerOrganizer.cs" />
       </list>
     </option>
   </component>
@@ -430,13 +448,13 @@
     </navigator>
     <panes>
       <pane id="FileSystemExplorer" />
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
+      </pane>
       <pane id="AssemblyExplorer" />
       <pane id="UnityExplorer">
         <option name="show-hidden-items" value="false" />
         <option name="show-project-names" value="true" />
-      </pane>
-      <pane id="SolutionExplorer">
-        <option name="show-all-files" value="false" />
       </pane>
     </panes>
   </component>
@@ -447,6 +465,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="CodeLensConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -495,11 +514,12 @@
       <workItem from="1589797561864" duration="9879000" />
       <workItem from="1589969791501" duration="1535000" />
       <workItem from="1590588192801" duration="3295000" />
+      <workItem from="1590653210591" duration="12594000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43026000" />
+    <option name="totallyTimeSpent" value="55620000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -512,8 +532,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="320" y="179" width="1437" height="806" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2977487" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30210602" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -642,6 +663,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TreeFallParticle.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+          <folding>
+            <marker date="1590504131983" expanded="true" signature="65:887" ph="{...}" />
+            <marker date="1590504131983" expanded="true" signature="276:539" ph="{...}" />
+            <marker date="1590504131983" expanded="true" signature="397:475" ph="{...}" />
+            <marker date="1590504131983" expanded="true" signature="591:885" ph="{...}" />
+            <marker date="1590504131983" expanded="true" signature="648:879" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/UIMan.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -664,7 +699,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/SceneMan.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
+        <state relative-caret-position="60">
           <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
           <folding>
             <marker date="1590504079175" expanded="true" signature="58:338" ph="{...}" />
@@ -674,10 +709,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/LayerOrganizer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="53" column="84" selection-start-line="53" selection-start-column="84" selection-end-line="53" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/AnimalSprite.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <marker date="1590588460774" expanded="true" signature="6:78" ph="..." />
+            <marker date="1590588460774" expanded="true" signature="121:335" ph="{...}" />
+            <marker date="1590588460774" expanded="true" signature="193:214" ph="{...}" />
+            <marker date="1590588460774" expanded="true" signature="272:333" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutTarget.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state>
+          <caret lean-forward="true" />
           <folding>
             <marker date="1590503979627" expanded="true" signature="59:129" ph="{...}" />
           </folding>
@@ -686,10 +741,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Cutting Algorithm Related/CuttableTreeScript.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1380">
+        <state relative-caret-position="-4003">
           <caret line="152" selection-start-line="152" selection-end-line="152" />
           <folding>
-            <element signature="e#0#97#0" expanded="true" />
             <marker date="1590580873692" expanded="false" signature="6:169" ph="..." />
             <marker date="1590580873692" expanded="true" signature="210:293" ph="{...}" />
             <marker date="1590580873692" expanded="true" signature="329:401" ph="{...}" />
@@ -846,8 +900,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutMan.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4125">
-          <caret line="294" column="13" selection-start-line="294" selection-start-column="13" selection-end-line="294" selection-end-column="13" />
+        <state relative-caret-position="-882">
+          <caret line="152" column="42" lean-forward="true" selection-start-line="152" selection-start-column="42" selection-end-line="152" selection-end-column="42" />
           <folding>
             <marker date="1590504597349" expanded="true" signature="6:106" ph="..." />
             <marker date="1590504597349" expanded="true" signature="143:13643" ph="{...}" />
@@ -897,52 +951,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/TreeFallParticle.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/WeirdExperimentalShit/LayerOrganizer.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+        <state relative-caret-position="393">
+          <caret line="117" column="25" lean-forward="true" selection-start-line="117" selection-start-column="25" selection-end-line="117" selection-end-column="25" />
           <folding>
-            <marker date="1590504131983" expanded="true" signature="65:887" ph="{...}" />
-            <marker date="1590504131983" expanded="true" signature="276:539" ph="{...}" />
-            <marker date="1590504131983" expanded="true" signature="397:475" ph="{...}" />
-            <marker date="1590504131983" expanded="true" signature="591:885" ph="{...}" />
-            <marker date="1590504131983" expanded="true" signature="648:879" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/AnimalSprite.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <marker date="1590588460774" expanded="true" signature="6:78" ph="..." />
-            <marker date="1590588460774" expanded="true" signature="121:335" ph="{...}" />
-            <marker date="1590588460774" expanded="true" signature="193:214" ph="{...}" />
-            <marker date="1590588460774" expanded="true" signature="272:333" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/LayerOrganizer.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="53" column="84" selection-start-line="53" selection-start-column="84" selection-end-line="53" selection-end-column="84" />
-          <folding>
-            <marker date="1590594088719" expanded="true" signature="6:92" ph="..." />
-            <marker date="1590594088719" expanded="true" signature="137:1821" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="239:470" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="347:417" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="541:576" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="649:703" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="748:818" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="850:1672" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="1045:1666" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="1111:1656" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="1173:1642" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="1364:1624" ph="{...}" />
-            <marker date="1590594088719" expanded="true" signature="1411:1602" ph="/* perform magic/raycasts to figure out if the animal is actually in a location reasonably possibly behind ... */" />
-            <marker date="1590594088719" expanded="true" signature="1720:1819" ph="{...}" />
+            <marker date="1590667519982" expanded="false" signature="6:92" ph="..." />
+            <marker date="1590667519982" expanded="true" signature="137:7136" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="894:1230" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="909:1076" ph="/* AnimalSprite[] temp = FindObjectsOfType&lt;AnimalSprite&gt;(); ... */" />
+            <marker date="1590667519982" expanded="true" signature="1275:1561" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="1290:1497" ph="/* sort this newly created animal, used later on when add animals during runtime, might be smarter to pre-place ... */" />
+            <marker date="1590667519982" expanded="true" signature="1593:2100" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="1711:2094" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="1829:2084" ph="/* check against the created box with a quick sphere and then a slower more accurate cube, ... */" />
+            <marker date="1590667519982" expanded="true" signature="2141:3311" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="2172:3305" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="2285:3228" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="2451:2650" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="2694:3214" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="2810:2988" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="3018:3196" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="3359:3562" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="3374:3556" ph="/* sort all objects into foreground that appear in front of a specified animal, using the same approach as in ... */" />
+            <marker date="1590667519982" expanded="true" signature="3631:5597" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="3646:4110" ph="/* create a box defined by 8 points, 0 being the top left corner of the original boxcollider, 3 being its bottom  ... */" />
+            <marker date="1590667519982" expanded="true" signature="4743:5568" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="4949:5020" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="5037:5558" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="5178:5544" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="5317:5526" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="5650:7134" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="5665:5999" ph="/* grabs all objects with a mesh, then discards the ones that have a layer (presumably for functionality purposes ... */" />
+            <marker date="1590667519982" expanded="true" signature="6176:7095" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="6303:6520" ph="/* Bug potential with the way that the cutting placer also uses boxcolliders, can be easily avoided by ... */" />
+            <marker date="1590667519982" expanded="true" signature="6520:7085" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="6668:7071" ph="{...}" />
+            <marker date="1590667519982" expanded="true" signature="6853:7053" ph="{...}" />
           </folding>
         </state>
       </provider>
