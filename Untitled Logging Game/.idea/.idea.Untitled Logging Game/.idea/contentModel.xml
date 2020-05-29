@@ -2,21 +2,112 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\C4\.Rider2019.1\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\C4\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_Untitled Logging Game.444116117.00" t="ExcludeRecursive" />
-    <e p="D:\ProjectShowOff\Untitled-Game\Untitled Logging Game" t="IncludeRecursive">
+    <e p="C:\Users\C4\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_Untitled Logging Game.-1208141299.00" t="ExcludeRecursive" />
+    <e p="D:\ProjectShowOff\ShowOff\Untitled Logging Game" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Allegorithmic" t="Include">
+          <e p="Plugins" t="Include">
+            <e p="engine_build_info.txt" t="Include" />
+            <e p="EULA.txt" t="Include" />
+            <e p="Substance.Platform" t="Include">
+              <e p="NativeFunctions.cs" t="Include" />
+              <e p="Substance.Platform.asmdef" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="LeanTween" t="Include">
+          <e p="Editor" t="Include">
+            <e p="LeanTweenDocumentationEditor.cs" t="Include" />
+          </e>
+          <e p="Framework" t="Include">
+            <e p="LeanAudio.cs" t="Include" />
+            <e p="LeanSmooth.cs" t="Include" />
+            <e p="LeanTest.cs" t="Include" />
+            <e p="LeanTween.cs" t="Include" />
+            <e p="LeanTweenExt.cs" t="Include" />
+            <e p="LTDescr.cs" t="Include" />
+            <e p="LTDescrOptional.cs" t="Include" />
+            <e p="LTSeq.cs" t="Include" />
+          </e>
+          <e p="License.txt" t="Include" />
+          <e p="ReadMe.txt" t="Include" />
+        </e>
         <e p="Scripts" t="Include">
-          <e p="CuttableTreeScript.cs" t="Include" />
-          <e p="SimpleCameraController.cs" t="Include" />
+          <e p="CutMan.cs" t="Include" />
+          <e p="CutTarget.cs" t="Include" />
+          <e p="Cutting Algorithm Related" t="Include">
+            <e p="CuttableMeshPhysicsManager.cs" t="Include" />
+            <e p="CuttableTreeScript.cs" t="Include" />
+            <e p="EnsurePositionIsCentroid.cs" t="Include" />
+            <e p="MeshLidPairing.cs" t="Include" />
+            <e p="ProceduralObjectPlacer.cs" t="Include" />
+            <e p="SortingAlgorithmRelated.cs" t="Include" />
+          </e>
+          <e p="DebugDrawerInterface.cs" t="Include" />
+          <e p="MapZoomIn.cs" t="Include" />
+          <e p="ObjectPlacerEditor.cs" t="Include" />
+          <e p="PositionFinder.cs" t="Include" />
+          <e p="PrimitiveMesh.cs" t="Include" />
+          <e p="ProceduralPlacementStuff" t="Include">
+            <e p="ProceduralPlacementEditor.cs" t="Include" />
+          </e>
+          <e p="SceneMan.cs" t="Include" />
+          <e p="SoundMan.cs" t="Include" />
+          <e p="TreeFallParticle.cs" t="Include" />
+          <e p="UIMan.cs" t="Include" />
+          <e p="Utils.cs" t="Include" />
+          <e p="VectorDebugShow.cs" t="Include" />
           <e p="WeirdExperimentalShit" t="Include">
             <e p="MeshVisualizer.cs" t="Include" />
             <e p="UnityJobSystemTest.cs" t="Include" />
           </e>
         </e>
+        <e p="Shaders" t="Include">
+          <e p="ToonShader" t="Include">
+            <e p="Assets" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Rotate.cs" t="Include" />
+              </e>
+              <e p="ToonShader" t="Include">
+                <e p="GetLighting.hlsl" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
+      <e p="Substance.Platform.csproj" t="IncludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />
       <e p="Untitled Logging Game.sln" t="IncludeFlat" />
     </e>

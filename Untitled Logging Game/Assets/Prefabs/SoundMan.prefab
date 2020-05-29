@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7147995790042562301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1815073053308379078}
+  - component: {fileID: 3625837336521441785}
+  m_Layer: 0
+  m_Name: SoundMan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1815073053308379078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7147995790042562301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.46630976, y: 56.820045, z: 20.93645}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3625837336521441785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7147995790042562301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec00bb0975fb38348b8b97353e07e804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainsaw:
+  - {fileID: 8300000, guid: 7bb605ad74e5bcf41853bd514de84bc4, type: 3}
+  - {fileID: 8300000, guid: ba37e47d4e3fae64f9e470a03a905029, type: 3}
+  - {fileID: 8300000, guid: 988ebc51ecbff0740a3306415295d2e1, type: 3}
+  - {fileID: 8300000, guid: 0e7e94a6e0cca874a8392ebf8a6c881f, type: 3}
+  audioSource: {fileID: 6093158248382917742, guid: 98602828bb989234b804827b59ca941f,
+    type: 3}
+  chainsawSoundObject: {fileID: 0}
+  treeFall:
+  - {fileID: 8300000, guid: 75198aee144c65f4f9c41e3fb573845c, type: 3}
+  - {fileID: 8300000, guid: 6a16f7765a8b16c4cbd2852a7de6122a, type: 3}
