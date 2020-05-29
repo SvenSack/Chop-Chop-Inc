@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -32,7 +33,8 @@ public class CutMan : MonoBehaviour
 
     [SerializeField] float cutForce;
 
-    public GameObject nutPrefab; // make this an array later
+    public GameObject nutPrefab;
+    public Sprite[] nutSprites;
     public GameObject treeShakeParticles;
     private int groundMask;
     private float shakeTimer;
@@ -377,6 +379,7 @@ public class CutMan : MonoBehaviour
             newNut.transform.position = Camera.main.WorldToScreenPoint(nutPosition);
             NutMover newNutMove = newNut.GetComponent<NutMover>();
             newNutMove.treeIndex = newPartIndex;
+            newNut.GetComponent<Image>().sprite = nutSprites[newPartIndex];
             RaycastHit hit;
             Physics.Raycast(nutPosition, Vector3.down, out hit, 100, groundMask);
             Debug.DrawRay(nutPosition,Vector3.down*10,Color.green, 5);

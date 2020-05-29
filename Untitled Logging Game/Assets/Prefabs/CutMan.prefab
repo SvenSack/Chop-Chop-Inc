@@ -50,7 +50,6 @@ MonoBehaviour:
     type: 3}
   fallParticleObject: {fileID: 6611483207489948961, guid: f7c4759f4dac49e4c99c5d2588a5cd55,
     type: 3}
-  trees: []
   treeHps: 
   cutTargetPrefab: {fileID: 1814081134978495635, guid: cadd5663b54c03848b64d15b8341b423,
     type: 3}
@@ -63,7 +62,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 83b6712b8a9d750498db870f2df49a99, type: 3}
   - {fileID: 21300000, guid: e8cb85d7714f763488ee26910516fc0c, type: 3}
   cutForce: 130
-  nutPrefab: {fileID: 1012406978264307292, guid: 875b7a64114bf3b49949db35a9669262,
+  nutPrefab: {fileID: 1012406978264307292, guid: 258f7097ae789df45abd9697ff3a6284,
     type: 3}
-  treeShakeParticles: {fileID: 4357241419668975948, guid: 8850647abd4a5d64a997f722a44337ab,
+  nutSprites:
+  - {fileID: 21300000, guid: a80884cba975ca34c8c806346079da38, type: 3}
+  - {fileID: 21300000, guid: 6356f72b25027084f946015a9ea544ae, type: 3}
+  - {fileID: 21300000, guid: 330566cae15d99544b069a9cb844e497, type: 3}
+  - {fileID: 21300000, guid: cf8281e10672a7b41871bfab6a8d06ee, type: 3}
+  - {fileID: 21300000, guid: 715d2120e392c3a4790e789e7db7290f, type: 3}
+  treeShakeParticles: {fileID: 4357241419668975948, guid: 13b6083acc2adb245b988db3e58a42c6,
     type: 3}

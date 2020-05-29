@@ -17,6 +17,7 @@ public class NutMover : MonoBehaviour
     {
         nut = GetComponent<Image>();
         uiMan = FindObjectOfType<UIMan>();
+        transform.LeanRotate(new Vector3(0, 0, Random.Range(-3,2)*360f+(Random.Range(0,2)*2-1)*90), (transform.position.y - floorHeight) / speed);
     }
 
     // Update is called once per frame
@@ -25,7 +26,7 @@ public class NutMover : MonoBehaviour
         var nutPosition = transform.position;
         if (nutPosition.y > floorHeight)
         {
-            transform.Translate(0,-speed*Time.deltaTime,0);
+            transform.position += new Vector3(0,-speed*Time.deltaTime,0);
             // Debug.Log(nutPosition.y);
             if (nutPosition.y < floorHeight)
                 nutPosition.y = floorHeight;

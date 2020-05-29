@@ -154,7 +154,7 @@ public class CuttableTreeScript : MonoBehaviour
     public int leafParticleIndex;
     public float cutForceMultiplier;
 
-    [SerializeField] private bool isFirstTree = true;
+    public bool isFirstTree = true;
 
     private void Start()
     {
