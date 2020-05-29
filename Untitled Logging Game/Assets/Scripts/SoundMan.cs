@@ -1,10 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundMan : MonoBehaviour
 {
-    public static SoundMan instance = null;
+    private static SoundMan instance;
     public AudioClip[] chainsaw = new AudioClip[4];
     public GameObject audioSource;
     public GameObject chainsawSoundObject;
@@ -17,23 +16,11 @@ public class SoundMan : MonoBehaviour
         if(!instance )
             instance = this;
         else {
-            Destroy(this.gameObject) ;
+            Destroy(gameObject) ;
             return;
         }
 
-        DontDestroyOnLoad(this.gameObject) ;
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        DontDestroyOnLoad(gameObject) ;
     }
 
     public void StartCut()
@@ -47,10 +34,7 @@ public class SoundMan : MonoBehaviour
 
     public void ToggleWood()
     {
-        if(chainsawSoundSource.clip != chainsaw[3])
-            SwapChainsawSound(chainsaw[3], true, true);
-        else
-            SwapChainsawSound(chainsaw[1], true, true);
+        SwapChainsawSound(chainsawSoundSource.clip != chainsaw[3] ? chainsaw[3] : chainsaw[1], true, true);
     }
 
     public void StopCut()
@@ -64,11 +48,11 @@ public class SoundMan : MonoBehaviour
         }
     }
 
-    private AudioSource GenerateAudio(AudioClip audio)
+    private AudioSource GenerateAudio(AudioClip audioC)
     {
         GameObject inst = Instantiate(audioSource);
         AudioSource ret = inst.GetComponent<AudioSource>();
-        ret.clip = audio;
+        ret.clip = audioC;
         return ret;
     }
 

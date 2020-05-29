@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TreeFallParticle : MonoBehaviour
 {
@@ -25,15 +22,9 @@ public class TreeFallParticle : MonoBehaviour
         soundMan = FindObjectOfType<SoundMan>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Ground")
+        if (other.gameObject.CompareTag("Ground"))
         {
             leaves.Stop(false, ParticleSystemStopBehavior.StopEmitting);
             dust.Play();

@@ -181,6 +181,11 @@ public class PrimitiveMesh
         individualFaces.Add(newFace);
     }
 
+    public void AddFaceFrom(Face face)
+    {
+
+    }
+
     public void AddTriangleFrom(CuttableTreeScript cts, Triangle triangle)
     {
         Mesh mesh = cts.GetMesh();
