@@ -54,6 +54,10 @@
           <e p="ObjectPlacerEditor.cs" t="Include" />
           <e p="Optimizations" t="Include">
             <e p="faceToPrimitiveMeshJob.cs" t="Include" />
+            <e p="IntersectingFaceAssemblyJob.cs" t="Include" />
+            <e p="NativeArrayMallocJob.cs" t="Include" />
+            <e p="NewBehaviourScript.cs" t="Include" />
+            <e p="PreAllocator.cs" t="Include" />
             <e p="triangleToFaceJob.cs" t="Include" />
           </e>
           <e p="PositionFinder.cs" t="Include" />
@@ -65,7 +69,9 @@
           <e p="Utils.cs" t="Include" />
           <e p="VectorDebugShow.cs" t="Include" />
           <e p="WeirdExperimentalShit" t="Include">
+            <e p="DynamicBuffers.cs" t="Include" />
             <e p="LayerOrganizer.cs" t="Include" />
+            <e p="MeshRenderQueueChanger.cs" t="Include" />
             <e p="MeshVisualizer.cs" t="Include" />
             <e p="UnityJobSystemTest.cs" t="Include" />
           </e>
@@ -73,11 +79,32 @@
         <e p="Shaders" t="Include">
           <e p="ToonShader" t="Include">
             <e p="Assets" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="Rotate.cs" t="Include" />
-              </e>
               <e p="ToonShader" t="Include">
                 <e p="GetLighting.hlsl" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="WorkingToonShader" t="Include">
+            <e p="cel-shading-urp-master" t="Include">
+              <e p="Assets" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="Rotate.cs" t="Include" />
+                  <e p="SimpleCameraController.cs" t="Include" />
+                </e>
+                <e p="Shaders" t="Include">
+                  <e p="GetLighting.hlsl" t="Include" />
+                </e>
+                <e p="TutorialInfo" t="Include">
+                  <e p="Scripts" t="Include">
+                    <e p="Editor" t="Include">
+                      <e p="ReadmeEditor.cs" t="Include" />
+                    </e>
+                    <e p="Readme.cs" t="Include" />
+                  </e>
+                </e>
+              </e>
+              <e p="ProjectSettings" t="Include">
+                <e p="ProjectVersion.txt" t="Include" />
               </e>
             </e>
           </e>
