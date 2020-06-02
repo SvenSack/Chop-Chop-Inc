@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4127975799837781779}
   - component: {fileID: 4905126573779342629}
   - component: {fileID: 1670285474762697180}
+  - component: {fileID: -6586155540203352542}
   m_Layer: 0
   m_Name: Flower_ParadiseBird_Amazon
   m_TagString: Untagged
@@ -76,6 +77,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!210 &-6586155540203352542
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086174305192746240}
+  m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0

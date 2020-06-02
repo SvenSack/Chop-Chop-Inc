@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cfe943250aa3af842b8ba18beffdb110, type: 2}
+  - {fileID: 2100000, guid: 4bf33886f2ad2f141ae590ead2708be8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,6 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5609145317345842022}
+  - component: {fileID: 511301669935326432}
   m_Layer: 0
   m_Name: Grass_Amazon_03
   m_TagString: Untagged
@@ -112,6 +113,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &511301669935326432
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584229063535018222}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &3640612181587613142
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +182,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cfe943250aa3af842b8ba18beffdb110, type: 2}
+  - {fileID: 2100000, guid: 4bf33886f2ad2f141ae590ead2708be8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -249,7 +261,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cfe943250aa3af842b8ba18beffdb110, type: 2}
+  - {fileID: 2100000, guid: 4bf33886f2ad2f141ae590ead2708be8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

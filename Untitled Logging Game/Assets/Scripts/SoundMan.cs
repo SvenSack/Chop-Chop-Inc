@@ -88,6 +88,4 @@ public class SoundMan : MonoBehaviour
         temp.transform.SetParent(tree.transform, false);
         return temp;
     }
-    
-    
 }

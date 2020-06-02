@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3945608966964037796}
   - component: {fileID: 5447834703156736658}
   - component: {fileID: 1776126512948842091}
+  - component: {fileID: -4695565182943389149}
   m_Layer: 0
   m_Name: TreeHugger_Vine_03_Amazon
   m_TagString: Untagged
@@ -76,6 +77,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!210 &-4695565182943389149
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43566686047713975}
+  m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
