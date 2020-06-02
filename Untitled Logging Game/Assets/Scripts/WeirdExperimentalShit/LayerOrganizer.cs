@@ -74,7 +74,7 @@ public class LayerOrganizer : MonoBehaviour
                     }
                 }
             }
-            Debug.Log("Drawing Gizmos for camera layer ordering");
+            //Debug.Log("Drawing Gizmos for camera layer ordering");
         }
     }
 
