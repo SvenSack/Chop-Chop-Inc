@@ -29,18 +29,6 @@ TextureImporter:
   - first:
       213: 8340328075617433513
     second: foxRunning_spritesheetSmall_8
-  - first:
-      213: -1184788554626690783
-    second: foxRunning_spritesheetSmall_9
-  - first:
-      213: 7520693758948563512
-    second: foxRunning_spritesheetSmall_10
-  - first:
-      213: 1161753485291442057
-    second: foxRunning_spritesheetSmall_11
-  - first:
-      213: -6979337809607097571
-    second: foxRunning_spritesheetSmall_12
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -122,7 +110,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
