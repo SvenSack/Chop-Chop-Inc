@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-[Serializable]
-public class MeshLidPairing
+
+public struct MeshLidPairing
 {
 
     public IndividualVertex v0;
@@ -19,6 +19,8 @@ public class MeshLidPairing
     {
         return new IndividualTriangle(v0, centerVertex, v1);
     }
+
+
 
 
 }

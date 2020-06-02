@@ -8,15 +8,16 @@ public struct FacePairing
 {
     public Face f1;
     public Face f2;
+
+
 }
 
 
 
-struct TriangleToFaceJob2 : IJobParallelFor
+struct TriangleToFaceJob : IJobParallelFor
 {
     [WriteOnly]
     public NativeArray<FacePairing> faces;
-
     [ReadOnly]
     public NativeArray<int> triangles;
     [ReadOnly]
@@ -52,15 +53,17 @@ struct TriangleToFaceJob2 : IJobParallelFor
         FacePairing pairing;
 
         Face face1 = new Face();
-        face1.Init();
         Face face2 = new Face();
+        face1.Init();
         face2.Init();
 
-        //both triangles can be considered a face 
+
+        //tri1 and tri2 
         if ((tri1Normal - tri2Normal).magnitude < 0.001f)
         {
             face1.tri1 = tri1;
             face1.tri2 = tri2;
+            face2.MarkUnfilled();
         }
         //both triangles need to be in 2 different faces
         else
@@ -68,7 +71,7 @@ struct TriangleToFaceJob2 : IJobParallelFor
             face1.tri1 = tri1;
             face2.tri1 = tri2;
         }
-
+        
         pairing.f1 = face1;
         pairing.f2 = face2;
 

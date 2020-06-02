@@ -145,12 +145,7 @@ public class Utils : MonoBehaviour
 
                 mesh.MarkModified(); 
             }
-
-            
-
-
         }
-
         else
         {
             Debug.LogError("Utils.EnsurePositionIsCentroid failed because a mesh filter of the mesh itself is missing!");
@@ -160,18 +155,18 @@ public class Utils : MonoBehaviour
     }
 
     //TODO :I have no idea how this actually works, and I will find out later
-    public static unsafe NativeArray<Vector3> GetNativeVertexArrays(Vector3[] vertexArray)
+    public static unsafe NativeArray<T> ToNativeArray<T>(T[] TArray,Allocator allocator = Allocator.Persistent) where T : unmanaged
     {
         // create a destination NativeArray to hold the vertices
-        NativeArray<Vector3> verts = new NativeArray<Vector3>(vertexArray.Length, Allocator.Persistent,
+        NativeArray<T> verts = new NativeArray<T>(TArray.Length, allocator,
             NativeArrayOptions.UninitializedMemory);
 
         // pin the mesh's vertex buffer in place...
-        fixed (void* vertexBufferPointer = vertexArray)
+        fixed (void* vertexBufferPointer = TArray)
         {
             // ...and use memcpy to copy the Vector3[] into a NativeArray<floar3> without casting. whould be fast!
             UnsafeUtility.MemCpy(NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(verts),
-                vertexBufferPointer, vertexArray.Length * (long)UnsafeUtility.SizeOf<Vector3>());
+                vertexBufferPointer, TArray.Length * (long)UnsafeUtility.SizeOf<T>());
         }
         // we only hve to fix the .net array in place, the NativeArray is allocated in the C++ side of the engine and
         // wont move arround unexpectedly. We have a pointer to it not a reference! thats basically what fixed does,
@@ -179,47 +174,5 @@ public class Utils : MonoBehaviour
 
         return verts;
     }
-
-
-    public static unsafe NativeArray<int> GetNativeIntArrays(int[] vertexArray)
-    {
-        // create a destination NativeArray to hold the vertices
-        NativeArray<int> verts = new NativeArray<int>(vertexArray.Length, Allocator.Persistent,
-            NativeArrayOptions.UninitializedMemory);
-
-        // pin the mesh's vertex buffer in place...
-        fixed (void* vertexBufferPointer = vertexArray)
-        {
-            // ...and use memcpy to copy the Vector3[] into a NativeArray<floar3> without casting. whould be fast!
-            UnsafeUtility.MemCpy(NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(verts),
-                vertexBufferPointer, vertexArray.Length * (long)UnsafeUtility.SizeOf<int>());
-        }
-        // we only hve to fix the .net array in place, the NativeArray is allocated in the C++ side of the engine and
-        // wont move arround unexpectedly. We have a pointer to it not a reference! thats basically what fixed does,
-        // we create a scope where its 'safe' to get a pointer and directly manipulate the array
-
-        return verts;
-    }
-
-
-    //public static unsafe NativeArray<T> GetNativeIntArrays<T>(T[] TArray) where T : struct
-    //{
-    //    // create a destination NativeArray to hold the vertices
-    //    NativeArray<T> verts = new NativeArray<T>(TArray.Length, Allocator.Persistent,
-    //        NativeArrayOptions.UninitializedMemory);
-
-    //    // pin the mesh's vertex buffer in place...
-    //    fixed (void* vertexBufferPointer = TArray)
-    //    {
-    //        // ...and use memcpy to copy the Vector3[] into a NativeArray<floar3> without casting. whould be fast!
-    //        UnsafeUtility.MemCpy(NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(verts),
-    //            vertexBufferPointer, TArray.Length * (long)UnsafeUtility.SizeOf<T>());
-    //    }
-    //    // we only hve to fix the .net array in place, the NativeArray is allocated in the C++ side of the engine and
-    //    // wont move arround unexpectedly. We have a pointer to it not a reference! thats basically what fixed does,
-    //    // we create a scope where its 'safe' to get a pointer and directly manipulate the array
-
-    //    return verts;
-    //}
 
 }
