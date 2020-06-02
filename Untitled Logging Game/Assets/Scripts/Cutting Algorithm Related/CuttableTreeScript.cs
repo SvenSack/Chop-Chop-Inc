@@ -200,7 +200,10 @@ public class CuttableTreeScript : MonoBehaviour
 
     public static bool useMultithreadedVersion = true;
 
+    public Material cutMaterial = null;
+
     public PreAllocator nativeArrayAllocator;
+
 
     private void Start()
     {
@@ -284,50 +287,37 @@ public class CuttableTreeScript : MonoBehaviour
                 transformedNormal, worldMatrix, position, normal, collisionBox.faces);
         }
 
+
+
         Profiler.EndSample();
 
-        List<Vector3> vertexPositions = new List<Vector3>();
-
-        Vector3 centerPoint = Vector3.zero;
-
         //------- Get center of the intersection points created from the cut------------------------//
-        foreach (MeshLidPairing lidPairing in lidPairings)
-        {
-            centerPoint += lidPairing.v0.position;
-            centerPoint += lidPairing.v1.position;
+        Vector3 centerPoint = Vector3.zero;
+        
 
-            vertexPositions.Add(lidPairing.v0.position);
-            vertexPositions.Add(lidPairing.v1.position);
+        int intersectionVertexCount = generatedHoleFilling.Count;
+
+        List<Vector3> holes = new List<Vector3>();
+
+        while (generatedHoleFilling.TryDequeue(out CutHolePairing holePairing ))
+        {
+            centerPoint += holePairing.v0;
+            centerPoint += holePairing.v1;
+
+            holes.Add(holePairing.v0);
+            holes.Add(holePairing.v1);
         }
 
-        centerPoint /= (lidPairings.Count * 2);
+        centerPoint /= (intersectionVertexCount * 2);
 
         IndividualVertex vertex = new IndividualVertex(centerPoint, Vector3.zero, Vector2.zero);
 
         List<IndividualTriangle> trianglesBelow = new List<IndividualTriangle>();
 
-        //--------------------- Create triangles using the intersection points and the centerPoint------------------------//
+        //--------------------- Create a mesh to cover up the hole created by the cut------------------------//
 
-        //foreach (MeshLidPairing lidPairing in lidPairings)
-        //{
-        //    IndividualTriangle tri = lidPairing.CreateTriangle(vertex);
-
-        //    Vector3 ObjectSpaceCentroid = tri.GetObjectSpaceCentroid();
-        //    Vector3 direction = Vector3.Cross(Vector3.up, ObjectSpaceCentroid - centerPoint).normalized;
-
-        //    tri.AttemptDirectionOrderingBasedVertexCorrection(ObjectSpaceCentroid, direction);
-        //    tri.SetNormals(normal);
-        //    trianglesBelow.Add(tri);
-        //    FacesSplitBelow.AddFaceFromSingularTriangle(tri);
-
-        //    IndividualTriangle tri2 = tri.Clone();
-        //    tri2.FlipTriangle(0, 2);
-        //    tri2.SetNormals(-normal);
-        //    FacesSplitAbove.AddFaceFromSingularTriangle(tri2);
-
-        //}
-
-        //<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        GameObject bottomHoleCover = InstantiateHole(intersectionVertexCount, holes, centerPoint,  normal);
+        GameObject upperHoleCover = InstantiateHole(intersectionVertexCount, holes, centerPoint, normal, false);
 
 
         //-------------------------- Reinitialize the original mesh ------------------------------------//
@@ -384,7 +374,13 @@ public class CuttableTreeScript : MonoBehaviour
 
         rawLowerMeshQueue.Clear();
         rawUpperMeshQueue.Clear();
+        generatedHoleFilling.Dispose();
 
+        bottomHoleCover.transform.SetParent(transform);
+        upperHoleCover.transform.SetParent(newTree.transform);
+
+        bottomHoleCover.tag = "Leaves";
+        upperHoleCover.tag = "Leaves";
 
         return newTree;
     }
@@ -403,6 +399,68 @@ public class CuttableTreeScript : MonoBehaviour
         }
     }
 
+    private GameObject InstantiateHole(int intersectionVertexCount,List<Vector3> holes,Vector3 centerPoint,Vector3 cuttingNormal,bool isBottom = true)
+    {
+
+        float normalMultiplier = isBottom ? 1.0f : -1.0f;
+
+        GameObject HoleCover = new GameObject("lowerHoleCover");
+
+        HoleCover.transform.position = transform.position;
+        HoleCover.transform.rotation = transform.rotation;
+        HoleCover.transform.localScale = transform.localScale;
+
+        Mesh holeMesh = HoleCover.AddComponent<MeshFilter>().mesh;
+        MeshRenderer meshRenderer = HoleCover.AddComponent<MeshRenderer>();
+
+        if (cutMaterial)
+        {
+            meshRenderer.sharedMaterial = cutMaterial;
+        }
+        else
+        {
+            meshRenderer.sharedMaterial = GetComponent<MeshRenderer>().sharedMaterial;
+        }
+
+        //initialize list of vertices 
+        Vector3[] holeVertices = new Vector3[intersectionVertexCount * 3];
+        Vector3[] holeNormals = new Vector3[holeVertices.Length];
+        Vector2[] holeUVs = new Vector2[holeVertices.Length];
+        int[] holeTriangles = new int[holeVertices.Length];
+
+
+
+        for (int i = 0, j = 0; i < holeVertices.Length; i += 3, j++)
+        {
+            holeVertices[i] = isBottom? holes[i - j] : holes[i - j + 1];
+            holeVertices[i + 1] = isBottom ?  holes[i - j + 1] : holes[i - j];
+            holeVertices[i + 2] = centerPoint;
+
+            holeNormals[i] = cuttingNormal  * normalMultiplier;
+            holeNormals[i + 1] = cuttingNormal * normalMultiplier;
+            holeNormals[i + 2] = cuttingNormal * normalMultiplier;
+
+            holeUVs[i] = new Vector2(1, 0);
+            holeUVs[i + 1] = new Vector2(-1, 0);
+            holeUVs[i + 2] = new Vector2(1, 1);
+
+
+        }
+
+        for (int i = 0; i < holeTriangles.Length; i++)
+        {
+            holeTriangles[i] = i;
+        }
+
+        holeMesh.Clear();
+        holeMesh.vertices = holeVertices;
+        holeMesh.normals = holeNormals;
+        holeMesh.uv = holeUVs;
+        holeMesh.triangles = holeTriangles;
+
+        return HoleCover;
+
+    }
    
 
     private void multithreadedPopulatePrimitiveMeshes(NativeQueue<JobFace> rawLowerMeshQueue, NativeQueue<JobFace> rawUpperMeshQueue,

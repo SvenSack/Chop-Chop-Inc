@@ -139,8 +139,8 @@ public struct JobVertex
 
 public struct CutHolePairing
 {
-    Vector3 v0;
-    Vector3 v1;
+    public Vector3 v0;
+    public Vector3 v1;
 
     public void Init(Vector3 v0,Vector3 v1)
     {
@@ -434,7 +434,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
         CutHolePairing cutHolePairing = new CutHolePairing();
         cutHolePairing.Init(Matrix4x4.Inverse(worldMatrix).MultiplyPoint(intersectionPoints[0]), Matrix4x4.Inverse(worldMatrix).MultiplyPoint(intersectionPoints[intersectionPoints.Count - 1]));
-
+        holePairings.Enqueue(cutHolePairing);
 
 
     }
@@ -712,6 +712,8 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         CutHolePairing cutHolePairing = new CutHolePairing();
         cutHolePairing.Init(Matrix4x4.Inverse(worldMatrix).MultiplyPoint(uniqueIntersectionPoints[0])
             , Matrix4x4.Inverse(worldMatrix).MultiplyPoint(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]));
+        holePairings.Enqueue(cutHolePairing);
+
 
     }
 

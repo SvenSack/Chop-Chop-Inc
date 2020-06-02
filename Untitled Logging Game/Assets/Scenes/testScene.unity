@@ -379,7 +379,8 @@ MonoBehaviour:
   leafParticleIndex: 0
   cutForceMultiplier: 0
   isFirstTree: 1
-  nativeArrayAllocator: {fileID: 0}
+  cutMaterial: {fileID: 0}
+  nativeArrayAllocator: {fileID: 2124940691}
 --- !u!1 &227651161
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +450,7 @@ MonoBehaviour:
   leafParticleIndex: 0
   cutForceMultiplier: 0
   isFirstTree: 1
+  cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 2124940691}
 --- !u!65 &521710462
 BoxCollider:
@@ -623,6 +625,7 @@ MonoBehaviour:
   leafParticleIndex: 0
   cutForceMultiplier: 0
   isFirstTree: 1
+  cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
 --- !u!114 &602425126
 MonoBehaviour:
@@ -902,7 +905,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089753566}
   m_LocalRotation: {x: -0.07852121, y: 0.0019738656, z: 0.025052417, w: 0.9965957}
-  m_LocalPosition: {x: 107.6, y: 3.92, z: -14.65}
+  m_LocalPosition: {x: 107.58, y: 4.3, z: -14.71}
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1039,6 +1042,7 @@ MonoBehaviour:
   leafParticleIndex: 0
   cutForceMultiplier: 0
   isFirstTree: 1
+  cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
 --- !u!1 &1520342361
 GameObject:
@@ -1336,4 +1340,5 @@ MonoBehaviour:
   leafParticleIndex: 0
   cutForceMultiplier: 0
   isFirstTree: 1
+  cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
