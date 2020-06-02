@@ -17,6 +17,9 @@
             </e>
           </e>
         </e>
+        <e p="Editor" t="Include">
+          <e p="ProceduralPlacementEditor.cs" t="Include" />
+        </e>
         <e p="LeanTween" t="Include">
           <e p="Editor" t="Include">
             <e p="LeanTweenDocumentationEditor.cs" t="Include" />
@@ -35,6 +38,7 @@
           <e p="ReadMe.txt" t="Include" />
         </e>
         <e p="Scripts" t="Include">
+          <e p="AnimalSprite.cs" t="Include" />
           <e p="CutMan.cs" t="Include" />
           <e p="CutTarget.cs" t="Include" />
           <e p="Cutting Algorithm Related" t="Include">
@@ -48,11 +52,12 @@
           <e p="DebugDrawerInterface.cs" t="Include" />
           <e p="MapZoomIn.cs" t="Include" />
           <e p="ObjectPlacerEditor.cs" t="Include" />
+          <e p="Optimizations" t="Include">
+            <e p="faceToPrimitiveMeshJob.cs" t="Include" />
+            <e p="triangleToFaceJob.cs" t="Include" />
+          </e>
           <e p="PositionFinder.cs" t="Include" />
           <e p="PrimitiveMesh.cs" t="Include" />
-          <e p="ProceduralPlacementStuff" t="Include">
-            <e p="ProceduralPlacementEditor.cs" t="Include" />
-          </e>
           <e p="SceneMan.cs" t="Include" />
           <e p="SoundMan.cs" t="Include" />
           <e p="TreeFallParticle.cs" t="Include" />
@@ -60,6 +65,7 @@
           <e p="Utils.cs" t="Include" />
           <e p="VectorDebugShow.cs" t="Include" />
           <e p="WeirdExperimentalShit" t="Include">
+            <e p="LayerOrganizer.cs" t="Include" />
             <e p="MeshVisualizer.cs" t="Include" />
             <e p="UnityJobSystemTest.cs" t="Include" />
           </e>
