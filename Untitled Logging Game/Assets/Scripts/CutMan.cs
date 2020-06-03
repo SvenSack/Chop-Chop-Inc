@@ -165,6 +165,7 @@ public class CutMan : MonoBehaviour
                     {
                         GameObject cutPlane = InitiateCut(cutStart, cutUpdate);
                         CuttableTreeScript target = currentCut.GetComponentInChildren<CutTarget>().target;
+                        Debug.Break();
                         GameObject newTreePiece = target.CutAt(cutPlane.transform.position, cutPlane.transform.up, cutForce);
                         Destroy(cutPlane);
                         FellTree(newTreePiece, target); // this does the visual and auditory stuff for the tree falling
