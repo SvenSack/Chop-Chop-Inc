@@ -446,7 +446,7 @@ public class CuttableTreeScript : MonoBehaviour
             holeVertices[i + 2] = centerPoint;
 
             //TODO find out why this patch was needed in the first place
-            NormalBasedVertexCorrection(holeVertices, i, i + 1, i + 2, cuttingNormal);
+            NormalBasedVertexCorrection(holeVertices, i, i + 1, i + 2, cuttingNormal * normalMultiplier);
 
             holeNormals[i] = cuttingNormal  * normalMultiplier;
             holeNormals[i + 1] = cuttingNormal * normalMultiplier;
