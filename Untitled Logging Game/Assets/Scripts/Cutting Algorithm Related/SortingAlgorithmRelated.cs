@@ -23,8 +23,6 @@ public class IntersectionComparer : IComparer<Vector3>
         float x = Vector3.Dot(baseDirection, intersectionPoint1 - basePosition);
         float y = Vector3.Dot(baseDirection, intersectionPoint2 - basePosition);
 
-
-
         return x.CompareTo(y);
     }
 
