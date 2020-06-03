@@ -50,6 +50,13 @@
             <e p="SortingAlgorithmRelated.cs" t="Include" />
           </e>
           <e p="DebugDrawerInterface.cs" t="Include" />
+          <e p="GameIO" t="Include">
+            <e p="GameDataReader.cs" t="Include" />
+            <e p="GameDataWriter.cs" t="Include" />
+            <e p="HighScoreManager.cs" t="Include" />
+            <e p="HighScoreView.cs" t="Include" />
+            <e p="PlayerScoreData.cs" t="Include" />
+          </e>
           <e p="MapZoomIn.cs" t="Include" />
           <e p="ObjectPlacerEditor.cs" t="Include" />
           <e p="Optimizations" t="Include">
@@ -63,9 +70,13 @@
           <e p="PositionFinder.cs" t="Include" />
           <e p="PrimitiveMesh.cs" t="Include" />
           <e p="SceneMan.cs" t="Include" />
+          <e p="ScoreboardSceneManager.cs" t="Include" />
           <e p="SoundMan.cs" t="Include" />
           <e p="TreeFallParticle.cs" t="Include" />
           <e p="UIMan.cs" t="Include" />
+          <e p="UIStuff" t="Include">
+            <e p="TextInstance.cs" t="Include" />
+          </e>
           <e p="Utils.cs" t="Include" />
           <e p="VectorDebugShow.cs" t="Include" />
           <e p="WeirdExperimentalShit" t="Include">

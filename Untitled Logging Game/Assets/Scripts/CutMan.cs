@@ -10,6 +10,7 @@ public class CutMan : MonoBehaviour
     private Vector2 cutStart;
     private Vector2 cutUpdate;
     private bool isCutting;
+    public bool isInCombo;
     
     [SerializeField] GraphicRaycaster gRaycaster;
     [SerializeField] EventSystem eventSystem;
@@ -47,8 +48,6 @@ public class CutMan : MonoBehaviour
         trees = FindObjectsOfType<CuttableTreeScript>();
         treeHps = new int[trees.Length];
         cutTargets = new CutTarget[trees.Length];
-        // ### the following should be replaced once the placement is algorithmically determined,
-        // then we could just look it up there
         for (int i = 0; i < treeHps.Length; i++)
         {
             treeHps[i] = Random.Range(1, 3);
@@ -76,51 +75,53 @@ public class CutMan : MonoBehaviour
             }
         }
 
-        if (currentCut != null)
+        if (isInCombo)
         {
             if (Input.GetMouseButtonUp(0))
             {
-                // Debug.Log("Stopped cutting because click lift");
+                Debug.Log("Stopped cutting because click lift");
                 StopCut();
                 foreach (var routine in bagOfCutStops)
                 {
                    StopCoroutine(routine); 
                 }
             }
-        }
-        else if(Input.GetMouseButton(0))
-        {
-            List<RaycastResult> castHits = new List<RaycastResult>();
-            PointerEventData eventPoint = new PointerEventData(eventSystem) {position = Input.mousePosition};
-            gRaycaster.Raycast(eventPoint, castHits);
-            bool hit = false;
-            if (castHits.Count > 0)
+            else if(Input.GetMouseButton(0))
             {
-                foreach (var t in castHits)
+                List<RaycastResult> castHits = new List<RaycastResult>();
+                PointerEventData eventPoint = new PointerEventData(eventSystem) {position = Input.mousePosition};
+                gRaycaster.Raycast(eventPoint, castHits);
+                bool hit = false;
+                if (castHits.Count > 0)
                 {
-                    if (t.gameObject.TryGetComponent(out CutTarget targ))
+                    foreach (var t in castHits)
                     {
-                        // Debug.Log("Cut continues");
-                        if (targ.gameObject != currentCut)
+                        CutTarget targ = t.gameObject.GetComponentInChildren<CutTarget>();
+                        if (targ != null)
                         {
-                            currentCut = targ.gameObject;
-                            cutFailing = false;
+                            // Debug.Log("Cut continues");
+                            if (targ.gameObject != currentCut)
+                            {
+                                Debug.Log("Comboed into " + targ.name);
+                                currentCut = targ.gameObject;
+                                cutFailing = false;
+                            }
+                            hit = true;
                         }
-                        hit = true;
                     }
                 }
-            }
-
-            if (!hit)
-            {
-                // Debug.Log("Stopped cutting because click left");
-                Coroutine rout = StartCoroutine(InitiateStopCut(bagOfCutStops.Count+1));
-                bagOfCutStops.Add(rout);
-            }
+                if (!hit && !cutFailing)
+                {
+                    Debug.Log("Stopped cutting because click left");
+                    Coroutine rout = StartCoroutine(InitiateStopCut(bagOfCutStops.Count+1));
+                    bagOfCutStops.Add(rout);
+                }
             
+            }
         }
+        
 
-        if (currentCut != null)
+        if (isInCombo)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, 100000, trunkMask))
@@ -165,7 +166,6 @@ public class CutMan : MonoBehaviour
                     {
                         GameObject cutPlane = InitiateCut(cutStart, cutUpdate);
                         CuttableTreeScript target = currentCut.GetComponentInChildren<CutTarget>().target;
-                        Debug.Break();
                         GameObject newTreePiece = target.CutAt(cutPlane.transform.position, cutPlane.transform.up, cutForce);
                         Destroy(cutPlane);
                         FellTree(newTreePiece, target); // this does the visual and auditory stuff for the tree falling
@@ -289,6 +289,7 @@ public class CutMan : MonoBehaviour
                     soundMan.StartCut();
                     currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
+                    isInCombo = true;
                 }
                 // Debug.DrawLine(corners[2],corners[3],Color.cyan,1000);
                 break;
@@ -300,6 +301,7 @@ public class CutMan : MonoBehaviour
                     soundMan.StartCut();
                     currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
+                    isInCombo = true;
                 }
                 // Debug.DrawLine(corners[0],corners[1],Color.cyan,1000);
                 break;
@@ -314,19 +316,20 @@ public class CutMan : MonoBehaviour
             {
                 part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
             }
-        soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
         currentCut = null;
-        isCutting = false; 
+        isCutting = false;
+        isInCombo = false;
     }
 
     IEnumerator InitiateStopCut(int index)
     {
+        // Coroutine me = bagOfCutStops[index];
         cutFailing = true;
         yield return new WaitForSeconds(forgivingness);
         if (cutFailing)
         {
             StopCut();
-            bagOfCutStops.Remove(bagOfCutStops[index]);
+            // bagOfCutStops.Remove(me);
         }
     }
 
