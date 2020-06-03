@@ -394,8 +394,8 @@ public class CuttableTreeScript : MonoBehaviour
         }
         else
         {
-            rawLowerMeshQueue = new NativeQueue<JobFace>(Allocator.Temp);
-            rawUpperMeshQueue = new NativeQueue<JobFace>(Allocator.Temp);
+            rawLowerMeshQueue = new NativeQueue<JobFace>(Allocator.TempJob);
+            rawUpperMeshQueue = new NativeQueue<JobFace>(Allocator.TempJob);
         }
     }
 
