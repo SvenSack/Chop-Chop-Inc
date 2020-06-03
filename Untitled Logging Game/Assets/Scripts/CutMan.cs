@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,7 +24,8 @@ public class CutMan : MonoBehaviour
     public int[] treeHps;
     private CutTarget[] cutTargets;
     [SerializeField] GameObject cutTargetPrefab;
-
+    [SerializeField] private float cutTargetDistance = 5f;
+    
     private SoundMan soundMan;
     private UIMan uiMan;
 
@@ -31,6 +33,10 @@ public class CutMan : MonoBehaviour
     public Sprite[] leafParticles;
 
     [SerializeField] float cutForce;
+
+    public float forgivingness = 1f;
+    private List<Coroutine> bagOfCutStops = new List<Coroutine>();
+    private bool cutFailing;
     
     
     private void Awake()
@@ -76,30 +82,40 @@ public class CutMan : MonoBehaviour
             {
                 // Debug.Log("Stopped cutting because click lift");
                 StopCut();
-            }
-            else
-            {
-                List<RaycastResult> castHits = new List<RaycastResult>();
-                PointerEventData eventPoint = new PointerEventData(eventSystem) {position = Input.mousePosition};
-                gRaycaster.Raycast(eventPoint, castHits);
-                bool hit = false;
-                if (castHits.Count > 0)
+                foreach (var routine in bagOfCutStops)
                 {
-                    foreach (var t in castHits)
+                   StopCoroutine(routine); 
+                }
+            }
+        }
+        else if(Input.GetMouseButton(0))
+        {
+            List<RaycastResult> castHits = new List<RaycastResult>();
+            PointerEventData eventPoint = new PointerEventData(eventSystem) {position = Input.mousePosition};
+            gRaycaster.Raycast(eventPoint, castHits);
+            bool hit = false;
+            if (castHits.Count > 0)
+            {
+                foreach (var t in castHits)
+                {
+                    if (t.gameObject.TryGetComponent(out CutTarget targ))
                     {
-                        if (t.gameObject == currentCut)
+                        // Debug.Log("Cut continues");
+                        if (targ.gameObject != currentCut)
                         {
-                            // Debug.Log("Cut continues");
-                            hit = true;
+                            currentCut = targ.gameObject;
+                            cutFailing = false;
                         }
+                        hit = true;
                     }
                 }
+            }
 
-                if (!hit)
-                {
-                    Debug.Log("Stopped cutting because click left");
-                    StopCut();
-                }
+            if (!hit)
+            {
+                // Debug.Log("Stopped cutting because click left");
+                Coroutine rout = StartCoroutine(InitiateStopCut(bagOfCutStops.Count+1));
+                bagOfCutStops.Add(rout);
             }
             
         }
@@ -162,12 +178,14 @@ public class CutMan : MonoBehaviour
                             }
                         }
                         Destroy(currentCut);
+                        Coroutine rout = StartCoroutine(InitiateStopCut(bagOfCutStops.Count+1));
+                        bagOfCutStops.Add(rout);
+                        isCutting = false;
                     }
                     foreach (var part in cutParticleInstance.GetComponents<ParticleSystem>())
                     {
                         part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
                     }
-                    StopCut();
                 }
             }
         }
@@ -212,7 +230,7 @@ public class CutMan : MonoBehaviour
         {
             if (cutTargets[i] == null && treeHps[i] > 0)
             {
-                if (Vector3.Distance(trees[i].transform.position, Camera.main.transform.position) < 5f)
+                if (Vector3.Distance(trees[i].transform.position, Camera.main.transform.position) < cutTargetDistance)
                 {
                     cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponentInChildren<CutTarget>();
                     cutTargets[i].target = trees[i];
@@ -298,6 +316,17 @@ public class CutMan : MonoBehaviour
         soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
         currentCut = null;
         isCutting = false; 
+    }
+
+    IEnumerator InitiateStopCut(int index)
+    {
+        cutFailing = true;
+        yield return new WaitForSeconds(forgivingness);
+        if (cutFailing)
+        {
+            StopCut();
+            bagOfCutStops.Remove(bagOfCutStops[index]);
+        }
     }
 
     private void FellTree(GameObject newTreePiece, CuttableTreeScript target)
