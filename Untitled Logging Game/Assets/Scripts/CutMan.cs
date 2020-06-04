@@ -374,7 +374,7 @@ public class CutMan : MonoBehaviour
             Transform tempTrans = cutTargets[currentIndex].transform.parent;
 
 
-            float offSet = Random.Range(-maxRot, -maxRot);
+            float offSet = Random.Range(maxRot, -maxRot);
             tempTrans.rotation = Quaternion.Euler(0, 0, offSet);
 
             if (!cutTargets[currentIndex].goesLeft)

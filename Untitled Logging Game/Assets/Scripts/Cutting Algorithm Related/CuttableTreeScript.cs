@@ -211,7 +211,13 @@ public class CuttableTreeScript : MonoBehaviour
 
         if(isFirstTree)
         {
-            nativeArrayAllocator = GameObject.FindGameObjectWithTag("PreAllocator").GetComponent<PreAllocator>();
+            GameObject allocator = GameObject.FindGameObjectWithTag("PreAllocator");
+
+            if(allocator)
+            {
+                nativeArrayAllocator = GameObject.FindGameObjectWithTag("PreAllocator").GetComponent<PreAllocator>();
+            }
+            
         }
     }
 
