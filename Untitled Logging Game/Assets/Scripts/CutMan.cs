@@ -12,28 +12,28 @@ public class CutMan : MonoBehaviour
     private bool isCutting;
     public bool isInCombo;
     
-    [SerializeField] GraphicRaycaster gRaycaster;
-    [SerializeField] EventSystem eventSystem;
-    [SerializeField] float marginOfError;
+    [SerializeField] GraphicRaycaster gRaycaster = null;
+    [SerializeField] EventSystem eventSystem = null;
+    [SerializeField] float marginOfError = 0.1f;
     private int trunkMask;
 
-    [SerializeField] GameObject cutParticleObject;
-    [SerializeField] GameObject fallParticleObject;
+    [SerializeField] GameObject cutParticleObject = null;
+    [SerializeField] GameObject fallParticleObject = null;
     private GameObject cutParticleInstance;
 
     private CuttableTreeScript[] trees;
     public int[] treeHps;
     private CutTarget[] cutTargets;
-    [SerializeField] GameObject cutTargetPrefab;
+    [SerializeField] GameObject cutTargetPrefab = null;
     [SerializeField] private float cutTargetDistance = 5f;
     
     private SoundMan soundMan;
     private UIMan uiMan;
 
-    [SerializeField] float[] leafScaleValues;
+    [SerializeField] float[] leafScaleValues = new []{1f,1f,1f,1f,1f,1f};
     public Sprite[] leafParticles;
 
-    [SerializeField] float cutForce;
+    [SerializeField] float cutForce = 100f;
 
     public float forgivingness = 1f;
     private List<Coroutine> bagOfCutStops = new List<Coroutine>();
@@ -100,7 +100,7 @@ public class CutMan : MonoBehaviour
                         if (targ != null)
                         {
                             // Debug.Log("Cut continues");
-                            if (targ.gameObject != currentCut)
+                            if (targ.gameObject != currentCut && StartCut(targ.gameObject))
                             {
                                 Debug.Log("Comboed into " + targ.name);
                                 currentCut = targ.gameObject;
@@ -130,7 +130,7 @@ public class CutMan : MonoBehaviour
                     currentCut.GetComponentInChildren<CutTarget>().target)
                 {
                     // Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.green, 100f);
-                    if (!isCutting)
+                    if (!isCutting && CheckCutSpot(Input.mousePosition))
                     {
                         // Debug.Log("hit tree");
                         isCutting = true;
@@ -146,7 +146,7 @@ public class CutMan : MonoBehaviour
                         soundMan.chainsawSoundObject.transform.position = hit.point;
                         cutStart = Input.mousePosition;
                     }
-                    else
+                    if(isCutting)
                     {
                         // Debug.Log("still hitting tree");
                         cutUpdate = Input.mousePosition;
@@ -162,7 +162,7 @@ public class CutMan : MonoBehaviour
                 {
                     float dist = Vector2.Distance(cutStart, Input.mousePosition);
                     Debug.Log("stopped hitting tree at distance " + dist);
-                    if (Mathf.Abs(dist) > marginOfError)
+                    if (Mathf.Abs(dist) > marginOfError && CheckCutSpotCut(cutStart, Input.mousePosition))
                     {
                         GameObject cutPlane = InitiateCut(cutStart, cutUpdate);
                         CuttableTreeScript target = currentCut.GetComponentInChildren<CutTarget>().target;
@@ -225,6 +225,45 @@ public class CutMan : MonoBehaviour
         return ray.GetPoint(dist);
     }
 
+    private bool CheckCutSpotCut(Vector2 pos1, Vector2 pos2)
+    {
+        List<RaycastResult> castHits1 = new List<RaycastResult>();
+        List<RaycastResult> castHits2 = new List<RaycastResult>();
+        PointerEventData eventPoint1 = new PointerEventData(eventSystem) {position = pos1};
+        PointerEventData eventPoint2 = new PointerEventData(eventSystem) {position = pos2};
+        gRaycaster.Raycast(eventPoint1, castHits1);
+        gRaycaster.Raycast(eventPoint2, castHits2);
+        List<GameObject> targ1 = new List<GameObject>();
+        List<GameObject> targ = new List<GameObject>();
+        foreach (var hit in castHits1)
+        {
+            targ1.Add(hit.gameObject);
+        }
+
+        foreach (var check in castHits2)
+        {
+            if (targ1.Contains(check.gameObject))
+            {
+                targ.Add(check.gameObject);
+            }
+        }
+        Debug.Log(targ.Contains(currentCut.transform.parent.gameObject));
+        return targ.Contains(currentCut.transform.parent.gameObject);
+    }
+    
+    private bool CheckCutSpot(Vector2 pos)
+    {
+        List<RaycastResult> castHits = new List<RaycastResult>();
+        PointerEventData eventPoint = new PointerEventData(eventSystem) {position = pos};
+        gRaycaster.Raycast(eventPoint, castHits);
+        List<GameObject> targ = new List<GameObject>();
+        foreach (var hit in castHits)
+        {
+            targ.Add(hit.gameObject);
+        }
+        return targ.Contains(currentCut.transform.parent.gameObject);
+    }
+
     private void PlaceCutSpots()
     {
         for (int i = 0; i < cutTargets.Length; i++)
@@ -273,7 +312,7 @@ public class CutMan : MonoBehaviour
         }
     }
 
-    private void StartCut(GameObject target)
+    private bool StartCut(GameObject target)
     {
         RectTransform rec = target.GetComponent<RectTransform>();
         Vector3[] corners = new Vector3[4];
@@ -284,28 +323,32 @@ public class CutMan : MonoBehaviour
             case true:
                 float dist = Vector2.Distance(Vector3.Lerp(corners[2],corners[3],0.5f),
                     Input.mousePosition);
-                if (dist < width / 5)
+                if (dist < width / 3)
                 {
                     soundMan.StartCut();
                     currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     isInCombo = true;
+                    return true;
                 }
                 // Debug.DrawLine(corners[2],corners[3],Color.cyan,1000);
                 break;
             case false:
                 float dist1 = Vector2.Distance(Vector3.Lerp(corners[0],corners[1],0.5f),
                     Input.mousePosition);
-                if (dist1 < width / 5)
+                if (dist1 < width / 3)
                 {
                     soundMan.StartCut();
                     currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     isInCombo = true;
+                    return true;
                 }
                 // Debug.DrawLine(corners[0],corners[1],Color.cyan,1000);
                 break;
         }
+
+        return false;
     }
 
     private void StopCut()
