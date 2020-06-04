@@ -31233,6 +31233,7 @@ GameObject:
   - component: {fileID: 5011147940967940490}
   - component: {fileID: 3596701075611426825}
   - component: {fileID: 7232934574951804275}
+  - component: {fileID: 3183951350256755367}
   m_Layer: 8
   m_Name: TRUNK
   m_TagString: Trunks
@@ -32081,12 +32082,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 630413310a7559445bce44d64c60b7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshColliderGenerator: {fileID: 0}
+  meshPhysicsManager: {fileID: 3183951350256755367}
   debugShowIndex: 2
   debugSphereSize: 0.01
   DebugObjectTest: {fileID: 0}
   leafParticleIndex: 0
   cutForceMultiplier: 0
+  isFirstTree: 1
+  cutMaterial: {fileID: 0}
+  nativeArrayAllocator: {fileID: 0}
 --- !u!64 &7232934574951804275
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -32101,6 +32105,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -966573794197651769, guid: 16da87203cee8164eaab8860caac0304, type: 3}
+--- !u!114 &3183951350256755367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763228422345950183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833eb2791ccf3b7428cb9dfa2049db3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4777360707102237625
 GameObject:
   m_ObjectHideFlags: 0

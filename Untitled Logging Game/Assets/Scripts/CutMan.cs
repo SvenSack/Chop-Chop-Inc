@@ -66,10 +66,9 @@ public class CutMan : MonoBehaviour
             {
                 foreach (var t in castHits)
                 {
-                    // Debug.Log("I hit " + castHits[i].gameObject.name);
-                    if (t.gameObject.GetComponentInChildren<CutTarget>() != null)
+                    if (t.gameObject.transform.GetChild(0).TryGetComponent(out CutTarget cuttarg))
                     {
-                        StartCut(t.gameObject);
+                        StartCut(cuttarg.transform.parent.gameObject);
                     }
                 }
             }
@@ -124,7 +123,7 @@ public class CutMan : MonoBehaviour
         if (isInCombo)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit, 100000, trunkMask))
+            if (Physics.Raycast(ray, out var hit, 100000, trunkMask) && currentCut != null)
             {
                 if (hit.collider.gameObject.GetComponent<CuttableTreeScript>() ==
                     currentCut.GetComponentInChildren<CutTarget>().target)
@@ -261,8 +260,7 @@ public class CutMan : MonoBehaviour
         {
             targ.Add(hit.gameObject);
         }
-        // Debug.Log(targ.Contains(currentCut.transform.parent.gameObject));
-        Debug.DrawLine(new Vector3(pos.x, pos.y, 100), new Vector3(pos.x, pos.y, -100), Color.green, 10f);
+        // Debug.DrawLine(new Vector3(pos.x, pos.y, 100), new Vector3(pos.x, pos.y, -100), Color.green, 10f);
         return targ.Contains(currentCut.transform.parent.gameObject);
     }
 
@@ -316,7 +314,7 @@ public class CutMan : MonoBehaviour
 
     private bool StartCut(GameObject target)
     {
-        RectTransform rec = target.transform.parent.GetComponent<RectTransform>();
+        RectTransform rec = target.GetComponent<RectTransform>();
         Vector3[] corners = new Vector3[4];
         rec.GetWorldCorners(corners);
         float width = Vector3.Distance(Vector3.Lerp(corners[2],corners[3],0.5f),Vector3.Lerp(corners[0],corners[1],0.5f));
@@ -331,9 +329,9 @@ public class CutMan : MonoBehaviour
                     currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     isInCombo = true;
+                    // Debug.DrawLine(Vector3.Lerp(corners[2],corners[3],0.5f), Input.mousePosition,Color.cyan,1000);
                     return true;
                 }
-                // Debug.DrawLine(corners[2],corners[3],Color.cyan,1000);
                 break;
             case false:
                 float dist1 = Vector2.Distance(Vector3.Lerp(corners[0],corners[1],0.5f),
@@ -341,12 +339,12 @@ public class CutMan : MonoBehaviour
                 if (dist1 < width / 3)
                 {
                     soundMan.StartCut();
-                    currentCut = target;
+                    currentCut = target.transform.GetChild(0).gameObject;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     isInCombo = true;
+                    // Debug.DrawLine(Vector3.Lerp(corners[0],corners[1],0.5f), Input.mousePosition, Color.cyan,1000);
                     return true;
                 }
-                // Debug.DrawLine(corners[0],corners[1],Color.cyan,1000);
                 break;
         }
 
