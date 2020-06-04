@@ -472,6 +472,12 @@ public class CutMan : MonoBehaviour
         string temp = comboText.text;
         temp = temp.Replace((comboCount - 1) + "x", comboCount + "x");
         comboText.text = temp;
+        if (comboCount > 3)
+        {
+            cutDifficulty += .05f;
+            maxRot += +1;
+            forgivingness -= .1f;
+        }
     }
 
     IEnumerator SeedSpawn(Transform tree)
