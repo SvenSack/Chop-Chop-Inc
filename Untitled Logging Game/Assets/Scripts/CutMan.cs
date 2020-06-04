@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CutMan : MonoBehaviour
 {
-    private GameObject currentCut;
+    public GameObject currentCut;
     private Vector2 cutStart;
     private Vector2 cutUpdate;
     private bool isCutting;
@@ -113,7 +113,7 @@ public class CutMan : MonoBehaviour
                 if (!hit && !cutFailing)
                 {
                     Debug.Log("Stopped cutting because click left");
-                    Coroutine rout = StartCoroutine(InitiateStopCut(bagOfCutStops.Count+1));
+                    Coroutine rout = StartCoroutine(InitiateStopCut());
                     bagOfCutStops.Add(rout);
                 }
             
@@ -179,7 +179,7 @@ public class CutMan : MonoBehaviour
                             }
                         }
                         Destroy(currentCut);
-                        Coroutine rout = StartCoroutine(InitiateStopCut(bagOfCutStops.Count+1));
+                        Coroutine rout = StartCoroutine(InitiateStopCut());
                         bagOfCutStops.Add(rout);
                         isCutting = false;
                     }
@@ -221,7 +221,7 @@ public class CutMan : MonoBehaviour
         Ray ray = (main = Camera.main).ScreenPointToRay(Input.mousePosition);
         float dist = Vector3.Distance(main.transform.position,
             currentCut.GetComponentInChildren<CutTarget>().target.transform.position);
-        Debug.DrawRay(ray.origin, ray.direction * dist, Color.yellow, 10f);
+        // Debug.DrawRay(ray.origin, ray.direction * dist, Color.yellow, 10f);
         return ray.GetPoint(dist);
     }
 
@@ -247,7 +247,7 @@ public class CutMan : MonoBehaviour
                 targ.Add(check.gameObject);
             }
         }
-        Debug.Log(targ.Contains(currentCut.transform.parent.gameObject));
+        // Debug.Log(targ.Contains(currentCut.transform.parent.gameObject));
         return targ.Contains(currentCut.transform.parent.gameObject);
     }
     
@@ -261,6 +261,8 @@ public class CutMan : MonoBehaviour
         {
             targ.Add(hit.gameObject);
         }
+        // Debug.Log(targ.Contains(currentCut.transform.parent.gameObject));
+        Debug.DrawLine(new Vector3(pos.x, pos.y, 100), new Vector3(pos.x, pos.y, -100), Color.green, 10f);
         return targ.Contains(currentCut.transform.parent.gameObject);
     }
 
@@ -314,7 +316,7 @@ public class CutMan : MonoBehaviour
 
     private bool StartCut(GameObject target)
     {
-        RectTransform rec = target.GetComponent<RectTransform>();
+        RectTransform rec = target.transform.parent.GetComponent<RectTransform>();
         Vector3[] corners = new Vector3[4];
         rec.GetWorldCorners(corners);
         float width = Vector3.Distance(Vector3.Lerp(corners[2],corners[3],0.5f),Vector3.Lerp(corners[0],corners[1],0.5f));
@@ -364,15 +366,13 @@ public class CutMan : MonoBehaviour
         isInCombo = false;
     }
 
-    IEnumerator InitiateStopCut(int index)
+    IEnumerator InitiateStopCut()
     {
-        // Coroutine me = bagOfCutStops[index];
         cutFailing = true;
         yield return new WaitForSeconds(forgivingness);
         if (cutFailing)
         {
             StopCut();
-            // bagOfCutStops.Remove(me);
         }
     }
 
