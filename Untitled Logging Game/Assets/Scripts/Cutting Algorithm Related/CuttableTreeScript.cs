@@ -196,7 +196,7 @@ public class CuttableTreeScript : MonoBehaviour
     public int leafParticleIndex;
     public float cutForceMultiplier;
 
-    [SerializeField] private bool isFirstTree = false;
+    public bool isFirstTree = false;
 
     public static bool useMultithreadedVersion = true;
 

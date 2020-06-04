@@ -26,6 +26,7 @@ public class CutMan : MonoBehaviour
     private CutTarget[] cutTargets;
     [SerializeField] GameObject cutTargetPrefab = null;
     [SerializeField] private float cutTargetDistance = 5f;
+    [SerializeField] private float cutForce;
     
     private SoundMan soundMan;
     private UIMan uiMan;
