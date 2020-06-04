@@ -6,8 +6,8 @@ using UnityEngine;
 public class CuttableMeshPhysicsManager : MonoBehaviour
 {
 
-    [SerializeField] private MeshCollider cutCollider;
-    [SerializeField] private MeshFilter meshFilter;
+    private MeshCollider cutCollider;
+    private MeshFilter meshFilter;
 
     private Rigidbody rb;
 

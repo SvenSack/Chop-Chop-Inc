@@ -372,8 +372,17 @@ public class CuttableTreeScript : MonoBehaviour
 
         otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal, point);
 
-        rawLowerMeshQueue.Clear();
-        rawUpperMeshQueue.Clear();
+        if(nativeArrayAllocator)
+        {
+            rawLowerMeshQueue.Clear();
+            rawUpperMeshQueue.Clear();
+        }
+        else
+        {
+            rawLowerMeshQueue.Dispose();
+            rawUpperMeshQueue.Dispose();
+        }
+       
         generatedHoleFilling.Dispose();
 
         bottomHoleCover.transform.SetParent(transform);
@@ -436,6 +445,9 @@ public class CuttableTreeScript : MonoBehaviour
             holeVertices[i + 1] = isBottom ?  holes[i - j + 1] : holes[i - j];
             holeVertices[i + 2] = centerPoint;
 
+            //TODO find out why this patch was needed in the first place
+            NormalBasedVertexCorrection(holeVertices, i, i + 1, i + 2, cuttingNormal * normalMultiplier);
+
             holeNormals[i] = cuttingNormal  * normalMultiplier;
             holeNormals[i + 1] = cuttingNormal * normalMultiplier;
             holeNormals[i + 2] = cuttingNormal * normalMultiplier;
@@ -459,6 +471,21 @@ public class CuttableTreeScript : MonoBehaviour
         holeMesh.triangles = holeTriangles;
 
         return HoleCover;
+
+    }
+
+    private void NormalBasedVertexCorrection(Vector3[] holeVertices,int index,int indexP1,int indexP2,Vector3 cuttingNormal)
+    {
+        Vector3 foundNormal = Vector3.Cross(holeVertices[indexP1] - holeVertices[index]
+            , holeVertices[indexP2] - holeVertices[index]);
+
+        if(Vector3.Dot(foundNormal,cuttingNormal) < 0)
+        {
+            Vector3 tempP1 = holeVertices[indexP1];
+            holeVertices[indexP1] = holeVertices[index];
+            holeVertices[index] = tempP1;
+        }
+
 
     }
    
