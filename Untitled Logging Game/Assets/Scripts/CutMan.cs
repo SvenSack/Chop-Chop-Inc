@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,7 +11,6 @@ public class CutMan : MonoBehaviour
     private Vector2 cutStart;
     private Vector2 cutUpdate;
     private bool isCutting;
-    public bool isInCombo;
     
     [SerializeField] GraphicRaycaster gRaycaster = null;
     [SerializeField] EventSystem eventSystem = null;
@@ -39,6 +39,10 @@ public class CutMan : MonoBehaviour
     private List<Coroutine> bagOfCutStops = new List<Coroutine>();
     private bool cutFailing;
     
+    public bool isInCombo;
+    private int comboCount = 0;
+    [SerializeField] private TextMeshProUGUI comboText;
+    
     
     private void Awake()
     {
@@ -66,9 +70,9 @@ public class CutMan : MonoBehaviour
             {
                 foreach (var t in castHits)
                 {
-                    if (t.gameObject.transform.GetChild(0).TryGetComponent(out CutTarget cuttarg))
+                    if (t.gameObject.GetComponentInChildren<CutTarget>() != null)
                     {
-                        StartCut(cuttarg.transform.parent.gameObject);
+                        StartCut(t.gameObject);
                     }
                 }
             }
@@ -99,10 +103,10 @@ public class CutMan : MonoBehaviour
                         if (targ != null)
                         {
                             // Debug.Log("Cut continues");
-                            if (targ.gameObject != currentCut && StartCut(targ.gameObject))
+                            GameObject targO = targ.transform.parent.gameObject;
+                            if (targO != currentCut && StartCut(targO))
                             {
-                                Debug.Log("Comboed into " + targ.name);
-                                currentCut = targ.gameObject;
+                                currentCut = targO;
                                 cutFailing = false;
                             }
                             hit = true;
@@ -160,7 +164,7 @@ public class CutMan : MonoBehaviour
                 if (isCutting)
                 {
                     float dist = Vector2.Distance(cutStart, Input.mousePosition);
-                    Debug.Log("stopped hitting tree at distance " + dist);
+                    // Debug.Log("stopped hitting tree at distance " + dist);
                     if (Mathf.Abs(dist) > marginOfError && CheckCutSpotCut(cutStart, Input.mousePosition))
                     {
                         GameObject cutPlane = InitiateCut(cutStart, cutUpdate);
@@ -178,6 +182,7 @@ public class CutMan : MonoBehaviour
                             }
                         }
                         Destroy(currentCut);
+                        ComboCut();
                         Coroutine rout = StartCoroutine(InitiateStopCut());
                         bagOfCutStops.Add(rout);
                         isCutting = false;
@@ -185,6 +190,15 @@ public class CutMan : MonoBehaviour
                     foreach (var part in cutParticleInstance.GetComponents<ParticleSystem>())
                     {
                         part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                    }
+                }
+                else
+                {
+                    if(cutParticleInstance != null)
+                    {
+                        float zValue = cutParticleInstance.transform.position.z;
+                        Ray ray1 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                        cutParticleInstance.transform.position = ray1.GetPoint(zValue);
                     }
                 }
             }
@@ -246,8 +260,7 @@ public class CutMan : MonoBehaviour
                 targ.Add(check.gameObject);
             }
         }
-        // Debug.Log(targ.Contains(currentCut.transform.parent.gameObject));
-        return targ.Contains(currentCut.transform.parent.gameObject);
+        return targ.Contains(currentCut);
     }
     
     private bool CheckCutSpot(Vector2 pos)
@@ -260,8 +273,7 @@ public class CutMan : MonoBehaviour
         {
             targ.Add(hit.gameObject);
         }
-        // Debug.DrawLine(new Vector3(pos.x, pos.y, 100), new Vector3(pos.x, pos.y, -100), Color.green, 10f);
-        return targ.Contains(currentCut.transform.parent.gameObject);
+        return targ.Contains(currentCut);
     }
 
     private void PlaceCutSpots()
@@ -340,7 +352,7 @@ public class CutMan : MonoBehaviour
                 if (dist1 < width / 3)
                 {
                     soundMan.StartCut();
-                    currentCut = target.transform.GetChild(0).gameObject;
+                    currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     isInCombo = true;
                     // Debug.DrawLine(Vector3.Lerp(corners[0],corners[1],0.5f), Input.mousePosition, Color.cyan,1000);
@@ -363,6 +375,8 @@ public class CutMan : MonoBehaviour
         currentCut = null;
         isCutting = false;
         isInCombo = false;
+        comboCount = 0;
+        comboText.fontSize = 0;
     }
 
     IEnumerator InitiateStopCut()
@@ -390,5 +404,13 @@ public class CutMan : MonoBehaviour
         newPartShape.mesh = newTreePiece.GetComponent<MeshFilter>().mesh;
         newPart.Play();
         newTreePiece.GetComponent<TreeFallParticle>().fallSound = soundMan.TreeFall(newTreePiece);
+    }
+
+    private void ComboCut()
+    {
+        comboCount++;
+        if (comboText.fontSize == 0)
+            comboText.fontSize = 36;
+        comboText.text = comboText.text.Replace("X", "" + (comboCount));
     }
 }
