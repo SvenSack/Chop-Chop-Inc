@@ -38,8 +38,11 @@ public class CutMan : MonoBehaviour
     public float forgivingness = 1f;
     private List<Coroutine> bagOfCutStops = new List<Coroutine>();
     private bool cutFailing;
-    
-    
+
+    [Range(0,1.0f)]public float cutDifficulty;
+    [Range(0, 40.0f)] public float maxRot;
+
+
     private void Awake()
     {
         soundMan = FindObjectOfType<SoundMan>();
@@ -268,15 +271,19 @@ public class CutMan : MonoBehaviour
 
     private void PlaceCutSpots()
     {
+        List<CutSpriteInfo> cutSpritesToModify = new List<CutSpriteInfo>();
+
+        bool defaultCutDirection = Random.Range(0, 2) == 0;
         for (int i = 0; i < cutTargets.Length; i++)
         {
             if (cutTargets[i] == null && treeHps[i] > 0)
             {
                 if (Vector3.Distance(trees[i].transform.position, Camera.main.transform.position) < cutTargetDistance)
                 {
+
                     cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponentInChildren<CutTarget>();
                     cutTargets[i].target = trees[i];
-                    cutTargets[i].goesLeft = Random.Range(0, 2) == 0;
+                    cutTargets[i].goesLeft = defaultCutDirection;
                     Transform tempTrans = cutTargets[i].transform.parent;
                     BoxCollider[] boxes = trees[i].transform.parent.GetComponentsInChildren<BoxCollider>();
                     Vector3 targetPosition = Vector3.zero;
@@ -305,13 +312,42 @@ public class CutMan : MonoBehaviour
                             break;
                     }
                     tempTrans.position = Camera.main.WorldToScreenPoint(targetPosition);
-                    float offSet = Random.Range(-20f, 20f);
-                    tempTrans.rotation = Quaternion.Euler(0,0, offSet);
-                    if (!cutTargets[i].goesLeft)
-                        tempTrans.GetChild(0).rotation = Quaternion.Euler(0,0,180+offSet);
+                    CutSpriteInfo cutSpriteInfo = new CutSpriteInfo(i, targetPosition.x);
+                    cutSpritesToModify.Add(cutSpriteInfo);
+                    //float offSet = Random.Range(-20f, 20f);
+                    
                 }
             }
         }
+
+        CutSpriteInfoComparer comparer = new CutSpriteInfoComparer();
+        cutSpritesToModify.Sort(comparer);
+
+        for (int i = 1; i < cutSpritesToModify.Count; i++)
+        {
+            int currentIndex = cutSpritesToModify[i].indexInArray;
+            int previousIndex = cutSpritesToModify[i - 1].indexInArray;
+
+            Debug.Log("iterating on object " + cutTargets[currentIndex].target.transform.parent.name);
+
+            bool doDifficultySwitch = Random.Range(0, 1.0f) < cutDifficulty ? true : false;
+
+            if (doDifficultySwitch)
+            {
+                Debug.Log("DifficultySwitch");
+                cutTargets[currentIndex].goesLeft = !cutTargets[previousIndex].goesLeft;
+            }
+
+            Transform tempTrans = cutTargets[currentIndex].transform.parent;
+
+
+            float offSet = Random.Range(-maxRot, -maxRot);
+            tempTrans.rotation = Quaternion.Euler(0, 0, offSet);
+
+            if (!cutTargets[currentIndex].goesLeft)
+                tempTrans.GetChild(0).rotation = Quaternion.Euler(0, 0, offSet + 180);
+        }
+
     }
 
     private bool StartCut(GameObject target)
@@ -391,5 +427,27 @@ public class CutMan : MonoBehaviour
         newPartShape.mesh = newTreePiece.GetComponent<MeshFilter>().mesh;
         newPart.Play();
         newTreePiece.GetComponent<TreeFallParticle>().fallSound = soundMan.TreeFall(newTreePiece);
+    }
+}
+
+
+public class CutSpriteInfo
+{
+    public int indexInArray;
+    public float locationInScreen;
+
+    public CutSpriteInfo(int indexInArray,float locationInScreen)
+    {
+        this.indexInArray = indexInArray;
+        this.locationInScreen = locationInScreen;
+    }
+
+}
+
+public class CutSpriteInfoComparer : IComparer<CutSpriteInfo>
+{
+    public int Compare(CutSpriteInfo a,CutSpriteInfo b)
+    {
+        return b.locationInScreen.CompareTo(a.locationInScreen);
     }
 }
