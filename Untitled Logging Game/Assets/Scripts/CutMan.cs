@@ -275,6 +275,7 @@ public class CutMan : MonoBehaviour
                     cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponentInChildren<CutTarget>();
                     cutTargets[i].target = trees[i];
                     cutTargets[i].goesLeft = Random.Range(0, 2) == 0;
+                    cutTargets[i].setLifeTime = forgivingness * 3;
                     Transform tempTrans = cutTargets[i].transform.parent;
                     BoxCollider[] boxes = trees[i].transform.parent.GetComponentsInChildren<BoxCollider>();
                     Vector3 targetPosition = Vector3.zero;
