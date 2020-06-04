@@ -73,6 +73,7 @@
           <e p="PrimitiveMesh.cs" t="Include" />
           <e p="SceneMan.cs" t="Include" />
           <e p="ScoreboardSceneManager.cs" t="Include" />
+          <e p="SimpleCameraController.cs" t="Include" />
           <e p="SoundMan.cs" t="Include" />
           <e p="TreeFallParticle.cs" t="Include" />
           <e p="UIMan.cs" t="Include" />
@@ -103,7 +104,6 @@
               <e p="Assets" t="Include">
                 <e p="Scripts" t="Include">
                   <e p="Rotate.cs" t="Include" />
-                  <e p="SimpleCameraController.cs" t="Include" />
                 </e>
                 <e p="Shaders" t="Include">
                   <e p="GetLighting.hlsl" t="Include" />

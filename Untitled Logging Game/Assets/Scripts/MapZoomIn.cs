@@ -13,22 +13,16 @@ public class MapZoomIn : MonoBehaviour
     public string[] sceneLoads = new string[3];
     public Transform defaultZoom;
     private SceneMan sceneMan;
+    public GameObject[] mapButtons = new GameObject[3];
+    public GameObject[] mainMenu = new GameObject[3];
 
     private void Awake()
     {
         sceneMan = FindObjectOfType<SceneMan>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        foreach (var but in mapButtons)
+        {
+            but.SetActive(false);
+        }
     }
 
     public void Zoom1()
@@ -50,6 +44,21 @@ public class MapZoomIn : MonoBehaviour
         mainCam.transform.LeanMove(zooms[2].transform.position, zoomTime);
         mainCam.transform.LeanRotate(zooms[2].rotation.eulerAngles, zoomTime);
         StartCoroutine(LoadScene(sceneLoads[2]));
+    }
+
+    public void ZoomMap()
+    {
+        mainCam.transform.LeanMove(defaultZoom.transform.position, zoomTime);
+        mainCam.transform.LeanRotate(defaultZoom.rotation.eulerAngles, zoomTime);
+        foreach (var but in mapButtons)
+        {
+            but.SetActive(true);
+        }
+
+        foreach (var part in mainMenu)
+        {
+         part.SetActive(false);   
+        }
     }
 
     public void ZoomOut()
@@ -92,7 +101,8 @@ public class MapZoomIn : MonoBehaviour
             mainCam.transform.position = zooms[2].position;
             mainCam.transform.rotation = zooms[2].rotation;
         }
-        ZoomOut();
+        if(sceneMan.prevScene != "")
+            ZoomOut();
         // Debug.Log("Zoom me out, scotty !");
     }
     
@@ -108,7 +118,6 @@ public class MapZoomIn : MonoBehaviour
          
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        // Debug.Log("I totally happen");
         StartCoroutine(ReturnToMap(.01f));
     }
 }
