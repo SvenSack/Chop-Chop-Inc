@@ -50937,6 +50937,7 @@ GameObject:
   - component: {fileID: 6121620488017559152}
   - component: {fileID: 8213201667761013790}
   - component: {fileID: 2653615652889673247}
+  - component: {fileID: 3908321953927636311}
   m_Layer: 8
   m_Name: TRUNK
   m_TagString: Trunks
@@ -52051,12 +52052,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 630413310a7559445bce44d64c60b7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshColliderGenerator: {fileID: 0}
+  meshPhysicsManager: {fileID: 3908321953927636311}
   debugShowIndex: 2
   debugSphereSize: 0.01
   DebugObjectTest: {fileID: 0}
   leafParticleIndex: 2
   cutForceMultiplier: 0
+  isFirstTree: 1
+  cutMaterial: {fileID: 0}
+  nativeArrayAllocator: {fileID: 0}
+--- !u!114 &3908321953927636311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6009230055062944797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833eb2791ccf3b7428cb9dfa2049db3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6009503213158198419
 GameObject:
   m_ObjectHideFlags: 0
