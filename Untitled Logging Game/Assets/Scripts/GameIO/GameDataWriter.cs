@@ -5,9 +5,9 @@ using System.IO;
 
 public class GameDataWriter
 {
-    private BinaryWriter writer;
+    private StreamWriter writer;
 
-    public GameDataWriter(BinaryWriter writer)
+    public GameDataWriter(StreamWriter writer)
     {
         this.writer = writer;
     }
@@ -24,7 +24,7 @@ public class GameDataWriter
 
     public void Write(string value)
     {
-        writer.Write(value);
+        writer.WriteLineAsync(value);
     }
 
 

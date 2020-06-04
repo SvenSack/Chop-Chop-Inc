@@ -5,27 +5,19 @@ using System.IO;
 
 public class GameDataReader
 {
-    BinaryReader reader;
+    StreamReader reader;
 
-    public GameDataReader(BinaryReader reader)
+    public GameDataReader(StreamReader reader)
     {
         this.reader = reader;
     }
 
-    public int ReadInt()
-    {
-        return reader.ReadInt32();
-    }
-
-    public float ReadFloat()
-    {
-        return reader.ReadSingle();
-    }
-
     public string ReadString()
     {
-        return reader.ReadString();
+        return reader.ReadLine();
     }
+
+
 
 
 

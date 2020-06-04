@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using System.IO;
 
 public delegate void OnGameCompleted();
 
 public class HighScoreManager : MonoBehaviour
 {
-    private List<PlayerScoreData> playerScoreData = new List<PlayerScoreData>();
+    private List<PlayerGameData> playerScoreData = new List<PlayerGameData>();
 
     private static string fileName = "Scores.txt";
 
@@ -18,6 +17,8 @@ public class HighScoreManager : MonoBehaviour
     private float currentPlayerScore;
 
     private InputField inputField;
+
+    private int loginCount;
 
     void Awake()
     {
@@ -67,58 +68,67 @@ public class HighScoreManager : MonoBehaviour
         currentPlayerScore = newScore;
     }
 
-    public void AddPlayerScoreData(PlayerScoreData scoreData)
+    public void AddPlayerScoreData(PlayerGameData scoreData)
     {
         playerScoreData.Add(scoreData);
     }
 
     public void AddCurrentPlayerScoreData()
     {
-        PlayerScoreData scoreData = new PlayerScoreData(currentPlayerName, currentPlayerScore);
+        PlayerGameData scoreData = new PlayerGameData(currentPlayerName, currentPlayerScore);
         playerScoreData.Add(scoreData);
     }
 
     public void SaveScoresToFile()
     {
-        Debug.Log("File Exists " + File.Exists(savePath));
 
         playerScoreData.Sort(new PlayerScoreComparer());
 
-        using (var writer = new BinaryWriter(File.Open(savePath, FileMode.Create)))
+        using (var writer = new StreamWriter(File.Open(savePath, FileMode.Create)))
         {
             GameDataWriter dataWriter = new GameDataWriter(writer);
 
-            dataWriter.Write(playerScoreData.Count);
+            GameStatistics ScoreCountObj = new GameStatistics(playerScoreData.Count, loginCount);
 
-            foreach (PlayerScoreData scoreData in playerScoreData)
+            string jsonScoreDataCount = JsonUtility.ToJson(ScoreCountObj);
+            dataWriter.Write(jsonScoreDataCount);
+
+            foreach (PlayerGameData scoreData in playerScoreData)
             {
-                scoreData.Save(dataWriter);
+                string jsonScoreData = JsonUtility.ToJson(scoreData);
+                dataWriter.Write(jsonScoreData);
             }
         }
-
-        Debug.Log("File Exists after " + File.Exists(savePath));
     }
 
     public void LoadScoresInFile()
     {
-        using (var reader = new BinaryReader(File.Open(savePath, FileMode.Open)))
+        using (var reader = new StreamReader(File.Open(savePath, FileMode.Open)))
         {
+            Debug.Log("Loading Scores");
+
             GameDataReader dataReader = new GameDataReader(reader);
 
-            int playerDataCount = dataReader.ReadInt();
+            string strPlayerDataCount = dataReader.ReadString();
+            GameStatistics playerDataCount = JsonUtility.FromJson<GameStatistics>(strPlayerDataCount);
+
+            loginCount = playerDataCount.loginCount;
 
             playerScoreData.Clear();
 
-            for (int i = 0; i < playerDataCount; i++)
+            for (int i = 0; i < playerDataCount.scoresStored; i++)
             {
-                PlayerScoreData scoreData = new PlayerScoreData();
-                scoreData.Load(dataReader);
+                string scoreDataStr = dataReader.ReadString();
+                PlayerGameData scoreData = JsonUtility.FromJson<PlayerGameData>(scoreDataStr);
+
+                Debug.Log("Loaded " + scoreDataStr);
+
                 playerScoreData.Add(scoreData);
             }
         }
     }
 
-    public List<PlayerScoreData> GetScoreData()
+    public List<PlayerGameData> GetScoreData()
     {
         return playerScoreData;
     }
@@ -152,12 +162,11 @@ public class HighScoreManager : MonoBehaviour
 
         float score = Random.Range(0, 40.0f);
 
-        PlayerScoreData randomData = new PlayerScoreData(name, score);
+        PlayerGameData randomData = new PlayerGameData(name, score);
         Debug.Log("Added " + name + " with score " + score);
 
         playerScoreData.Add(randomData);
     }
-
 
     public void DEBUG_AddAndSaveCurrentPlayerData()
     {

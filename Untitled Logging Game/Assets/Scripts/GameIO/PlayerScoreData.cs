@@ -1,48 +1,51 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
-public class PlayerScoreData
+public class GameStatistics
 {
-    public string Name;
-    public float Score;
-
-
-
-    public PlayerScoreData(string name, float score)
+    public GameStatistics(int scoreCount,int loginCount)
     {
-        this.Name = name;
-        this.Score = score;
+        this.scoresStored = scoreCount;
+        this.loginCount = loginCount;
     }
 
-    public PlayerScoreData() { }
-
-    public void Save(GameDataWriter dataWriter)
-    {
-        dataWriter.Write(Name);
-        dataWriter.Write(Score);
-
-        Debug.Log("Saved " + Name + "," + Score);
-
-    }
-
-    public void Load(GameDataReader dataReader)
-    {
-        Name = dataReader.ReadString();
-        Score = dataReader.ReadFloat();
-
-        Debug.Log("Loaded " + Name + "," + Score);
-
-
-    }
-
+    public int scoresStored;
+    public int loginCount;
 
 }
 
-public class PlayerScoreComparer : IComparer<PlayerScoreData>
+public class PlayerGameData
 {
-    public int Compare(PlayerScoreData a, PlayerScoreData b)
+    public string Name;
+    public float Score;
+    public string Time;
+    public string Date;
+    public int AchievedLevel;
+    public string FeedBack;
+
+    public PlayerGameData(string name, float score,int achievedLevel = -1)
+    {
+        this.Name = name;
+        this.Score = score;
+        this.AchievedLevel = achievedLevel;
+
+        DateTime now = DateTime.Now;
+
+        Time = now.TimeOfDay.ToString();
+        Date = now.Date.ToString();
+
+    }
+
+    public PlayerGameData() { }
+
+}
+
+public class PlayerScoreComparer : IComparer<PlayerGameData>
+{
+    public int Compare(PlayerGameData a, PlayerGameData b)
     {
         return b.Score.CompareTo(a.Score);
     }
