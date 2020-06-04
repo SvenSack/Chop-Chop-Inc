@@ -40,7 +40,7 @@ public class CutMan : MonoBehaviour
     private bool cutFailing;
     
     public bool isInCombo;
-    private int comboCount = 0;
+    public int comboCount = 0;
     [SerializeField] private TextMeshProUGUI comboText;
     
     
@@ -409,8 +409,10 @@ public class CutMan : MonoBehaviour
     private void ComboCut()
     {
         comboCount++;
-        if (comboText.fontSize == 0)
+        if (comboText.fontSize == 0 && comboCount > 1)
             comboText.fontSize = 36;
-        comboText.text = comboText.text.Replace("X", "" + (comboCount));
+        string temp = comboText.text;
+        temp = temp.Replace((comboCount - 1) + "x", comboCount + "x");
+        comboText.text = temp;
     }
 }
