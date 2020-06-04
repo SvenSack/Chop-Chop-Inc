@@ -48,7 +48,7 @@ public class HighScoreView : MonoBehaviour
 
         Vector2 shiftAmount = new Vector2(0, -100);
 
-        foreach(PlayerGameData data in highScoreManager.GetScoreData())
+        foreach(PlayerScoreData data in highScoreManager.GetScoreData())
         {
             Debug.Log("loaded score data");
 
