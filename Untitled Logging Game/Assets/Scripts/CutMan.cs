@@ -51,6 +51,8 @@ public class CutMan : MonoBehaviour
     [Range(0,1.0f)]public float cutDifficulty;
     [Range(0, 40.0f)] public float maxRot;
 
+    private Camera mainCam;
+
 
     private void Awake()
     {
@@ -65,6 +67,8 @@ public class CutMan : MonoBehaviour
         {
             treeHps[i] = Random.Range(1, 3);
         }
+
+        mainCam = Camera.main;
     }
 
     // Update is called once per frame
@@ -88,7 +92,7 @@ public class CutMan : MonoBehaviour
             else
             {
                 RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit,Mathf.Infinity, trunkMask) && shakeTimer <= 0)
                 {
                     shakeTimer = 1;
@@ -149,7 +153,7 @@ public class CutMan : MonoBehaviour
 
         if (isInCombo)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, 100000, trunkMask) && currentCut != null)
             {
                 if (hit.collider.gameObject.GetComponent<CuttableTreeScript>() ==
@@ -220,7 +224,7 @@ public class CutMan : MonoBehaviour
                     if(cutParticleInstance != null)
                     {
                         float zValue = cutParticleInstance.transform.position.z;
-                        Ray ray1 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                        Ray ray1 = mainCam.ScreenPointToRay(Input.mousePosition);
                         cutParticleInstance.transform.position = ray1.GetPoint(zValue);
                     }
                 }
@@ -234,11 +238,11 @@ public class CutMan : MonoBehaviour
 
     private GameObject InitiateCut(Vector2 start, Vector2 finish)
     {
-        Ray ray = Camera.main.ScreenPointToRay(start);
+        Ray ray = mainCam.ScreenPointToRay(start);
         Physics.Raycast(ray, out var hit);
         Vector3 startPoint = hit.point;
         
-        Ray ray2 = Camera.main.ScreenPointToRay(finish);
+        Ray ray2 = mainCam.ScreenPointToRay(finish);
         Physics.Raycast(ray2, out hit);
         Vector3 finishPoint = hit.point;
         
@@ -255,9 +259,8 @@ public class CutMan : MonoBehaviour
 
     private Vector3 GetMouseWorld()
     {
-        Camera main;
-        Ray ray = (main = Camera.main).ScreenPointToRay(Input.mousePosition);
-        float dist = Vector3.Distance(main.transform.position,
+        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+        float dist = Vector3.Distance(mainCam.transform.position,
             currentCut.GetComponentInChildren<CutTarget>().target.transform.position);
         // Debug.DrawRay(ray.origin, ray.direction * dist, Color.yellow, 10f);
         return ray.GetPoint(dist);
@@ -310,7 +313,7 @@ public class CutMan : MonoBehaviour
         {
             if (cutTargets[i] == null && treeHps[i] > 0)
             {
-                if (Vector3.Distance(trees[i].transform.position, Camera.main.transform.position) < cutTargetDistance)
+                if (Vector3.Distance(trees[i].transform.position, mainCam.transform.position) < cutTargetDistance)
                 {
 
                     cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponentInChildren<CutTarget>();
@@ -344,7 +347,7 @@ public class CutMan : MonoBehaviour
                             targetPosition.y = Random.Range(roof2.y, floor2.y);
                             break;
                     }
-                    tempTrans.position = Camera.main.WorldToScreenPoint(targetPosition);
+                    tempTrans.position = mainCam.WorldToScreenPoint(targetPosition);
                     CutSpriteInfo cutSpriteInfo = new CutSpriteInfo(i, targetPosition.x);
                     cutSpritesToModify.Add(cutSpriteInfo);
                     //float offSet = Random.Range(-20f, 20f);
@@ -515,14 +518,14 @@ public class CutMan : MonoBehaviour
                 }
             }
             GameObject newNut =  Instantiate(nutPrefab, gRaycaster.transform);
-            newNut.transform.position = Camera.main.WorldToScreenPoint(nutPosition);
+            newNut.transform.position = mainCam.WorldToScreenPoint(nutPosition);
             NutMover newNutMove = newNut.GetComponent<NutMover>();
             newNutMove.treeIndex = newPartIndex;
             newNut.GetComponent<Image>().sprite = nutSprites[newPartIndex];
             RaycastHit hit;
             Physics.Raycast(nutPosition, Vector3.down, out hit, 100, groundMask);
             Debug.DrawRay(nutPosition,Vector3.down*10,Color.green, 5);
-            newNutMove.floorHeight = Camera.main.WorldToScreenPoint(hit.point).y;
+            newNutMove.floorHeight = mainCam.WorldToScreenPoint(hit.point).y;
             tree.LeanRotateZ(currentZ - 4, .3f);
             yield return new WaitForSeconds(.3f);
             tree.LeanRotateZ(currentZ, .2f); 
