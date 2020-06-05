@@ -29,6 +29,6 @@ public class CutTarget : MonoBehaviour
             img.color = newCol;
         }
         else
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
     }
 }

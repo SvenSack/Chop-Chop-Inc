@@ -290,8 +290,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutMan.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-315">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="165">
+              <caret line="11" column="32" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="32" />
               <folding>
                 <marker date="1591344145150" expanded="true" signature="6:194" ph="..." />
                 <marker date="1591344145150" expanded="true" signature="231:23623" ph="{...}" />
@@ -414,6 +414,8 @@
       <find>camera</find>
       <find>camera.main</find>
       <find>sepera</find>
+      <find>currenttarget</find>
+      <find>currentcut</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -552,12 +554,12 @@
       <workItem from="1590653210591" duration="12594000" />
       <workItem from="1591257604737" duration="26245000" />
       <workItem from="1591313531115" duration="2290000" />
-      <workItem from="1591342368641" duration="2027000" />
+      <workItem from="1591342368641" duration="2360000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103679000" />
+    <option name="totallyTimeSpent" value="104012000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -572,7 +574,7 @@
     <frame x="320" y="179" width="1437" height="806" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.32461873" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32461873" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1045,8 +1047,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutMan.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-315">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        <state relative-caret-position="165">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="32" />
           <folding>
             <marker date="1591344145150" expanded="true" signature="6:194" ph="..." />
             <marker date="1591344145150" expanded="true" signature="231:23623" ph="{...}" />
