@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CutMan : MonoBehaviour
 {
@@ -25,7 +27,7 @@ public class CutMan : MonoBehaviour
     public int[] treeHps;
     private CutTarget[] cutTargets;
     [SerializeField] GameObject cutTargetPrefab = null;
-    [SerializeField] private float cutTargetDistance = 5f;
+    public float cutTargetDistance = 5f;
     [SerializeField] private float cutForce;
     
     private SoundMan soundMan;
@@ -52,6 +54,10 @@ public class CutMan : MonoBehaviour
     [Range(0, 40.0f)] public float maxRot;
 
     private Camera mainCam;
+    
+    [SerializeField] private bool multiCam;
+    private CameraMan camMan;
+    public List<int> currentTargetIndices = new List<int>();
 
 
     private void Awake()
@@ -65,10 +71,16 @@ public class CutMan : MonoBehaviour
         cutTargets = new CutTarget[trees.Length];
         for (int i = 0; i < treeHps.Length; i++)
         {
-            treeHps[i] = Random.Range(1, 3);
+            treeHps[i] = Random.Range(1, 4);
         }
 
         mainCam = Camera.main;
+    }
+
+    private void Start()
+    {
+        if (multiCam)
+            camMan = FindObjectOfType<CameraMan>();
     }
 
     // Update is called once per frame
@@ -205,7 +217,24 @@ public class CutMan : MonoBehaviour
                             {
                                 treeHps[i]--;
                                 if(treeHps[i] == 0)
+                                {
                                     uiMan.IncreaseScore(true);
+                                    if (multiCam)
+                                    {
+                                        bool checker = false;
+                                        foreach (var index in currentTargetIndices)
+                                        {
+                                            if (treeHps[index] != 0)
+                                                checker = true;
+                                        }
+
+                                        if (!checker)
+                                        {
+                                            camMan.MoveOn();
+                                            currentTargetIndices.Clear();
+                                        }
+                                    }
+                                }
                             }
                         }
                         Destroy(currentCut);
@@ -316,6 +345,8 @@ public class CutMan : MonoBehaviour
                 if (Vector3.Distance(trees[i].transform.position, mainCam.transform.position) < cutTargetDistance)
                 {
 
+                    if(multiCam && !currentTargetIndices.Contains(i))
+                        currentTargetIndices.Add(i);
                     cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponentInChildren<CutTarget>();
                     cutTargets[i].target = trees[i];
                     cutTargets[i].goesLeft = defaultCutDirection;

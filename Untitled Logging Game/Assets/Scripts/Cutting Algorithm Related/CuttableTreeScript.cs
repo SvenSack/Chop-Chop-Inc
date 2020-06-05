@@ -260,7 +260,7 @@ public class CuttableTreeScript : MonoBehaviour
     /// <param name="seperationForce"> The scalar value of the force that has a direction parallel to the cutting plane normal which is 
     /// added to the newly created mesh after it is split. </param>
     /// <returns></returns>
-    public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
+    public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce)
     {
         Profiler.BeginSample("[cut] MatrixMath");
 
@@ -642,7 +642,7 @@ public class CuttableTreeScript : MonoBehaviour
     //----------------------------------------- non-multithreaded code below--------------------------------------------------------------//
     //
 
-    public GameObject CutAtNoOptimizations(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
+    public GameObject CutAtNoOptimizations(Vector3 position, Vector3 normal, float seperationForce)
     {
         Debug.Log("Starting cut for " + gameObject.name);
 
