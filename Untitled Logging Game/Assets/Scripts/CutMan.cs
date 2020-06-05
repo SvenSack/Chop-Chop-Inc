@@ -407,7 +407,7 @@ public class CutMan : MonoBehaviour
 
 
             float offSet = Random.Range(maxRot, -maxRot);
-            tempTrans.rotation = Quaternion.Euler(0, 0, offSet);
+            tempTrans.GetChild(0).rotation = Quaternion.Euler(0, 0, offSet);
 
             if (!cutTargets[currentIndex].goesLeft)
                 tempTrans.GetChild(0).rotation = Quaternion.Euler(0, 0, offSet + 180);

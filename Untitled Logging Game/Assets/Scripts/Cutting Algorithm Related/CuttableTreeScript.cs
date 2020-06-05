@@ -376,7 +376,7 @@ public class CuttableTreeScript : MonoBehaviour
         DisplaceLeaves(position, normal, gameObject, otherMeshPhysicsManager.gameObject);
         Profiler.EndSample();
 
-        otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal, point);
+        otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal.normalized, centerPoint);
 
         if(nativeArrayAllocator)
         {
