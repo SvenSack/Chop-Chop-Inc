@@ -86,10 +86,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Cutting Algorithm Related/CuttableTreeScript.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-103">
+            <state relative-caret-position="2760">
               <caret line="367" column="32" selection-start-line="367" selection-start-column="32" selection-end-line="367" selection-end-column="32" />
               <folding>
                 <marker date="1591347236362" expanded="true" signature="6:183" ph="..." />
@@ -287,6 +287,22 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameIO/HighScoreView.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+              <folding>
+                <marker date="1591350604474" expanded="true" signature="6:78" ph="..." />
+                <marker date="1591350604474" expanded="true" signature="147:2163" ph="{...}" />
+                <marker date="1591350604474" expanded="true" signature="523:544" ph="{...}" />
+                <marker date="1591350604474" expanded="true" signature="574:2160" ph="{...}" />
+                <marker date="1591350604474" expanded="true" signature="1426:2154" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutMan.cs">
           <provider selected="true" editor-type-id="text-editor">
@@ -431,6 +447,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SceneMan.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CutMan.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MapZoomIn.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameIO/HighScoreManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Documents/projectStartup/projectStartup/Project Startup/Assets/Assets/Scripts/UI/MenuButtons.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scenes/PrototypeLevel.unity" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NutMover.cs" root0="FORCE_HIGHLIGHTING" />
@@ -440,6 +457,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utils.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SoundMan.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/AnimalSprite.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameIO/HighScoreView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CameraMan.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Documents/projectStartup/projectStartup/Project Startup/Assets/Assets/Scripts/Audio/MusicManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Documents/projectStartup/projectStartup/Project Startup/Assets/Assets/Scripts/Characters/Fronpy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -469,6 +487,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/CutMan.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CutMan.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Cutting Algorithm Related/CuttableTreeScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameIO/HighScoreView.cs" />
       </list>
     </option>
   </component>
@@ -554,12 +573,12 @@
       <workItem from="1590653210591" duration="12594000" />
       <workItem from="1591257604737" duration="26245000" />
       <workItem from="1591313531115" duration="2290000" />
-      <workItem from="1591342368641" duration="3735000" />
+      <workItem from="1591342368641" duration="5541000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="105387000" />
+    <option name="totallyTimeSpent" value="107193000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -932,9 +951,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameIO/HighScoreManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <folding>
+            <marker date="1591287816356" expanded="true" signature="6:91" ph="..." />
+            <marker date="1591287816356" expanded="true" signature="179:4711" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="515:655" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="682:1364" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="729:814" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="856:942" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="984:1045" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="1087:1186" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="1227:1358" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="1394:1434" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="1482:1533" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="1595:1647" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="1692:1838" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="1874:2556" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="2032:2550" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="2393:2540" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="2592:3434" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="2689:3428" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="3129:3418" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="3482:3526" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="3565:3839" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="3594:3729" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="3742:3814" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="3884:4352" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="4055:4126" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="4405:4598" ph="{...}" />
+            <marker date="1591287816356" expanded="true" signature="4636:4709" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Cutting Algorithm Related/CuttableTreeScript.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-103">
+        <state relative-caret-position="2760">
           <caret line="367" column="32" selection-start-line="367" selection-start-column="32" selection-end-line="367" selection-end-column="32" />
           <folding>
             <marker date="1591347236362" expanded="true" signature="6:183" ph="..." />
@@ -1127,6 +1182,20 @@
             <marker date="1591347236362" expanded="true" signature="70880:70994" ph="{...}" />
             <marker date="1591347236362" expanded="true" signature="71066:71203" ph="{...}" />
             <marker date="1591347236362" expanded="true" signature="71120:71197" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameIO/HighScoreView.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+          <folding>
+            <marker date="1591350604474" expanded="true" signature="6:78" ph="..." />
+            <marker date="1591350604474" expanded="true" signature="147:2163" ph="{...}" />
+            <marker date="1591350604474" expanded="true" signature="523:544" ph="{...}" />
+            <marker date="1591350604474" expanded="true" signature="574:2160" ph="{...}" />
+            <marker date="1591350604474" expanded="true" signature="1426:2154" ph="{...}" />
           </folding>
         </state>
       </provider>
