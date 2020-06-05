@@ -70,17 +70,17 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutTarget.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="240">
+              <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
               <folding>
-                <marker date="1591287816350" expanded="true" signature="7:55" ph="..." />
-                <marker date="1591287816350" expanded="true" signature="95:641" ph="{...}" />
-                <marker date="1591287816350" expanded="true" signature="270:351" ph="{...}" />
-                <marker date="1591287816350" expanded="true" signature="370:639" ph="{...}" />
-                <marker date="1591287816350" expanded="true" signature="402:587" ph="{...}" />
+                <marker date="1591345981655" expanded="true" signature="7:55" ph="..." />
+                <marker date="1591345981655" expanded="true" signature="95:669" ph="{...}" />
+                <marker date="1591345981655" expanded="true" signature="270:351" ph="{...}" />
+                <marker date="1591345981655" expanded="true" signature="370:667" ph="{...}" />
+                <marker date="1591345981655" expanded="true" signature="402:587" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -287,11 +287,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutMan.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="32" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="32" />
+            <state relative-caret-position="66">
+              <caret line="431" column="40" lean-forward="true" selection-start-line="431" selection-start-column="40" selection-end-line="431" selection-end-column="40" />
               <folding>
                 <marker date="1591344145150" expanded="true" signature="6:194" ph="..." />
                 <marker date="1591344145150" expanded="true" signature="231:23623" ph="{...}" />
@@ -460,7 +460,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/AnimalSprite.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/LayerOrganizer.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/WeirdExperimentalShit/LayerOrganizer.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CutTarget.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AudioCleanup.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundMan.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NutMover.cs" />
@@ -469,6 +468,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/CameraMan.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CutMan.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CutMan.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CutTarget.cs" />
       </list>
     </option>
   </component>
@@ -554,12 +554,12 @@
       <workItem from="1590653210591" duration="12594000" />
       <workItem from="1591257604737" duration="26245000" />
       <workItem from="1591313531115" duration="2290000" />
-      <workItem from="1591342368641" duration="2360000" />
+      <workItem from="1591342368641" duration="3159000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104012000" />
+    <option name="totallyTimeSpent" value="104811000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1016,20 +1016,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutTarget.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-          <folding>
-            <marker date="1591287816350" expanded="true" signature="7:55" ph="..." />
-            <marker date="1591287816350" expanded="true" signature="95:641" ph="{...}" />
-            <marker date="1591287816350" expanded="true" signature="270:351" ph="{...}" />
-            <marker date="1591287816350" expanded="true" signature="370:639" ph="{...}" />
-            <marker date="1591287816350" expanded="true" signature="402:587" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/CameraMan.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="452">
@@ -1047,8 +1033,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutMan.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="32" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="32" />
+        <state relative-caret-position="66">
+          <caret line="431" column="40" lean-forward="true" selection-start-line="431" selection-start-column="40" selection-end-line="431" selection-end-column="40" />
           <folding>
             <marker date="1591344145150" expanded="true" signature="6:194" ph="..." />
             <marker date="1591344145150" expanded="true" signature="231:23623" ph="{...}" />
@@ -1127,6 +1113,20 @@
             <marker date="1591344145150" expanded="true" signature="23785:23889" ph="{...}" />
             <marker date="1591344145150" expanded="true" signature="23955:24092" ph="{...}" />
             <marker date="1591344145150" expanded="true" signature="24013:24090" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/CutTarget.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+          <folding>
+            <marker date="1591345981655" expanded="true" signature="7:55" ph="..." />
+            <marker date="1591345981655" expanded="true" signature="95:669" ph="{...}" />
+            <marker date="1591345981655" expanded="true" signature="270:351" ph="{...}" />
+            <marker date="1591345981655" expanded="true" signature="370:667" ph="{...}" />
+            <marker date="1591345981655" expanded="true" signature="402:587" ph="{...}" />
           </folding>
         </state>
       </provider>
