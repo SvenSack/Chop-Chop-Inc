@@ -23,7 +23,7 @@ public class CutMan : MonoBehaviour
     [SerializeField] GameObject fallParticleObject = null;
     private GameObject cutParticleInstance;
 
-    private CuttableTreeScript[] trees;
+    public CuttableTreeScript[] trees;
     public int[] treeHps;
     private CutTarget[] cutTargets;
     [SerializeField] GameObject cutTargetPrefab = null;
@@ -66,7 +66,7 @@ public class CutMan : MonoBehaviour
         uiMan = FindObjectOfType<UIMan>();
         trunkMask = LayerMask.GetMask("Trunks");
         groundMask = LayerMask.GetMask("Ground");
-        trees = FindObjectsOfType<CuttableTreeScript>();
+        // trees = FindObjectsOfType<CuttableTreeScript>();
         treeHps = new int[trees.Length];
         cutTargets = new CutTarget[trees.Length];
         for (int i = 0; i < treeHps.Length; i++)
@@ -342,11 +342,9 @@ public class CutMan : MonoBehaviour
         {
             if (cutTargets[i] == null && treeHps[i] > 0)
             {
-                if (Vector3.Distance(trees[i].transform.position, mainCam.transform.position) < cutTargetDistance)
+                if ((Vector3.Distance(trees[i].transform.position, mainCam.transform.position) < cutTargetDistance
+                    && !multiCam ) || currentTargetIndices.Contains(i))
                 {
-
-                    if(multiCam && !currentTargetIndices.Contains(i))
-                        currentTargetIndices.Add(i);
                     cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponentInChildren<CutTarget>();
                     cutTargets[i].target = trees[i];
                     cutTargets[i].goesLeft = defaultCutDirection;
