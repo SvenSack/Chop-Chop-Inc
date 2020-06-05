@@ -59,6 +59,7 @@ public class CutMan : MonoBehaviour
     private CameraMan camMan;
     public List<int> currentTargetIndices = new List<int>();
 
+    public bool debugMode;
 
     private void Awake()
     {
@@ -86,6 +87,19 @@ public class CutMan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (debugMode && Input.GetKeyDown(KeyCode.Return))
+        {
+            foreach (var tar in 
+                FindObjectsOfType<CutTarget>())
+            {
+                Destroy(tar.transform.parent.gameObject);
+            }
+
+            camMan.MoveOn();
+            currentTargetIndices.Clear();
+        }
+        
+        
         if (Input.GetMouseButtonDown(0))
         {
             List<RaycastResult> castHits = new List<RaycastResult>();
@@ -565,6 +579,8 @@ public class CutMan : MonoBehaviour
     
     
 }
+
+
 
 
 public class CutSpriteInfo

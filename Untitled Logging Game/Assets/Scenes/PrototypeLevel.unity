@@ -491,6 +491,11 @@ PrefabInstance:
       propertyPath: trees.Array.data[45]
       value: 
       objectReference: {fileID: 491360370}
+    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
+        type: 3}
+      propertyPath: debugMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebcc37a588a7f4646be6722f804cdf7c, type: 3}
 --- !u!114 &43398616 stripped
