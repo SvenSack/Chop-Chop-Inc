@@ -31,7 +31,8 @@ public class SoundMan : MonoBehaviour
             chainsawSoundObject = chainsawSoundSource.gameObject;
             chainsawSoundSource.Play();
             chainsawSoundSource.spatialBlend = .5f;
-            cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length));
+            chainsawSoundSource.GetComponent<AudioCleanup>().enabled = false;
+            cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length-.01f));
         }
     }
 
@@ -42,12 +43,17 @@ public class SoundMan : MonoBehaviour
 
     public void StopCut()
     {
+        Debug.Log("stopped cut sound");
         if (chainsawSoundSource.clip != chainsaw[0])
+        {
             SwapChainsawSound(chainsaw[2], false, true);
+            chainsawSoundSource.GetComponent<AudioCleanup>().enabled = true;
+        }
         else
         {
                 StopCoroutine(cueCutLoop);
                 SwapChainsawSound(chainsaw[2], false, true);
+                chainsawSoundSource.GetComponent<AudioCleanup>().enabled = true;
         }
     }
 

@@ -43,7 +43,7 @@ public class CutMan : MonoBehaviour
     private float shakeTimer;
 
     public float forgivingness = 1f;
-    private List<Coroutine> bagOfCutStops = new List<Coroutine>();
+    private IEnumerator cutStopper;
     private bool cutFailing;
     
     public bool isInCombo;
@@ -61,6 +61,11 @@ public class CutMan : MonoBehaviour
 
     public bool debugMode;
 
+    public float cutDelay = .5f;
+    private Coroutine cutRoutine;
+
+    private GameObject trailMan;
+
     private void Awake()
     {
         soundMan = FindObjectOfType<SoundMan>();
@@ -76,12 +81,15 @@ public class CutMan : MonoBehaviour
         }
 
         mainCam = Camera.main;
+        cutStopper = InitiateStopCut();
     }
 
     private void Start()
     {
         if (multiCam)
             camMan = FindObjectOfType<CameraMan>();
+
+        trailMan = GameObject.FindGameObjectWithTag("TrailMan");
     }
 
     // Update is called once per frame
@@ -102,32 +110,12 @@ public class CutMan : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0))
         {
-            List<RaycastResult> castHits = new List<RaycastResult>();
-            PointerEventData eventPoint = new PointerEventData(eventSystem) {position = Input.mousePosition};
-            gRaycaster.Raycast(eventPoint, castHits);
-            if (castHits.Count > 0)
-            {
-                foreach (var t in castHits)
-                {
-                    if (t.gameObject.GetComponentInChildren<CutTarget>() != null)
-                    {
-                        StartCut(t.gameObject);
-                    }
-                }
-            }
+            if(cutRoutine == null)
+                cutRoutine = StartCoroutine(Cut());
             else
             {
-                RaycastHit hit;
-                Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit,Mathf.Infinity, trunkMask) && shakeTimer <= 0)
-                {
-                    shakeTimer = 1;
-                    // ### maybe sanitize with a coroutine to rule out dragging ?
-                    if (hit.collider.gameObject.GetComponent<CuttableTreeScript>().isFirstTree)
-                    {
-                        StartCoroutine(SeedSpawn(hit.collider.transform));
-                    }
-                }
+                StopCoroutine(cutRoutine);
+                cutRoutine = StartCoroutine(Cut());
             }
         }
 
@@ -137,10 +125,7 @@ public class CutMan : MonoBehaviour
             {
                 Debug.Log("Stopped cutting because click lift");
                 StopCut();
-                foreach (var routine in bagOfCutStops)
-                {
-                   StopCoroutine(routine); 
-                }
+                StopCoroutine(cutStopper);
             }
             else if(Input.GetMouseButton(0))
             {
@@ -169,8 +154,7 @@ public class CutMan : MonoBehaviour
                 if (!hit && !cutFailing)
                 {
                     Debug.Log("Stopped cutting because click left");
-                    Coroutine rout = StartCoroutine(InitiateStopCut());
-                    bagOfCutStops.Add(rout);
+                    StartCoroutine(cutStopper);
                 }
             
             }
@@ -253,8 +237,7 @@ public class CutMan : MonoBehaviour
                         }
                         Destroy(currentCut);
                         ComboCut();
-                        Coroutine rout = StartCoroutine(InitiateStopCut());
-                        bagOfCutStops.Add(rout);
+                        StartCoroutine(cutStopper);
                         isCutting = false;
                     }
                     foreach (var part in cutParticleInstance.GetComponents<ParticleSystem>())
@@ -277,6 +260,9 @@ public class CutMan : MonoBehaviour
         PlaceCutSpots();
         if (shakeTimer > 0)
             shakeTimer -= Time.deltaTime;
+        
+        
+        trailMan.transform.position = GetMouseWorld();
     }
 
     private GameObject InitiateCut(Vector2 start, Vector2 finish)
@@ -303,8 +289,13 @@ public class CutMan : MonoBehaviour
     private Vector3 GetMouseWorld()
     {
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
-        float dist = Vector3.Distance(mainCam.transform.position,
-            currentCut.GetComponentInChildren<CutTarget>().target.transform.position);
+        float dist;
+        if(currentCut != null)
+            dist = Vector3.Distance(mainCam.transform.position, currentCut.GetComponentInChildren<CutTarget>().target.transform.position);
+        else
+        {
+            dist = 5f;
+        }
         // Debug.DrawRay(ray.origin, ray.direction * dist, Color.yellow, 10f);
         return ray.GetPoint(dist);
     }
@@ -483,6 +474,7 @@ public class CutMan : MonoBehaviour
         isInCombo = false;
         comboCount = 0;
         comboText.fontSize = 0;
+        trailMan.GetComponent<TrailRenderer>().emitting = false;
     }
 
     IEnumerator InitiateStopCut()
@@ -491,6 +483,7 @@ public class CutMan : MonoBehaviour
         yield return new WaitForSeconds(forgivingness);
         if (cutFailing)
         {
+            
             StopCut();
         }
     }
@@ -576,9 +569,34 @@ public class CutMan : MonoBehaviour
             tree.LeanRotateZ(currentZ, .2f); 
         }
     }
-    
-    
+
+    IEnumerator Cut()
+    {
+        yield return new WaitForSeconds(cutDelay);
+        if (Input.GetMouseButton(0))
+        {
+            StopCoroutine(cutStopper);
+            soundMan.StartCut();
+            soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
+            isInCombo = true;
+            trailMan.GetComponent<TrailRenderer>().emitting = true;
+        }
+        else
+        {
+            RaycastHit hit;
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit,Mathf.Infinity, trunkMask) && shakeTimer <= 0)
+            {
+                shakeTimer = 1;
+                if (hit.collider.gameObject.GetComponent<CuttableTreeScript>().isFirstTree)
+                {
+                    StartCoroutine(SeedSpawn(hit.collider.transform));
+                }
+            }
+        }
+    }
 }
+
 
 
 
