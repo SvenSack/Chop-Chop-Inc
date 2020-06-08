@@ -198,7 +198,7 @@ public class CuttableTreeScript : MonoBehaviour
 
     public bool isFirstTree = false;
 
-    public static bool useMultithreadedVersion = true;
+    public static bool useMultithreadedVersion = false;
 
     public Material cutMaterial = null;
 
@@ -248,6 +248,8 @@ public class CuttableTreeScript : MonoBehaviour
         preCutCentroid /= (mesh.vertices.Length);
 
         objectSpacePreCutCentroid = preCutCentroid;
+
+        //Utils.EnsurePositionIsCentroid(transform);
 
         meshPhysicsManager = GetMeshColliderGenerator();
     }
@@ -1693,12 +1695,108 @@ public class CuttableTreeScript : MonoBehaviour
 
     //---------------------------------- Helper Functions----------------------------------------//
 
+   public static List<IntersectionQuery> FindTriangleToPlaneIntersectionPoint(NativeArray<Vector3> meshVertices, NativeArray<Vector2> meshUVs,int v0,int v1, int v2 , Vector3 inversePosition,Vector3 inverseNormal)
+   {
+        List<IntersectionQuery> result = new List<IntersectionQuery>();
+
+        IntersectionQuery intersection1;
+        if (FindLineToPlaneIntersection(meshVertices,meshUVs,v0,v1,inversePosition,inverseNormal, out intersection1))
+        {
+            result.Add(intersection1);
+        }
+
+        IntersectionQuery intersection2;
+        if (FindLineToPlaneIntersection(meshVertices, meshUVs, v1, v2, inversePosition, inverseNormal, out intersection2))
+        {
+            result.Add(intersection2);
+        }
+
+        IntersectionQuery intersection3;
+        if (FindLineToPlaneIntersection(meshVertices, meshUVs, v2, v0, inversePosition, inverseNormal, out intersection3))
+        {
+            result.Add(intersection3);
+        }
+
+        return result;
+    }
+
+   /// <summary>
+   /// Given the vertices and UVs of a line in a triangle of a mesh, checks if there is a collision between a plane with a given position and normal
+   /// </summary>
+   /// <param name="meshVertices"></param>
+   /// <param name="meshUVs"></param>
+   /// <param name="v0"></param>
+   /// <param name="v1"></param>
+   /// <param name="position"></param>
+   /// <param name="normal"></param>
+   /// <param name="intersection"></param>
+   /// <returns></returns>
+   public static bool FindLineToPlaneIntersection(NativeArray<Vector3> meshVertices, NativeArray<Vector2> meshUVs, int v0, int v1, Vector3 inversePosition, Vector3 inverseNormal,out IntersectionQuery intersection)
+   {
+        Vector3 objectSpaceV1 = meshVertices[v1];
+        Vector3 objectSpaceV0 = meshVertices[v0];
+        
+        bool isOnSameSideOfPlane = Utils.IsPointAbovePlane(objectSpaceV0, inversePosition, inverseNormal) ^ Utils.IsPointAbovePlane(objectSpaceV1, inversePosition, inverseNormal);
+
+        intersection = new IntersectionQuery();
+
+        if (!isOnSameSideOfPlane)
+        { 
+            return false;
+        }
+
+        Vector2 UVP0 = meshUVs[v0];
+        Vector2 UVP1 = meshUVs[v1];
+
+        Vector2 UVLine = (UVP1 - UVP0).normalized;
+
+        Vector3 lineToUse = objectSpaceV1 - objectSpaceV0;
+
+        Vector3 P0 = objectSpaceV0;
+        Vector3 P1 = lineToUse.normalized;
+        Vector3 A = inversePosition;
+
+        float t = (Vector3.Dot(A, inverseNormal) - Vector3.Dot(P0, inverseNormal)) / Vector3.Dot(P1, inverseNormal);
+
+        intersection.intersectionPosition = P0 + P1 * t;
+        intersection.UV = UVP0 + UVLine * t;
+
+        return true;
+    }
+
+    public static void GetFaceToPlaneIntersectionPoints(NativeArray<Vector3> meshVertices,NativeArray<Vector2> meshUVs, Face face, Vector3 position, Vector3 normal, out List<IntersectionQuery> intersectionPoints)
+    {
+        intersectionPoints = new List<IntersectionQuery>();
+
+
+
+        List<IntersectionQuery> triangleIntersectionPoints = FindTriangleToPlaneIntersectionPoint
+            (meshVertices, meshUVs, face.tri1.v0, face.tri1.v1, face.tri1.v2, position, normal);
+
+
+        List<IntersectionQuery> secondTriangleIntersectionPoints = FindTriangleToPlaneIntersectionPoint
+            (meshVertices, meshUVs, face.tri2.v0, face.tri2.v1, face.tri2.v2, position, normal);
+
+
+        foreach (var intersectionPoint in triangleIntersectionPoints)
+        {
+            intersectionPoints.Add(intersectionPoint);
+        }
+
+        foreach (var intersectionPoint in secondTriangleIntersectionPoints)
+        {
+            intersectionPoints.Add(intersectionPoint);
+        }
+
+    }
+
+
     public static List<Vector3> UnOptimizedFindTriangleToPlaneIntersectionPoint(Vector3 transformedV0, Vector3 transformedV1, Vector3 transformedV2, Vector3 position, Vector3 normal)
     {
         List<Vector3> result = new List<Vector3>();
 
         Vector3 intersection1;
-        if (UnOptimizedFindLineToPlaneIntersection(transformedV0, transformedV1, position, normal, out intersection1) 
+        if (UnOptimizedFindLineToPlaneIntersection(transformedV0, transformedV1, position, normal, out intersection1)
             //|| UnOptimizedFindLineToPlaneIntersection(transformedV1, transformedV0, position, normal, out intersection1)
             )
         {
@@ -1706,7 +1804,7 @@ public class CuttableTreeScript : MonoBehaviour
         }
 
         Vector3 intersection2;
-        if (UnOptimizedFindLineToPlaneIntersection(transformedV1, transformedV2, position, normal, out intersection2) 
+        if (UnOptimizedFindLineToPlaneIntersection(transformedV1, transformedV2, position, normal, out intersection2)
             //|| UnOptimizedFindLineToPlaneIntersection(transformedV2, transformedV1, position, normal, out intersection2)
             )
         {
@@ -1714,7 +1812,7 @@ public class CuttableTreeScript : MonoBehaviour
         }
 
         Vector3 intersection3;
-        if (UnOptimizedFindLineToPlaneIntersection(transformedV2, transformedV0, position, normal, out intersection3) 
+        if (UnOptimizedFindLineToPlaneIntersection(transformedV2, transformedV0, position, normal, out intersection3)
             //|| UnOptimizedFindLineToPlaneIntersection(transformedV0, transformedV2, position, normal, out intersection3)
             )
         {
