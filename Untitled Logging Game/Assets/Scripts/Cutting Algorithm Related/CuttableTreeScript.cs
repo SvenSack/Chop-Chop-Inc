@@ -262,6 +262,11 @@ public class CuttableTreeScript : MonoBehaviour
     /// <returns></returns>
     public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce)
     {
+        normal.Normalize();
+
+        Debug.Log("position " + position.ToString());
+        Debug.Log("normal " + normal.ToString());
+
         Profiler.BeginSample("[cut] MatrixMath");
 
         Matrix4x4 worldMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
@@ -302,7 +307,7 @@ public class CuttableTreeScript : MonoBehaviour
         
 
         int intersectionVertexCount = generatedHoleFilling.Count;
-
+    
         List<Vector3> holes = new List<Vector3>();
 
         while (generatedHoleFilling.TryDequeue(out CutHolePairing holePairing ))
@@ -376,6 +381,7 @@ public class CuttableTreeScript : MonoBehaviour
         DisplaceLeaves(position, normal, gameObject, otherMeshPhysicsManager.gameObject);
         Profiler.EndSample();
 
+        if(intersectionVertexCount == 0) { centerPoint = transform.position; }
         otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal.normalized, centerPoint);
 
         if(nativeArrayAllocator)
