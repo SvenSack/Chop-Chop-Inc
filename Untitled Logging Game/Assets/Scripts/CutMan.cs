@@ -192,7 +192,8 @@ public class CutMan : MonoBehaviour
                     Debug.Log("hit tree");
                     isCutting = true;
                     soundMan.ToggleWood();
-                    cutParticleInstance = Instantiate(cutParticleObject);
+                    if(cutParticleInstance == null)
+                        cutParticleInstance = Instantiate(cutParticleObject);
                     if(currentTarget.goesLeft)
                         cutParticleInstance.transform.rotation = Quaternion.Euler(0,0,180);
                     foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
@@ -201,8 +202,8 @@ public class CutMan : MonoBehaviour
                     }
                     cutParticleInstance.transform.position = hit.point;
                     soundMan.chainsawSoundObject.transform.position = hit.point;
-                    Debug.Log("cutStart set at time " + Time.frameCount);
-                    Debug.Log("cutStart set at value " + Input.mousePosition);
+                    // Debug.Log("cutStart set at time " + Time.frameCount);
+                    // Debug.Log("cutStart set at value " + Input.mousePosition);
                     cutStart = Input.mousePosition;
                     isCutStartSet = true;
 
@@ -272,8 +273,10 @@ public class CutMan : MonoBehaviour
                             cutUpdate = Input.mousePosition;
                         }
                         
-                        cutParticleInstance.transform.position = hit.point;
-                        soundMan.chainsawSoundObject.transform.position = hit.point;
+                        if(cutParticleInstance != null)
+                            cutParticleInstance.transform.position = hit.point;
+                        if(soundMan.chainsawSoundObject != null)
+                            soundMan.chainsawSoundObject.transform.position = hit.point;
                     }
                 }
             }
@@ -287,10 +290,10 @@ public class CutMan : MonoBehaviour
                     // Debug.Log("stopped hitting tree at distance " + dist);
                     if (Mathf.Abs(dist) > marginOfError && CheckCutSpotCut(cutStart, Input.mousePosition))
                     {
-                        Debug.Log("IsCutting NonCombo Suceeded");
+                        // Debug.Log("IsCutting NonCombo Suceeded");
 
-                        Debug.Log("cutStart " + cutStart.ToString("F2"));
-                        Debug.Log("cutEnd " + cutUpdate.ToString("F2"));
+                        // Debug.Log("cutStart " + cutStart.ToString("F2"));
+                        // Debug.Log("cutEnd " + cutUpdate.ToString("F2"));
                         GameObject newTreePiece = InitiateCut(cutStart, cutUpdate);
                         CuttableTreeScript target = currentTarget.target;
                         FellTree(newTreePiece, target); // this does the visual and auditory stuff for the tree falling
@@ -353,7 +356,7 @@ public class CutMan : MonoBehaviour
         Vector3 finishPoint = hit.point;
         
         Vector3 targetLocation = Vector3.Lerp(startPoint, finishPoint, 0.5f);
-        Debug.Log("targetLocation " + targetLocation.ToString("F2"));
+        // Debug.Log("targetLocation " + targetLocation.ToString("F2"));
         Vector3 cutLine = startPoint - finishPoint;
         Vector3 cutRight = Vector3.Cross(cutLine, Vector3.up);
         Vector3 cutNormal = Vector3.Cross(cutRight, cutLine);
@@ -361,9 +364,9 @@ public class CutMan : MonoBehaviour
         Debug.DrawLine(new Vector3(start.x, start.y , 100), new Vector3(start.x, start.y , -100), Color.magenta, 1000f);
         Debug.DrawLine(new Vector3(finish.x, finish.y , 100), new Vector3(finish.x, finish.y , -100), Color.green, 1000f);
 
-        Debug.Log("cutNormal " + cutNormal.ToString("F2"));
-        Debug.Log("cutForce " + cutForce);
-        GameObject newTree = target.CutAt(targetLocation, cutNormal, cutForce);
+        // Debug.Log("cutNormal " + cutNormal.ToString("F2"));
+        // Debug.Log("cutForce " + cutForce);
+        GameObject newTree = target.CutAt(targetLocation, cutNormal.normalized, cutForce);
         return newTree;
     }
 
@@ -516,26 +519,26 @@ public class CutMan : MonoBehaviour
         { 
             case true:
                 float dist = Vector2.Distance(currentR, Input.mousePosition);
-                if (dist < width / 3)
+                if (dist < width * .3f)
                 {
                     soundMan.StartCut();
                     currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     isInCombo = true;
-                    Debug.DrawLine(currentR, Input.mousePosition,Color.cyan,1000);
+                    // Debug.DrawLine(currentR, Input.mousePosition,Color.cyan,1000);
                     return true;
                 }
                 Debug.Log("Discarded left with width of " + width + " and distance of " + dist);
                 break;
             case false:
                 float dist1 = Vector2.Distance(currentL, Input.mousePosition);
-                if (dist1 < width / 3)
+                if (dist1 < width * .3f)
                 {
                     soundMan.StartCut();
                     currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     isInCombo = true;
-                    Debug.DrawLine(currentL, Input.mousePosition, Color.cyan,1000);
+                    // Debug.DrawLine(currentL, Input.mousePosition, Color.cyan,1000);
                     return true;
                 }
                 Debug.Log("Discarded right with width of " + width + " and distance of " + dist1);
