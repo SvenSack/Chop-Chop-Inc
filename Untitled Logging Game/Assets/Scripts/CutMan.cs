@@ -168,7 +168,7 @@ public class CutMan : MonoBehaviour
                 }
                 if (!hit && !cutFailing)
                 {
-                    Debug.Log("Stopped cutting because click left");
+                    // Debug.Log("Stopped cutting because click left");
                     StartCoroutine(cutStopper);
                 }
             
@@ -497,6 +497,7 @@ public class CutMan : MonoBehaviour
                     Debug.DrawLine(currentR, Input.mousePosition,Color.cyan,1000);
                     return true;
                 }
+                Debug.Log("Discarded left with width of " + width + " and distance of " + dist);
                 break;
             case false:
                 float dist1 = Vector2.Distance(currentL, Input.mousePosition);
@@ -509,6 +510,7 @@ public class CutMan : MonoBehaviour
                     Debug.DrawLine(currentL, Input.mousePosition, Color.cyan,1000);
                     return true;
                 }
+                Debug.Log("Discarded right with width of " + width + " and distance of " + dist1);
                 break;
         }
 
