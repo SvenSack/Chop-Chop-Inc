@@ -330,6 +330,7 @@ public class CuttableTreeScript : MonoBehaviour
         GameObject bottomHoleCover = InstantiateHole(intersectionVertexCount, holes, centerPoint,  normal);
         GameObject upperHoleCover = InstantiateHole(intersectionVertexCount, holes, centerPoint, normal, false);
 
+    
 
         //-------------------------- Reinitialize the original mesh ------------------------------------//
         Profiler.BeginSample("[cut] Reinitialize the original mesh ");
@@ -397,11 +398,14 @@ public class CuttableTreeScript : MonoBehaviour
        
         generatedHoleFilling.Dispose();
 
+        //Utils.EnsureCentroidIsPosition(bottomHoleCover.transform);
+        //Utils.EnsureCentroidIsPosition(upperHoleCover.transform);
+
         bottomHoleCover.transform.SetParent(transform);
         upperHoleCover.transform.SetParent(newTree.transform);
 
-        bottomHoleCover.tag = "Leaves";
-        upperHoleCover.tag = "Leaves";
+        bottomHoleCover.tag = "hole";
+        upperHoleCover.tag = "hole";
 
         return newTree;
     }
@@ -860,35 +864,55 @@ public class CuttableTreeScript : MonoBehaviour
     {
         List<Transform> children = new List<Transform>();
 
-        foreach (Transform child in transform)
+        Debug.Log("belowCuttingPlaneObj.gameObject.transform.childCount " + belowCuttingPlaneObj.gameObject.transform.childCount);
+        foreach (Transform child in belowCuttingPlaneObj.gameObject.transform)
+        {
+            children.Add(child);
+        }
+        Debug.Log("aboveCuttingPlaneObj.gameObject.transform.childCount " + aboveCuttingPlaneObj.gameObject.transform.childCount);
+        foreach (Transform child in aboveCuttingPlaneObj.gameObject.transform)
         {
             children.Add(child);
         }
 
-        gameObject.transform.DetachChildren();
 
+        belowCuttingPlaneObj.transform.DetachChildren();
+        aboveCuttingPlaneObj.transform.DetachChildren();
+        Debug.Log("Working with " + children.Count + " children");
         foreach (Transform child in children)
         {
-            // Debug.Log("child is " + child.name);
-            if (child.tag != "Leaves")
+            child.parent = null;
+
+            Vector3 position = Vector3.zero;
+            if (child.tag == "Leaves")
+            {
+                position = child.transform.position;
+                continue;
+            }
+            else if(child.tag == "hole")
+            {
+                position = child.transform.position;
+            }
+            else
             {
                 continue;
             }
 
-            if (Utils.IsPointAbovePlane(child.transform.position,planePosition,planeNormal))
+            //Debug.Log("planePosition " + planePosition.ToString("F2"));
+            if (Utils.IsPointAbovePlane(position, planePosition,planeNormal))
             {
+                Debug.Log("Set to above");
                 child.SetParent(aboveCuttingPlaneObj.transform);
+                
             }
             else
             {
+                Debug.Log("Set to below");
                 child.SetParent(belowCuttingPlaneObj.transform);
             }
 
-
+            //Debug.Log("child is at " + position.ToString("F2"));
         }
-
-
-        
     }
 
     public Mesh GetMesh()
