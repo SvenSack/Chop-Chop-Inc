@@ -21,6 +21,9 @@ public class CutTarget : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown("f"))
+            lifeTime = Single.PositiveInfinity;
+        
         if (lifeTime > 0)
         {
             lifeTime -= Time.deltaTime;
@@ -29,6 +32,6 @@ public class CutTarget : MonoBehaviour
             img.color = newCol;
         }
         else
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
     }
 }

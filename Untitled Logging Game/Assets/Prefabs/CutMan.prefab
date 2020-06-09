@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9ed6df47abeb645b6b9cc9b89eac95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCut: {fileID: 0}
   gRaycaster: {fileID: 0}
   eventSystem: {fileID: 0}
   marginOfError: 0.1
@@ -50,25 +51,37 @@ MonoBehaviour:
     type: 3}
   fallParticleObject: {fileID: 6611483207489948961, guid: f7c4759f4dac49e4c99c5d2588a5cd55,
     type: 3}
+  trees: []
   treeHps: 
   cutTargetPrefab: {fileID: 1814081134978495635, guid: cadd5663b54c03848b64d15b8341b423,
     type: 3}
+  cutTargetDistance: 60
+  cutForce: 130
   leafScaleValues:
   - 0.01
   - 1
   - 0.01
   leafParticles:
-  - {fileID: 21300000, guid: a9b2ea3cf12ee804f91e5d8c8faa7f56, type: 3}
-  - {fileID: 21300000, guid: 83b6712b8a9d750498db870f2df49a99, type: 3}
-  - {fileID: 21300000, guid: e8cb85d7714f763488ee26910516fc0c, type: 3}
-  cutForce: 130
-  nutPrefab: {fileID: 1012406978264307292, guid: 258f7097ae789df45abd9697ff3a6284,
+  - {fileID: 21300000, guid: 06039e3bb861d7548a3437f2e0ae9966, type: 3}
+  - {fileID: 21300000, guid: 5c5c2d6c71c825b44964ea8d1ab8aa17, type: 3}
+  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
+  nutPrefab: {fileID: 1012406978264307292, guid: 3844cd77728ceb54fa6a0ea91a56418f,
     type: 3}
   nutSprites:
-  - {fileID: 21300000, guid: a80884cba975ca34c8c806346079da38, type: 3}
-  - {fileID: 21300000, guid: 6356f72b25027084f946015a9ea544ae, type: 3}
-  - {fileID: 21300000, guid: 330566cae15d99544b069a9cb844e497, type: 3}
-  - {fileID: 21300000, guid: cf8281e10672a7b41871bfab6a8d06ee, type: 3}
-  - {fileID: 21300000, guid: 715d2120e392c3a4790e789e7db7290f, type: 3}
-  treeShakeParticles: {fileID: 4357241419668975948, guid: 13b6083acc2adb245b988db3e58a42c6,
+  - {fileID: 21300000, guid: 1d5986465c412a541b71910884c2c9cd, type: 3}
+  - {fileID: 21300000, guid: 57f7a4de88226244bbb4f798c4d5b8ca, type: 3}
+  - {fileID: 21300000, guid: 2d6f14fb275da864fbda5e9465a11fb4, type: 3}
+  - {fileID: 21300000, guid: 4ab789b360b756d40bd34c74ce2af7b9, type: 3}
+  - {fileID: 21300000, guid: dc5ab7f8350d3104e9981fd09b6e20cf, type: 3}
+  treeShakeParticles: {fileID: 4357241419668975948, guid: 5e7def1b7c059b2428b6fba5ebd24b7b,
     type: 3}
+  forgivingness: 3
+  isInCombo: 0
+  comboCount: 0
+  comboText: {fileID: 0}
+  cutDifficulty: 0.443
+  maxRot: 17.5
+  multiCam: 0
+  currentTargetIndices: 
+  debugMode: 0
+  cutDelay: 0.5

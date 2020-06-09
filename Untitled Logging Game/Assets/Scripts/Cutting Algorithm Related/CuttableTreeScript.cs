@@ -211,7 +211,13 @@ public class CuttableTreeScript : MonoBehaviour
 
         if(isFirstTree)
         {
-            nativeArrayAllocator = GameObject.FindGameObjectWithTag("PreAllocator").GetComponent<PreAllocator>();
+            GameObject allocator = GameObject.FindGameObjectWithTag("PreAllocator");
+
+            if(allocator)
+            {
+                nativeArrayAllocator = GameObject.FindGameObjectWithTag("PreAllocator").GetComponent<PreAllocator>();
+            }
+            
         }
     }
 
@@ -254,8 +260,13 @@ public class CuttableTreeScript : MonoBehaviour
     /// <param name="seperationForce"> The scalar value of the force that has a direction parallel to the cutting plane normal which is 
     /// added to the newly created mesh after it is split. </param>
     /// <returns></returns>
-    public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
+    public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce)
     {
+        normal.Normalize();
+
+        Debug.Log("position " + position.ToString());
+        Debug.Log("normal " + normal.ToString());
+
         Profiler.BeginSample("[cut] MatrixMath");
 
         Matrix4x4 worldMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
@@ -296,7 +307,7 @@ public class CuttableTreeScript : MonoBehaviour
         
 
         int intersectionVertexCount = generatedHoleFilling.Count;
-
+    
         List<Vector3> holes = new List<Vector3>();
 
         while (generatedHoleFilling.TryDequeue(out CutHolePairing holePairing ))
@@ -319,6 +330,7 @@ public class CuttableTreeScript : MonoBehaviour
         GameObject bottomHoleCover = InstantiateHole(intersectionVertexCount, holes, centerPoint,  normal);
         GameObject upperHoleCover = InstantiateHole(intersectionVertexCount, holes, centerPoint, normal, false);
 
+    
 
         //-------------------------- Reinitialize the original mesh ------------------------------------//
         Profiler.BeginSample("[cut] Reinitialize the original mesh ");
@@ -370,7 +382,8 @@ public class CuttableTreeScript : MonoBehaviour
         DisplaceLeaves(position, normal, gameObject, otherMeshPhysicsManager.gameObject);
         Profiler.EndSample();
 
-        otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal, point);
+        if(intersectionVertexCount == 0) { centerPoint = transform.position; }
+        otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal.normalized, centerPoint);
 
         if(nativeArrayAllocator)
         {
@@ -385,11 +398,14 @@ public class CuttableTreeScript : MonoBehaviour
        
         generatedHoleFilling.Dispose();
 
+        //Utils.EnsureCentroidIsPosition(bottomHoleCover.transform);
+        //Utils.EnsureCentroidIsPosition(upperHoleCover.transform);
+
         bottomHoleCover.transform.SetParent(transform);
         upperHoleCover.transform.SetParent(newTree.transform);
 
-        bottomHoleCover.tag = "Leaves";
-        upperHoleCover.tag = "Leaves";
+        bottomHoleCover.tag = "hole";
+        upperHoleCover.tag = "hole";
 
         return newTree;
     }
@@ -636,7 +652,7 @@ public class CuttableTreeScript : MonoBehaviour
     //----------------------------------------- non-multithreaded code below--------------------------------------------------------------//
     //
 
-    public GameObject CutAtNoOptimizations(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
+    public GameObject CutAtNoOptimizations(Vector3 position, Vector3 normal, float seperationForce)
     {
         Debug.Log("Starting cut for " + gameObject.name);
 
@@ -848,35 +864,55 @@ public class CuttableTreeScript : MonoBehaviour
     {
         List<Transform> children = new List<Transform>();
 
-        foreach (Transform child in transform)
+        Debug.Log("belowCuttingPlaneObj.gameObject.transform.childCount " + belowCuttingPlaneObj.gameObject.transform.childCount);
+        foreach (Transform child in belowCuttingPlaneObj.gameObject.transform)
+        {
+            children.Add(child);
+        }
+        Debug.Log("aboveCuttingPlaneObj.gameObject.transform.childCount " + aboveCuttingPlaneObj.gameObject.transform.childCount);
+        foreach (Transform child in aboveCuttingPlaneObj.gameObject.transform)
         {
             children.Add(child);
         }
 
-        gameObject.transform.DetachChildren();
 
+        belowCuttingPlaneObj.transform.DetachChildren();
+        aboveCuttingPlaneObj.transform.DetachChildren();
+        Debug.Log("Working with " + children.Count + " children");
         foreach (Transform child in children)
         {
-            // Debug.Log("child is " + child.name);
-            if (child.tag != "Leaves")
+            child.parent = null;
+
+            Vector3 position = Vector3.zero;
+            if (child.tag == "Leaves")
+            {
+                position = child.transform.position;
+                // continue;
+            }
+            else if(child.tag == "hole")
+            {
+                position = child.transform.position;
+            }
+            else
             {
                 continue;
             }
 
-            if (Utils.IsPointAbovePlane(child.transform.position,planePosition,planeNormal))
+            //Debug.Log("planePosition " + planePosition.ToString("F2"));
+            if (Utils.IsPointAbovePlane(position, planePosition,planeNormal))
             {
+                Debug.Log("Set to above");
                 child.SetParent(aboveCuttingPlaneObj.transform);
+                
             }
             else
             {
+                Debug.Log("Set to below");
                 child.SetParent(belowCuttingPlaneObj.transform);
             }
 
-
+            //Debug.Log("child is at " + position.ToString("F2"));
         }
-
-
-        
     }
 
     public Mesh GetMesh()
