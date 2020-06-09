@@ -51,32 +51,37 @@ MonoBehaviour:
     type: 3}
   fallParticleObject: {fileID: 6611483207489948961, guid: f7c4759f4dac49e4c99c5d2588a5cd55,
     type: 3}
+  trees: []
   treeHps: 
   cutTargetPrefab: {fileID: 1814081134978495635, guid: cadd5663b54c03848b64d15b8341b423,
     type: 3}
-  cutTargetDistance: 5
+  cutTargetDistance: 60
   cutForce: 130
   leafScaleValues:
   - 0.01
   - 1
   - 0.01
   leafParticles:
-  - {fileID: 21300000, guid: 978c22d1060856d429cb0535efbdeba0, type: 3}
-  - {fileID: 21300000, guid: 8e30c4e6ca550c544bae4dd4fdce4129, type: 3}
-  - {fileID: 21300000, guid: 277e80d80f5f993459a70acae00d4786, type: 3}
-  nutPrefab: {fileID: 1012406978264307292, guid: f8c370adec8054d42a4b47c385a29e6b,
+  - {fileID: 21300000, guid: 06039e3bb861d7548a3437f2e0ae9966, type: 3}
+  - {fileID: 21300000, guid: 5c5c2d6c71c825b44964ea8d1ab8aa17, type: 3}
+  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
+  nutPrefab: {fileID: 1012406978264307292, guid: 3844cd77728ceb54fa6a0ea91a56418f,
     type: 3}
   nutSprites:
-  - {fileID: 21300000, guid: 8aea2ea18a18e104e8c5e15d66c8656f, type: 3}
-  - {fileID: 21300000, guid: 8cb64f56c4e9f014a84dc759ce710f5a, type: 3}
-  - {fileID: 21300000, guid: 12afcbd3bdfacb248bd39b0dba812d51, type: 3}
-  - {fileID: 21300000, guid: 04c202d2a54c76b42a78121b78efd27e, type: 3}
-  - {fileID: 21300000, guid: 475eadc69ff617d43b74d5a002ec2da0, type: 3}
-  treeShakeParticles: {fileID: 4357241419668975948, guid: 61b2ab37ae12ea14789c986fd532a32f,
+  - {fileID: 21300000, guid: 1d5986465c412a541b71910884c2c9cd, type: 3}
+  - {fileID: 21300000, guid: 57f7a4de88226244bbb4f798c4d5b8ca, type: 3}
+  - {fileID: 21300000, guid: 2d6f14fb275da864fbda5e9465a11fb4, type: 3}
+  - {fileID: 21300000, guid: 4ab789b360b756d40bd34c74ce2af7b9, type: 3}
+  - {fileID: 21300000, guid: dc5ab7f8350d3104e9981fd09b6e20cf, type: 3}
+  treeShakeParticles: {fileID: 4357241419668975948, guid: 5e7def1b7c059b2428b6fba5ebd24b7b,
     type: 3}
-  forgivingness: 1
+  forgivingness: 3
   isInCombo: 0
   comboCount: 0
   comboText: {fileID: 0}
-  cutDifficulty: 0
-  maxRot: 0
+  cutDifficulty: 0.443
+  maxRot: 17.5
+  multiCam: 0
+  currentTargetIndices: 
+  debugMode: 0
+  cutDelay: 0.5

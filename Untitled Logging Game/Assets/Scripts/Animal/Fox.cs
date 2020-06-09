@@ -111,8 +111,13 @@ namespace Animal
         public void Scare(Vector3 positionOfScaryness)
         {
             Camera mainCam = Camera.main;
-            if(mainCam.WorldToScreenPoint(transform.position).x > mainCam.WorldToScreenPoint(positionOfScaryness).x && !directionIsLeft)
+            if(mainCam.WorldToScreenPoint(transform.position).x < mainCam.WorldToScreenPoint(positionOfScaryness).x && directionIsLeft)
+            {
+                Debug.Log("Fox: " + mainCam.WorldToScreenPoint(transform.position).x);
+                Debug.Log("Danger: " + mainCam.WorldToScreenPoint(positionOfScaryness).x);
+                Debug.Log("Fox is walking left is " + directionIsLeft);
                 PatchworkFlip(.3f);
+            }
             if(!animator.GetBool("scared"))
             {
                 animator.SetBool("scared", true);

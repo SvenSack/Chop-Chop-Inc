@@ -36,6 +36,7 @@ public class TreeFallParticle : MonoBehaviour
             inAir = false;
             Fox[] foxes = FindObjectsOfType<Fox>();
             Vector3 landingPoint = other.GetContact(0).point;
+            Debug.DrawLine(landingPoint, landingPoint+Vector3.up*10, Color.red, 1000f);
             foreach (var fox in foxes)
             {
                 if (Vector3.Distance(fox.transform.position, landingPoint) < 5f)
