@@ -11,6 +11,7 @@ namespace Animal
         public bool directionIsLeft = true;
         public float walkSpeed = .1f;
         private Transform spriteTrans;
+        public bool isWaiting = true;
         private bool isTurning;
         private bool isShocked;
         private Vector3 cameraPosition;
@@ -24,10 +25,6 @@ namespace Animal
 
         public override void Update()
         {
-            
-            if(Input.GetKeyDown("r"))
-                SnapToCamera();
-            
             if (Vector3.Distance(cameraPosition, transform.position) < soundProximity && !animator.GetBool("scared"))
             {
                 if(idleTimer <= idleTime)
@@ -44,15 +41,12 @@ namespace Animal
             }
 
             
-            if(!isTurning && !isShocked)
+            if(!isTurning && !isShocked && !isWaiting)
                 PerformMotion();
             
             
-            if(!animator.GetBool("scared") && !isTurning)
+            if(!animator.GetBool("scared") && !isTurning && !isWaiting)
                 CheckForFlip();
-            
-            if(Input.GetKeyDown("l"))
-                Scare(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
 
 

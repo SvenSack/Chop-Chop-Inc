@@ -550,7 +550,8 @@ public class CutMan : MonoBehaviour
 
     private void StopCut()
     {
-        soundMan.StopCut();
+        if(soundMan.chainsawSoundObject != null)
+            soundMan.StopCut();
         if(cutParticleInstance != null)
             foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
             {
@@ -559,6 +560,9 @@ public class CutMan : MonoBehaviour
         currentCut = null;
         isCutting = false;
         isInCombo = false;
+        string temp = comboText.text;
+        temp = temp.Replace((comboCount) + "x", 0 + "x");
+        comboText.text = temp;
         comboCount = 0;
         comboText.fontSize = 0;
         trailMan.GetComponent<TrailRenderer>().emitting = false;
@@ -604,7 +608,8 @@ public class CutMan : MonoBehaviour
         {
             cutDifficulty += .05f;
             maxRot += +1;
-            forgivingness -= .1f;
+            if (forgivingness > .3f)
+                forgivingness = forgivingness*.9f;
         }
     }
 
