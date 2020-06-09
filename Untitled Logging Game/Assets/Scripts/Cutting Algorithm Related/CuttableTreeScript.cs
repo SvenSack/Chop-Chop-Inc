@@ -887,7 +887,7 @@ public class CuttableTreeScript : MonoBehaviour
             if (child.tag == "Leaves")
             {
                 position = child.transform.position;
-                continue;
+                // continue;
             }
             else if(child.tag == "hole")
             {
