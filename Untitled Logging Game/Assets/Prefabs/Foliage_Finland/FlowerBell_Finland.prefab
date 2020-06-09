@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7379588976612738540}
   - component: {fileID: 1959795554018607066}
   - component: {fileID: 5192121260609422115}
+  - component: {fileID: 6960003286796862309}
   m_Layer: 0
   m_Name: FlowerBell_Finland
   m_TagString: Untagged
@@ -77,6 +78,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!210 &6960003286796862309
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5778902049243723775}
+  m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0

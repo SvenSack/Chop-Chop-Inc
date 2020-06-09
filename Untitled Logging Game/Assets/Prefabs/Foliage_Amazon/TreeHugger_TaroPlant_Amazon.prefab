@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3748741213099973170}
   - component: {fileID: 5286437589602000900}
   - component: {fileID: 1901006752723508477}
+  - component: {fileID: -4704797144665467993}
   m_Layer: 0
   m_Name: TreeHugger_TaroPlant_Amazon
   m_TagString: Untagged
@@ -76,6 +77,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!210 &-4704797144665467993
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170412883701016609}
+  m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0

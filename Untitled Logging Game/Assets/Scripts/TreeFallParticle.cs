@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using Animal;
+using UnityEngine;
 
 public class TreeFallParticle : MonoBehaviour
 {
     private ParticleSystem leaves;
     private ParticleSystem dust;
+    private bool inAir = true;
 
     public AudioSource fallSound;
     private SoundMan soundMan;
@@ -24,7 +26,7 @@ public class TreeFallParticle : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground") && inAir)
         {
             if(leaves != null)
             {
@@ -35,6 +37,17 @@ public class TreeFallParticle : MonoBehaviour
             fallSound.time = 0;
             fallSound.clip = soundMan.treeFall[1];
             fallSound.Play();
+            inAir = false;
+            Fox[] foxes = FindObjectsOfType<Fox>();
+            Vector3 landingPoint = other.GetContact(0).point;
+            Debug.DrawLine(landingPoint, landingPoint+Vector3.up*10, Color.red, 1000f);
+            foreach (var fox in foxes)
+            {
+                if (Vector3.Distance(fox.transform.position, landingPoint) < 5f && !fox.isWaiting)
+                {
+                    fox.Scare(landingPoint);
+                }
+            }
         }
     }
 }

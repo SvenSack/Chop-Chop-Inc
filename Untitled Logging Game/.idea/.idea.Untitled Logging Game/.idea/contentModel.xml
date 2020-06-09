@@ -38,7 +38,11 @@
           <e p="ReadMe.txt" t="Include" />
         </e>
         <e p="Scripts" t="Include">
-          <e p="AnimalSprite.cs" t="Include" />
+          <e p="Animal" t="Include">
+            <e p="AnimalSprite.cs" t="Include" />
+            <e p="Fox.cs" t="Include" />
+            <e p="Squirrel.cs" t="Include" />
+          </e>
           <e p="AudioCleanup.cs" t="Include" />
           <e p="CameraMan.cs" t="Include" />
           <e p="CutMan.cs" t="Include" />
@@ -84,7 +88,6 @@
           <e p="VectorDebugShow.cs" t="Include" />
           <e p="WeirdExperimentalShit" t="Include">
             <e p="DynamicBuffers.cs" t="Include" />
-            <e p="LayerOrganizer.cs" t="Include" />
             <e p="MeshRenderQueueChanger.cs" t="Include" />
             <e p="MeshVisualizer.cs" t="Include" />
             <e p="ObjectRenderOrderer.cs" t="Include" />
