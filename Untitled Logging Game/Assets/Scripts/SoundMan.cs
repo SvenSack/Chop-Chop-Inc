@@ -41,7 +41,15 @@ public class SoundMan : MonoBehaviour
 
     public void ToggleWood()
     {
-        SwapChainsawSound(chainsawSoundSource.clip != chainsaw[3] ? chainsaw[3] : chainsaw[1], true, true);
+        //if(chainsaw[3] != null && chainsaw[1] != null && chainsawSoundSource.clip != null)
+        //{
+            SwapChainsawSound(chainsawSoundSource.clip != chainsaw[3] ? chainsaw[3] : chainsaw[1], true, true);
+        //}
+        //else
+        //{
+        //    Debug.LogError("chainsaw[3]/ chainsaw[1]/chainsawSoundSource.clip is null ");
+        //}
+            
     }
 
     public void StopCut()
