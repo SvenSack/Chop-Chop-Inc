@@ -184,7 +184,7 @@ public class CutMan : MonoBehaviour
                 // Debug.DrawRay (ray.origin, ray.direction * 50000000, Color.green, 100f);
                 if (!isCutting && CheckCutSpot(Input.mousePosition))
                 {
-                    // Debug.Log("hit tree");
+                    Debug.Log("hit tree");
                     isCutting = true;
                     soundMan.ToggleWood();
                     cutParticleInstance = Instantiate(cutParticleObject);
@@ -197,6 +197,7 @@ public class CutMan : MonoBehaviour
                     cutParticleInstance.transform.position = hit.point;
                     soundMan.chainsawSoundObject.transform.position = hit.point;
                     cutStart = Input.mousePosition;
+                    Debug.Log(cutStart.x + ", " + cutStart.y);
                 }
 
                 if (isCutting)
@@ -316,7 +317,6 @@ public class CutMan : MonoBehaviour
 
     private GameObject InitiateCut(Vector2 start, Vector2 finish)
     {
-        Debug.Log(start.x + ", " + start.y + "  " + finish.x + ", " + finish.y);
         CuttableTreeScript target = currentTarget.target;
         Ray ray = mainCam.ScreenPointToRay(start);
         Physics.Raycast(ray, out var hit, trunkMask);
@@ -331,8 +331,9 @@ public class CutMan : MonoBehaviour
         Vector3 cutRight = Vector3.Cross(cutLine, Vector3.up);
         Vector3 cutNormal = Vector3.Cross(cutRight, cutLine);
         
-        Debug.DrawLine(startPoint, finishPoint, Color.magenta, 1000f);
-        
+        Debug.DrawLine(new Vector3(start.x, start.y , 100), new Vector3(start.x, start.y , -100), Color.magenta, 1000f);
+        Debug.DrawLine(new Vector3(finish.x, finish.y , 100), new Vector3(finish.x, finish.y , -100), Color.green, 1000f);
+
         GameObject newTree = target.CutAt(targetLocation, cutNormal, cutForce);
         return newTree;
     }
@@ -475,6 +476,7 @@ public class CutMan : MonoBehaviour
 
     private bool StartCut(GameObject target)
     {
+        Debug.Log("Cut Start query");
         RectTransform rec = target.GetComponent<RectTransform>();
         Vector3[] corners = new Vector3[4];
         rec.GetWorldCorners(corners);
@@ -491,7 +493,7 @@ public class CutMan : MonoBehaviour
                     currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     isInCombo = true;
-                    // Debug.DrawLine(currentR, Input.mousePosition,Color.cyan,1000);
+                    Debug.DrawLine(currentR, Input.mousePosition,Color.cyan,1000);
                     return true;
                 }
                 break;
@@ -503,7 +505,7 @@ public class CutMan : MonoBehaviour
                     currentCut = target;
                     soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
                     isInCombo = true;
-                    // Debug.DrawLine(currentL, Input.mousePosition, Color.cyan,1000);
+                    Debug.DrawLine(currentL, Input.mousePosition, Color.cyan,1000);
                     return true;
                 }
                 break;
@@ -613,7 +615,7 @@ public class CutMan : MonoBehaviour
             newNut.GetComponent<Image>().sprite = nutSprites[newPartIndex];
             RaycastHit hit;
             Physics.Raycast(nutPosition, Vector3.down, out hit, 100, groundMask);
-            Debug.DrawRay(nutPosition,Vector3.down*10,Color.green, 5);
+            // Debug.DrawRay(nutPosition,Vector3.down*10,Color.green, 5);
             newNutMove.floorHeight = mainCam.WorldToScreenPoint(hit.point).y;
             tree.LeanRotateZ(currentZ - 4, .3f);
             yield return new WaitForSeconds(.3f);
