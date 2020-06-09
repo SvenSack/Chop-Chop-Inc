@@ -57,21 +57,25 @@ struct TriangleToFaceJob : IJobParallelFor
         face1.Init();
         face2.Init();
 
+        face1.tri1 = tri1;
+        face2.tri1 = tri2;
 
-        //tri1 and tri2 
-        if ((tri1Normal - tri2Normal).magnitude < 0.001f)
-        {
-            face1.tri1 = tri1;
-            face1.tri2 = tri2;
-            face2.MarkUnfilled();
-        }
-        //both triangles need to be in 2 different faces
-        else
-        {
-            face1.tri1 = tri1;
-            face2.tri1 = tri2;
-        }
-        
+        ////tri1 and tri2 
+        //if ((tri1Normal - tri2Normal).magnitude < 0.001f)
+        //{
+        //    face1.tri1 = tri1;
+        //    face1.tri2 = tri2;
+        //    face2.MarkUnfilled();
+        //}
+        ////both triangles need to be in 2 different faces
+        //else
+        //{
+        //    face1.tri1 = tri1;
+        //    face2.tri1 = tri2;
+        //}
+
+
+
         pairing.f1 = face1;
         pairing.f2 = face2;
 
