@@ -196,7 +196,7 @@ public class CuttableTreeScript : MonoBehaviour
     public int leafParticleIndex;
     public float cutForceMultiplier;
 
-    [SerializeField] private bool isFirstTree = false;
+    public bool isFirstTree = false;
 
     public static bool useMultithreadedVersion = true;
 
@@ -211,7 +211,13 @@ public class CuttableTreeScript : MonoBehaviour
 
         if(isFirstTree)
         {
-            nativeArrayAllocator = GameObject.FindGameObjectWithTag("PreAllocator").GetComponent<PreAllocator>();
+            GameObject allocator = GameObject.FindGameObjectWithTag("PreAllocator");
+
+            if(allocator)
+            {
+                nativeArrayAllocator = GameObject.FindGameObjectWithTag("PreAllocator").GetComponent<PreAllocator>();
+            }
+            
         }
     }
 
@@ -254,7 +260,7 @@ public class CuttableTreeScript : MonoBehaviour
     /// <param name="seperationForce"> The scalar value of the force that has a direction parallel to the cutting plane normal which is 
     /// added to the newly created mesh after it is split. </param>
     /// <returns></returns>
-    public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
+    public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce)
     {
         Profiler.BeginSample("[cut] MatrixMath");
 
@@ -370,10 +376,19 @@ public class CuttableTreeScript : MonoBehaviour
         DisplaceLeaves(position, normal, gameObject, otherMeshPhysicsManager.gameObject);
         Profiler.EndSample();
 
-        otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal, point);
+        otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal.normalized, centerPoint);
 
-        rawLowerMeshQueue.Clear();
-        rawUpperMeshQueue.Clear();
+        if(nativeArrayAllocator)
+        {
+            rawLowerMeshQueue.Clear();
+            rawUpperMeshQueue.Clear();
+        }
+        else
+        {
+            rawLowerMeshQueue.Dispose();
+            rawUpperMeshQueue.Dispose();
+        }
+       
         generatedHoleFilling.Dispose();
 
         bottomHoleCover.transform.SetParent(transform);
@@ -394,8 +409,8 @@ public class CuttableTreeScript : MonoBehaviour
         }
         else
         {
-            rawLowerMeshQueue = new NativeQueue<JobFace>(Allocator.Temp);
-            rawUpperMeshQueue = new NativeQueue<JobFace>(Allocator.Temp);
+            rawLowerMeshQueue = new NativeQueue<JobFace>(Allocator.TempJob);
+            rawUpperMeshQueue = new NativeQueue<JobFace>(Allocator.TempJob);
         }
     }
 
@@ -436,6 +451,9 @@ public class CuttableTreeScript : MonoBehaviour
             holeVertices[i + 1] = isBottom ?  holes[i - j + 1] : holes[i - j];
             holeVertices[i + 2] = centerPoint;
 
+            //TODO find out why this patch was needed in the first place
+            NormalBasedVertexCorrection(holeVertices, i, i + 1, i + 2, cuttingNormal * normalMultiplier);
+
             holeNormals[i] = cuttingNormal  * normalMultiplier;
             holeNormals[i + 1] = cuttingNormal * normalMultiplier;
             holeNormals[i + 2] = cuttingNormal * normalMultiplier;
@@ -459,6 +477,21 @@ public class CuttableTreeScript : MonoBehaviour
         holeMesh.triangles = holeTriangles;
 
         return HoleCover;
+
+    }
+
+    private void NormalBasedVertexCorrection(Vector3[] holeVertices,int index,int indexP1,int indexP2,Vector3 cuttingNormal)
+    {
+        Vector3 foundNormal = Vector3.Cross(holeVertices[indexP1] - holeVertices[index]
+            , holeVertices[indexP2] - holeVertices[index]);
+
+        if(Vector3.Dot(foundNormal,cuttingNormal) < 0)
+        {
+            Vector3 tempP1 = holeVertices[indexP1];
+            holeVertices[indexP1] = holeVertices[index];
+            holeVertices[index] = tempP1;
+        }
+
 
     }
    
@@ -609,7 +642,7 @@ public class CuttableTreeScript : MonoBehaviour
     //----------------------------------------- non-multithreaded code below--------------------------------------------------------------//
     //
 
-    public GameObject CutAtNoOptimizations(Vector3 position, Vector3 normal, float seperationForce = 0.0f)
+    public GameObject CutAtNoOptimizations(Vector3 position, Vector3 normal, float seperationForce)
     {
         Debug.Log("Starting cut for " + gameObject.name);
 

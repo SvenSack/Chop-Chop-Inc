@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9ed6df47abeb645b6b9cc9b89eac95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCut: {fileID: 0}
   gRaycaster: {fileID: 0}
   eventSystem: {fileID: 0}
   marginOfError: 0.1
@@ -50,16 +51,32 @@ MonoBehaviour:
     type: 3}
   fallParticleObject: {fileID: 6611483207489948961, guid: f7c4759f4dac49e4c99c5d2588a5cd55,
     type: 3}
-  trees: []
   treeHps: 
   cutTargetPrefab: {fileID: 1814081134978495635, guid: cadd5663b54c03848b64d15b8341b423,
     type: 3}
+  cutTargetDistance: 5
+  cutForce: 130
   leafScaleValues:
   - 0.01
   - 1
-  - 1
+  - 0.01
   leafParticles:
-  - {fileID: 21300000, guid: a9b2ea3cf12ee804f91e5d8c8faa7f56, type: 3}
-  - {fileID: 21300000, guid: 83b6712b8a9d750498db870f2df49a99, type: 3}
-  - {fileID: 21300000, guid: e8cb85d7714f763488ee26910516fc0c, type: 3}
-  cutForce: 130
+  - {fileID: 21300000, guid: 978c22d1060856d429cb0535efbdeba0, type: 3}
+  - {fileID: 21300000, guid: 8e30c4e6ca550c544bae4dd4fdce4129, type: 3}
+  - {fileID: 21300000, guid: 277e80d80f5f993459a70acae00d4786, type: 3}
+  nutPrefab: {fileID: 1012406978264307292, guid: f8c370adec8054d42a4b47c385a29e6b,
+    type: 3}
+  nutSprites:
+  - {fileID: 21300000, guid: 8aea2ea18a18e104e8c5e15d66c8656f, type: 3}
+  - {fileID: 21300000, guid: 8cb64f56c4e9f014a84dc759ce710f5a, type: 3}
+  - {fileID: 21300000, guid: 12afcbd3bdfacb248bd39b0dba812d51, type: 3}
+  - {fileID: 21300000, guid: 04c202d2a54c76b42a78121b78efd27e, type: 3}
+  - {fileID: 21300000, guid: 475eadc69ff617d43b74d5a002ec2da0, type: 3}
+  treeShakeParticles: {fileID: 4357241419668975948, guid: 61b2ab37ae12ea14789c986fd532a32f,
+    type: 3}
+  forgivingness: 1
+  isInCombo: 0
+  comboCount: 0
+  comboText: {fileID: 0}
+  cutDifficulty: 0
+  maxRot: 0

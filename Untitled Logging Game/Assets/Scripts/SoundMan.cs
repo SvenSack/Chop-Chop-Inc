@@ -28,11 +28,15 @@ public class SoundMan : MonoBehaviour
 
     public void StartCut()
     {
-        chainsawSoundSource = GenerateAudio(chainsaw[0]);
-        chainsawSoundObject = chainsawSoundSource.gameObject;
-        chainsawSoundSource.Play();
-        chainsawSoundSource.spatialBlend = .5f;
-        cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length));
+        if(chainsawSoundSource == null)
+        {
+            chainsawSoundSource = GenerateAudio(chainsaw[0]);
+            chainsawSoundObject = chainsawSoundSource.gameObject;
+            chainsawSoundSource.Play();
+            chainsawSoundSource.spatialBlend = .5f;
+            chainsawSoundSource.GetComponent<AudioCleanup>().enabled = false;
+            cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length-.01f));
+        }
     }
 
     public void ToggleWood()
@@ -42,12 +46,17 @@ public class SoundMan : MonoBehaviour
 
     public void StopCut()
     {
+        Debug.Log("stopped cut sound");
         if (chainsawSoundSource.clip != chainsaw[0])
+        {
             SwapChainsawSound(chainsaw[2], false, true);
+            chainsawSoundSource.GetComponent<AudioCleanup>().enabled = true;
+        }
         else
         {
                 StopCoroutine(cueCutLoop);
                 SwapChainsawSound(chainsaw[2], false, true);
+                chainsawSoundSource.GetComponent<AudioCleanup>().enabled = true;
         }
     }
 
