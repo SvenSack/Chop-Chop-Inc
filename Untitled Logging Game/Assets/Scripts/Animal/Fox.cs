@@ -33,7 +33,7 @@ namespace Animal
                 if(idleTimer <= idleTime)
                 {
                     idleTime = 0;
-                    mouth.clip = soundMan.foxSounds[Random.Range(0, 5)];
+                    mouth.clip = soundMan.foxSounds[Random.Range(0, 4)];
                     mouth.time = 0;
                     mouth.Play();
                 }
