@@ -419,6 +419,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         //------------------------------- create bottom part----------------------------------------------------//
         Profiler.BeginSample("assembleFacesFromSplitVertices lowerMesh");
 
+
         assembleFacesFromSplitVertices(intersectionPoints, uniqueTrianglesBelowSplittingPlane, false, lowerMesh);
 
         Profiler.EndSample();
