@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -488625919330548635}
   - component: {fileID: -8885783915292319362}
   - component: {fileID: 6314568292734281028}
+  - component: {fileID: 2544448668880378498}
   m_Layer: 0
   m_Name: Bush_TaroPlant_Amazon
   m_TagString: Untagged
@@ -95,6 +96,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3768733765594367570, guid: c162b247e13623744a94369dd0763929, type: 3}
+--- !u!210 &2544448668880378498
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459206978524424286}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &6461882391873967437
 GameObject:
   m_ObjectHideFlags: 0

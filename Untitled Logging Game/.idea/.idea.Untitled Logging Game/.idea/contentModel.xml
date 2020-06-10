@@ -38,8 +38,13 @@
           <e p="ReadMe.txt" t="Include" />
         </e>
         <e p="Scripts" t="Include">
-          <e p="AnimalSprite.cs" t="Include" />
+          <e p="Animal" t="Include">
+            <e p="AnimalSprite.cs" t="Include" />
+            <e p="Fox.cs" t="Include" />
+            <e p="Squirrel.cs" t="Include" />
+          </e>
           <e p="AudioCleanup.cs" t="Include" />
+          <e p="CameraMan.cs" t="Include" />
           <e p="CutMan.cs" t="Include" />
           <e p="CutTarget.cs" t="Include" />
           <e p="Cutting Algorithm Related" t="Include">
@@ -73,7 +78,6 @@
           <e p="PrimitiveMesh.cs" t="Include" />
           <e p="SceneMan.cs" t="Include" />
           <e p="ScoreboardSceneManager.cs" t="Include" />
-          <e p="SimpleCameraController.cs" t="Include" />
           <e p="SoundMan.cs" t="Include" />
           <e p="TreeFallParticle.cs" t="Include" />
           <e p="UIMan.cs" t="Include" />
@@ -84,7 +88,6 @@
           <e p="VectorDebugShow.cs" t="Include" />
           <e p="WeirdExperimentalShit" t="Include">
             <e p="DynamicBuffers.cs" t="Include" />
-            <e p="LayerOrganizer.cs" t="Include" />
             <e p="MeshRenderQueueChanger.cs" t="Include" />
             <e p="MeshVisualizer.cs" t="Include" />
             <e p="ObjectRenderOrderer.cs" t="Include" />
@@ -123,6 +126,7 @@
             </e>
           </e>
         </e>
+        <e p="sky.cs" t="Include" />
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
             <e p="LiberationSans - OFL.txt" t="Include" />

@@ -102,7 +102,17 @@ public class MapZoomIn : MonoBehaviour
             mainCam.transform.rotation = zooms[2].rotation;
         }
         if(sceneMan.prevScene != "")
+        {
+            foreach (var but in mapButtons)
+            {
+                but.SetActive(true);
+            }
+            foreach (var part in mainMenu)
+            {
+                part.SetActive(false);   
+            }
             ZoomOut();
+        }
         // Debug.Log("Zoom me out, scotty !");
     }
     

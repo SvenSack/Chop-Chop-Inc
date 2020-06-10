@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5208645904240106713}
   - component: {fileID: 3824635140043794159}
   - component: {fileID: 7363205131661384214}
+  - component: {fileID: -4718608783828318563}
   m_Layer: 0
   m_Name: Mushroom_Flycap_01_Finland
   m_TagString: Untagged
@@ -76,6 +77,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!210 &-4718608783828318563
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9084756617157717706}
+  m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0

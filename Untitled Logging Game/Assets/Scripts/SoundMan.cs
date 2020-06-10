@@ -9,6 +9,9 @@ public class SoundMan : MonoBehaviour
     public GameObject chainsawSoundObject;
     private AudioSource chainsawSoundSource;
     private Coroutine cueCutLoop;
+    
+    public AudioClip[] foxSounds = new AudioClip[4];
+    public AudioClip[] squirrelSounds = new AudioClip[10];
 
     public AudioClip[] treeFall = new AudioClip[2];
 
@@ -31,23 +34,37 @@ public class SoundMan : MonoBehaviour
             chainsawSoundObject = chainsawSoundSource.gameObject;
             chainsawSoundSource.Play();
             chainsawSoundSource.spatialBlend = .5f;
-            cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length));
+            chainsawSoundSource.GetComponent<AudioCleanup>().enabled = false;
+            cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length-.01f));
         }
     }
 
     public void ToggleWood()
     {
-        SwapChainsawSound(chainsawSoundSource.clip != chainsaw[3] ? chainsaw[3] : chainsaw[1], true, true);
+        //if(chainsaw[3] != null && chainsaw[1] != null && chainsawSoundSource.clip != null)
+        //{
+            SwapChainsawSound(chainsawSoundSource.clip != chainsaw[3] ? chainsaw[3] : chainsaw[1], true, true);
+        //}
+        //else
+        //{
+        //    Debug.LogError("chainsaw[3]/ chainsaw[1]/chainsawSoundSource.clip is null ");
+        //}
+            
     }
 
     public void StopCut()
     {
+        Debug.Log("stopped cut sound");
         if (chainsawSoundSource.clip != chainsaw[0])
+        {
             SwapChainsawSound(chainsaw[2], false, true);
+            chainsawSoundSource.GetComponent<AudioCleanup>().enabled = true;
+        }
         else
         {
                 StopCoroutine(cueCutLoop);
                 SwapChainsawSound(chainsaw[2], false, true);
+                chainsawSoundSource.GetComponent<AudioCleanup>().enabled = true;
         }
     }
 

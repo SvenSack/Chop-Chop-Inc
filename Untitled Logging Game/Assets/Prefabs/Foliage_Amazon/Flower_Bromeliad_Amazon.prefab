@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3736104372975777449}
   - component: {fileID: 5657165029142563999}
   - component: {fileID: 2143362634144411750}
+  - component: {fileID: -1754140413039291422}
   m_Layer: 0
   m_Name: Flower_Bromeliad_Amazon
   m_TagString: Untagged
@@ -76,6 +77,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!210 &-1754140413039291422
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396904975941747898}
+  m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0

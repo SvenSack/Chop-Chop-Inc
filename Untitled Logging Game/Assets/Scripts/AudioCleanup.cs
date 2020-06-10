@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioCleanup : MonoBehaviour
 {
     private AudioSource audio;
+    public bool enabled;
     
     // Start is called before the first frame update
     void Start()
@@ -15,7 +16,7 @@ public class AudioCleanup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!audio.isPlaying)
+        if (!audio.isPlaying && enabled)
         {
             Destroy(gameObject);
         }

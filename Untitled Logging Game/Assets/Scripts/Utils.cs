@@ -154,7 +154,55 @@ public class Utils : MonoBehaviour
 
     }
 
-    //TODO :I have no idea how this actually works, and I will find out later
+    static public void EnsureCentroidIsPosition(Transform obj)
+    {
+        MeshFilter meshFilter = obj.GetComponent<MeshFilter>();
+
+        if (meshFilter)
+        {
+            Mesh mesh = meshFilter.mesh;
+
+            if (mesh)
+            {
+                Vector3 worldSpaceCentroid = obj.localToWorldMatrix.MultiplyPoint(GetObjectSpaceMeshCentroid( mesh));
+
+                Vector3 oldPosition = obj.transform.position;
+                obj.transform.position = worldSpaceCentroid;
+
+
+                Vector3 shiftDirection = oldPosition - worldSpaceCentroid;
+                Vector3[] vertices = mesh.vertices;
+
+                for (int i = 0; i < mesh.vertices.Length; i++)
+                {
+                    vertices[i] -= shiftDirection;
+                }
+
+                mesh.vertices = vertices;
+
+                mesh.MarkModified();
+
+
+            }
+        }
+
+        
+    }
+
+    public static Vector3 GetObjectSpaceMeshCentroid(Mesh mesh)
+    {
+        Vector3 centroid = new Vector3();
+
+        for (int i = 0; i < mesh.triangles.Length; i++)
+        {
+            centroid += mesh.vertices[mesh.triangles[i]];
+        }
+
+        centroid /= mesh.triangles.Length;
+        return centroid;
+    }
+
+        //TODO :I have no idea how this actually works, and I will find out later
     public static unsafe NativeArray<T> ToNativeArray<T>(T[] TArray,Allocator allocator = Allocator.Persistent) where T : unmanaged
     {
         // create a destination NativeArray to hold the vertices

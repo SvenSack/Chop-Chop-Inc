@@ -27,7 +27,17 @@ struct TriangleToFaceJob : IJobParallelFor
     {
         int index = i * 6;
 
-        if (index + 5 > triangles.Length - 1) { return; }
+        bool canAddOneMoreTriangle = index + 2 < triangles.Length - 1;
+        bool canAddOneMoreQuad = index + 5 < triangles.Length - 1;
+
+        if(!canAddOneMoreQuad && canAddOneMoreTriangle)
+        {
+
+        }
+        else if (!canAddOneMoreQuad)
+        {
+            return;
+        }
 
         int v0 = triangles[index];
         int v1 = triangles[index + 1];
@@ -74,7 +84,8 @@ struct TriangleToFaceJob : IJobParallelFor
         //    face2.tri1 = tri2;
         //}
 
-
+        face1.tri1 = tri1;
+        face2.tri1 = tri2;
 
         pairing.f1 = face1;
         pairing.f2 = face2;

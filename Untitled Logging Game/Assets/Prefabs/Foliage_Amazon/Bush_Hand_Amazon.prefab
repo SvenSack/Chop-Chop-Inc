@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2243791388705721177}
   - component: {fileID: 7095573900472201583}
   - component: {fileID: 3549966482666835350}
+  - component: {fileID: 5042267048065629280}
   m_Layer: 0
   m_Name: Bush_Hand_Amazon
   m_TagString: Untagged
@@ -76,6 +77,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!210 &5042267048065629280
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2988373346232858954}
+  m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
