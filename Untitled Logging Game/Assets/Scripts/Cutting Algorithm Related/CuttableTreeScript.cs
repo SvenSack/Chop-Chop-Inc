@@ -875,9 +875,9 @@ public class CuttableTreeScript : MonoBehaviour
             children.Add(child);
         }
 
-
         belowCuttingPlaneObj.transform.DetachChildren();
         aboveCuttingPlaneObj.transform.DetachChildren();
+
         Debug.Log("Working with " + children.Count + " children");
         foreach (Transform child in children)
         {
@@ -887,17 +887,18 @@ public class CuttableTreeScript : MonoBehaviour
             if (child.tag == "Leaves")
             {
                 position = child.transform.position;
-                //continue; <--- Comment this
             }
             else if(child.tag == "hole")
             {
-                position = child.transform.position;
+                position = transform.localToWorldMatrix.MultiplyPoint(Utils.GetObjectSpaceMeshCentroid(
+                    child.GetComponent<MeshFilter>().mesh));
+                    //child.transform.position;
             }
             else
             {
                 continue;
             }
-
+            Debug.Log("child is at " + position.ToString("F2"));
             //Debug.Log("planePosition " + planePosition.ToString("F2"));
             if (Utils.IsPointAbovePlane(position, planePosition,planeNormal))
             {
@@ -911,7 +912,7 @@ public class CuttableTreeScript : MonoBehaviour
                 child.SetParent(belowCuttingPlaneObj.transform);
             }
 
-            //Debug.Log("child is at " + position.ToString("F2"));
+            //
         }
     }
 
