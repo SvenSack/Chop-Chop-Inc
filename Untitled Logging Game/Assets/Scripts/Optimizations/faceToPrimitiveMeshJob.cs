@@ -222,9 +222,6 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         //if both triangles exist but one triangle is intersecting but the other is either above or below the splitting plane
         else if (isBothTrianglesExist && tri1CheckResult != tri2CheckResult)
         {
-            //intersectingFaces.Enqueue(faces[i]);
-
-
             Vector3[] worldTrianglePointPositions = new Vector3[6];
 
             worldTrianglePointPositions[0] = worldMatrix.MultiplyPoint(meshVertices[faces[i].tri1.v0]);
@@ -551,7 +548,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
     }
 
-    private void FindDecisionForSingularTriangle( TriangleSplitState state, Triangle tri,int executeIndex)
+    private void FindDecisionForSingularTriangle(TriangleSplitState state, Triangle tri,int executeIndex)
     {
         switch (state)
         {
@@ -605,8 +602,10 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         Profiler.BeginSample("UnOptimizedFindTriangleToPlaneIntersectionPoint");
 
         //------------ Find the 
-        List<Vector3> uniqueIntersectionPoints = CuttableTreeScript.UnOptimizedFindTriangleToPlaneIntersectionPoint
-            (worldTrianglePointPositions[0], worldTrianglePointPositions[1], worldTrianglePointPositions[2], position, normal);
+        List<IntersectionQuery> uniqueIntersectionPoints = MeshSplittingStatics.FindTriangleToPlaneIntersectionPoint
+            (meshVertices, meshUVs, tri.v0, tri.v1, tri.v2, transformedPosition, transformedNormal);
+            //CuttableTreeScript.UnOptimizedFindTriangleToPlaneIntersectionPoint
+            //(worldTrianglePointPositions[0], worldTrianglePointPositions[1], worldTrianglePointPositions[2], position, normal);
 
         Profiler.EndSample();
 
