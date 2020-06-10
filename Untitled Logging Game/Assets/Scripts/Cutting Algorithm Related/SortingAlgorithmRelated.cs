@@ -28,6 +28,31 @@ public class IntersectionComparer : IComparer<Vector3>
 
 }
 
+public class IntersectionQueryComparer : IComparer<IntersectionQuery>
+{
+    private Vector3 baseDirection;
+    public Vector3 basePosition;
+    private Matrix4x4 world;
+
+
+    public IntersectionQueryComparer(Vector3 baseDirection, Vector3 basePosition, Matrix4x4 world)
+    {
+        this.baseDirection = baseDirection;
+        this.basePosition = basePosition;
+        this.world = world;
+    }
+
+    public int Compare(IntersectionQuery intersectionPoint1, IntersectionQuery intersectionPoint2)
+    {
+        float x = Vector3.Dot(baseDirection, (world.MultiplyPoint(intersectionPoint1.intersectionPosition) - basePosition));
+        float y = Vector3.Dot(baseDirection, (world.MultiplyPoint(intersectionPoint2.intersectionPosition) - basePosition));
+
+        return x.CompareTo(y);
+    }
+
+}
+    
+
 
 public class IndexDirectionComparer : IComparer<int>
 {
