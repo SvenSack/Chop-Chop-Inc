@@ -235,6 +235,10 @@ MonoBehaviour:
   pressedColor: {r: 0.8431373, g: 0.8352942, b: 0.25490198, a: 1}
   unPressedColor: {r: 0.9960785, g: 0.9960785, b: 0.9960785, a: 1}
   shiftButton: {fileID: 4785158386052460504}
+  targetTextBox: {fileID: 0}
+  pressedShiftSprite: {fileID: 21300000, guid: f730b9d24a421ea4eb3a3fa5f7c8bd40, type: 3}
+  unPressedShiftSprite: {fileID: 21300000, guid: 64f173ec0bfa894468bab242d21534ad,
+    type: 3}
 --- !u!1001 &186408010023100849
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ public class KeyboardMan : MonoBehaviour
     [SerializeField] private Color unPressedColor;
     [SerializeField] private Button shiftButton;
     public TextMeshProUGUI targetTextBox;
+    [SerializeField] private Sprite pressedShiftSprite;
+    [SerializeField] private Sprite unPressedShiftSprite;
 
     private void Start()
     {
@@ -47,6 +49,7 @@ public class KeyboardMan : MonoBehaviour
                 {
                     txt.text = txt.text.ToLowerInvariant();
                 }
+                button.GetComponent<Image>().sprite = unPressedShiftSprite;
                 break;
             }
 
@@ -64,6 +67,7 @@ public class KeyboardMan : MonoBehaviour
             case ShiftState.Caps:
             {
                 button.transform.GetChild(1).GetComponent<Image>().color = unPressedColor;
+                button.GetComponent<Image>().sprite = pressedShiftSprite;
                 break;
             }
         }

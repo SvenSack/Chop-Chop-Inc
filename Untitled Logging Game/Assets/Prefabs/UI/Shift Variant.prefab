@@ -91,6 +91,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 64f173ec0bfa894468bab242d21534ad,
         type: 3}
+    - target: {fileID: 3022259255051494436, guid: 2b1f26862d48d8c42a59685037ed1c63,
+        type: 3}
+      propertyPath: m_Transition
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3415569402041835053, guid: 2b1f26862d48d8c42a59685037ed1c63,
         type: 3}
       propertyPath: m_textInfo.characterCount

@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 687297545647211045, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3511311986574191905, guid: d16e3d257b218b8499bc4082abf31536,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -115,7 +120,7 @@ PrefabInstance:
     - target: {fileID: 4636112666789585128, guid: d16e3d257b218b8499bc4082abf31536,
         type: 3}
       propertyPath: m_Name
-      value: Confirm
+      value: Confirm Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6401963645579216711, guid: d16e3d257b218b8499bc4082abf31536,
         type: 3}
@@ -168,5 +173,29 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 7472083106939375695, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fb20d5ea5dbfe1246a830f15ef378c14,
+        type: 3}
+    - target: {fileID: 7472083106939375695, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3e5c23f99f479b540a48605804ec0676,
+        type: 3}
+    - target: {fileID: 7472083106939375695, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3e5c23f99f479b540a48605804ec0676,
+        type: 3}
+    - target: {fileID: 7472083106939375695, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3e5c23f99f479b540a48605804ec0676,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d16e3d257b218b8499bc4082abf31536, type: 3}
