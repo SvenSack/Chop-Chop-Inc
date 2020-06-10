@@ -19,8 +19,7 @@ MonoBehaviour:
   animator: {fileID: 3257609167860403278}
   soundMan: {fileID: 0}
   directionIsLeft: 1
-  walkSpeed: 1.5
-  isWaiting: 1
+  walkSpeed: 0.5
   turnTime: 0
 --- !u!1001 &3552677574581420013
 PrefabInstance:
@@ -29,21 +28,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2051670182648869793, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051670182648869793, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051670182648869793, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715896, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_Name
