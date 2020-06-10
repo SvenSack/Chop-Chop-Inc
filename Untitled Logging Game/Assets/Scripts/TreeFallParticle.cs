@@ -43,7 +43,7 @@ public class TreeFallParticle : MonoBehaviour
             Debug.DrawLine(landingPoint, landingPoint+Vector3.up*10, Color.red, 1000f);
             foreach (var fox in foxes)
             {
-                if (Vector3.Distance(fox.transform.position, landingPoint) < 5f && !fox.isWaiting)
+                if (Vector3.Distance(fox.transform.position, landingPoint) < 5f)
                 {
                     fox.Scare(landingPoint);
                 }

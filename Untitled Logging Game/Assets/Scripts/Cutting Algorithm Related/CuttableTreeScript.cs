@@ -106,7 +106,7 @@ public struct Triangle
 
 public struct Face
 { 
-    public bool IsFilled()
+    public bool isFilled()
     {
         return tri1.v0 != -1;
     }
@@ -141,7 +141,7 @@ public struct Face
     public void ToLog()
     {
         Debug.Log("Tri1 " + tri1.v0 + "," + tri1.v1 + "," + tri1.v2);
-        Debug.Log("Tri2 " + tri2.v0 + "," + tri2.v1 + "," + tri2.v2);
+        Debug.Log("Tri1 " + tri2.v0 + "," + tri2.v1 + "," + tri2.v2);
     }
 
     public Triangle tri1;
@@ -248,8 +248,6 @@ public class CuttableTreeScript : MonoBehaviour
         preCutCentroid /= (mesh.vertices.Length);
 
         objectSpacePreCutCentroid = preCutCentroid;
-
-        //Utils.EnsurePositionIsCentroid(transform);
 
         meshPhysicsManager = GetMeshColliderGenerator();
     }
@@ -512,7 +510,7 @@ public class CuttableTreeScript : MonoBehaviour
         NativeQueue<CutHolePairing> generatedHoleFilling, Vector3 transformedPosition, Vector3 transformedNormal, Matrix4x4 worldMatrix,
        Vector3 position, Vector3 normal, List<Face> meshfaces)
     {
-        //Debug.DrawLine()
+
         Profiler.BeginSample("Multhithreaded splitting job");
 
         FaceToPrimitiveMeshJob primitiveMeshPopulateJob = new FaceToPrimitiveMeshJob();
@@ -849,7 +847,7 @@ public class CuttableTreeScript : MonoBehaviour
         }
     }
 
- 
+
    
 
 
@@ -889,7 +887,7 @@ public class CuttableTreeScript : MonoBehaviour
             if (child.tag == "Leaves")
             {
                 position = child.transform.position;
-                // continue;
+                //continue; <--- Comment this
             }
             else if(child.tag == "hole")
             {
@@ -926,15 +924,7 @@ public class CuttableTreeScript : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.C))
         {
-            if(useMultithreadedVersion)
-            {
-                CutAt(DebugObjectTest.transform.position, DebugObjectTest.transform.up, 00.0f);
-            }
-            else
-            {
-                CutAtNoOptimizations(DebugObjectTest.transform.position, DebugObjectTest.transform.up, 00.0f);
-            }
-            
+            CutAt(DebugObjectTest.transform.position, DebugObjectTest.transform.up,00.0f);
         }
     }
 
@@ -1389,6 +1379,7 @@ public class CuttableTreeScript : MonoBehaviour
 
                         upperRightVertex = new IndividualVertex(mesh, trianglesInSplitPlane.ElementAt(currentTriangleIndex - 1));
 
+                        Debug.Log("found tct " + tct.ToString());//tct.ToString()
                        
                         if (tct == TriangleConnectionType.DoubleOriginalPoint)
                         {
@@ -1715,7 +1706,7 @@ public class CuttableTreeScript : MonoBehaviour
         {
             tscb.faces.Add(pairing.f1);
 
-            if (pairing.f2.IsFilled())
+            if (pairing.f2.isFilled())
             {
                 tscb.faces.Add(pairing.f2);
             }
@@ -1732,113 +1723,12 @@ public class CuttableTreeScript : MonoBehaviour
 
     //---------------------------------- Helper Functions----------------------------------------//
 
-   public static List<IntersectionQuery> FindTriangleToPlaneIntersectionPoint(NativeArray<Vector3> meshVertices, NativeArray<Vector2> meshUVs,int v0,int v1, int v2 , Vector3 inversePosition,Vector3 inverseNormal)
-   {
-        List<IntersectionQuery> result = new List<IntersectionQuery>();
-
-
-
-        IntersectionQuery intersection1;
-        if (FindLineToPlaneIntersection(meshVertices,meshUVs,v0,v1,inversePosition,inverseNormal, out intersection1))
-        {
-            result.Add(intersection1);
-        }
-
-        IntersectionQuery intersection2;
-        if (FindLineToPlaneIntersection(meshVertices, meshUVs, v1, v2, inversePosition, inverseNormal, out intersection2))
-        {
-            result.Add(intersection2);
-        }
-
-        IntersectionQuery intersection3;
-        if (FindLineToPlaneIntersection(meshVertices, meshUVs, v2, v0, inversePosition, inverseNormal, out intersection3))
-        {
-            result.Add(intersection3);
-        }
-
-        return result;
-    }
-
-    /// <summary>
-    /// Given the vertices and UVs of a line in a triangle of a mesh, checks if there is a collision between a plane with a given position and normal
-    /// </summary>
-    /// <param name="meshVertices"></param>
-    /// <param name="meshUVs"></param>
-    /// <param name="v0"></param>
-    /// <param name="v1"></param>
-    /// <param name="position"></param>
-    /// <param name="normal"></param>
-    /// <param name="intersection"></param>
-    /// <returns></returns>
-    public static bool FindLineToPlaneIntersection(NativeArray<Vector3> meshVertices, NativeArray<Vector2> meshUVs, int v0, int v1, Vector3 inversePosition, Vector3 inverseNormal,out IntersectionQuery intersection)
-   {
-        Vector3 objectSpaceV1 = meshVertices[v1];
-        Vector3 objectSpaceV0 = meshVertices[v0];
-        
-        bool isOnSameSideOfPlane = Utils.IsPointAbovePlane(objectSpaceV0, inversePosition, inverseNormal) ^ Utils.IsPointAbovePlane(objectSpaceV1, inversePosition, inverseNormal);
-
-        intersection = new IntersectionQuery();
-
-        if (!isOnSameSideOfPlane)
-        { 
-            return false;
-        }
-
-        Vector2 UVP0 = meshUVs[v0];
-        Vector2 UVP1 = meshUVs[v1];
-
-        Vector2 UVLine = (UVP1 - UVP0).normalized;
-
-        Vector3 lineToUse = objectSpaceV1 - objectSpaceV0;
-
-        Vector3 P0 = objectSpaceV0;
-        Vector3 P1 = lineToUse.normalized;
-        Vector3 A = inversePosition;
-
-        float t = (Vector3.Dot(A, inverseNormal) - Vector3.Dot(P0, inverseNormal)) / Vector3.Dot(P1, inverseNormal);
-
-        intersection.intersectionPosition = P0 + P1 * t;
-
-        intersection.UV = Vector2.Lerp(UVP0,UVP1,(t/ Vector3.Magnitude(lineToUse)));
-
-        return true;
-    }
-
-    public static void GetFaceToPlaneIntersectionPoints(NativeArray<Vector3> meshVertices,NativeArray<Vector2> meshUVs, Face face,
-        Vector3 transformedPosition, Vector3 transformedNormal, out List<IntersectionQuery> intersectionPoints)
-    {
-        intersectionPoints = new List<IntersectionQuery>();
-
-
-        Debug.Log("-------------For face ---------------------------");
-        face.ToLog();
-        List<IntersectionQuery> triangleIntersectionPoints = FindTriangleToPlaneIntersectionPoint
-            (meshVertices, meshUVs, face.tri1.v0, face.tri1.v1, face.tri1.v2, transformedPosition, transformedNormal);
-
-
-        List<IntersectionQuery> secondTriangleIntersectionPoints = FindTriangleToPlaneIntersectionPoint
-            (meshVertices, meshUVs, face.tri2.v0, face.tri2.v1, face.tri2.v2, transformedPosition, transformedNormal);
-
-
-        foreach (var intersectionPoint in triangleIntersectionPoints)
-        {
-            intersectionPoints.Add(intersectionPoint);
-        }
-
-        foreach (var intersectionPoint in secondTriangleIntersectionPoints)
-        {
-            intersectionPoints.Add(intersectionPoint);
-        }
-
-    }
-
-
     public static List<Vector3> UnOptimizedFindTriangleToPlaneIntersectionPoint(Vector3 transformedV0, Vector3 transformedV1, Vector3 transformedV2, Vector3 position, Vector3 normal)
     {
         List<Vector3> result = new List<Vector3>();
 
         Vector3 intersection1;
-        if (UnOptimizedFindLineToPlaneIntersection(transformedV0, transformedV1, position, normal, out intersection1)
+        if (UnOptimizedFindLineToPlaneIntersection(transformedV0, transformedV1, position, normal, out intersection1) 
             //|| UnOptimizedFindLineToPlaneIntersection(transformedV1, transformedV0, position, normal, out intersection1)
             )
         {
@@ -1846,7 +1736,7 @@ public class CuttableTreeScript : MonoBehaviour
         }
 
         Vector3 intersection2;
-        if (UnOptimizedFindLineToPlaneIntersection(transformedV1, transformedV2, position, normal, out intersection2)
+        if (UnOptimizedFindLineToPlaneIntersection(transformedV1, transformedV2, position, normal, out intersection2) 
             //|| UnOptimizedFindLineToPlaneIntersection(transformedV2, transformedV1, position, normal, out intersection2)
             )
         {
@@ -1854,7 +1744,7 @@ public class CuttableTreeScript : MonoBehaviour
         }
 
         Vector3 intersection3;
-        if (UnOptimizedFindLineToPlaneIntersection(transformedV2, transformedV0, position, normal, out intersection3)
+        if (UnOptimizedFindLineToPlaneIntersection(transformedV2, transformedV0, position, normal, out intersection3) 
             //|| UnOptimizedFindLineToPlaneIntersection(transformedV0, transformedV2, position, normal, out intersection3)
             )
         {

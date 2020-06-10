@@ -67,8 +67,6 @@ struct TriangleToFaceJob : IJobParallelFor
         face1.Init();
         face2.Init();
 
-        face1.tri1 = tri1;
-        face2.tri1 = tri2;
 
         ////tri1 and tri2 
         //if ((tri1Normal - tri2Normal).magnitude < 0.001f)
