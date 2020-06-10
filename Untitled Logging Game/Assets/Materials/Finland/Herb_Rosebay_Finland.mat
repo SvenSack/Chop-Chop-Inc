@@ -10,8 +10,8 @@ Material:
   m_Name: Herb_Rosebay_Finland
   m_Shader: {fileID: -6465566751694194690, guid: 429cd1b11538cc146bb1f64dc0c98c67,
     type: 3}
-  m_ShaderKeywords: BOOLEAN_9338859E_ON _ALPHATEST_ON _EMISSION
-  m_LightmapFlags: 2
+  m_ShaderKeywords: BOOLEAN_9338859E_ON
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -22,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_35412953:
-        m_Texture: {fileID: 2800000, guid: 6b21de834b65fc144bb66e514057d207, type: 3}
+        m_Texture: {fileID: 2800000, guid: 671b68ae194db2b43bfd8fc71a87e2db, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_B63BE1FE:
@@ -30,7 +30,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_DB152443:
-        m_Texture: {fileID: 2800000, guid: 6b21de834b65fc144bb66e514057d207, type: 3}
+        m_Texture: {fileID: 2800000, guid: 671b68ae194db2b43bfd8fc71a87e2db, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -95,7 +95,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
-    - Color_DBF5581F: {r: 0, g: 0, b: 0, a: 0.50980395}
+    - Color_DBF5581F: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 0.8301887, g: 0.71662515, b: 0.71662515, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
