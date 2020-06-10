@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Linq;
+using UnityEngine.Profiling;
 
 public class SortingGroupComparer : IComparer<ObjectToScreenSpaceZ>
 {
@@ -29,6 +30,8 @@ public class ObjectRenderOrderer : MonoBehaviour
 {
     public List<ObjectToScreenSpaceZ> objectsToBeSorted = new List<ObjectToScreenSpaceZ>();
 
+    private Camera camera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,11 +41,19 @@ public class ObjectRenderOrderer : MonoBehaviour
         {
             objectsToBeSorted.Add(new ObjectToScreenSpaceZ(sortingGroup,0.0f));
         }
+
+        Debug.Log("Found " + sortingGroups.Length + " to be sorted");
+
+        camera = Camera.main;
     }
 
     private void Update()
     {
+        Profiler.BeginSample("SortObjectRenderOrder");
+
         SortObjectRenderOrder();
+
+        Profiler.EndSample();
     }
 
     public void SortObjectRenderOrder()
@@ -50,7 +61,7 @@ public class ObjectRenderOrderer : MonoBehaviour
         //set sorting order of all objects based on z screen space values
         foreach(ObjectToScreenSpaceZ obj in objectsToBeSorted)
         {
-            float z = Camera.main.WorldToScreenPoint(obj.sortingGroup.transform.position).z;
+            float z = camera.WorldToScreenPoint(obj.sortingGroup.transform.position).z;
             obj.ScreenSpaceZ = z;
 
         }

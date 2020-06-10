@@ -222,9 +222,6 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         //if both triangles exist but one triangle is intersecting but the other is either above or below the splitting plane
         else if (isBothTrianglesExist && tri1CheckResult != tri2CheckResult)
         {
-            //intersectingFaces.Enqueue(faces[i]);
-
-
             Vector3[] worldTrianglePointPositions = new Vector3[6];
 
             worldTrianglePointPositions[0] = worldMatrix.MultiplyPoint(meshVertices[faces[i].tri1.v0]);
@@ -330,8 +327,9 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
     {
         Profiler.BeginSample("Checking intersection Points");
 
-        List<Vector3> foundIntersectionPoint;
-        UnOptimizedGetFaceToPlaneIntersectionPoints( face, position, normal, out foundIntersectionPoint);
+        List<IntersectionQuery> foundIntersectionPoint;
+        MeshSplittingStatics.GetFaceToPlaneIntersectionPoints(meshVertices,meshUVs,face
+            ,transformedPosition,transformedNormal, out foundIntersectionPoint);
 
         Profiler.EndSample();
 
@@ -364,7 +362,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         Profiler.BeginSample("Get unique Lists");
         List<int> uniqueTrianglesAboveSplittingPlane = GetUniqueVertices(trianglesAboveSplittingPlane);
         List<int> uniqueTrianglesBelowSplittingPlane = GetUniqueVertices(trianglesBelowSplittingPlane);
-        List<Vector3> uniqueIntersectionPoints = GetUniqueVector3Collection(foundIntersectionPoint);
+        List<IntersectionQuery> uniqueIntersectionPoints = MeshSplittingStatics.GetUniqueIntersectionQueryCollection(foundIntersectionPoint);
 
         Profiler.EndSample();
 
@@ -381,7 +379,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         basePosition = preCutCentroid;
         baseDirection = Vector3.Cross(Vector3.up, (worldTrianglePointPositions[0] - preCutCentroid)).normalized;
 
-        IntersectionComparer ic = new IntersectionComparer
+        IntersectionQueryComparer ic = new IntersectionQueryComparer
             (baseDirection, basePosition, worldMatrix);
 
         Profiler.BeginSample("Actual sorting intersection points");
@@ -395,22 +393,25 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
         Profiler.BeginSample("Sort Triangle Points");
 
-        IndexDirectionComparer idc = new IndexDirectionComparer((uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0]).normalized
+        Vector3 indexBasedDirection = (worldMatrix.MultiplyPoint(foundIntersectionPoint[foundIntersectionPoint.Count - 1].intersectionPosition)
+            - worldMatrix.MultiplyPoint(foundIntersectionPoint[0].intersectionPosition));
+        indexBasedDirection.Normalize();
+
+        IndexDirectionComparer idc = new IndexDirectionComparer(indexBasedDirection
         , basePosition, meshVertices.ToArray(), worldMatrix);
 
         Vector3 belowTriangleCentroid = GetWorldTriangleCentroid(uniqueTrianglesBelowSplittingPlane);
         Vector3 aboveTriangleCentroid = GetWorldTriangleCentroid(uniqueTrianglesAboveSplittingPlane);
 
-        idc.basePosition = uniqueIntersectionPoints[0];
+
         uniqueTrianglesBelowSplittingPlane.Sort(idc);
 
-        idc.basePosition = uniqueIntersectionPoints[0];
         uniqueTrianglesAboveSplittingPlane.Sort(idc);
 
         Profiler.EndSample();
 
 
-        List<Vector3> intersectionPoints = new List<Vector3>();
+        List<IntersectionQuery> intersectionPoints = new List<IntersectionQuery>();
 
         intersectionPoints.Add(uniqueIntersectionPoints[0]);
         intersectionPoints.Add(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]);
@@ -434,7 +435,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         //store vertices restoring the hole that will be generated after cutting the mesh
 
         CutHolePairing cutHolePairing = new CutHolePairing();
-        cutHolePairing.Init(Matrix4x4.Inverse(worldMatrix).MultiplyPoint(intersectionPoints[0]), Matrix4x4.Inverse(worldMatrix).MultiplyPoint(intersectionPoints[intersectionPoints.Count - 1]));
+        cutHolePairing.Init(intersectionPoints[0].intersectionPosition, intersectionPoints[intersectionPoints.Count - 1].intersectionPosition);
         holePairings.Enqueue(cutHolePairing);
 
 
@@ -503,6 +504,8 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         return uniqueCollection;
     }
 
+    
+
     private void UnOptimizedGetFaceToPlaneIntersectionPoints(Face face, Vector3 position, Vector3 normal, out List<Vector3> intersectionPoints)
     {
         intersectionPoints = new List<Vector3>();
@@ -552,7 +555,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
     }
 
-    private void FindDecisionForSingularTriangle( TriangleSplitState state, Triangle tri,int executeIndex)
+    private void FindDecisionForSingularTriangle(TriangleSplitState state, Triangle tri,int executeIndex)
     {
         switch (state)
         {
@@ -606,8 +609,10 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         Profiler.BeginSample("UnOptimizedFindTriangleToPlaneIntersectionPoint");
 
         //------------ Find the 
-        List<Vector3> uniqueIntersectionPoints = CuttableTreeScript.UnOptimizedFindTriangleToPlaneIntersectionPoint
-            (worldTrianglePointPositions[0], worldTrianglePointPositions[1], worldTrianglePointPositions[2], position, normal);
+       List<IntersectionQuery> uniqueIntersectionPoints = MeshSplittingStatics.FindTriangleToPlaneIntersectionPoint
+            (meshVertices, meshUVs, tri.v0, tri.v1, tri.v2, transformedPosition, transformedNormal);
+            //CuttableTreeScript.UnOptimizedFindTriangleToPlaneIntersectionPoint
+            //(worldTrianglePointPositions[0], worldTrianglePointPositions[1], worldTrianglePointPositions[2], position, normal);
 
         Profiler.EndSample();
 
@@ -645,13 +650,16 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         Vector3 basePosition = preCutCentroid;
         Vector3 baseDirection = Vector3.Cross(Vector3.up, (worldTrianglePointPositions[0] - preCutCentroid));
 
-        IntersectionComparer ic = new IntersectionComparer(baseDirection, basePosition, worldMatrix);
+        IntersectionQueryComparer ic = new IntersectionQueryComparer(baseDirection, basePosition, worldMatrix);
         uniqueIntersectionPoints.Sort(ic);
 
         //sort the points above and below the splitting plane based on the vector created by the last element of the intersectionPoint 
         //Collection and the first element in the Vector3 Collection
 
-        baseDirection = (uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0]);
+        Vector3 indexBasedDirection = (worldMatrix.MultiplyPoint(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1].intersectionPosition)
+           - worldMatrix.MultiplyPoint(uniqueIntersectionPoints[0].intersectionPosition));
+        indexBasedDirection.Normalize();
+
 
         IndexDirectionComparer idc = new IndexDirectionComparer(baseDirection
             , basePosition, meshVertices.ToArray(), worldMatrix);
@@ -663,9 +671,10 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
         //check one more time, check if points and intersection points are ordered in the right direction
 
-        
 
-        Vector3 intersectionDirection = uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0];
+
+        Vector3 intersectionDirection = (worldMatrix.MultiplyPoint(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1].intersectionPosition)
+        - worldMatrix.MultiplyPoint(uniqueIntersectionPoints[0].intersectionPosition));
 
         Vector3 vertexDirection =
              worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesBelowSplittingPlane[uniqueTrianglesBelowSplittingPlane.Count - 1]]) -
@@ -686,21 +695,23 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         Profiler.BeginSample("Actual assembly lowerMesh");
         assembleFacesFromSplitVertices(uniqueIntersectionPoints, uniqueTrianglesBelowSplittingPlane, false,lowerMesh);
         Profiler.EndSample();
-       
+
 
         //use the points above the spllitting plane and the intersection points to create the triangle that will be placed in the upperPrimitiveMesh
 
+        Vector3 intersectionDirection2 = (worldMatrix.MultiplyPoint(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1].intersectionPosition)
+       - worldMatrix.MultiplyPoint(uniqueIntersectionPoints[0].intersectionPosition));
 
         Vector3 vertexDirection2 =
            worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesAboveSplittingPlane[uniqueTrianglesAboveSplittingPlane.Count - 1]]) -
            worldMatrix.MultiplyPoint(meshVertices[uniqueTrianglesAboveSplittingPlane[0]]);
 
-        if (Vector3.Dot(intersectionDirection, baseDirection) < 0)
+        if (Vector3.Dot(intersectionDirection2, baseDirection) < 0)
         {
             uniqueIntersectionPoints.Reverse();
         }
 
-        if (Vector3.Dot(vertexDirection2, intersectionDirection) < 0)
+        if (Vector3.Dot(vertexDirection2, intersectionDirection2) < 0)
         {
             uniqueTrianglesAboveSplittingPlane.Reverse();
         }
@@ -711,8 +722,8 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
         //use the points below the splitting plane and the intersection points to create the triangle that will be placed in the lowerPrimitiveMesh
         CutHolePairing cutHolePairing = new CutHolePairing();
-        cutHolePairing.Init(Matrix4x4.Inverse(worldMatrix).MultiplyPoint(uniqueIntersectionPoints[0])
-            , Matrix4x4.Inverse(worldMatrix).MultiplyPoint(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]));
+        cutHolePairing.Init(uniqueIntersectionPoints[0].intersectionPosition
+            , uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1].intersectionPosition);
         holePairings.Enqueue(cutHolePairing);
 
 
@@ -744,7 +755,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
         return worldMatrix.MultiplyPoint(result);
     }
 
-    private void assembleFacesFromSplitVertices(List<Vector3> uniqueIntersectionPoints, List<int> trianglesInSplitPlane, 
+    private void assembleFacesFromSplitVertices(List<IntersectionQuery> uniqueIntersectionPoints, List<int> trianglesInSplitPlane, 
         bool isIntersectionPointBottomLeftVertex, NativeQueue<JobFace>.ParallelWriter meshToPopulate)
     {
         Matrix4x4 inverseWorld = Matrix4x4.Inverse(worldMatrix);
@@ -758,7 +769,8 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
             Profiler.BeginSample("single quad/triangle assembly");
 
             int currentItersectionPointI = CuttableTreeScript.GetCurrentIndex(uniqueIntersectionPoints.Count, i);
-            Vector3 objectSpaceItersectionPoint = inverseWorld.MultiplyPoint(uniqueIntersectionPoints.ElementAt(currentItersectionPointI));
+            Vector3 objectSpaceItersectionPoint = uniqueIntersectionPoints.ElementAt(currentItersectionPointI).intersectionPosition;
+            Vector2 intersectionPointUV = uniqueIntersectionPoints.ElementAt(currentItersectionPointI).UV;
 
             bool nextIntersectionPointExist = i + 1 < uniqueIntersectionPoints.Count;
             bool nextTrianglePointExist = i + 1 < trianglesInSplitPlane.Count;
@@ -776,7 +788,8 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
                 JobVertex bottomRightVertex = new JobVertex();
                 JobVertex upperRightVertex = new JobVertex();
 
-                Vector3 nextObjectSpaceIntersectionPoint = inverseWorld.MultiplyPoint(uniqueIntersectionPoints.ElementAt(i + 1));
+                Vector3 nextObjectSpaceIntersectionPoint = uniqueIntersectionPoints.ElementAt(i + 1).intersectionPosition;
+                Vector2 nextIntersectionPointUV = uniqueIntersectionPoints.ElementAt(i + 1).UV;
 
                 //all intersection points are bottom, triangles points are upper
                 if (isIntersectionPointBottomLeftVertex)
@@ -787,9 +800,9 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
                     upperRightVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[i + 1]);
 
-                    bottomLeftVertex.Init(objectSpaceItersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+                    bottomLeftVertex.Init(objectSpaceItersectionPoint, upperLeftVertex.normal, intersectionPointUV);
 
-                    bottomRightVertex.Init(nextObjectSpaceIntersectionPoint, upperRightVertex.normal, new Vector2(1, 1));
+                    bottomRightVertex.Init(nextObjectSpaceIntersectionPoint, upperRightVertex.normal, nextIntersectionPointUV);
 
                     tri1.Init(bottomLeftVertex, upperLeftVertex, upperRightVertex);
                     tri2.Init(bottomLeftVertex, upperRightVertex, bottomRightVertex);
@@ -822,9 +835,9 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
                     bottomRightVertex.Init(meshVertices, meshNormals, meshUVs,trianglesInSplitPlane[i+1]);
 
-                    upperLeftVertex.Init(objectSpaceItersectionPoint, bottomLeftVertex.normal, new Vector2(1, 1));
+                    upperLeftVertex.Init(objectSpaceItersectionPoint, bottomLeftVertex.normal, intersectionPointUV);
 
-                    upperRightVertex.Init(nextObjectSpaceIntersectionPoint, bottomRightVertex.normal, new Vector2(1, 1));
+                    upperRightVertex.Init(nextObjectSpaceIntersectionPoint, bottomRightVertex.normal, nextIntersectionPointUV);
 
                     tri1.Init(bottomLeftVertex, upperLeftVertex, upperRightVertex);
                     tri2.Init(bottomLeftVertex, upperRightVertex, bottomRightVertex);
@@ -859,7 +872,8 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
                 {
                     
 
-                    Vector3 nextObjectSpaceIntersectionPoint = inverseWorld.MultiplyPoint(uniqueIntersectionPoints.ElementAt(i + 1));
+                    Vector3 nextObjectSpaceIntersectionPoint = uniqueIntersectionPoints.ElementAt(i + 1).intersectionPosition;
+                    Vector2 nextIntersectionPointUV = uniqueIntersectionPoints.ElementAt(i + 1).UV;
 
                     //all intersection points are bottom, triangles points are upper
                     if (isIntersectionPointBottomLeftVertex)
@@ -868,9 +882,9 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
                         upperLeftVertex.Init(meshVertices, meshNormals, meshUVs,trianglesInSplitPlane[currentTriangleIndex]);
 
-                        bottomLeftVertex.Init(objectSpaceItersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+                        bottomLeftVertex.Init(objectSpaceItersectionPoint, upperLeftVertex.normal, intersectionPointUV);
 
-                        bottomRightVertex.Init(nextObjectSpaceIntersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+                        bottomRightVertex.Init(nextObjectSpaceIntersectionPoint, upperLeftVertex.normal, nextIntersectionPointUV);
 
                         tri1.Init(upperLeftVertex, bottomRightVertex, bottomLeftVertex);
                         tri1.AttemptNormalBasedVertexCorrection(upperLeftVertex.normal, 1, 2);
@@ -885,9 +899,9 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
                         bottomLeftVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[currentTriangleIndex]);
 
-                        upperLeftVertex.Init(objectSpaceItersectionPoint, bottomLeftVertex.normal, new Vector2(1, 1));
+                        upperLeftVertex.Init(objectSpaceItersectionPoint, bottomLeftVertex.normal, intersectionPointUV);
 
-                        upperRightVertex.Init(nextObjectSpaceIntersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+                        upperRightVertex.Init(nextObjectSpaceIntersectionPoint, upperLeftVertex.normal, nextIntersectionPointUV);
 
                         tri1.Init(bottomLeftVertex, upperLeftVertex, upperRightVertex);
                         tri1.AttemptNormalBasedVertexCorrection(upperLeftVertex.normal, 1, 2);
@@ -907,8 +921,8 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
                         bottomRightVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[currentTriangleIndex+1]);
 
-                        TriangleConnectionType tct = GetClosestConnectionTypeByCentroidProjection(uniqueIntersectionPoints[0], 
-                            (uniqueIntersectionPoints[1] - uniqueIntersectionPoints[0]).normalized, types);
+                        TriangleConnectionType tct = GetClosestConnectionTypeByCentroidProjection(uniqueIntersectionPoints[0].intersectionPosition, 
+                            (uniqueIntersectionPoints[1].intersectionPosition - uniqueIntersectionPoints[0].intersectionPosition).normalized, types);
 
                         ConnectionTypeToCentroid tri1Type = new ConnectionTypeToCentroid();
                         
@@ -920,7 +934,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
                         if (tct == TriangleConnectionType.DoubleIntersection)
                         {
                             tri1Type.tct = TriangleConnectionType.DoubleOriginalPoint;
-                            upperRightVertex.Init(objectSpaceItersectionPoint, bottomLeftVertex.normal, new Vector2(1, 1));
+                            upperRightVertex.Init(objectSpaceItersectionPoint, bottomLeftVertex.normal,intersectionPointUV);
                         }
 
                         tri1.Init(bottomLeftVertex, upperRightVertex, bottomRightVertex);
@@ -940,7 +954,7 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
                         upperRightVertex.Init(meshVertices, meshNormals, meshUVs, trianglesInSplitPlane[currentTriangleIndex + 1]);
 
-                        bottomLeftVertex.Init(objectSpaceItersectionPoint, upperLeftVertex.normal, new Vector2(1, 1));
+                        bottomLeftVertex.Init(objectSpaceItersectionPoint, upperLeftVertex.normal, intersectionPointUV);
 
                         tri1.Init(bottomLeftVertex, upperLeftVertex, upperRightVertex);
                         tri1.AttemptNormalBasedVertexCorrection(bottomLeftVertex.normal, 1, 2);
@@ -968,8 +982,8 @@ struct FaceToPrimitiveMeshJob : IJobParallelFor
 
         foreach (ConnectionTypeToCentroid singleTypeToCentroid in cttc)
         {
-            Vector3 worldSpaceCentroid = worldMatrix.MultiplyPoint(singleTypeToCentroid.objectSpaceCentroid);
-            Vector3 currentDirection = (worldSpaceCentroid - basePosition).normalized;
+            Vector3 objectSpaceCentroid = singleTypeToCentroid.objectSpaceCentroid;
+            Vector3 currentDirection = (objectSpaceCentroid - basePosition).normalized;
 
             float currentFoundClosest = Vector3.Dot(currentDirection, desiredDirection);
 

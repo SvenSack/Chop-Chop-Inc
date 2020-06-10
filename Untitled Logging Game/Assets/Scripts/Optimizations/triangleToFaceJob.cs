@@ -30,9 +30,33 @@ struct TriangleToFaceJob : IJobParallelFor
         bool canAddOneMoreTriangle = index + 2 < triangles.Length - 1;
         bool canAddOneMoreQuad = index + 5 < triangles.Length - 1;
 
-        if(!canAddOneMoreQuad && canAddOneMoreTriangle)
-        {
+        FacePairing pairing;
 
+        Face face1 = new Face();
+        Face face2 = new Face();
+        face1.Init();
+        face2.Init();
+
+        Triangle tri1 = new Triangle();
+        Triangle tri2 = new Triangle();
+
+
+        if (!canAddOneMoreQuad && canAddOneMoreTriangle)
+        {
+            tri1.v0 = triangles[index];
+            tri1.v1 = triangles[index + 1];
+            tri1.v2 = triangles[index + 2];
+
+            face1.tri1 = tri1;
+            face2.MarkUnfilled();
+
+            pairing.f1 = face1;
+            pairing.f2 = face2;
+
+            faces[i] = pairing;
+
+
+            return;
         }
         else if (!canAddOneMoreQuad)
         {
@@ -47,12 +71,12 @@ struct TriangleToFaceJob : IJobParallelFor
         int v4 = triangles[index + 4];
         int v5 = triangles[index + 5];
 
-        Triangle tri1 = new Triangle();
+        
         tri1.v0 = v0;
         tri1.v1 = v1;
         tri1.v2 = v2;
 
-        Triangle tri2 = new Triangle();
+        
         tri2.v0 = v3;
         tri2.v1 = v4;
         tri2.v2 = v5;
@@ -60,12 +84,9 @@ struct TriangleToFaceJob : IJobParallelFor
         Vector3 tri1Normal = normals[v0];
         Vector3 tri2Normal = normals[v3];
 
-        FacePairing pairing;
+        
 
-        Face face1 = new Face();
-        Face face2 = new Face();
-        face1.Init();
-        face2.Init();
+       
 
 
         ////tri1 and tri2 

@@ -11,9 +11,12 @@ namespace Animal
         public Animator animator;
         public SoundMan soundMan;
 
+        protected Camera camera;
+
         void Awake()
         {
             soundMan = FindObjectOfType<SoundMan>();
+            camera = Camera.main;
         }
 
         // Update is called once per frame
@@ -25,7 +28,7 @@ namespace Animal
 
         public void SnapToCamera()
         {
-            Vector3 cameraPosition = Camera.main.transform.position;
+            Vector3 cameraPosition = camera.transform.position;
             Vector3 lookAtPosition = new Vector3(cameraPosition.x, transform.position.y, cameraPosition.y);
 
             transform.LookAt(lookAtPosition);

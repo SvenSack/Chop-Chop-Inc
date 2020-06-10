@@ -102,6 +102,15 @@ public struct Triangle
     }
 
     public int v0, v1, v2;
+
+    public void LogWorldVertexPositions(NativeArray<Vector3> meshVertices,Matrix4x4 world)
+    {
+        Debug.Log("-----------------------LogWorldVertexPositions-----------------------------");
+        Debug.Log(" v0 " + world.MultiplyPoint(meshVertices[v0]));
+        Debug.Log(" v1 " + world.MultiplyPoint(meshVertices[v1]));
+        Debug.Log(" v2 " + world.MultiplyPoint(meshVertices[v2]));
+    }
+
 }
 
 public struct Face
@@ -864,12 +873,11 @@ public class CuttableTreeScript : MonoBehaviour
     {
         List<Transform> children = new List<Transform>();
 
-        Debug.Log("belowCuttingPlaneObj.gameObject.transform.childCount " + belowCuttingPlaneObj.gameObject.transform.childCount);
+
         foreach (Transform child in belowCuttingPlaneObj.gameObject.transform)
         {
             children.Add(child);
         }
-        Debug.Log("aboveCuttingPlaneObj.gameObject.transform.childCount " + aboveCuttingPlaneObj.gameObject.transform.childCount);
         foreach (Transform child in aboveCuttingPlaneObj.gameObject.transform)
         {
             children.Add(child);
@@ -878,7 +886,6 @@ public class CuttableTreeScript : MonoBehaviour
         belowCuttingPlaneObj.transform.DetachChildren();
         aboveCuttingPlaneObj.transform.DetachChildren();
 
-        Debug.Log("Working with " + children.Count + " children");
         foreach (Transform child in children)
         {
             child.parent = null;
@@ -898,17 +905,15 @@ public class CuttableTreeScript : MonoBehaviour
             {
                 continue;
             }
-            Debug.Log("child is at " + position.ToString("F2"));
-            //Debug.Log("planePosition " + planePosition.ToString("F2"));
+
             if (Utils.IsPointAbovePlane(position, planePosition,planeNormal))
             {
-                Debug.Log("Set to above");
+
                 child.SetParent(aboveCuttingPlaneObj.transform);
                 
             }
             else
             {
-                Debug.Log("Set to below");
                 child.SetParent(belowCuttingPlaneObj.transform);
             }
 
@@ -1683,7 +1688,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         int writeCount = mesh.triangles.Length / 6;
 
-        NativeArray<FacePairing> faces = new NativeArray<FacePairing>(writeCount, Allocator.TempJob);
+        NativeArray<FacePairing> faces = new NativeArray<FacePairing>(writeCount+1, Allocator.TempJob);
 
         Profiler.BeginSample("[cut] Array setup");
 
