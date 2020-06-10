@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class CameraMan : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class CameraMan : MonoBehaviour
 
     void Start()
     {
+        Profiler.SetAreaEnabled(ProfilerArea.UIDetails, false);
+        Profiler.SetAreaEnabled(ProfilerArea.UI, false);
+        //Profiler.SetAreaActive(ProfilerArea.UIDetails, false)
+        //Profiler.SetAreaActive(ProfilerArea.UIDetails, false)
         mainCam = Camera.main;
         cutMan = FindObjectOfType<CutMan>();
         treesToCutEach = new[] {treesToCut0, treesToCut1, treesToCut2, treesToCut3};

@@ -16,10 +16,12 @@ namespace Animal
         private Vector3 cameraPosition;
         [SerializeField] private float turnTime = 2f;
 
+        
+
         public void Start()
         {
             spriteTrans = transform.GetComponentInChildren<SpriteRenderer>().transform;
-            cameraPosition = Camera.main.transform.position;
+            cameraPosition = camera.transform.position;
         }
 
         public override void Update()
@@ -52,7 +54,7 @@ namespace Animal
                 CheckForFlip();
             
             if(Input.GetKeyDown("l"))
-                Scare(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                Scare(camera.ScreenToWorldPoint(Input.mousePosition));
         }
 
 
@@ -68,8 +70,8 @@ namespace Animal
 
         private void CheckForFlip()
         {
-            Camera mainCam = Camera.main;
-            Vector3 viewPoint = mainCam.WorldToScreenPoint(transform.position);
+            
+            Vector3 viewPoint = camera.WorldToScreenPoint(transform.position);
             if ( !(viewPoint.z > 0 && viewPoint.x > 1 && viewPoint.x < Screen.width) )
             {
                 Vector3 targetRot = spriteTrans.rotation.eulerAngles;
@@ -110,11 +112,11 @@ namespace Animal
 
         public void Scare(Vector3 positionOfScaryness)
         {
-            Camera mainCam = Camera.main;
-            if(mainCam.WorldToScreenPoint(transform.position).x < mainCam.WorldToScreenPoint(positionOfScaryness).x && directionIsLeft)
+          
+            if(camera.WorldToScreenPoint(transform.position).x < camera.WorldToScreenPoint(positionOfScaryness).x && directionIsLeft)
             {
-                Debug.Log("Fox: " + mainCam.WorldToScreenPoint(transform.position).x);
-                Debug.Log("Danger: " + mainCam.WorldToScreenPoint(positionOfScaryness).x);
+                Debug.Log("Fox: " + camera.WorldToScreenPoint(transform.position).x);
+                Debug.Log("Danger: " + camera.WorldToScreenPoint(positionOfScaryness).x);
                 Debug.Log("Fox is walking left is " + directionIsLeft);
                 PatchworkFlip(.3f);
             }

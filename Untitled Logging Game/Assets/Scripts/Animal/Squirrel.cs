@@ -7,7 +7,7 @@ namespace Animal
 
         public override void Update()
         {
-            Vector3 cameraPosition = Camera.main.transform.position;
+            Vector3 cameraPosition = camera.transform.position;
             Vector3 lookAtPosition = new Vector3(cameraPosition.x, transform.position.y, cameraPosition.y);
             transform.LookAt(lookAtPosition);
             
