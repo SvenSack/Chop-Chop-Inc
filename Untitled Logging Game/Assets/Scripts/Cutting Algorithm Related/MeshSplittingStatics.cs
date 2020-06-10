@@ -71,8 +71,6 @@ public static class MeshSplittingStatics
         Vector2 UVP0 = meshUVs[v0];
         Vector2 UVP1 = meshUVs[v1];
 
-        Vector2 UVLine = (UVP1 - UVP0).normalized;
-
         Vector3 lineToUse = objectSpaceV1 - objectSpaceV0;
 
         Vector3 P0 = objectSpaceV0;
@@ -82,11 +80,10 @@ public static class MeshSplittingStatics
         float t = (Vector3.Dot(A, inverseNormal) - Vector3.Dot(P0, inverseNormal)) / Vector3.Dot(P1, inverseNormal);
 
         intersection.intersectionPosition = P0 + P1 * t;
-        intersection.UV = UVP0 + UVLine * t;
+        intersection.UV = Vector2.Lerp(UVP0, UVP1, (t / Vector3.Magnitude(lineToUse)));
 
         return true;
     }
-
 
     /// <summary>
     /// 
@@ -122,5 +119,42 @@ public static class MeshSplittingStatics
         }
 
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="nonUniqueCollection"></param>
+    /// <returns></returns>
+    public static List<IntersectionQuery> GetUniqueIntersectionQueryCollection(List<IntersectionQuery> nonUniqueCollection)
+    {
+        List<IntersectionQuery> uniqueCollection = new List<IntersectionQuery>();
+
+        for (int i = 0; i < nonUniqueCollection.Count; i++)
+        {
+            bool hasSeenElement = false;
+
+            foreach (var vertex in uniqueCollection)
+            {
+
+                if (Vector3.Magnitude(nonUniqueCollection[i].intersectionPosition - vertex.intersectionPosition) < 0.001f)
+                {
+                    hasSeenElement = true;
+                    break;
+                }
+            }
+
+            if (!hasSeenElement)
+            {
+                uniqueCollection.Add(nonUniqueCollection[i]);
+            }
+
+        }
+
+        return uniqueCollection;
+    }
+
+
+
+
 
 }
