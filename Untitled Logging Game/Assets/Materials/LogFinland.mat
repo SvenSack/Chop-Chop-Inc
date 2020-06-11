@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4137541984464507189
+--- !u!114 &-8214383356948774211
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,38 +20,25 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BirchLeaf_Stylized_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: 725ae5cbb90f0fe439a4c2240e3e9dc2,
-    type: 3}
-  m_ShaderKeywords: BOOLEAN_9338859E_ON _ALPHATEST_ON _NORMALMAP
+  m_Name: LogFinland
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 1
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses:
-  - SHADOWCASTER
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2050
+  stringTagMap:
+    RenderType: Opaque
+  disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_35412953:
-        m_Texture: {fileID: 2800000, guid: 12dd95277b07ac840a2b5e53885b0e6c, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_B63BE1FE:
-        m_Texture: {fileID: 2800000, guid: 3af1cbc815326f149a8386a25f7f74a2, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_DB152443:
-        m_Texture: {fileID: 2800000, guid: 12dd95277b07ac840a2b5e53885b0e6c, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 12dd95277b07ac840a2b5e53885b0e6c, type: 3}
+        m_Texture: {fileID: 2800000, guid: b9c4cc4d1b3746b41b35bad3f335915d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 3af1cbc815326f149a8386a25f7f74a2, type: 3}
+        m_Texture: {fileID: 2800000, guid: e5b35aaa0e6c6d94c8e09079e5a3d7b5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -59,11 +46,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 12dd95277b07ac840a2b5e53885b0e6c, type: 3}
+        m_Texture: {fileID: 2800000, guid: b9c4cc4d1b3746b41b35bad3f335915d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f760695185f69ab4c8a8871468754bda, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -75,21 +62,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - BOOLEAN_9338859E: 1
-    - BOOLEAN_F897B26C: 0
-    - Vector1_164BF680: 0.3
-    - Vector1_8136081E: 1.2
-    - Vector1_843B530E: 0.05
-    - Vector1_8F2BFB71: 0
-    - Vector1_CBEECB0E: 0.5
-    - Vector1_EA285729: 0.21
-    - Vector1_EC255C71: 1.07
-    - _AlphaClip: 1
+    - _AlphaClip: 0
     - _Blend: 0
-    - _BumpScale: 0.47
-    - _Cull: 0
+    - _BumpScale: 1
+    - _Cull: 2
     - _Cutoff: 0.5
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -98,16 +76,15 @@ Material:
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
-    - _Surface: 1
+    - _SrcBlend: 1
+    - _Surface: 0
     - _WorkflowMode: 1
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
-    - Color_DBF5581F: {r: 0.50980395, g: 0.027450966, b: 0.14306606, a: 0.5019608}
-    - _BaseColor: {r: 0.688, g: 0.16490686, b: 0, a: 1}
-    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
