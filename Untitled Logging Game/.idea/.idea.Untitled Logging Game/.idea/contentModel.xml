@@ -11,6 +11,10 @@
           <e p="Plugins" t="Include">
             <e p="engine_build_info.txt" t="Include" />
             <e p="EULA.txt" t="Include" />
+            <e p="Substance.EditorHelper" t="Include">
+              <e p="Scripter.cs" t="Include" />
+              <e p="Substance.EditorHelper.asmdef" t="Include" />
+            </e>
             <e p="Substance.Platform" t="Include">
               <e p="NativeFunctions.cs" t="Include" />
               <e p="Substance.Platform.asmdef" t="Include" />
@@ -160,6 +164,7 @@
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
+      <e p="Substance.EditorHelper.csproj" t="IncludeRecursive" />
       <e p="Substance.Platform.csproj" t="IncludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />
       <e p="Untitled Logging Game.sln" t="IncludeFlat" />

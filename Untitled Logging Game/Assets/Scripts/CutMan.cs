@@ -579,6 +579,8 @@ public class CutMan : MonoBehaviour
         ParticleSystem newPart = newPartI.transform.GetChild(0).GetComponent<ParticleSystem>();
         int newPartIndex = target.leafParticleIndex;
         newPart.textureSheetAnimation.SetSprite(0,leafParticles[newPartIndex]);
+        var mainModule = newPart.main;
+        mainModule.startColor = leafColorValues[newPartIndex];
         if (leafScaleValues[newPartIndex] != 1)
         {
             var newPartMain = newPart.main;
@@ -636,9 +638,7 @@ public class CutMan : MonoBehaviour
                         newPartIndex = tree.GetComponent<CuttableTreeScript>().leafParticleIndex;
                         tempPart.textureSheetAnimation.SetSprite(0, leafParticles[newPartIndex]);
                         var mainModule = tempPart.main;
-                        var mainModuleStartColor = mainModule.startColor;
-                        mainModuleStartColor.mode = ParticleSystemGradientMode.Color;
-                        mainModuleStartColor.color = leafColorValues[newPartIndex];
+                        mainModule.startColor = leafColorValues[newPartIndex];
                         if (leafScaleValues[newPartIndex] != 1)
                         {
                             var tempPartMain = tempPart.main;
