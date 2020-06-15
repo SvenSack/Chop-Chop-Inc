@@ -37476,7 +37476,7 @@ Transform:
   m_GameObject: {fileID: 4347663246825956092}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.007, y: 0.007, z: 0.007}
+  m_LocalScale: {x: 0.010676401, y: 0.010676401, z: 0.010676401}
   m_Children:
   - {fileID: 1874831143772538511}
   - {fileID: 584453687619229504}
@@ -52825,7 +52825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7465681235376030702}
   m_Layer: 0
-  m_Name: Cant cut
+  m_Name: pine_noCut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52838,14 +52838,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5890765898305090045}
-  m_LocalRotation: {x: -0.039787807, y: -0.0007289557, z: 0.022791494, w: 0.9989479}
-  m_LocalPosition: {x: 1.54, y: -2.893, z: -23.33}
-  m_LocalScale: {x: 1.5926, y: 1.5926, z: 1.5926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 569957238653494182}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -4.557, y: -0.18800001, z: 2.621}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5897258624228260662
 GameObject:
   m_ObjectHideFlags: 0

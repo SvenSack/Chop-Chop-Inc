@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9ed6df47abeb645b6b9cc9b89eac95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCut: {fileID: 0}
   gRaycaster: {fileID: 0}
   eventSystem: {fileID: 0}
   marginOfError: 0.1
@@ -103,7 +102,7 @@ MonoBehaviour:
   cutTargetDistance: 10
   cutForce: 100
   forgivingness: 3
-  isInCombo: 0
+  chainsawOn: 0
   comboCount: 0
   comboText: {fileID: 0}
   cutDifficulty: 0.3
@@ -140,6 +139,15 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
+  regrowableTrees:
+  - {fileID: 5412590131771530841, guid: ce2ed3e07008c8c4ea033ca8d46cbfc0, type: 3}
+  - {fileID: 5508396425249414309, guid: 52c7b6dd3e8663b45948f3adeb717b86, type: 3}
+  - {fileID: 5890765898305090045, guid: 04cd08ed5e141be41b78ecc1e58e3019, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   leafParticles:
   - {fileID: 21300000, guid: 06039e3bb861d7548a3437f2e0ae9966, type: 3}
   - {fileID: 21300000, guid: 5c5c2d6c71c825b44964ea8d1ab8aa17, type: 3}

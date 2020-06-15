@@ -820,7 +820,7 @@ Transform:
   m_GameObject: {fileID: 1196730200779329780}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.13, y: -0.0000029958737, z: -0.09}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.030081999, y: 0.030081999, z: 0.030081999}
   m_Children:
   - {fileID: 3261068415384407511}
   - {fileID: 1888944699988986055}
@@ -2885,7 +2885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8803016122381315766}
   m_Layer: 0
-  m_Name: no cut
+  m_Name: spruce_noCut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2898,14 +2898,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5508396425249414309}
-  m_LocalRotation: {x: 0.03372578, y: -0.11472495, z: -0.04778978, w: 0.9916738}
-  m_LocalPosition: {x: -16.24, y: -3.13, z: -28.3}
-  m_LocalScale: {x: 3.029117, y: 3.029117, z: 3.029117}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3108968497785377198}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 3.206, y: -13.363001, z: -5.894}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5526731123334289416
 GameObject:
   m_ObjectHideFlags: 0

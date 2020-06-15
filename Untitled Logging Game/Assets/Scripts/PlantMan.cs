@@ -8,16 +8,18 @@ public class PlantMan : MonoBehaviour
     
     [SerializeField] float[] leafScaleValues = new []{1f,1f,1f,1f,1f,1f};
     [SerializeField] Color[] leafColorValues = new Color[8];
-    public Sprite[] leafParticles;
+    [SerializeField] private GameObject[] regrowableTrees = new GameObject[8];
+    public Sprite[] leafParticles = new Sprite[8];
     
     public GameObject nutPrefab;
-    public Sprite[] nutSprites;
+    public Sprite[] nutSprites = new Sprite[8];
     public GameObject treeShakeParticles;
     private int groundMask;
     private float shakeTimer;
+
+    public List<Transform> currentTreeSpots;
     
-    
-    [SerializeField] GameObject fallParticleObject = null;
+    [SerializeField] GameObject fallParticleObject;
 
     private CutMan cutMan;
     private Camera mainCam;
@@ -36,6 +38,15 @@ public class PlantMan : MonoBehaviour
     {
         if (shakeTimer > 0)
             shakeTimer -= Time.deltaTime;
+    }
+
+    public void plantSeed(int treeIndex)
+    {
+        GameObject newTree = Instantiate(regrowableTrees[treeIndex], currentTreeSpots[0]);
+        newTree.transform.localScale = new Vector3(.1f,.1f,.1f);
+        newTree.transform.LeanScale(new Vector3(.4f, .4f, .4f), 2f);
+        // spawn sound and particles
+        currentTreeSpots.RemoveAt(0);
     }
 
     public void TreeFell(GameObject newTreePiece, CuttableTreeScript target)
@@ -58,7 +69,7 @@ public class PlantMan : MonoBehaviour
     
     public IEnumerator SeedSpawn(Transform tree, GraphicRaycaster gRaycaster)
     {
-        if (cutMan.currentTargetIndices.Contains(int.Parse(tree.parent.name)) && shakeTimer <= 0)
+        if (cutMan.currentTargetIndices.Contains(int.Parse(tree.parent.name)) && shakeTimer <= 0 && currentTreeSpots.Count > 0)
         {
             shakeTimer = 1;
             Transform[] leaves = tree.gameObject.GetComponentsInChildren<Transform>();

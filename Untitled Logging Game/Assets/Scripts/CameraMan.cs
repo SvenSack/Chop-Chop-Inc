@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -11,20 +12,26 @@ public class CameraMan : MonoBehaviour
     [SerializeField] private List<int> treesToCut2;
     [SerializeField] private List<int> treesToCut3;
     public List<int>[] treesToCutEach;
+    [SerializeField] private List<Transform> treesToPlant0;
+    [SerializeField] private List<Transform> treesToPlant1;
+    [SerializeField] private List<Transform> treesToPlant2;
+    [SerializeField] private List<Transform> treesToPlant3;
+    public List<Transform>[] treesToPlantEach;
     private int currentLocation = -1;
     public Camera mainCam;
     public float zoomTime = 5f;
     private CutMan cutMan;
+    private PlantMan plantMan;
 
     void Start()
     {
         Profiler.SetAreaEnabled(ProfilerArea.UIDetails, false);
         Profiler.SetAreaEnabled(ProfilerArea.UI, false);
-        //Profiler.SetAreaActive(ProfilerArea.UIDetails, false)
-        //Profiler.SetAreaActive(ProfilerArea.UIDetails, false)
         mainCam = Camera.main;
         cutMan = FindObjectOfType<CutMan>();
+        plantMan = FindObjectOfType<PlantMan>();
         treesToCutEach = new[] {treesToCut0, treesToCut1, treesToCut2, treesToCut3};
+        treesToPlantEach = new[] {treesToPlant0, treesToPlant1, treesToPlant2, treesToPlant3};
     }
 
     public void MoveOn()
@@ -43,5 +50,6 @@ public class CameraMan : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         cutMan.currentTargetIndices = treesToCutEach[currentLocation];
+        plantMan.currentTreeSpots = plantMan.currentTreeSpots.Union(treesToPlantEach[currentLocation]).ToList<Transform>();
     }
 }
