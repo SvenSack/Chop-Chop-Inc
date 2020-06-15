@@ -128,6 +128,13 @@ public class CutMan : MonoBehaviour
 
         if (isInCombo)
         {
+            
+            if (!cutFailing)
+            {
+  
+                StartCoroutine(cutStopper);
+            }
+            
             if (Input.GetMouseButtonUp(0))
             {
                 Debug.Log("Stopped cutting because click lift");
@@ -155,26 +162,18 @@ public class CutMan : MonoBehaviour
                                 {
                                     currentCut = targO;
                                     currentTarget = targ;
-                                    cutFailing = false;
                                     StartCut(targO);
                                 }
                                 else
                                 {
                                     currentCut = targO;
                                     currentTarget = targ;
-                                    cutFailing = false;
                                 }
                             }
                             hit = true;
                         }
                     }
                 }
-                if (!hit && !cutFailing)
-                {
-  
-                    StartCoroutine(cutStopper);
-                }
-            
             }
         }
         
@@ -365,6 +364,7 @@ public class CutMan : MonoBehaviour
         Debug.Log("cutNormal " + cutNormal.ToString("F2"));
         Debug.Log("cutForce " + cutForce);
         GameObject newTree = target.CutAt(targetLocation, cutNormal, cutForce);
+        cutFailing = false;
         return newTree;
     }
 
@@ -564,12 +564,17 @@ public class CutMan : MonoBehaviour
 
     IEnumerator InitiateStopCut()
     {
+        Debug.Log("query for stop");
         cutFailing = true;
         yield return new WaitForSeconds(forgivingness);
         if (cutFailing)
         {
-            
+            Debug.Log("query assessed true");
             StopCut();
+        }
+        else
+        {
+            Debug.Log("query assessed false");
         }
     }
 
@@ -604,7 +609,7 @@ public class CutMan : MonoBehaviour
         {
             cutDifficulty += .05f;
             maxRot += +1;
-            forgivingness -= .1f;
+            forgivingness = forgivingness*.95f;
         }
     }
 

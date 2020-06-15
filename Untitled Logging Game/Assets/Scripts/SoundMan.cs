@@ -93,8 +93,11 @@ public class SoundMan : MonoBehaviour
     IEnumerator CueCutLoop(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        if(chainsawSoundSource.clip == chainsaw[0])
+        if (chainsawSoundSource.clip == chainsaw[0])
+        {
             SwapChainsawSound(chainsaw[1], true, true);
+            chainsawSoundSource.time = 0;
+        }
     }
 
     public AudioSource TreeFall(GameObject tree)
