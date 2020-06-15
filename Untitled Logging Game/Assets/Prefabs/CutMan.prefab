@@ -61,9 +61,23 @@ MonoBehaviour:
   - 0.01
   - 1
   - 0.01
+  leafColorValues:
+  - {r: 0.50980395, g: 0.02745098, b: 0.14117648, a: 1}
+  - {r: 0.19215687, g: 0.23529412, b: 0.03529412, a: 1}
+  - {r: 0.14509805, g: 0.21568628, b: 0.047058824, a: 1}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
   leafParticles:
   - {fileID: 21300000, guid: 06039e3bb861d7548a3437f2e0ae9966, type: 3}
   - {fileID: 21300000, guid: 5c5c2d6c71c825b44964ea8d1ab8aa17, type: 3}
+  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
+  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
+  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
+  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
+  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
   - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
   nutPrefab: {fileID: 1012406978264307292, guid: 3844cd77728ceb54fa6a0ea91a56418f,
     type: 3}
@@ -73,6 +87,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2d6f14fb275da864fbda5e9465a11fb4, type: 3}
   - {fileID: 21300000, guid: 4ab789b360b756d40bd34c74ce2af7b9, type: 3}
   - {fileID: 21300000, guid: dc5ab7f8350d3104e9981fd09b6e20cf, type: 3}
+  - {fileID: 21300000, guid: f0b2310c176c98546b81b1a4c282d1ff, type: 3}
+  - {fileID: 21300000, guid: f0b2310c176c98546b81b1a4c282d1ff, type: 3}
   - {fileID: 21300000, guid: f0b2310c176c98546b81b1a4c282d1ff, type: 3}
   treeShakeParticles: {fileID: 4357241419668975948, guid: 5e7def1b7c059b2428b6fba5ebd24b7b,
     type: 3}

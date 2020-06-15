@@ -37,6 +37,7 @@ public class CutMan : MonoBehaviour
     private UIMan uiMan;
 
     [SerializeField] float[] leafScaleValues = new []{1f,1f,1f,1f,1f,1f};
+    [SerializeField] Color[] leafColorValues = new Color[8];
     public Sprite[] leafParticles;
 
     public GameObject nutPrefab;
@@ -578,6 +579,8 @@ public class CutMan : MonoBehaviour
         ParticleSystem newPart = newPartI.transform.GetChild(0).GetComponent<ParticleSystem>();
         int newPartIndex = target.leafParticleIndex;
         newPart.textureSheetAnimation.SetSprite(0,leafParticles[newPartIndex]);
+        var mainModule = newPart.main;
+        mainModule.startColor = leafColorValues[newPartIndex];
         if (leafScaleValues[newPartIndex] != 1)
         {
             var newPartMain = newPart.main;
@@ -607,50 +610,59 @@ public class CutMan : MonoBehaviour
 
     IEnumerator SeedSpawn(Transform tree)
     {
-        Transform[] leaves = tree.gameObject.GetComponentsInChildren<Transform>();
-        if (leaves.Length != 1)
-        {
-            // Debug.Log(leaves.Length);
-            float currentZ = tree.rotation.z;
-            tree.LeanRotateZ(currentZ + 2, .4f);
-            yield return new WaitForSeconds(.4f);
-            Transform nutLocation = leaves[UnityEngine.Random.Range(0, leaves.Length)];
-            Vector3 nutPosition = nutLocation.position;
-            Transform[] locations = new []
+        if (currentTargetIndices.Contains(int.Parse(tree.parent.name)))
+        { 
+            Transform[] leaves = tree.gameObject.GetComponentsInChildren<Transform>();
+            if (leaves.Length != 1)
             {
-                nutLocation, leaves[UnityEngine.Random.Range(0,leaves.Length)], leaves[UnityEngine.Random.Range(0,leaves.Length)], leaves[UnityEngine.Random.Range(0,leaves.Length)], leaves[UnityEngine.Random.Range(0,leaves.Length)]
-                    , leaves[UnityEngine.Random.Range(0,leaves.Length)], leaves[UnityEngine.Random.Range(0,leaves.Length)]};
-            int newPartIndex = 0;
-            foreach (var loc in locations)
-            {
-                if (loc.gameObject.CompareTag("Leaves"))
+                // Debug.Log(leaves.Length);
+                float currentZ = tree.rotation.z;
+                tree.LeanRotateZ(currentZ + 2, .4f);
+                yield return new WaitForSeconds(.4f);
+                Transform nutLocation = leaves[Random.Range(0, leaves.Length)];
+                Vector3 nutPosition = nutLocation.position;
+                Transform[] locations = new[]
                 {
-                    GameObject tempObj = Instantiate(treeShakeParticles, loc);
-                    ParticleSystem tempPart = tempObj.GetComponentInChildren<ParticleSystem>();
-                    newPartIndex = tree.GetComponent<CuttableTreeScript>().leafParticleIndex;
-                    tempPart.textureSheetAnimation.SetSprite(0,leafParticles[newPartIndex]);
-                    if (leafScaleValues[newPartIndex] != 1)
+                    nutLocation, leaves[Random.Range(0, leaves.Length)],
+                    leaves[Random.Range(0, leaves.Length)], leaves[Random.Range(0, leaves.Length)],
+                    leaves[Random.Range(0, leaves.Length)], leaves[Random.Range(0, leaves.Length)],
+                    leaves[Random.Range(0, leaves.Length)]
+                };
+                int newPartIndex = 0;
+                foreach (var loc in locations)
+                {
+                    if (loc.gameObject.CompareTag("Leaves"))
                     {
-                        var tempPartMain = tempPart.main;
-                        tempPartMain.startSizeMultiplier = leafScaleValues[newPartIndex];
+                        GameObject tempObj = Instantiate(treeShakeParticles, loc);
+                        ParticleSystem tempPart = tempObj.GetComponentInChildren<ParticleSystem>();
+                        newPartIndex = tree.GetComponent<CuttableTreeScript>().leafParticleIndex;
+                        tempPart.textureSheetAnimation.SetSprite(0, leafParticles[newPartIndex]);
+                        var mainModule = tempPart.main;
+                        mainModule.startColor = leafColorValues[newPartIndex];
+                        if (leafScaleValues[newPartIndex] != 1)
+                        {
+                            var tempPartMain = tempPart.main;
+                            tempPartMain.startSizeMultiplier = leafScaleValues[newPartIndex];
+                        }
+
+                        var tempPartShape = tempPart.shape;
+                        tempPartShape.mesh = loc.gameObject.GetComponent<MeshFilter>().mesh;
+                        tempPart.Play();
                     }
-                    var tempPartShape = tempPart.shape;
-                    tempPartShape.mesh = loc.gameObject.GetComponent<MeshFilter>().mesh;
-                    tempPart.Play();
                 }
+
+                GameObject newNut = Instantiate(nutPrefab, gRaycaster.transform);
+                newNut.transform.position = mainCam.WorldToScreenPoint(nutPosition);
+                NutMover newNutMove = newNut.GetComponent<NutMover>();
+                newNutMove.treeIndex = newPartIndex;
+                newNut.GetComponent<Image>().sprite = nutSprites[newPartIndex];
+                Physics.Raycast(nutPosition, Vector3.down, out var hit, 1000, groundMask);
+                // Debug.DrawLine(nutPosition,hit.point,Color.green, 1000);
+                newNutMove.floorHeight = mainCam.WorldToScreenPoint(hit.point).y;
+                tree.LeanRotateZ(currentZ - 4, .3f);
+                yield return new WaitForSeconds(.3f);
+                tree.LeanRotateZ(currentZ, .2f);
             }
-            GameObject newNut =  Instantiate(nutPrefab, gRaycaster.transform);
-            newNut.transform.position = mainCam.WorldToScreenPoint(nutPosition);
-            NutMover newNutMove = newNut.GetComponent<NutMover>();
-            newNutMove.treeIndex = newPartIndex;
-            newNut.GetComponent<Image>().sprite = nutSprites[newPartIndex];
-            RaycastHit hit;
-            Physics.Raycast(nutPosition, Vector3.down, out hit, 100, groundMask);
-            // Debug.DrawRay(nutPosition,Vector3.down*10,Color.green, 5);
-            newNutMove.floorHeight = mainCam.WorldToScreenPoint(hit.point).y;
-            tree.LeanRotateZ(currentZ - 4, .3f);
-            yield return new WaitForSeconds(.3f);
-            tree.LeanRotateZ(currentZ, .2f); 
         }
     }
 
