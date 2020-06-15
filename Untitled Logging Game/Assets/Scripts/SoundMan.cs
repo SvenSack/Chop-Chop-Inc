@@ -28,15 +28,12 @@ public class SoundMan : MonoBehaviour
 
     public void StartCut()
     {
-        if(chainsawSoundSource == null)
-        {
-            chainsawSoundSource = GenerateAudio(chainsaw[0]);
-            chainsawSoundObject = chainsawSoundSource.gameObject;
-            chainsawSoundSource.Play();
-            chainsawSoundSource.spatialBlend = .5f;
-            chainsawSoundSource.GetComponent<AudioCleanup>().enabled = false;
-            cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length-.01f));
-        }
+        chainsawSoundSource = GenerateAudio(chainsaw[0]);
+        chainsawSoundObject = chainsawSoundSource.gameObject;
+        chainsawSoundSource.Play();
+        chainsawSoundSource.spatialBlend = .5f;
+        chainsawSoundSource.GetComponent<AudioCleanup>().enabled = false;
+        cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length-.01f));
     }
 
     public void ToggleWood()

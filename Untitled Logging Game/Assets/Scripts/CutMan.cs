@@ -47,7 +47,6 @@ public class CutMan : MonoBehaviour
     private float shakeTimer;
 
     public float forgivingness = 1f;
-    private IEnumerator cutStopper;
     private bool cutFailing;
     
     public bool isInCombo;
@@ -86,7 +85,6 @@ public class CutMan : MonoBehaviour
         }
 
         mainCam = Camera.main;
-        cutStopper = InitiateStopCut();
     }
 
     private void Start()
@@ -131,15 +129,16 @@ public class CutMan : MonoBehaviour
             
             if (!cutFailing)
             {
-  
-                StartCoroutine(cutStopper);
+                Debug.Log("I think its failing");
+                StartCoroutine("InitiateStopCut");
             }
             
             if (Input.GetMouseButtonUp(0))
             {
                 Debug.Log("Stopped cutting because click lift");
                 StopCut();
-                StopCoroutine(cutStopper);
+                StopCoroutine("InitiateStopCut");
+                cutFailing = false;
             }
             else if(Input.GetMouseButton(0))
             {
@@ -201,8 +200,8 @@ public class CutMan : MonoBehaviour
                     }
                     cutParticleInstance.transform.position = hit.point;
                     soundMan.chainsawSoundObject.transform.position = hit.point;
-                    Debug.Log("cutStart set at time " + Time.frameCount);
-                    Debug.Log("cutStart set at value " + Input.mousePosition);
+                    // Debug.Log("cutStart set at time " + Time.frameCount);
+                    // Debug.Log("cutStart set at value " + Input.mousePosition);
                     cutStart = Input.mousePosition;
                     isCutStartSet = true;
 
@@ -256,7 +255,7 @@ public class CutMan : MonoBehaviour
 
                         Destroy(currentCut);
                         ComboCut();
-                        StartCoroutine(cutStopper);
+                        StartCoroutine("InitiateStopCut");
                         isCutting = false;
                         foreach (var part in cutParticleInstance.GetComponents<ParticleSystem>())
                         {
@@ -322,7 +321,7 @@ public class CutMan : MonoBehaviour
                         }
                         Destroy(currentCut);
                         ComboCut();
-                        StartCoroutine(cutStopper);
+                        StartCoroutine("InitiateStopCut");
                         isCutting = false;
                         foreach (var part in cutParticleInstance.GetComponents<ParticleSystem>())
                         {
@@ -548,7 +547,10 @@ public class CutMan : MonoBehaviour
 
     private void StopCut()
     {
-        soundMan.StopCut();
+        if (soundMan.chainsawSoundObject != null)
+        {
+            soundMan.StopCut();
+        }
         if(cutParticleInstance != null)
             foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
             {
@@ -576,6 +578,8 @@ public class CutMan : MonoBehaviour
         {
             Debug.Log("query assessed false");
         }
+
+        cutFailing = false;
     }
 
     private void FellTree(GameObject newTreePiece, CuttableTreeScript target)
@@ -676,7 +680,8 @@ public class CutMan : MonoBehaviour
         yield return new WaitForSeconds(cutDelay);
         if (Input.GetMouseButton(0))
         {
-            StopCoroutine(cutStopper);
+            StopCoroutine("InitiateStopCut");
+            cutFailing = false;
             soundMan.StartCut();
             soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
             isInCombo = true;

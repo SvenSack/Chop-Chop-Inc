@@ -51,12 +51,58 @@ MonoBehaviour:
     type: 3}
   fallParticleObject: {fileID: 6611483207489948961, guid: f7c4759f4dac49e4c99c5d2588a5cd55,
     type: 3}
-  trees: []
+  trees:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   treeHps: 
   cutTargetPrefab: {fileID: 1814081134978495635, guid: cadd5663b54c03848b64d15b8341b423,
     type: 3}
-  cutTargetDistance: 60
-  cutForce: 130
+  cutTargetDistance: 10
+  cutForce: 100
   leafScaleValues:
   - 0.01
   - 1
@@ -96,9 +142,9 @@ MonoBehaviour:
   isInCombo: 0
   comboCount: 0
   comboText: {fileID: 0}
-  cutDifficulty: 0.443
-  maxRot: 17.5
-  multiCam: 0
-  currentTargetIndices: 
-  debugMode: 0
-  cutDelay: 0.5
+  cutDifficulty: 0.3
+  maxRot: 15
+  multiCam: 1
+  currentTargetIndices: 0000000002000000
+  debugMode: 1
+  cutDelay: 0.1

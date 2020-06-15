@@ -278,16 +278,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
         type: 3}
-      propertyPath: currentTargetIndices.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: trees.Array.size
-      value: 46
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
       propertyPath: gRaycaster
       value: 
       objectReference: {fileID: 593527777}
@@ -296,46 +286,6 @@ PrefabInstance:
       propertyPath: eventSystem
       value: 
       objectReference: {fileID: 997470339}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: comboText
-      value: 
-      objectReference: {fileID: 1692674470}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: cutDifficulty
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: maxRot
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: cutTargetDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: forgivingness
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: cutForce
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: multiCam
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: currentTargetIndices.Array.data[1]
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
         type: 3}
       propertyPath: trees.Array.data[0]
@@ -568,69 +518,9 @@ PrefabInstance:
       objectReference: {fileID: 491360370}
     - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
         type: 3}
-      propertyPath: debugMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: leafParticles.Array.data[0]
+      propertyPath: comboText
       value: 
-      objectReference: {fileID: 21300000, guid: 06039e3bb861d7548a3437f2e0ae9966,
-        type: 3}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: leafParticles.Array.data[2]
-      value: 
-      objectReference: {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932,
-        type: 3}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: leafParticles.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: 5c5c2d6c71c825b44964ea8d1ab8aa17,
-        type: 3}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: nutPrefab
-      value: 
-      objectReference: {fileID: 1012406978264307292, guid: 3844cd77728ceb54fa6a0ea91a56418f,
-        type: 3}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: nutSprites.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 1d5986465c412a541b71910884c2c9cd,
-        type: 3}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: nutSprites.Array.data[2]
-      value: 
-      objectReference: {fileID: 21300000, guid: 2d6f14fb275da864fbda5e9465a11fb4,
-        type: 3}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: nutSprites.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: 57f7a4de88226244bbb4f798c4d5b8ca,
-        type: 3}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: nutSprites.Array.data[3]
-      value: 
-      objectReference: {fileID: 21300000, guid: 4ab789b360b756d40bd34c74ce2af7b9,
-        type: 3}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: nutSprites.Array.data[4]
-      value: 
-      objectReference: {fileID: 21300000, guid: dc5ab7f8350d3104e9981fd09b6e20cf,
-        type: 3}
-    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
-        type: 3}
-      propertyPath: treeShakeParticles
-      value: 
-      objectReference: {fileID: 4357241419668975948, guid: 5e7def1b7c059b2428b6fba5ebd24b7b,
-        type: 3}
+      objectReference: {fileID: 1692674470}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebcc37a588a7f4646be6722f804cdf7c, type: 3}
 --- !u!114 &43398616 stripped
