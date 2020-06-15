@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_WaterShader
+  m_Name: WaterShader_Mat
   m_Shader: {fileID: -6465566751694194690, guid: 4ec4d3607a3eb8f43874e3532d5646b7,
     type: 3}
   m_ShaderKeywords: 
@@ -29,6 +29,7 @@ Material:
     - Vector1_7486896E: 2
     - Vector1_8A945C8B: 0.71
     - Vector1_925C2E4B: 0.02
+    - Vector1_C3EE46D6: 3
     - Vector1_E6F1F81B: 1
     - Vector1_EC4FA05A: 0.1
     m_Colors:
