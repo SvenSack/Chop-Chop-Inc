@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5762498314335207108}
   - component: {fileID: 5762498314335207111}
+  - component: {fileID: 1950965387885546965}
   m_Layer: 0
   m_Name: CutMan
   m_TagString: Untagged
@@ -48,8 +49,6 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   marginOfError: 0.1
   cutParticleObject: {fileID: 6611483207489948961, guid: 892dc96521dc41640b9da286b14e059a,
-    type: 3}
-  fallParticleObject: {fileID: 6611483207489948961, guid: f7c4759f4dac49e4c99c5d2588a5cd55,
     type: 3}
   trees:
   - {fileID: 0}
@@ -103,41 +102,6 @@ MonoBehaviour:
     type: 3}
   cutTargetDistance: 10
   cutForce: 100
-  leafScaleValues:
-  - 0.01
-  - 1
-  - 0.01
-  leafColorValues:
-  - {r: 0.50980395, g: 0.02745098, b: 0.14117648, a: 1}
-  - {r: 0.19215687, g: 0.23529412, b: 0.03529412, a: 1}
-  - {r: 0.14509805, g: 0.21568628, b: 0.047058824, a: 1}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  leafParticles:
-  - {fileID: 21300000, guid: 06039e3bb861d7548a3437f2e0ae9966, type: 3}
-  - {fileID: 21300000, guid: 5c5c2d6c71c825b44964ea8d1ab8aa17, type: 3}
-  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
-  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
-  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
-  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
-  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
-  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
-  nutPrefab: {fileID: 1012406978264307292, guid: 3844cd77728ceb54fa6a0ea91a56418f,
-    type: 3}
-  nutSprites:
-  - {fileID: 21300000, guid: 1d5986465c412a541b71910884c2c9cd, type: 3}
-  - {fileID: 21300000, guid: 57f7a4de88226244bbb4f798c4d5b8ca, type: 3}
-  - {fileID: 21300000, guid: 2d6f14fb275da864fbda5e9465a11fb4, type: 3}
-  - {fileID: 21300000, guid: 4ab789b360b756d40bd34c74ce2af7b9, type: 3}
-  - {fileID: 21300000, guid: dc5ab7f8350d3104e9981fd09b6e20cf, type: 3}
-  - {fileID: 21300000, guid: f0b2310c176c98546b81b1a4c282d1ff, type: 3}
-  - {fileID: 21300000, guid: f0b2310c176c98546b81b1a4c282d1ff, type: 3}
-  - {fileID: 21300000, guid: f0b2310c176c98546b81b1a4c282d1ff, type: 3}
-  treeShakeParticles: {fileID: 4357241419668975948, guid: 5e7def1b7c059b2428b6fba5ebd24b7b,
-    type: 3}
   forgivingness: 3
   isInCombo: 0
   comboCount: 0
@@ -148,3 +112,55 @@ MonoBehaviour:
   currentTargetIndices: 0000000002000000
   debugMode: 1
   cutDelay: 0.1
+--- !u!114 &1950965387885546965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5762498314335207110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd2aef54ef716614cb8806ad4cc1afc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leafScaleValues:
+  - 0.01
+  - 1
+  - 0.01
+  - 1
+  - 1
+  - 1
+  leafColorValues:
+  - {r: 0.50980395, g: 0.027450982, b: 0.14117648, a: 1}
+  - {r: 0.19215688, g: 0.23529413, b: 0.03529412, a: 1}
+  - {r: 0.14509805, g: 0.21568629, b: 0.04705883, a: 1}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  leafParticles:
+  - {fileID: 21300000, guid: 06039e3bb861d7548a3437f2e0ae9966, type: 3}
+  - {fileID: 21300000, guid: 5c5c2d6c71c825b44964ea8d1ab8aa17, type: 3}
+  - {fileID: 21300000, guid: 046e01fb827253548bcb644efe7cc932, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  nutPrefab: {fileID: 1012406978264307292, guid: 3844cd77728ceb54fa6a0ea91a56418f,
+    type: 3}
+  nutSprites:
+  - {fileID: 21300000, guid: 1d5986465c412a541b71910884c2c9cd, type: 3}
+  - {fileID: 21300000, guid: 57f7a4de88226244bbb4f798c4d5b8ca, type: 3}
+  - {fileID: 21300000, guid: 2d6f14fb275da864fbda5e9465a11fb4, type: 3}
+  - {fileID: 21300000, guid: 4ab789b360b756d40bd34c74ce2af7b9, type: 3}
+  - {fileID: 21300000, guid: dc5ab7f8350d3104e9981fd09b6e20cf, type: 3}
+  - {fileID: 21300000, guid: f0b2310c176c98546b81b1a4c282d1ff, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  treeShakeParticles: {fileID: 4357241419668975948, guid: 5e7def1b7c059b2428b6fba5ebd24b7b,
+    type: 3}
+  fallParticleObject: {fileID: 6611483207489948961, guid: f7c4759f4dac49e4c99c5d2588a5cd55,
+    type: 3}

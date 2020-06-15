@@ -28,19 +28,26 @@ public class SoundMan : MonoBehaviour
 
     public void StartCut()
     {
-        chainsawSoundSource = GenerateAudio(chainsaw[0]);
-        chainsawSoundObject = chainsawSoundSource.gameObject;
-        chainsawSoundSource.Play();
-        chainsawSoundSource.spatialBlend = .5f;
+        if (chainsawSoundSource == null)
+        {
+            chainsawSoundSource = GenerateAudio(chainsaw[0]);
+            chainsawSoundObject = chainsawSoundSource.gameObject;
+            chainsawSoundSource.Play();
+            chainsawSoundSource.spatialBlend = .5f;
+            cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length-.01f));
+        }
+        else
+        {
+            SwapChainsawSound(chainsaw[1], false, true, true);
+        }
         chainsawSoundSource.GetComponent<AudioCleanup>().enabled = false;
-        cueCutLoop = StartCoroutine(CueCutLoop(chainsawSoundSource.clip.length-.01f));
     }
 
     public void ToggleWood()
     {
         //if(chainsaw[3] != null && chainsaw[1] != null && chainsawSoundSource.clip != null)
         //{
-            SwapChainsawSound(chainsawSoundSource.clip != chainsaw[3] ? chainsaw[3] : chainsaw[1], true, true);
+            SwapChainsawSound(chainsawSoundSource.clip != chainsaw[3] ? chainsaw[3] : chainsaw[1], true, true, false);
         //}
         //else
         //{
@@ -54,13 +61,13 @@ public class SoundMan : MonoBehaviour
         Debug.Log("stopped cut sound");
         if (chainsawSoundSource.clip != chainsaw[0])
         {
-            SwapChainsawSound(chainsaw[2], false, true);
+            SwapChainsawSound(chainsaw[2], false, true, true);
             chainsawSoundSource.GetComponent<AudioCleanup>().enabled = true;
         }
         else
         {
                 StopCoroutine(cueCutLoop);
-                SwapChainsawSound(chainsaw[2], false, true);
+                SwapChainsawSound(chainsaw[2], false, true, true);
                 chainsawSoundSource.GetComponent<AudioCleanup>().enabled = true;
         }
     }
@@ -73,7 +80,7 @@ public class SoundMan : MonoBehaviour
         return ret;
     }
 
-    private void SwapChainsawSound(AudioClip newSound, bool looping, bool spatial)
+    private void SwapChainsawSound(AudioClip newSound, bool looping, bool spatial, bool reset)
     {
         chainsawSoundSource = GenerateAudio(newSound);
         Vector3 temp = chainsawSoundObject.transform.position;
@@ -85,6 +92,8 @@ public class SoundMan : MonoBehaviour
         if (spatial)
             chainsawSoundSource.spatialBlend = .5f;
         chainsawSoundSource.Play();
+        if (reset)
+            chainsawSoundSource.time = 0;
     }
 
     IEnumerator CueCutLoop(float waitTime)
@@ -92,8 +101,7 @@ public class SoundMan : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         if (chainsawSoundSource.clip == chainsaw[0])
         {
-            SwapChainsawSound(chainsaw[1], true, true);
-            chainsawSoundSource.time = 0;
+            SwapChainsawSound(chainsaw[1], true, true, true);
         }
     }
 
