@@ -44,7 +44,9 @@
         <e p="Scripts" t="Include">
           <e p="Animal" t="Include">
             <e p="AnimalSprite.cs" t="Include" />
+            <e p="Capybara.cs" t="Include" />
             <e p="Fox.cs" t="Include" />
+            <e p="Maccaw.cs" t="Include" />
             <e p="Squirrel.cs" t="Include" />
           </e>
           <e p="AudioCleanup.cs" t="Include" />
@@ -70,8 +72,13 @@
             <e p="PlayerScoreData.cs" t="Include" />
           </e>
           <e p="KeyboardMan.cs" t="Include" />
+          <e p="MapButtonGlow.cs" t="Include" />
           <e p="MapZoomIn.cs" t="Include" />
           <e p="NutMover.cs" t="Include" />
+          <e p="ObjectPlacer" t="Include">
+            <e p="GameObjectBrush.cs" t="Include" />
+            <e p="GameObjectBrushEditor.cs" t="Include" />
+          </e>
           <e p="ObjectPlacerEditor.cs" t="Include" />
           <e p="Optimizations" t="Include">
             <e p="faceToPrimitiveMeshJob.cs" t="Include" />
@@ -88,6 +95,7 @@
           <e p="ScoreboardSceneManager.cs" t="Include" />
           <e p="SoundMan.cs" t="Include" />
           <e p="TreeFallParticle.cs" t="Include" />
+          <e p="TutorialMan.cs" t="Include" />
           <e p="UIMan.cs" t="Include" />
           <e p="UIStuff" t="Include">
             <e p="TextInstance.cs" t="Include" />
