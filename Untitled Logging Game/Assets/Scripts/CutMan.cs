@@ -346,6 +346,7 @@ public class CutMan : MonoBehaviour
         currentCut = null;
         isCutting = false;
         chainsawOn = false;
+        comboText.text = comboText.text.Replace((comboCount) + "x", 0 + "x");
         comboCount = 0;
         comboText.fontSize = 0;
         trailMan.GetComponent<TrailRenderer>().emitting = false;

@@ -18,6 +18,7 @@ namespace Animal
         [HideInInspector] public Transform spriteTrans;
         [HideInInspector] public bool isTurning;
         [SerializeField] public float turnTime = 2f;
+        public bool waiting = true;
 
         protected Camera camera;
 
@@ -42,6 +43,7 @@ namespace Animal
             Vector3 lookAtPosition = new Vector3(cameraPosition.x, transform.position.y, cameraPosition.y);
 
             transform.LookAt(lookAtPosition);
+            waiting = false;
         }
         
         public void PerformMotion()

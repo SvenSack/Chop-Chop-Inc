@@ -24,6 +24,7 @@ MonoBehaviour:
   spriteTrans: {fileID: 0}
   isTurning: 0
   turnTime: 2
+  waiting: 1
   tireTimer: 5
 --- !u!1001 &8543628675180478372
 PrefabInstance:
@@ -51,37 +52,37 @@ PrefabInstance:
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.012406
+      value: 215.6
       objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.8
+      value: 5.335
       objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.486948
+      value: 436.27
       objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.02365544
       objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9997202
       objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
@@ -96,12 +97,27 @@ PrefabInstance:
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 2.7110002
       objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6.72491
+      objectReference: {fileID: 0}
+    - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6.72491
+      objectReference: {fileID: 0}
+    - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 6.72491
       objectReference: {fileID: 0}
     - target: {fileID: 4477444528162151571, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
