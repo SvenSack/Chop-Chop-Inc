@@ -153,16 +153,16 @@ namespace Substance.Platform
             [DllImport("kernel32.dll", SetLastError = true)]
             static extern bool FreeLibrary(IntPtr hModule);
 
-            [DllImport("libdl.dylib")]
+            [DllImport("libdl")]
             protected static extern IntPtr dlopen(string filename, int flags);
 
-            [DllImport("libdl.dylib")]
+            [DllImport("libdl")]
             protected static extern IntPtr dlsym(IntPtr handle, string symbol);
 
-            [DllImport("libdl.dylib")]
+            [DllImport("libdl")]
             protected static extern IntPtr dlerror();
 
-            [DllImport("libdl.dylib")]
+            [DllImport("libdl")]
             protected static extern int dlclose(IntPtr handle);
 
             internal static IntPtr DllHandle = IntPtr.Zero;
@@ -184,13 +184,23 @@ namespace Substance.Platform
                     if (IsWindows())
                     {
                         LibDestination = Path.Combine(dataPath, "Plugins/Substance.Engine.dll");
-
                         DllHandle = LoadLibrary(LibDestination);
+
+                        if (DllHandle == IntPtr.Zero)
+                        {
+                            // Unity added the subfolder 'x86_64' in Unity2019.3.9f1 & later versions...
+                            LibDestination = Path.Combine(dataPath, "Plugins/x86_64/Substance.Engine.dll");
+                            DllHandle = LoadLibrary(LibDestination);
+                        }
                     }
                     else if (IsMac())
                     {
                         LibDestination = Path.Combine(dataPath, "Plugins/Substance.Engine.bundle/Contents/MacOS/Substance.Engine");
-
+                        DllHandle = dlopen(LibDestination, 3);
+                    }
+                    else if (IsLinux())
+                    {
+                        LibDestination = Path.Combine(dataPath, "Plugins/libSubstance.Engine.so");
                         DllHandle = dlopen(LibDestination, 3);
                     }
 
@@ -209,7 +219,7 @@ namespace Substance.Platform
                     {
                         FreeLibrary(DllHandle);
                     }
-                    else if (IsMac())
+                    else if (IsMac() || IsLinux())
                     {
                         dlclose(DllHandle);
                     }
@@ -228,7 +238,7 @@ namespace Substance.Platform
                 {
                     ptr = GetProcAddress(DllHandle, funcname);
                 }
-                else if (IsMac())
+                else if (IsMac() || IsLinux())
                 {
                     ptr = dlsym(DllHandle, funcname);
                 }
@@ -261,9 +271,9 @@ namespace Substance.Platform
         }
 #endif // IMPORT_DYNAMIC
 
-        // ======================================================================
+                            // ======================================================================
 #if IMPORT_DYNAMIC
-        public delegate IntPtr cppHelloDelegate();
+            public delegate IntPtr cppHelloDelegate();
         public static IntPtr cppHello()
         {
             string myName = System.Reflection.MethodBase.GetCurrentMethod().Name;
@@ -281,8 +291,8 @@ namespace Substance.Platform
 #endif
 
 #if IMPORT_DYNAMIC
-        public delegate void cppInitSubstanceDelegate(string applicationDataPath);
-        public static void cppInitSubstance(string applicationDataPath)
+        public delegate void cppInitSubstanceDelegate(string applicationDataPath, int pTextureClampExposant);
+        public static void cppInitSubstance(string applicationDataPath, int pTextureClampExposant)
         {
             string myName = System.Reflection.MethodBase.GetCurrentMethod().Name;
 
@@ -292,11 +302,11 @@ namespace Substance.Platform
 
             cppInitSubstanceDelegate function = DLLHelpers.GetFunction(
                 myName, typeof(cppInitSubstanceDelegate)) as cppInitSubstanceDelegate;
-            function.Invoke(applicationDataPath);
+            function.Invoke(applicationDataPath, pTextureClampExposant);
         }
 #else
         [DllImport(attributeValue)]
-        public static extern void cppInitSubstance(string applicationDataPath);
+        public static extern void cppInitSubstance(string applicationDataPath, int pTextureClampExposant);
 #endif
 
 #if IMPORT_DYNAMIC
@@ -333,24 +343,6 @@ namespace Substance.Platform
 #else
         [DllImport(attributeValue)]
         public static extern bool cppIsValidGraphHandle(IntPtr pGraphHandle);
-#endif
-
-#if IMPORT_DYNAMIC // not used!
-        public delegate bool cppCheckDimensionsDelegate(IntPtr pGraphHandle);
-        public static bool cppCheckDimensions(IntPtr pGraphHandle)
-        {
-            string myName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-            if (DLLHelpers.DllHandle == IntPtr.Zero)
-                return false;
-
-            cppCheckDimensionsDelegate function = DLLHelpers.GetFunction(
-                myName, typeof(cppCheckDimensionsDelegate)) as cppCheckDimensionsDelegate;
-            return function.Invoke(pGraphHandle);
-        }
-#else
-        [DllImport(attributeValue)]
-        public static extern bool cppCheckDimensions(IntPtr pGraphHandle);
 #endif
 
 #if IMPORT_DYNAMIC
@@ -423,24 +415,6 @@ namespace Substance.Platform
 #else
         [DllImport(attributeValue)]
         public static extern int cppGetNumOutputs(IntPtr graphHandle);
-#endif
-
-#if IMPORT_DYNAMIC
-        public delegate int cppGetNumMainTexturesDelegate(IntPtr graphHandle);
-        public static int cppGetNumMainTextures(IntPtr graphHandle)
-        {
-            string myName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-            if (DLLHelpers.DllHandle == IntPtr.Zero)
-                return 0;
-
-            cppGetNumMainTexturesDelegate function = DLLHelpers.GetFunction(
-                myName, typeof(cppGetNumMainTexturesDelegate)) as cppGetNumMainTexturesDelegate;
-            return (int)function.Invoke(graphHandle);
-        }
-#else
-        [DllImport(attributeValue)]
-        public static extern int cppGetNumMainTextures(IntPtr graphHandle);
 #endif
 
 #if IMPORT_DYNAMIC
@@ -596,11 +570,11 @@ namespace Substance.Platform
             IntPtr assetCtx, IntPtr substanceObject,
             UInt32[] graphIndices, string[] graphPrototypeNames, string[] graphLabels,
             int[] graphFormats, int[] normalFormats, UInt32 numGraphIndices,
-            int rawOverride, int projectContext);
+            int rawOverride, int pPipeline);
         public static int cppLoadSubstance(string pAssetPath, IntPtr array, Int32 size, IntPtr assetCtx, IntPtr substanceObject,
                                            UInt32[] graphIndices, string[] graphPrototypeNames, string[] graphLabels,
                                            int[] graphFormats, int[] normalFormats, UInt32 numGraphIndices,
-                                           int rawOverride, int projectContext)
+                                           int rawOverride, int pPipeline)
         {
             string myName = System.Reflection.MethodBase.GetCurrentMethod().Name;
 
@@ -612,13 +586,13 @@ namespace Substance.Platform
             return (int)function.Invoke(pAssetPath, array, size, assetCtx, substanceObject,
                                         graphIndices, graphPrototypeNames, graphLabels,
                                         graphFormats, normalFormats, numGraphIndices,
-                                        rawOverride, projectContext);
+                                        rawOverride, pPipeline);
         }
 #else
         [DllImport(attributeValue)]
         public static extern int cppLoadSubstance(string pAssetPath, IntPtr array, Int32 size, IntPtr assetCtx,
             IntPtr substanceObject, UInt32[] graphIndices, string[] graphPrototypeNames, string[] graphLabels,
-            int[] graphFormats, int[] normalFormats, UInt32 numGraphIndices, int rawOverride, int projectContext);
+            int[] graphFormats, int[] normalFormats, UInt32 numGraphIndices, int rawOverride, int pPipeline);
 #endif
 
 #if IMPORT_DYNAMIC

@@ -11,6 +11,7 @@ public class NutMover : MonoBehaviour
     private float fade = 1;
     private Image nut;
     private UIMan uiMan;
+    private PlantMan plantMan;
     
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class NutMover : MonoBehaviour
         nut = GetComponent<Image>();
         uiMan = FindObjectOfType<UIMan>();
         transform.LeanRotate(new Vector3(0, 0, Random.Range(-3,2)*360f+(Random.Range(0,2)*2-1)*90), (transform.position.y - floorHeight) / speed);
+        plantMan = FindObjectOfType<PlantMan>();
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class NutMover : MonoBehaviour
 
     public void GrabNut()
     {
-        Debug.Log("Nut grabbed");
+        plantMan.plantSeed(treeIndex);
         uiMan.IncreaseScore(false);
         Destroy(gameObject);
     }
