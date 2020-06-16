@@ -47,7 +47,7 @@ public class CameraMan : MonoBehaviour
     public void MoveOn()
     {
         currentLocation++;
-        if(currentLocation <= zoomLocations.Length)
+        if(currentLocation < zoomLocations.Length)
         {
             mainCam.transform.LeanMove(zoomLocations[currentLocation].position, zoomTime);
             mainCam.transform.LeanRotate(zoomLocations[currentLocation].rotation.eulerAngles, zoomTime);
