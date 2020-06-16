@@ -17038,10 +17038,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Herb_Rosebay_Finland (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1306804787339102937, guid: 995d9c095bb9fc94daf0666ea85b106d,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306804787339102937, guid: 995d9c095bb9fc94daf0666ea85b106d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a7cbe5c511bd2b245a85b23211d7fd2a, type: 2}
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.576063
+      value: 17.63
       objectReference: {fileID: 0}
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
@@ -17061,7 +17071,7 @@ PrefabInstance:
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.16524057
       objectReference: {fileID: 0}
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
@@ -17071,7 +17081,7 @@ PrefabInstance:
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.9862533
       objectReference: {fileID: 0}
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
@@ -17086,7 +17096,7 @@ PrefabInstance:
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -379.022
       objectReference: {fileID: 0}
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
@@ -22353,6 +22363,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 1232331338775315053, guid: cd2bdf465c0481c4eb9302d9be74e944,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1232331339116629051, guid: cd2bdf465c0481c4eb9302d9be74e944,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -22376,17 +22391,17 @@ PrefabInstance:
     - target: {fileID: 2256599488734795132, guid: cd2bdf465c0481c4eb9302d9be74e944,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2256599488734795132, guid: cd2bdf465c0481c4eb9302d9be74e944,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2256599488734795132, guid: cd2bdf465c0481c4eb9302d9be74e944,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2795396177563109099, guid: cd2bdf465c0481c4eb9302d9be74e944,
         type: 3}
@@ -24312,6 +24327,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Herb_Rosebay_Finland
       objectReference: {fileID: 0}
+    - target: {fileID: 1306804787339102937, guid: 995d9c095bb9fc94daf0666ea85b106d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a7cbe5c511bd2b245a85b23211d7fd2a, type: 2}
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
       propertyPath: m_LocalPosition.x
