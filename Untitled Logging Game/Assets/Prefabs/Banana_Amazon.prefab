@@ -286,6 +286,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3756503907228227744, guid: 5841675adb7aef4449792fd22bb742ef,
+        type: 3}
+      propertyPath: cutForceMultiplier
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5208786420211461020, guid: 5841675adb7aef4449792fd22bb742ef,
         type: 3}
       propertyPath: m_Name

@@ -346,6 +346,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1826417462111752020, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: cutForceMultiplier
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2519562448531319300, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
         type: 3}
       propertyPath: m_Enabled

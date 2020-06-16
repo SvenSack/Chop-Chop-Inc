@@ -30,7 +30,7 @@ namespace Animal
             }
 
             
-            if(!isTurning && !isShocked)
+            if(!isTurning && !isShocked && !waiting)
                 PerformMotion();
             
             

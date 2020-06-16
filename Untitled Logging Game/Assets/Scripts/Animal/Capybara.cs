@@ -35,11 +35,12 @@ namespace Animal
             }
             else
             {
+                if(!waiting)
                 tireTime += Time.deltaTime;
             }
 
             
-            if(!isTurning && !laying && (isRunning && running || !isRunning))
+            if(!isTurning && !laying && (isRunning && running || !isRunning) && !waiting)
                 PerformMotion();
             
             
