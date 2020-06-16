@@ -202,7 +202,7 @@ public class Utils : MonoBehaviour
         return centroid;
     }
 
-        //TODO :I have no idea how this actually works, and I will find out later
+    //TODO :I have no idea how this actually works, and I will find out later
     public static unsafe NativeArray<T> ToNativeArray<T>(T[] TArray,Allocator allocator = Allocator.Persistent) where T : unmanaged
     {
         // create a destination NativeArray to hold the vertices
