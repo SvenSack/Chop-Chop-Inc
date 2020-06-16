@@ -22,6 +22,7 @@ public class CameraMan : MonoBehaviour
     public float zoomTime = 5f;
     private CutMan cutMan;
     private PlantMan plantMan;
+    private GameObject mapButton;
 
     void Start()
     {
@@ -32,6 +33,8 @@ public class CameraMan : MonoBehaviour
         plantMan = FindObjectOfType<PlantMan>();
         treesToCutEach = new[] {treesToCut0, treesToCut1, treesToCut2, treesToCut3};
         treesToPlantEach = new[] {treesToPlant0, treesToPlant1, treesToPlant2, treesToPlant3};
+        mapButton = GameObject.FindGameObjectWithTag("MapButton");
+        mapButton.SetActive(false);
     }
 
     public void MoveOn()
@@ -43,7 +46,11 @@ public class CameraMan : MonoBehaviour
             mainCam.transform.LeanRotate(zoomLocations[currentLocation].rotation.eulerAngles, zoomTime);
             StartCoroutine(SetTargets(zoomTime));
         }
-        
+        else
+        {
+            mapButton.SetActive(true);
+            mapButton.GetComponent<MapButtonGlow>().StartGlow();
+        }
     }
 
     IEnumerator SetTargets(float delay)
