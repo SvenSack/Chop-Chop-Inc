@@ -32,8 +32,11 @@ public class TreeFallParticle : MonoBehaviour
             {
                 leaves.Stop(false, ParticleSystemStopBehavior.StopEmitting);
             }
+            if(dust != null)
+            {
+                dust.Play();
+            }
             
-            dust.Play();
             fallSound.time = 0;
             fallSound.clip = soundMan.treeFall[1];
             fallSound.Play();

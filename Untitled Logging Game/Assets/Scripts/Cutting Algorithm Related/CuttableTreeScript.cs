@@ -873,32 +873,42 @@ public class CuttableTreeScript : MonoBehaviour
     {
         List<Transform> children = new List<Transform>();
 
+        for (int i = 0; i < belowCuttingPlaneObj.gameObject.transform.childCount; i++)
+        {
+            var child = belowCuttingPlaneObj.gameObject.transform.GetChild(i);
 
-        foreach (Transform child in belowCuttingPlaneObj.gameObject.transform)
-        {
-            children.Add(child);
+            if(child != null)
+            {
+                children.Add(child);
+            }
         }
-        foreach (Transform child in aboveCuttingPlaneObj.gameObject.transform)
+
+        for (int i = 0; i < aboveCuttingPlaneObj.gameObject.transform.childCount; i++)
         {
-            children.Add(child);
+            var child = aboveCuttingPlaneObj.gameObject.transform.GetChild(i);
+
+            if (child != null)
+            {
+                children.Add(child);
+            }
         }
 
         belowCuttingPlaneObj.transform.DetachChildren();
         aboveCuttingPlaneObj.transform.DetachChildren();
 
-        foreach (Transform child in children)
+        for (int i = 0; i < children.Count; i++)
         {
-            child.parent = null;
+            if(children[i] == null) { continue; }
 
             Vector3 position = Vector3.zero;
-            if (child.tag == "Leaves")
+            if (children[i].tag == "Leaves")
             {
-                position = child.transform.position;
+                position = children[i].transform.position;
             }
-            else if(child.tag == "hole")
+            else if(children[i].tag == "hole")
             {
                 position = transform.localToWorldMatrix.MultiplyPoint(Utils.GetObjectSpaceMeshCentroid(
-                    child.GetComponent<MeshFilter>().mesh));
+                    children[i].GetComponent<MeshFilter>().mesh));
                     //child.transform.position;
             }
             else
@@ -909,12 +919,12 @@ public class CuttableTreeScript : MonoBehaviour
             if (Utils.IsPointAbovePlane(position, planePosition,planeNormal))
             {
 
-                child.SetParent(aboveCuttingPlaneObj.transform);
+                children[i].SetParent(aboveCuttingPlaneObj.transform);
                 
             }
             else
             {
-                child.SetParent(belowCuttingPlaneObj.transform);
+                children[i].SetParent(belowCuttingPlaneObj.transform);
             }
 
             //
