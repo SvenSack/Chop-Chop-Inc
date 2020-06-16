@@ -39,6 +39,7 @@ public class TreeFallParticle : MonoBehaviour
             fallSound.Play();
             inAir = false;
             Fox[] foxes = FindObjectsOfType<Fox>();
+            Capybara[] capys = FindObjectsOfType<Capybara>();
             Vector3 landingPoint = other.GetContact(0).point;
             Debug.DrawLine(landingPoint, landingPoint+Vector3.up*10, Color.red, 1000f);
             foreach (var fox in foxes)
@@ -46,6 +47,13 @@ public class TreeFallParticle : MonoBehaviour
                 if (Vector3.Distance(fox.transform.position, landingPoint) < 5f)
                 {
                     fox.Scare(landingPoint);
+                }
+            }
+            foreach (var capy in capys)
+            {
+                if (Vector3.Distance(capy.transform.position, landingPoint) < 5f)
+                {
+                    capy.Scare(landingPoint);
                 }
             }
         }
