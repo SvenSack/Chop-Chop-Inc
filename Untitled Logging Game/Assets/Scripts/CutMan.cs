@@ -64,6 +64,7 @@ public class CutMan : MonoBehaviour
         soundMan = FindObjectOfType<SoundMan>();
         uiMan = FindObjectOfType<UIMan>();
         trunkMask = LayerMask.GetMask("Trunks");
+        //Debug.Log("trunkMask is at " + trunkMask);
         if(!multiCam)
             trees = FindObjectsOfType<CuttableTreeScript>();
         treeHps = new int[trees.Length];

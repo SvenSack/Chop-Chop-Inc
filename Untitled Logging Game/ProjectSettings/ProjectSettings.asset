@@ -574,7 +574,7 @@ PlayerSettings:
   blurSplashScreenBackground: 0
   spritePackerPolicy: 
   webGLMemorySize: 16
-  webGLExceptionSupport: 1
+  webGLExceptionSupport: 3
   webGLNameFilesAsHashes: 0
   webGLDataCaching: 1
   webGLDebugSymbols: 0
@@ -589,6 +589,7 @@ PlayerSettings:
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
     1: SUBSTANCE_PLUGIN_ENABLED
+    13: SUBSTANCE_PLUGIN_ENABLED
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
