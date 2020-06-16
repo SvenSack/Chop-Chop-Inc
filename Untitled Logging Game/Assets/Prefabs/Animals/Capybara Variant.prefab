@@ -20,10 +20,11 @@ MonoBehaviour:
   soundMan: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
   directionIsLeft: 1
-  walkSpeed: 0.1
+  walkSpeed: 0.5
   spriteTrans: {fileID: 0}
   isTurning: 0
   turnTime: 2
+  tireTimer: 5
 --- !u!1001 &8543628675180478372
 PrefabInstance:
   m_ObjectHideFlags: 0
