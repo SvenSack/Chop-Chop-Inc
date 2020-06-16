@@ -157,8 +157,6 @@ public class TextCensorer
             
             if(numberCharToLetterChar.TryGetValue(charArraySanitize[i],out foundVal))
             {
-                Debug.Log("charArraySanitize[i] is " + charArraySanitize[i]);
-                Debug.Log("foundVal is " + foundVal);
                 charArraySanitize[i] = foundVal;
             }
 
