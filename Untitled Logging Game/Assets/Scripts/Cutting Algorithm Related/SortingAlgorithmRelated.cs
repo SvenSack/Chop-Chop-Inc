@@ -54,7 +54,7 @@ public class IndexDirectionComparer : IComparer<int>
         float x = Vector3.Dot(baseDirection, (worldIndexA - basePosition).normalized);
         float y = Vector3.Dot(baseDirection, (worldIndexB - basePosition).normalized);
 
-        if (Mathf.Abs(y - x) < 0.001f)
+        if (Mathf.Abs(y - x) < float.MinValue)
         {
             float xLength = Vector3.Distance(worldIndexA, basePosition);
             float yLength = Vector3.Distance(worldIndexB, basePosition);
