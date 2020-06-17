@@ -202,12 +202,22 @@ public class Utils : MonoBehaviour
         return centroid;
     }
 
-        //TODO :I have no idea how this actually works, and I will find out later
+    //TODO :I have no idea how this actually works, and I will find out later
     public static unsafe NativeArray<T> ToNativeArray<T>(T[] TArray,Allocator allocator = Allocator.Persistent) where T : unmanaged
     {
-        // create a destination NativeArray to hold the vertices
         NativeArray<T> verts = new NativeArray<T>(TArray.Length, allocator,
             NativeArrayOptions.UninitializedMemory);
+        #if UNITY_WEBGL
+
+            for (int i = 0; i < TArray.Length; i++)
+            {
+                verts[i] = TArray[i];
+            }
+
+            return verts;
+        #else
+        // create a destination NativeArray to hold the vertices
+
 
         // pin the mesh's vertex buffer in place...
         fixed (void* vertexBufferPointer = TArray)
@@ -221,6 +231,7 @@ public class Utils : MonoBehaviour
         // we create a scope where its 'safe' to get a pointer and directly manipulate the array
 
         return verts;
+        #endif
     }
 
 }

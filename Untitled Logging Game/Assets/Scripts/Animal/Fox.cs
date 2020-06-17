@@ -7,29 +7,13 @@ namespace Animal
 {
     public class Fox : AnimalSprite
     {
-
-        public bool directionIsLeft = true;
-        public float walkSpeed = .1f;
-        private Transform spriteTrans;
-        private bool isTurning;
-        private bool isShocked;
-        private Vector3 cameraPosition;
-        [SerializeField] private float turnTime = 2f;
-
         
-
-        public void Start()
-        {
-            spriteTrans = transform.GetComponentInChildren<SpriteRenderer>().transform;
-            cameraPosition = camera.transform.position;
-        }
+        
+        private bool isShocked;
+        
 
         public override void Update()
         {
-            
-            if(Input.GetKeyDown("r"))
-                SnapToCamera();
-            
             if (Vector3.Distance(cameraPosition, transform.position) < soundProximity && !animator.GetBool("scared"))
             {
                 if(idleTimer <= idleTime)
@@ -46,56 +30,17 @@ namespace Animal
             }
 
             
-            if(!isTurning && !isShocked)
+            if(!isTurning && !isShocked && !waiting)
                 PerformMotion();
             
             
             if(!animator.GetBool("scared") && !isTurning)
                 CheckForFlip();
             
-            if(Input.GetKeyDown("l"))
-                Scare(camera.ScreenToWorldPoint(Input.mousePosition));
         }
 
 
-        private void PerformMotion()
-        {
-            Vector3 targetVec = transform.right;
-            if (!directionIsLeft)
-                targetVec = targetVec * -1;
-            var position = transform.position;
-            position = Vector3.MoveTowards(position, position + targetVec, walkSpeed * Time.deltaTime);
-            transform.position = position;
-        }
-
-        private void CheckForFlip()
-        {
-            
-            Vector3 viewPoint = camera.WorldToScreenPoint(transform.position);
-            if ( !(viewPoint.z > 0 && viewPoint.x > 1 && viewPoint.x < Screen.width) )
-            {
-                Vector3 targetRot = spriteTrans.rotation.eulerAngles;
-                targetRot.y += 180;
-                directionIsLeft = !directionIsLeft;
-                isTurning = true;
-                StartCoroutine(TurnCompleter(turnTime));
-                spriteTrans.LeanRotate(targetRot, turnTime);
-            }
-        }
-
-        public void PatchworkFlip(float time)
-        {
-            Vector3 targetRot = spriteTrans.rotation.eulerAngles;
-            targetRot.y += 180;
-            directionIsLeft = !directionIsLeft;
-            spriteTrans.LeanRotate(targetRot, time);
-        }
-
-        IEnumerator TurnCompleter(float timer)
-        {
-            yield return new WaitForSeconds(timer);
-            isTurning = false;
-        }
+        
         
         IEnumerator ScareCompleter(float timer)
         {
@@ -115,9 +60,6 @@ namespace Animal
           
             if(camera.WorldToScreenPoint(transform.position).x < camera.WorldToScreenPoint(positionOfScaryness).x && directionIsLeft)
             {
-                Debug.Log("Fox: " + camera.WorldToScreenPoint(transform.position).x);
-                Debug.Log("Danger: " + camera.WorldToScreenPoint(positionOfScaryness).x);
-                Debug.Log("Fox is walking left is " + directionIsLeft);
                 PatchworkFlip(.3f);
             }
             if(!animator.GetBool("scared"))
