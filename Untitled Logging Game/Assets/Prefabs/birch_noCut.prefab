@@ -36378,6 +36378,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2732663750333055780}
+  - component: {fileID: 1188086174503589800}
   m_Layer: 0
   m_Name: birch_noCut
   m_TagString: Untagged
@@ -36397,9 +36398,801 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8765278821973099197}
+  - {fileID: 4488489866187863537}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &1188086174503589800
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5412590131771530841}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.07999992, y: 2.9699998, z: 0.051237583}
+  m_Size: 10.359853
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.4122653
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 5011147940967940490}
+    - renderer: {fileID: 358011278294844942}
+    - renderer: {fileID: 1953284327278317919}
+    - renderer: {fileID: 7924856605714871134}
+    - renderer: {fileID: 4403321209052274308}
+    - renderer: {fileID: 3639265490067332688}
+    - renderer: {fileID: 3795012302286525933}
+    - renderer: {fileID: 1996280499549801211}
+    - renderer: {fileID: 6832442184465793176}
+    - renderer: {fileID: 6744950590497144005}
+    - renderer: {fileID: 7985153752293182667}
+    - renderer: {fileID: 6327268918574959922}
+    - renderer: {fileID: 4676380326724322646}
+    - renderer: {fileID: 2094965041987439163}
+    - renderer: {fileID: 3164327079309532665}
+    - renderer: {fileID: 1979228511024364090}
+    - renderer: {fileID: 5064458753193875253}
+    - renderer: {fileID: 7201949570410157449}
+    - renderer: {fileID: 3152763620227366874}
+    - renderer: {fileID: 3909800427499614891}
+    - renderer: {fileID: 5730843736940025865}
+    - renderer: {fileID: 6791283134794423908}
+    - renderer: {fileID: 4270039508979379157}
+    - renderer: {fileID: 6113038050159277850}
+    - renderer: {fileID: 6384397624619842184}
+    - renderer: {fileID: 8625365298251081630}
+    - renderer: {fileID: 2346323459889169377}
+    - renderer: {fileID: 4255001348566310756}
+    - renderer: {fileID: 2472417252461709391}
+    - renderer: {fileID: 939803350330676142}
+    - renderer: {fileID: 8503060629334668506}
+    - renderer: {fileID: 7690976057455096533}
+    - renderer: {fileID: 181204646141591268}
+    - renderer: {fileID: 2591509087365649067}
+    - renderer: {fileID: 234955601503118405}
+    - renderer: {fileID: 2211046755035140831}
+    - renderer: {fileID: 361007830640633639}
+    - renderer: {fileID: 2420050635346261187}
+    - renderer: {fileID: 9213347761158670038}
+    - renderer: {fileID: 3056320741263282130}
+    - renderer: {fileID: 6180196244425965145}
+    - renderer: {fileID: 2368912692479430623}
+    - renderer: {fileID: 8190177035120835619}
+    - renderer: {fileID: 3309017653241307132}
+    - renderer: {fileID: 5782992347923293013}
+    - renderer: {fileID: 6769499993142959077}
+    - renderer: {fileID: 5264196578160652789}
+    - renderer: {fileID: 1276459868285160581}
+    - renderer: {fileID: 6590685393853194870}
+    - renderer: {fileID: 6822773948527574949}
+    - renderer: {fileID: 72834987918514862}
+    - renderer: {fileID: 5403307150144474772}
+    - renderer: {fileID: 1679624698553235734}
+    - renderer: {fileID: 1835287465048178759}
+    - renderer: {fileID: 1749582352523499824}
+    - renderer: {fileID: 5567215865191683043}
+    - renderer: {fileID: 686606990072358665}
+    - renderer: {fileID: 3336386085188341089}
+    - renderer: {fileID: 3936900639262370318}
+    - renderer: {fileID: 3516319540661996695}
+    - renderer: {fileID: 8619019595207086895}
+    - renderer: {fileID: 82273601285536015}
+    - renderer: {fileID: 6903195500061815400}
+    - renderer: {fileID: 6406121729120260919}
+    - renderer: {fileID: 2453129026808163188}
+    - renderer: {fileID: 7015611362097401110}
+    - renderer: {fileID: 5670607192947905407}
+    - renderer: {fileID: 3485037727142288411}
+    - renderer: {fileID: 8129927292765042573}
+    - renderer: {fileID: 2216547180572988441}
+    - renderer: {fileID: 3536855608040682680}
+    - renderer: {fileID: 7948365957583251226}
+    - renderer: {fileID: 7493492120234500130}
+    - renderer: {fileID: 4091978500463680750}
+    - renderer: {fileID: 1091776564085086367}
+    - renderer: {fileID: 7892642753281710935}
+    - renderer: {fileID: 8225101817855706271}
+    - renderer: {fileID: 2440758650090577925}
+    - renderer: {fileID: 4728727154158166857}
+    - renderer: {fileID: 6529911318981955567}
+    - renderer: {fileID: 9081419191392554519}
+    - renderer: {fileID: 7401900848283605543}
+    - renderer: {fileID: 4787797617741950418}
+    - renderer: {fileID: 4562100479654452375}
+    - renderer: {fileID: 9222487340055247031}
+    - renderer: {fileID: 5984799487115114548}
+    - renderer: {fileID: 2585203513633565402}
+    - renderer: {fileID: 4750261654455209145}
+    - renderer: {fileID: 7178558223447120103}
+    - renderer: {fileID: 6047114934907167668}
+    - renderer: {fileID: 5052336201553034637}
+    - renderer: {fileID: 2221372544391806143}
+    - renderer: {fileID: 6691558817942353401}
+    - renderer: {fileID: 1174111211700788624}
+    - renderer: {fileID: 1684242383207035689}
+    - renderer: {fileID: 2530160345362424061}
+    - renderer: {fileID: 2442069704799589675}
+    - renderer: {fileID: 1171028998053506990}
+    - renderer: {fileID: 1091244728279685810}
+    - renderer: {fileID: 5513320495935301541}
+    - renderer: {fileID: 7373724377024576142}
+    - renderer: {fileID: 6714541932757321109}
+    - renderer: {fileID: 2694981023294694345}
+    - renderer: {fileID: 6798228717560977786}
+    - renderer: {fileID: 883417901229436665}
+    - renderer: {fileID: 4511203534077767698}
+    - renderer: {fileID: 7842467510581445003}
+    - renderer: {fileID: 3331583448521087940}
+    - renderer: {fileID: 6378079601224225777}
+    - renderer: {fileID: 2173319442152445716}
+    - renderer: {fileID: 3078747243629627919}
+    - renderer: {fileID: 472396246237665360}
+    - renderer: {fileID: 8125948936479383616}
+    - renderer: {fileID: 3541596866883901877}
+    - renderer: {fileID: 6469364705550846124}
+    - renderer: {fileID: 4807525549259554482}
+    - renderer: {fileID: 7341882651798245599}
+    - renderer: {fileID: 2135059835990393629}
+    - renderer: {fileID: 2532465149470560645}
+    - renderer: {fileID: 6598696655052536551}
+    - renderer: {fileID: 1540512861165282404}
+    - renderer: {fileID: 6943603480073905517}
+    - renderer: {fileID: 5930533947268896553}
+    - renderer: {fileID: 419193682746496271}
+    - renderer: {fileID: 2261715110779571362}
+    - renderer: {fileID: 318631871258151010}
+    - renderer: {fileID: 3050964515913020472}
+    - renderer: {fileID: 3583456659691354895}
+    - renderer: {fileID: 360235975528483370}
+    - renderer: {fileID: 3194366321945537166}
+    - renderer: {fileID: 262886929663153315}
+    - renderer: {fileID: 6850790186049638446}
+    - renderer: {fileID: 2369413612214826033}
+    - renderer: {fileID: 7218968676197903574}
+    - renderer: {fileID: 3805893966767447013}
+    - renderer: {fileID: 731558815236493087}
+    - renderer: {fileID: 3472182266660051462}
+    - renderer: {fileID: 7475565372254899162}
+    - renderer: {fileID: 8124088022447741543}
+    - renderer: {fileID: 4146609484335198413}
+    - renderer: {fileID: 5719923927126293729}
+    - renderer: {fileID: 8052520933520160526}
+    - renderer: {fileID: 26311667344892852}
+    - renderer: {fileID: 8668546718453652802}
+    - renderer: {fileID: 5085445992504882417}
+    - renderer: {fileID: 7924649363803499193}
+    - renderer: {fileID: 8267376313218358533}
+    - renderer: {fileID: 6408262605134864529}
+    - renderer: {fileID: 7648267703558143559}
+    - renderer: {fileID: 5643187165828611072}
+    - renderer: {fileID: 4107841962757446548}
+    - renderer: {fileID: 5459277960228455476}
+    - renderer: {fileID: 2686290014303404660}
+    - renderer: {fileID: 264768351827619661}
+    - renderer: {fileID: 3934868825427899873}
+    - renderer: {fileID: 5875979024387971135}
+    - renderer: {fileID: 445135239706008279}
+    - renderer: {fileID: 4862891025624362847}
+    - renderer: {fileID: 8533886134205924096}
+    - renderer: {fileID: 4700331530425829888}
+    - renderer: {fileID: 3424063027383750363}
+    - renderer: {fileID: 4362031642005300421}
+    - renderer: {fileID: 4487575045787289939}
+    - renderer: {fileID: 4934180571353696390}
+    - renderer: {fileID: 6157794149011560227}
+    - renderer: {fileID: 513580292790151085}
+    - renderer: {fileID: 8767544375040713508}
+    - renderer: {fileID: 7300878338536523668}
+    - renderer: {fileID: 8928939418784661438}
+    - renderer: {fileID: 5415975568157722978}
+    - renderer: {fileID: 1826658238632075343}
+    - renderer: {fileID: 2495745134558696120}
+    - renderer: {fileID: 7475127697933800498}
+    - renderer: {fileID: 6415116545255788634}
+    - renderer: {fileID: 3314289457934247502}
+    - renderer: {fileID: 4274960735064390037}
+    - renderer: {fileID: 2072663613138667636}
+    - renderer: {fileID: 7211780869611540442}
+    - renderer: {fileID: 1814630832410230982}
+    - renderer: {fileID: 8143137948462102211}
+    - renderer: {fileID: 5708755735676926459}
+    - renderer: {fileID: 7517181321490376575}
+    - renderer: {fileID: 4636720385881494936}
+    - renderer: {fileID: 3667030312083604316}
+    - renderer: {fileID: 8084993181580949122}
+    - renderer: {fileID: 554986033278390451}
+    - renderer: {fileID: 7733965031984717051}
+    - renderer: {fileID: 5136208345371614056}
+    - renderer: {fileID: 7712545565222277568}
+    - renderer: {fileID: 3335070949927792946}
+    - renderer: {fileID: 2566200942432578135}
+    - renderer: {fileID: 6138885073119228183}
+    - renderer: {fileID: 4346839813903093274}
+    - renderer: {fileID: 6390461253837450816}
+    - renderer: {fileID: 8794940729391010866}
+    - renderer: {fileID: 8963477013676743455}
+    - renderer: {fileID: 2183726548576114803}
+    - renderer: {fileID: 4415821702458549353}
+    - renderer: {fileID: 8662904134722539328}
+    - renderer: {fileID: 7559263109183534132}
+    - renderer: {fileID: 4600095471269044504}
+    - renderer: {fileID: 2132600176390272042}
+    - renderer: {fileID: 1934340136546651168}
+    - renderer: {fileID: 7331801165818142960}
+    - renderer: {fileID: 5700032804409505982}
+    - renderer: {fileID: 3859483792647682240}
+    - renderer: {fileID: 7511400288729761636}
+    - renderer: {fileID: 2183288928257446860}
+    - renderer: {fileID: 1698068225730166031}
+    - renderer: {fileID: 5253250958446495624}
+    - renderer: {fileID: 872484914118289456}
+    - renderer: {fileID: 8893196540973314975}
+    - renderer: {fileID: 2714470336580069687}
+    - renderer: {fileID: 8030314599391894625}
+    - renderer: {fileID: 145105072516988665}
+    - renderer: {fileID: 5057894388466045785}
+    - renderer: {fileID: 8641268084247595048}
+    - renderer: {fileID: 5187268753127246873}
+    - renderer: {fileID: 345618275970113790}
+    - renderer: {fileID: 8090602402315994952}
+    - renderer: {fileID: 6555877297689715201}
+    - renderer: {fileID: 2115135487169603505}
+    - renderer: {fileID: 3290671776100597552}
+    - renderer: {fileID: 2245805076100873314}
+    - renderer: {fileID: 1075763586474398467}
+    - renderer: {fileID: 2926737863983385980}
+    - renderer: {fileID: 2878707036557907035}
+    - renderer: {fileID: 5366372571129360508}
+    - renderer: {fileID: 2895287880610207495}
+    - renderer: {fileID: 5073045922376217279}
+    - renderer: {fileID: 6875401156811260984}
+    - renderer: {fileID: 7832117869164406389}
+    - renderer: {fileID: 2469709000906639652}
+    - renderer: {fileID: 5221953280120246117}
+    - renderer: {fileID: 9070498101059807502}
+    - renderer: {fileID: 3509447134316273300}
+    - renderer: {fileID: 3199174804674061328}
+    - renderer: {fileID: 335035034902591381}
+    - renderer: {fileID: 6731136434153390166}
+    - renderer: {fileID: 6703491847054466758}
+    - renderer: {fileID: 1320908208129091482}
+    - renderer: {fileID: 3449230429818470782}
+    - renderer: {fileID: 5052176287065860824}
+    - renderer: {fileID: 2241553763718536113}
+    - renderer: {fileID: 7842907195462029911}
+    - renderer: {fileID: 7807112782315065270}
+    - renderer: {fileID: 3992652957167206715}
+    - renderer: {fileID: 1894160963882195672}
+    - renderer: {fileID: 4328085343700500747}
+    - renderer: {fileID: 1201552292820423780}
+    - renderer: {fileID: 9004327102003230518}
+    - renderer: {fileID: 6608492591219203892}
+    - renderer: {fileID: 7261996452046736017}
+    - renderer: {fileID: 8759428657237740421}
+    - renderer: {fileID: 1680370688134590212}
+    - renderer: {fileID: 774751434370246872}
+    - renderer: {fileID: 7435626933229753400}
+    - renderer: {fileID: 3244564663862066383}
+    - renderer: {fileID: 5655661082095548722}
+    - renderer: {fileID: 5284077955804375649}
+    - renderer: {fileID: 4599371595493907505}
+    - renderer: {fileID: 564031019812470302}
+    - renderer: {fileID: 773073030918270639}
+    - renderer: {fileID: 837011502725321704}
+    - renderer: {fileID: 189292944884072273}
+    - renderer: {fileID: 8863763468829611009}
+    - renderer: {fileID: 3334247023273602051}
+    - renderer: {fileID: 3542905723304454391}
+    - renderer: {fileID: 3273920223903698025}
+    - renderer: {fileID: 7460683010325535884}
+    - renderer: {fileID: 3319657949428573630}
+    - renderer: {fileID: 8925361940627639439}
+    - renderer: {fileID: 4116706157829807070}
+    - renderer: {fileID: 6956318146903689983}
+    - renderer: {fileID: 345415339638036143}
+    - renderer: {fileID: 1281878719790304735}
+    - renderer: {fileID: 2572576021001859102}
+    - renderer: {fileID: 297306649749799418}
+    - renderer: {fileID: 4776428834394583816}
+    - renderer: {fileID: 1303582161799191492}
+    - renderer: {fileID: 5268286254673159776}
+    - renderer: {fileID: 3358376583158217470}
+    - renderer: {fileID: 8954657100064620933}
+    - renderer: {fileID: 585954063378655149}
+    - renderer: {fileID: 6962352012325081743}
+    - renderer: {fileID: 3028741267012408926}
+    - renderer: {fileID: 4724239571856080129}
+    - renderer: {fileID: 7548823389886487358}
+    - renderer: {fileID: 4279668402571463281}
+    - renderer: {fileID: 3190251052840939598}
+    - renderer: {fileID: 6700275491436195348}
+    - renderer: {fileID: 9039241537148416405}
+    - renderer: {fileID: 5874136526297399120}
+    - renderer: {fileID: 6702967380791291861}
+    - renderer: {fileID: 5802101427172480199}
+    - renderer: {fileID: 1039570233501266130}
+    - renderer: {fileID: 9015472890287077488}
+    - renderer: {fileID: 865225500726479090}
+    - renderer: {fileID: 2721276654671716393}
+    - renderer: {fileID: 3731228876386864866}
+    - renderer: {fileID: 1194239372443029125}
+    - renderer: {fileID: 5134988809667121993}
+    - renderer: {fileID: 2986486486829972959}
+    - renderer: {fileID: 7150110322228892839}
+    - renderer: {fileID: 8440189884747854873}
+    - renderer: {fileID: 1331344115548490010}
+    - renderer: {fileID: 7416015293877648660}
+    - renderer: {fileID: 2968689495702109073}
+    - renderer: {fileID: 2246591478390498050}
+    - renderer: {fileID: 3905343629678816248}
+    - renderer: {fileID: 4943572362173636783}
+    - renderer: {fileID: 8084772422549517171}
+    - renderer: {fileID: 677795552673637559}
+    - renderer: {fileID: 7303736325126087904}
+    - renderer: {fileID: 4725767325962875995}
+    - renderer: {fileID: 702563562365525419}
+    - renderer: {fileID: 4462923842587685307}
+    - renderer: {fileID: 7721997230572519130}
+    - renderer: {fileID: 417236564538265193}
+    - renderer: {fileID: 7501860175573093848}
+    - renderer: {fileID: 4975012385075698060}
+    - renderer: {fileID: 8708124156893843828}
+    - renderer: {fileID: 1147605826112929759}
+    - renderer: {fileID: 8439085759337318749}
+    - renderer: {fileID: 2892924099001242871}
+    - renderer: {fileID: 4967358439825609023}
+    - renderer: {fileID: 2213454077137381276}
+    - renderer: {fileID: 5860114784070200370}
+    - renderer: {fileID: 6871905733621382802}
+    - renderer: {fileID: 5614915979962158225}
+    - renderer: {fileID: 6636112920091669474}
+    - renderer: {fileID: 7753702223297033960}
+    - renderer: {fileID: 3456347645204489308}
+    - renderer: {fileID: 4774161693701501071}
+    - renderer: {fileID: 6711071997231862449}
+    - renderer: {fileID: 958833841228770655}
+    - renderer: {fileID: 6726451568158991262}
+    - renderer: {fileID: 7622792208649245434}
+    - renderer: {fileID: 4641879743731660410}
+    - renderer: {fileID: 7007380362468153262}
+    - renderer: {fileID: 1323545235090391523}
+    - renderer: {fileID: 6971956830625684823}
+    - renderer: {fileID: 8768574941293577634}
+    - renderer: {fileID: 3009731876761179395}
+    - renderer: {fileID: 3361572933976656254}
+    - renderer: {fileID: 4325874103527789029}
+    - renderer: {fileID: 4592026924810848232}
+    - renderer: {fileID: 5462253669346852632}
+    - renderer: {fileID: 2133241474532437417}
+    - renderer: {fileID: 7879896896675709206}
+    - renderer: {fileID: 4342590119704105832}
+    - renderer: {fileID: 2242235840495816127}
+    - renderer: {fileID: 6984201800146099772}
+    - renderer: {fileID: 2729376101926978618}
+    - renderer: {fileID: 8053621480941735760}
+    - renderer: {fileID: 8275720313974415408}
+    - renderer: {fileID: 400729951480882303}
+    - renderer: {fileID: 592214068666317915}
+    - renderer: {fileID: 8529573153642316476}
+    - renderer: {fileID: 7637446159110072394}
+    - renderer: {fileID: 3128871617213190080}
+    - renderer: {fileID: 7464116262184918856}
+    - renderer: {fileID: 7443845141217270154}
+    - renderer: {fileID: 7350259889899767664}
+    - renderer: {fileID: 5072310232850099255}
+    - renderer: {fileID: 5581980246596713928}
+    - renderer: {fileID: 8404427762770361091}
+    - renderer: {fileID: 629924629329438200}
+    - renderer: {fileID: 2856552912452051014}
+    - renderer: {fileID: 1974742508667769238}
+    - renderer: {fileID: 6031327406491989865}
+    - renderer: {fileID: 8181486970533227113}
+    - renderer: {fileID: 7192741367019770810}
+    - renderer: {fileID: 7177924094793930429}
+    - renderer: {fileID: 5136691078751503037}
+    - renderer: {fileID: 8369161570806614472}
+    - renderer: {fileID: 3863811897802294110}
+    - renderer: {fileID: 4035699891189388251}
+    - renderer: {fileID: 1038234020920491057}
+    - renderer: {fileID: 4985493392750107854}
+    - renderer: {fileID: 7321755464677047615}
+    - renderer: {fileID: 6308975939354905156}
+    - renderer: {fileID: 1959869655670164471}
+    - renderer: {fileID: 5053638613627233723}
+    - renderer: {fileID: 9126532920160462255}
+    - renderer: {fileID: 7112066786267574428}
+    - renderer: {fileID: 3760928477228985111}
+    - renderer: {fileID: 7694038904735201233}
+    - renderer: {fileID: 3990053994079501641}
+    - renderer: {fileID: 5281174293451646396}
+    - renderer: {fileID: 4769565327746322505}
+    - renderer: {fileID: 2423055133484966913}
+    - renderer: {fileID: 8447796412343051490}
+    - renderer: {fileID: 8274139271110692442}
+    - renderer: {fileID: 5098776879979916266}
+    - renderer: {fileID: 8739816734355662887}
+    - renderer: {fileID: 3256335765439895227}
+    - renderer: {fileID: 921961392336203297}
+    - renderer: {fileID: 6283077278781549261}
+    - renderer: {fileID: 109466671478484170}
+    - renderer: {fileID: 4941931493362082094}
+    - renderer: {fileID: 2547374622059827617}
+    - renderer: {fileID: 5693086972537525961}
+    - renderer: {fileID: 7523823048699250626}
+    - renderer: {fileID: 2736333595827063110}
+    - renderer: {fileID: 1992793291399401641}
+    - renderer: {fileID: 5717172994024062582}
+    - renderer: {fileID: 112088228164304629}
+    - renderer: {fileID: 6323799529960876432}
+    - renderer: {fileID: 5699966945626897765}
+    - renderer: {fileID: 5086371296982818762}
+    - renderer: {fileID: 8782060397738444853}
+    - renderer: {fileID: 1934188183486183360}
+    - renderer: {fileID: 647404103586054845}
+    - renderer: {fileID: 6589939790544113180}
+    - renderer: {fileID: 502015252783513259}
+    - renderer: {fileID: 2975886656834092530}
+    - renderer: {fileID: 2489740872005770078}
+    - renderer: {fileID: 364976771999768859}
+    - renderer: {fileID: 6305445718098673436}
+    - renderer: {fileID: 7546371880915941468}
+    - renderer: {fileID: 8123863342264928106}
+    - renderer: {fileID: 6701045702299017920}
+    - renderer: {fileID: 2102791481318115845}
+    - renderer: {fileID: 5571027841177107157}
+    - renderer: {fileID: 730243295667028478}
+    - renderer: {fileID: 381836844756714365}
+    - renderer: {fileID: 8685957003237985590}
+    - renderer: {fileID: 628857834764822436}
+    - renderer: {fileID: 5744654289767622052}
+    - renderer: {fileID: 6525262892667273166}
+    - renderer: {fileID: 6162291495829632342}
+    - renderer: {fileID: 1243916202184553795}
+    - renderer: {fileID: 2502593401628349744}
+    - renderer: {fileID: 7877213641934492208}
+    - renderer: {fileID: 3696785617448381237}
+    - renderer: {fileID: 5262821138106871225}
+    - renderer: {fileID: 4405338692898198166}
+    - renderer: {fileID: 7731193024750959807}
+    - renderer: {fileID: 8675972306819529811}
+    - renderer: {fileID: 773146470701705148}
+    - renderer: {fileID: 413793622550209816}
+    - renderer: {fileID: 1464039582998396225}
+    - renderer: {fileID: 8691816685188167082}
+    - renderer: {fileID: 2377849600912100213}
+    - renderer: {fileID: 8103480666309328070}
+    - renderer: {fileID: 7705773373027301625}
+    - renderer: {fileID: 6815955955026606750}
+    - renderer: {fileID: 8502219212383994062}
+    - renderer: {fileID: 6492479256153847487}
+    - renderer: {fileID: 2602708935746903918}
+    - renderer: {fileID: 8066604222925442461}
+    - renderer: {fileID: 559257937464719730}
+    - renderer: {fileID: 4698296721766178120}
+    - renderer: {fileID: 7589849798503549317}
+    - renderer: {fileID: 781129065047454048}
+    - renderer: {fileID: 6237032845058149495}
+    - renderer: {fileID: 7509726827279604806}
+    - renderer: {fileID: 3550124000075498678}
+    - renderer: {fileID: 1908423586483804914}
+    - renderer: {fileID: 1191701847510223477}
+    - renderer: {fileID: 7809104161081670693}
+    - renderer: {fileID: 8766531790482627127}
+    - renderer: {fileID: 6984066600048745075}
+    - renderer: {fileID: 7991620823081347300}
+    - renderer: {fileID: 2515359115896698453}
+    - renderer: {fileID: 3613481569440869129}
+    - renderer: {fileID: 6738809794381749400}
+    - renderer: {fileID: 8636068464620553711}
+    - renderer: {fileID: 5849550466447267870}
+    - renderer: {fileID: 7279732871157847059}
+    - renderer: {fileID: 4300693697631349403}
+    - renderer: {fileID: 3409414660508727205}
+    - renderer: {fileID: 1080493993481571255}
+    - renderer: {fileID: 2098782876468994370}
+    - renderer: {fileID: 6710810783665637144}
+    - renderer: {fileID: 3016917067869794476}
+    - renderer: {fileID: 7045700193883222155}
+    - renderer: {fileID: 1428700353588994452}
+    - renderer: {fileID: 668345472201487069}
+    - renderer: {fileID: 472871680860869946}
+    - renderer: {fileID: 6418484048016069648}
+    - renderer: {fileID: 8237435222472926130}
+    - renderer: {fileID: 6681109091665241152}
+    - renderer: {fileID: 5871068745854450102}
+    - renderer: {fileID: 2314201845730214800}
+    - renderer: {fileID: 3680750908459636522}
+    - renderer: {fileID: 1668113023494457614}
+    - renderer: {fileID: 5828232320192678191}
+    - renderer: {fileID: 3091106814357698072}
+    - renderer: {fileID: 198930853804421675}
+    - renderer: {fileID: 2692826063139928053}
+    - renderer: {fileID: 3920757332533475168}
+    - renderer: {fileID: 775936050597352604}
+    - renderer: {fileID: 249037275969761994}
+    - renderer: {fileID: 6276327418422624523}
+    - renderer: {fileID: 7545782129982715557}
+    - renderer: {fileID: 1950892597171587834}
+    - renderer: {fileID: 2384439212364926404}
+    - renderer: {fileID: 895309326287050613}
+    - renderer: {fileID: 298740321229737754}
+    - renderer: {fileID: 828362757407296303}
+    - renderer: {fileID: 7786895279909688438}
+    - renderer: {fileID: 3329059225875323873}
+    - renderer: {fileID: 295807172591360286}
+    - renderer: {fileID: 1845523551138084211}
+    - renderer: {fileID: 8949284174413782565}
+    - renderer: {fileID: 8466150135601868690}
+    - renderer: {fileID: 2386736828171638545}
+    - renderer: {fileID: 8823425848323363418}
+    - renderer: {fileID: 3338937924495546034}
+    - renderer: {fileID: 170552942195330966}
+    - renderer: {fileID: 5986362762276539081}
+    - renderer: {fileID: 3625984988558719305}
+    - renderer: {fileID: 6692930140356012634}
+    - renderer: {fileID: 1945047442504842836}
+    - renderer: {fileID: 1896999852146993724}
+    - renderer: {fileID: 3710032914503920842}
+    - renderer: {fileID: 6576918160606425834}
+    - renderer: {fileID: 3672575312196834827}
+    - renderer: {fileID: 834998734087390659}
+    - renderer: {fileID: 461477868858712364}
+    - renderer: {fileID: 1572871146647610597}
+    - renderer: {fileID: 8294446697020871554}
+    - renderer: {fileID: 1950679763741262752}
+    - renderer: {fileID: 4845520224023875784}
+    - renderer: {fileID: 5142213868671165289}
+    - renderer: {fileID: 5996785278134681960}
+    - renderer: {fileID: 585870713775351264}
+    - renderer: {fileID: 6137998916918567653}
+    - renderer: {fileID: 3472705881390625372}
+    - renderer: {fileID: 3359418120075319156}
+    - renderer: {fileID: 4700611372191925052}
+    - renderer: {fileID: 725307701551949874}
+    - renderer: {fileID: 7889401758504699924}
+    - renderer: {fileID: 8887502907561291507}
+    - renderer: {fileID: 1010754405362314479}
+    - renderer: {fileID: 4321644523590501509}
+    - renderer: {fileID: 1000503218253275693}
+    - renderer: {fileID: 477918807367286122}
+    - renderer: {fileID: 6247015666615785044}
+    - renderer: {fileID: 301357295561950064}
+    - renderer: {fileID: 477050196090182708}
+    - renderer: {fileID: 8913472040231073433}
+    - renderer: {fileID: 1936914404556504731}
+    - renderer: {fileID: 9165031173282333373}
+    - renderer: {fileID: 5783722690577633155}
+    - renderer: {fileID: 1917392141295447782}
+    - renderer: {fileID: 2185928326656800795}
+    - renderer: {fileID: 3557199361810641008}
+    - renderer: {fileID: 8648846227877577986}
+    - renderer: {fileID: 1217453586182448456}
+    - renderer: {fileID: 1296788760890360724}
+    - renderer: {fileID: 4094830601464281911}
+    - renderer: {fileID: 4060468963210198509}
+    - renderer: {fileID: 6295796664267964687}
+    - renderer: {fileID: 1229689766744052281}
+    - renderer: {fileID: 3527865903716559465}
+    - renderer: {fileID: 3787041582340880913}
+    - renderer: {fileID: 4128161191523873576}
+    - renderer: {fileID: 8010125527815799774}
+    - renderer: {fileID: 6739030138839264859}
+    - renderer: {fileID: 2431117375716414266}
+    - renderer: {fileID: 9022605109721640963}
+    - renderer: {fileID: 5794392601139075451}
+    - renderer: {fileID: 8545107759066441558}
+    - renderer: {fileID: 2394357551059496374}
+    - renderer: {fileID: 1062829501845736864}
+    - renderer: {fileID: 7357918761983733148}
+    - renderer: {fileID: 2017232639249554146}
+    - renderer: {fileID: 1935758616677984670}
+    - renderer: {fileID: 1429903803402398478}
+    - renderer: {fileID: 6130867469189142759}
+    - renderer: {fileID: 9098222782978353278}
+    - renderer: {fileID: 2169065665090423358}
+    - renderer: {fileID: 4299839050227778490}
+    - renderer: {fileID: 6209900311496438011}
+    - renderer: {fileID: 3050662320071176406}
+    - renderer: {fileID: 7327524747766253282}
+    - renderer: {fileID: 802855299402248234}
+    - renderer: {fileID: 3549862324200346898}
+    - renderer: {fileID: 3503505244983885849}
+    - renderer: {fileID: 5836962712212984767}
+    - renderer: {fileID: 2765803909712564645}
+    - renderer: {fileID: 5950926355876221312}
+    - renderer: {fileID: 9059910915164662932}
+    - renderer: {fileID: 8124105081775759853}
+    - renderer: {fileID: 3442072195751596864}
+    - renderer: {fileID: 2258867258101093494}
+    - renderer: {fileID: 4699420593429948152}
+    - renderer: {fileID: 6512116075440230957}
+    - renderer: {fileID: 3650821249337342469}
+    - renderer: {fileID: 4485940231480172481}
+    - renderer: {fileID: 7659215885965961376}
+    - renderer: {fileID: 5434440790292768141}
+    - renderer: {fileID: 7461953195778491391}
+    - renderer: {fileID: 5711528753751798028}
+    - renderer: {fileID: 5663419798169419445}
+    - renderer: {fileID: 1287149749242412768}
+    - renderer: {fileID: 1322625446328624313}
+    - renderer: {fileID: 571426680058621915}
+    - renderer: {fileID: 4849802051082122026}
+    - renderer: {fileID: 5904418555501049298}
+    - renderer: {fileID: 6871389299961202638}
+    - renderer: {fileID: 5690706268524725983}
+    - renderer: {fileID: 6713007660449796980}
+    - renderer: {fileID: 5646470347089443741}
+    - renderer: {fileID: 3995227769426356585}
+    - renderer: {fileID: 4731128027887872097}
+    - renderer: {fileID: 3561395443280072988}
+    - renderer: {fileID: 4326317806041185543}
+    - renderer: {fileID: 3959785882466788632}
+    - renderer: {fileID: 3593279456706355464}
+    - renderer: {fileID: 2264861053117892426}
+    - renderer: {fileID: 6965216098664489931}
+    - renderer: {fileID: 3524986513137533132}
+    - renderer: {fileID: 214044159750579932}
+    - renderer: {fileID: 6989571609574014404}
+    - renderer: {fileID: 1738436870178076233}
+    - renderer: {fileID: 6966608926659201185}
+    - renderer: {fileID: 4336168866021831888}
+    - renderer: {fileID: 5907135823482745355}
+    - renderer: {fileID: 1772996629291609854}
+    - renderer: {fileID: 7729473496093530127}
+    - renderer: {fileID: 8197153416156337062}
+    - renderer: {fileID: 8477004246668203790}
+    - renderer: {fileID: 5316980473262637162}
+    - renderer: {fileID: 3276824640580469767}
+    - renderer: {fileID: 2303717866103933233}
+    - renderer: {fileID: 680832551782872014}
+    - renderer: {fileID: 4533185509685251331}
+    - renderer: {fileID: 6220096832889622715}
+    - renderer: {fileID: 7543490892105283201}
+    - renderer: {fileID: 7371582334496005039}
+    - renderer: {fileID: 2923455697693562496}
+    - renderer: {fileID: 9062048790124757851}
+    - renderer: {fileID: 4917135448073377000}
+    - renderer: {fileID: 6041151576340352041}
+    - renderer: {fileID: 8849402667016397432}
+    - renderer: {fileID: 4031419968650525251}
+    - renderer: {fileID: 5730940467528462186}
+    - renderer: {fileID: 8639070291538914686}
+    - renderer: {fileID: 5655364260942467216}
+    - renderer: {fileID: 347185868184501600}
+    - renderer: {fileID: 7691616764542669082}
+    - renderer: {fileID: 3058305473627926359}
+    - renderer: {fileID: 5315905020969413453}
+    - renderer: {fileID: 6857013741870285139}
+    - renderer: {fileID: 2572953765866171339}
+    - renderer: {fileID: 6005155473212739655}
+    - renderer: {fileID: 5165090170016194330}
+    - renderer: {fileID: 1952386850858901997}
+    - renderer: {fileID: 634484668618337486}
+    - renderer: {fileID: 5649842733255682642}
+    - renderer: {fileID: 1585988159528010517}
+    - renderer: {fileID: 6063545403681974774}
+    - renderer: {fileID: 2849060269008812265}
+    - renderer: {fileID: 8958980465838115118}
+    - renderer: {fileID: 6200079276323997459}
+    - renderer: {fileID: 6601957586851473491}
+    - renderer: {fileID: 2435715816440646827}
+    - renderer: {fileID: 1070484566220940295}
+    - renderer: {fileID: 1895994204025918458}
+    - renderer: {fileID: 1035509945348202559}
+    - renderer: {fileID: 2989358102448850003}
+    - renderer: {fileID: 2051443280834704119}
+    - renderer: {fileID: 8915479094143768075}
+    - renderer: {fileID: 12265348707382577}
+    - renderer: {fileID: 5760542532305226902}
+    - renderer: {fileID: 4155870086939380171}
+    - renderer: {fileID: 7351774804028022992}
+    - renderer: {fileID: 4469850152466333938}
+    - renderer: {fileID: 3354185858075437131}
+    - renderer: {fileID: 216056849046146367}
+    - renderer: {fileID: 7568430913721546499}
+    - renderer: {fileID: 3531722269127065508}
+    - renderer: {fileID: 1185262311743349875}
+    - renderer: {fileID: 6413141182145251407}
+    - renderer: {fileID: 7487419497737659234}
+    - renderer: {fileID: 732845828393524245}
+    - renderer: {fileID: 513418099199520998}
+    - renderer: {fileID: 8902737221595539311}
+    - renderer: {fileID: 4604360219849529632}
+    - renderer: {fileID: 5465558763245708628}
+    - renderer: {fileID: 6225441017189869781}
+    - renderer: {fileID: 7433318858872049310}
+    - renderer: {fileID: 8094956743566077025}
+    - renderer: {fileID: 7204358456145470574}
+    - renderer: {fileID: 200066831107581729}
+    - renderer: {fileID: 2527811434356919328}
+    - renderer: {fileID: 7572838098890994389}
+    - renderer: {fileID: 5185682471263732911}
+    - renderer: {fileID: 7831327617266683027}
+    - renderer: {fileID: 4514096565506635455}
+    - renderer: {fileID: 4939376158067282257}
+    - renderer: {fileID: 7308084454502194437}
+    - renderer: {fileID: 5586942211344362895}
+    - renderer: {fileID: 6204192839019368195}
+    - renderer: {fileID: 3148997723270991673}
+    - renderer: {fileID: 8933247909198239072}
+    - renderer: {fileID: 4900114538355768882}
+    - renderer: {fileID: 6887999108998916545}
+    - renderer: {fileID: 8143409853495456263}
+    - renderer: {fileID: 8990794648013135937}
+    - renderer: {fileID: 8608110021919583037}
+    - renderer: {fileID: 6025901946671509799}
+    - renderer: {fileID: 3044802979762689654}
+    - renderer: {fileID: 1597186503749839329}
+    - renderer: {fileID: 7231229312005702311}
+    - renderer: {fileID: 9094636792909466968}
+    - renderer: {fileID: 4526325236551020980}
+    - renderer: {fileID: 3043858704413628336}
+    - renderer: {fileID: 5087274257200060035}
+    - renderer: {fileID: 7161206788479018788}
+    - renderer: {fileID: 633320169904581296}
+    - renderer: {fileID: 613276941290924728}
+    - renderer: {fileID: 5320948829312858590}
+    - renderer: {fileID: 5076689589328561337}
+    - renderer: {fileID: 6882305334958207763}
+    - renderer: {fileID: 6492955441121048004}
+    - renderer: {fileID: 5798944184641953592}
+    - renderer: {fileID: 3220753454317424005}
+    - renderer: {fileID: 579826286142800203}
+    - renderer: {fileID: 4553730311594132698}
+    - renderer: {fileID: 2283457674263186679}
+    - renderer: {fileID: 4679459413799435939}
+    - renderer: {fileID: 7232952582278669548}
+    - renderer: {fileID: 8196364451582515205}
+    - renderer: {fileID: 3610559703099614990}
+    - renderer: {fileID: 2865096671370309399}
+    - renderer: {fileID: 2387240685893190837}
+    - renderer: {fileID: 8747589697598406191}
+    - renderer: {fileID: 2502160867326531661}
+    - renderer: {fileID: 2478208936799052111}
+    - renderer: {fileID: 1835547961931058392}
+    - renderer: {fileID: 5254807320812194826}
+    - renderer: {fileID: 1339703425928104271}
+    - renderer: {fileID: 8740235873751610773}
+    - renderer: {fileID: 2214661783154852483}
+    - renderer: {fileID: 2416685808050245337}
+    - renderer: {fileID: 1152801457946706003}
+    - renderer: {fileID: 5605997571615445635}
+    - renderer: {fileID: 7765023055670966605}
+    - renderer: {fileID: 5612206722560498979}
+    - renderer: {fileID: 5639258253687768816}
+    - renderer: {fileID: 3449651005782543527}
+    - renderer: {fileID: 7870975623219937480}
+    - renderer: {fileID: 371432019371280161}
+    - renderer: {fileID: 6236840016622937637}
+    - renderer: {fileID: 144105789888273379}
+    - renderer: {fileID: 7685432800370824302}
+    - renderer: {fileID: 979502516916315218}
+    - renderer: {fileID: 2775342326457651382}
+    - renderer: {fileID: 5664313323308130336}
+    - renderer: {fileID: 4722473069499942849}
+    - renderer: {fileID: 7449562021306150457}
+    - renderer: {fileID: 3123926028761781642}
+    - renderer: {fileID: 1567824928840173084}
+    - renderer: {fileID: 5094313026915429764}
+    - renderer: {fileID: 4601957007761770243}
+    - renderer: {fileID: 3948071396422290381}
+    - renderer: {fileID: 1662667299224462639}
+    - renderer: {fileID: 8920524123148794039}
+    - renderer: {fileID: 6826265224410240173}
+    - renderer: {fileID: 8642142778079743053}
+    - renderer: {fileID: 7184828334910019451}
+    - renderer: {fileID: 4536680352232156039}
+    - renderer: {fileID: 3631303783823000806}
+    - renderer: {fileID: 3502081917427841826}
+  - screenRelativeHeight: 0.002857876
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6582172882052959035}
+  m_Enabled: 1
 --- !u!1 &5422919927285922130
 GameObject:
   m_ObjectHideFlags: 0
@@ -59627,6 +60420,98 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &8867975807127578725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4488489866187863537}
+  - component: {fileID: 7275572936339099699}
+  - component: {fileID: 6582172882052959035}
+  - component: {fileID: 3390908497083534509}
+  m_Layer: 0
+  m_Name: Quad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4488489866187863537
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867975807127578725}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.08, y: 2.97, z: -0.03}
+  m_LocalScale: {x: 10.359853, y: 10.359853, z: 10.359853}
+  m_Children: []
+  m_Father: {fileID: 2732663750333055780}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7275572936339099699
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867975807127578725}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6582172882052959035
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867975807127578725}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7d1a76cadb401814084813ec4b2ed372, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &3390908497083534509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867975807127578725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47e587d7626ba6442a91e3c18affb304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8871643884225750108
 GameObject:
   m_ObjectHideFlags: 0

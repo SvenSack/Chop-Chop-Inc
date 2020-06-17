@@ -2480,6 +2480,98 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &4933770330645568196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 801701533837573393}
+  - component: {fileID: 2492711529970525889}
+  - component: {fileID: 9077345038178070828}
+  - component: {fileID: 310955324742447530}
+  m_Layer: 0
+  m_Name: Quad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &801701533837573393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933770330645568196}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.15, y: 2.82, z: 0.01}
+  m_LocalScale: {x: 10.876, y: 10.876, z: 10.876}
+  m_Children: []
+  m_Father: {fileID: 8803016122381315766}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2492711529970525889
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933770330645568196}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &9077345038178070828
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933770330645568196}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 750c0bbdc14d50d49bbcda709b4a0a6b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &310955324742447530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933770330645568196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47e587d7626ba6442a91e3c18affb304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4967470064160144452
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,6 +2976,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8803016122381315766}
+  - component: {fileID: 3284765042326342719}
   m_Layer: 0
   m_Name: spruce_noCut
   m_TagString: Untagged
@@ -2903,9 +2996,93 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3108968497785377198}
+  - {fileID: 801701533837573393}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &3284765042326342719
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508396425249414309}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.1500001, y: 2.8199997, z: -0.090845704}
+  m_Size: 10.875999
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.32553065
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1660399194118394521}
+    - renderer: {fileID: 3175798994062772589}
+    - renderer: {fileID: 2746116626537997663}
+    - renderer: {fileID: 5055667379596063596}
+    - renderer: {fileID: 634409710439121593}
+    - renderer: {fileID: 8301783468368794081}
+    - renderer: {fileID: 1722015197955012370}
+    - renderer: {fileID: 3517324693615928918}
+    - renderer: {fileID: 7923094647626074684}
+    - renderer: {fileID: 2685710384842910041}
+    - renderer: {fileID: 2059272930442915378}
+    - renderer: {fileID: 3167204719771555152}
+    - renderer: {fileID: 5264274823835952977}
+    - renderer: {fileID: 8597858289464306949}
+    - renderer: {fileID: 791744390973548557}
+    - renderer: {fileID: 2431946160323937634}
+    - renderer: {fileID: 8932061772680290723}
+    - renderer: {fileID: 6069915005568645815}
+    - renderer: {fileID: 5917523666230302532}
+    - renderer: {fileID: 1106607313989807524}
+    - renderer: {fileID: 311079863618542480}
+    - renderer: {fileID: 8926545502599509205}
+    - renderer: {fileID: 5635461694159135781}
+    - renderer: {fileID: 1708886202771325372}
+    - renderer: {fileID: 5284607360413627941}
+    - renderer: {fileID: 2260768366311489693}
+    - renderer: {fileID: 8446062440870656599}
+    - renderer: {fileID: 3005245440995510424}
+    - renderer: {fileID: 6308063327459612393}
+    - renderer: {fileID: 5546986861595928853}
+    - renderer: {fileID: 3898751284679458405}
+    - renderer: {fileID: 6735777250589258417}
+    - renderer: {fileID: 4213343675888332681}
+    - renderer: {fileID: 3187579284993813018}
+    - renderer: {fileID: 5532029849212030073}
+    - renderer: {fileID: 1072649923131606245}
+    - renderer: {fileID: 5023215654094961466}
+    - renderer: {fileID: 1399613193593084609}
+    - renderer: {fileID: 5963403411619694192}
+    - renderer: {fileID: 6507779741041572284}
+    - renderer: {fileID: 8801520015558544633}
+    - renderer: {fileID: 3046335539878306354}
+    - renderer: {fileID: 4068186001207324774}
+    - renderer: {fileID: 808553954672344529}
+    - renderer: {fileID: 3649382385621790385}
+    - renderer: {fileID: 6200068409539634436}
+    - renderer: {fileID: 1631029214571188535}
+    - renderer: {fileID: 2561494055987310308}
+    - renderer: {fileID: 5756048887631486175}
+    - renderer: {fileID: 1136263344286198245}
+    - renderer: {fileID: 3203528051767036668}
+    - renderer: {fileID: 3161816716121088161}
+    - renderer: {fileID: 7715267683752988897}
+    - renderer: {fileID: 4397363390186580792}
+    - renderer: {fileID: 5468356544731878160}
+    - renderer: {fileID: 266069272897510796}
+    - renderer: {fileID: 6121881143705083627}
+    - renderer: {fileID: 4894441820704147355}
+    - renderer: {fileID: 8685114446815440495}
+    - renderer: {fileID: 4106281201874948413}
+    - renderer: {fileID: 6784515415485761695}
+  - screenRelativeHeight: 0.0032533077
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 9077345038178070828}
+  m_Enabled: 1
 --- !u!1 &5526731123334289416
 GameObject:
   m_ObjectHideFlags: 0
