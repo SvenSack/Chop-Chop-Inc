@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class BillboardOrienter : MonoBehaviour
 {
-    private Vector3 cameraPosition;
+    private Camera mainCam;
     
     // Start is called before the first frame update
     void Start()
     {
-        cameraPosition = Camera.main.transform.position;
+        mainCam = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(cameraPosition);
+        transform.LookAt(mainCam.transform.position);
     }
 }
