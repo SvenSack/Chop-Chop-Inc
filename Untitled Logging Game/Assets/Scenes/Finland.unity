@@ -17427,16 +17427,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Herb_Rosebay_Finland (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 1306804787339102937, guid: 995d9c095bb9fc94daf0666ea85b106d,
-        type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306804787339102937, guid: 995d9c095bb9fc94daf0666ea85b106d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a7cbe5c511bd2b245a85b23211d7fd2a, type: 2}
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24923,11 +24913,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Herb_Rosebay_Finland
       objectReference: {fileID: 0}
-    - target: {fileID: 1306804787339102937, guid: 995d9c095bb9fc94daf0666ea85b106d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a7cbe5c511bd2b245a85b23211d7fd2a, type: 2}
     - target: {fileID: 4342943195746028566, guid: 995d9c095bb9fc94daf0666ea85b106d,
         type: 3}
       propertyPath: m_LocalPosition.x
