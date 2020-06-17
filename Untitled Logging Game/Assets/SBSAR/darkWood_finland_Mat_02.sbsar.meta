@@ -7,7 +7,7 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
+  script: {fileID: 232528478, guid: 0f3e740287f6e564d93d35f9ec08a20f, type: 3}
   version: 25
   projectContext: 2
   mGraphInstanceData:
@@ -17,10 +17,8 @@ ScriptedImporter:
     generateAllOutputs: 0
     generateMipMaps: 1
     preset: " <sbspreset pkgurl=\"pkg://Tree_Bark_Mat\" label=\"\" >\n  <presetinput
-      identifier=\"$outputsize\" uid=\"123416727\" type=\"8\" value=\"9,9\" />\n 
-      <presetinput identifier=\"Moss_\" uid=\"1876303475\" type=\"4\" value=\"1\"
-      />\n  <presetinput identifier=\"Amount_Moss\" uid=\"1876303518\" type=\"0\"
-      value=\"0.613\" />\n </sbspreset>\n"
+      identifier=\"$outputsize\" uid=\"123416727\" type=\"8\" value=\"9,9\" />\n
+      </sbspreset>\n"
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
