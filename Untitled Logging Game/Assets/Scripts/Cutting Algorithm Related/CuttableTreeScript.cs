@@ -153,6 +153,11 @@ public struct Face
         Debug.Log("Tri1 " + tri2.v0 + "," + tri2.v1 + "," + tri2.v2);
     }
 
+    public void ToLogPosition()
+    {
+
+    }
+
     public Triangle tri1;
     public Triangle tri2;
 }
@@ -234,9 +239,11 @@ public class CuttableTreeScript : MonoBehaviour
     {
         collisionBoxes = new List<TreeSplitCollisionBox>();
 
+        //----------- Get Mesh -------------------//
         meshFilter = gameObject.GetComponent<MeshFilter>();
         mesh = meshFilter.mesh;
 
+        //------------------ Initialize data structures for cutting -----------------------//
         if(useMultithreadedVersion)
         {
             multithreadedBruteForceCollisionBoxInitialize();
@@ -248,13 +255,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         lidPairings.Clear();
 
-        preCutCentroid = new Vector3(0, 0, 0);
-
-        foreach (Vector3 position in mesh.vertices)
-        {
-            preCutCentroid += position;
-        }
-        preCutCentroid /= (mesh.vertices.Length);
+        preCutCentroid = Utils.GetObjectSpaceMeshCentroid(mesh);
 
         objectSpacePreCutCentroid = preCutCentroid;
 
@@ -273,15 +274,13 @@ public class CuttableTreeScript : MonoBehaviour
     {
         normal.Normalize();
 
-        Debug.Log("position " + position.ToString());
-        Debug.Log("normal " + normal.ToString());
-
         Profiler.BeginSample("[cut] MatrixMath");
+
+
 
         Matrix4x4 worldMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
         preCutCentroid = worldMatrix.MultiplyPoint(preCutCentroid);
 
-        //will be usefull later for a possible optimization
         Matrix4x4 inverseWorldMatrix = Matrix4x4.Inverse(worldMatrix);
 
         Vector3 transformedPosition = inverseWorldMatrix.MultiplyPoint3x4(position);
@@ -293,6 +292,8 @@ public class CuttableTreeScript : MonoBehaviour
 
         Profiler.BeginSample("Create native queues");
 
+        //------------------- Initialize Collections that will be used to store the cut results -----------------------------//
+
         NativeQueue<JobFace> rawLowerMeshQueue;
         NativeQueue<JobFace> rawUpperMeshQueue;
         NativeQueue<CutHolePairing> generatedHoleFilling = new NativeQueue<CutHolePairing>(Allocator.TempJob);
@@ -301,20 +302,19 @@ public class CuttableTreeScript : MonoBehaviour
 
         Profiler.EndSample();
 
+        //---------Populate Collections by splitting the meshes that are above,below,and
+        // intersecting with the cutting plane ------------------------//
+
         foreach (TreeSplitCollisionBox collisionBox in collisionBoxes)
         {
             multithreadedPopulatePrimitiveMeshes(rawLowerMeshQueue, rawUpperMeshQueue, generatedHoleFilling, transformedPosition,
                 transformedNormal, worldMatrix, position, normal, collisionBox.faces);
         }
 
-
-
         Profiler.EndSample();
 
         //------- Get center of the intersection points created from the cut------------------------//
         Vector3 centerPoint = Vector3.zero;
-        
-
         int intersectionVertexCount = generatedHoleFilling.Count;
     
         List<Vector3> holes = new List<Vector3>();
@@ -339,8 +339,6 @@ public class CuttableTreeScript : MonoBehaviour
         GameObject bottomHoleCover = InstantiateHole(intersectionVertexCount, holes, centerPoint,  normal);
         GameObject upperHoleCover = InstantiateHole(intersectionVertexCount, holes, centerPoint, normal, false);
 
-    
-
         //-------------------------- Reinitialize the original mesh ------------------------------------//
         Profiler.BeginSample("[cut] Reinitialize the original mesh ");
         populateMesh(rawLowerMeshQueue, mesh);
@@ -354,7 +352,6 @@ public class CuttableTreeScript : MonoBehaviour
             meshPhysicsManager.GenerateMeshColliderFromCut(mesh, rigidBodyNeeded);
         }
         
-
         //---------------------- Create a new mesh and assign in to the newly created mesh-------------------------------//
         Profiler.BeginSample("[cut] Create a new mesh and assign in to the newly created mesh");
         GameObject newTree;
@@ -362,27 +359,6 @@ public class CuttableTreeScript : MonoBehaviour
         Profiler.EndSample();
 
 
-        float highestPoint = float.MinValue;
-        Vector3 point = new Vector3(highestPoint, highestPoint, highestPoint);
-
-        //find highest intersectionPoint
-        foreach (MeshLidPairing lidPairing in lidPairings)
-        {
-            Vector3 worldV0 = worldMatrix.MultiplyPoint(lidPairing.v0.position);
-            Vector3 worldV2 = worldMatrix.MultiplyPoint(lidPairing.v1.position);
-
-            if (worldV0.y > highestPoint)
-            {
-                highestPoint = worldV0.y;
-                point = worldV0;
-            }
-
-            if (worldV2.y > highestPoint)
-            {
-                highestPoint = worldV2.y;
-                point = worldV2;
-            }
-        }
 
         //---------------------- Re assign the leaves to its correct parent--------------------------//
 
@@ -394,7 +370,8 @@ public class CuttableTreeScript : MonoBehaviour
         if(intersectionVertexCount == 0) { centerPoint = transform.position; }
         otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal.normalized, centerPoint);
 
-        if(nativeArrayAllocator)
+        //---------------------- clear up or dispose of natuve queues-------------------//
+        if (nativeArrayAllocator)
         {
             rawLowerMeshQueue.Clear();
             rawUpperMeshQueue.Clear();
@@ -407,8 +384,7 @@ public class CuttableTreeScript : MonoBehaviour
        
         generatedHoleFilling.Dispose();
 
-        //Utils.EnsureCentroidIsPosition(bottomHoleCover.transform);
-        //Utils.EnsureCentroidIsPosition(upperHoleCover.transform);
+        //------------------- Set generated holes to respective parents -----------------------------//
 
         bottomHoleCover.transform.SetParent(transform);
         upperHoleCover.transform.SetParent(newTree.transform);
@@ -940,7 +916,15 @@ public class CuttableTreeScript : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.C))
         {
-            CutAt(DebugObjectTest.transform.position, DebugObjectTest.transform.up,00.0f);
+            if (useMultithreadedVersion)
+            {
+                CutAt(DebugObjectTest.transform.position, DebugObjectTest.transform.up, 00.0f);
+            }
+            else
+            {
+                CutAtNoOptimizations(DebugObjectTest.transform.position, DebugObjectTest.transform.up, 00.0f);
+            }
+            
         }
     }
 
@@ -1522,9 +1506,9 @@ public class CuttableTreeScript : MonoBehaviour
 
         //sort the points above and below the splitting plane based on the vector created by the last element of the intersectionPoint Collection and the first element in the Vector3 Collection
 
-        baseDirection = (uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0]).normalized;
+        Vector3 indexbaseDirection = (uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0]).normalized;
 
-        IndexDirectionComparer idc = new IndexDirectionComparer(baseDirection
+        IndexDirectionComparer idc = new IndexDirectionComparer(indexbaseDirection
             , basePosition, mesh.vertices, world);
 
         uniqueTrianglesAboveSplittingPlane.Sort(idc);
@@ -1532,7 +1516,7 @@ public class CuttableTreeScript : MonoBehaviour
 
         //check one more time, check if points and intersection points are ordered in the right direction
 
-        Vector3 intersectionDirection = uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1] - uniqueIntersectionPoints[0];
+        Vector3 intersectionDirection = world.MultiplyPoint(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]) - world.MultiplyPoint(uniqueIntersectionPoints[0]);
 
         Vector3 vertexDirection =
              world.MultiplyPoint(mesh.vertices[uniqueTrianglesBelowSplittingPlane[uniqueTrianglesBelowSplittingPlane.Count - 1]]) -
@@ -1553,18 +1537,18 @@ public class CuttableTreeScript : MonoBehaviour
         assembleFacesFromSplitVertices(uniqueIntersectionPoints, uniqueTrianglesBelowSplittingPlane, false, world, lowerPrimitiveMesh);
 
         //use the points above the spllitting plane and the intersection points to create the triangle that will be placed in the upperPrimitiveMesh
-
+        Vector3 intersectionDirection2 = world.MultiplyPoint(uniqueIntersectionPoints[uniqueIntersectionPoints.Count - 1]) - world.MultiplyPoint(uniqueIntersectionPoints[0]);
 
         Vector3 vertexDirection2 =
            world.MultiplyPoint(mesh.vertices[uniqueTrianglesAboveSplittingPlane[uniqueTrianglesAboveSplittingPlane.Count - 1]]) -
            world.MultiplyPoint(mesh.vertices[uniqueTrianglesAboveSplittingPlane[0]]);
 
-        if (Vector3.Dot(intersectionDirection, baseDirection) < 0)
+        if (Vector3.Dot(intersectionDirection2, baseDirection) < 0)
         {
             uniqueIntersectionPoints.Reverse();
         }
 
-        if (Vector3.Dot(vertexDirection2, intersectionDirection) < 0)
+        if (Vector3.Dot(vertexDirection2, intersectionDirection2) < 0)
         {
             uniqueTrianglesAboveSplittingPlane.Reverse();
         }
@@ -1695,10 +1679,12 @@ public class CuttableTreeScript : MonoBehaviour
         TreeSplitCollisionBox tscb = new TreeSplitCollisionBox();
         tscb.faces = new List<Face>();
         collisionBoxes.Add(tscb);
+        
+        int writeCount = mesh.triangles.Length%6 == 0 ?
+            mesh.triangles.Length / 6 : 
+            (mesh.triangles.Length / 6) + 1;
 
-        int writeCount = mesh.triangles.Length / 6;
-
-        NativeArray<FacePairing> faces = new NativeArray<FacePairing>(writeCount+1, Allocator.TempJob);
+        NativeArray<FacePairing> faces = new NativeArray<FacePairing>((mesh.triangles.Length / 6)+1, Allocator.TempJob);
 
         Profiler.BeginSample("[cut] Array setup");
 
