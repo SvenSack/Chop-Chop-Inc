@@ -9,6 +9,12 @@ namespace Animal
         [SerializeField] private float speed = 2f;
         private bool running;
 
+        public override void Start()
+        {
+            base.Start();
+            SnapToCamera();
+        }
+
         public override void Update()
         {
             bool landed = animator.GetBool("land");

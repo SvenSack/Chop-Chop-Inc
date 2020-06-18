@@ -22,7 +22,7 @@ namespace Animal
 
         protected Camera camera;
 
-        void Start()
+        public virtual void Start()
         {
             soundMan = FindObjectOfType<SoundMan>();
             camera = Camera.main;

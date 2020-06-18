@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Animal;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class PlantMan : MonoBehaviour
 {
@@ -69,8 +72,16 @@ public class PlantMan : MonoBehaviour
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Finland") && Random.Range(0,4) == 3)
         {
             Transform[] leaves = newTreePiece.transform.GetComponentsInChildren<Transform>();
-            
-            // Instantiate(squirrelPrefab, )
+            Transform maybeLeaf = leaves[Random.Range(0, leaves.Length)];
+            if (maybeLeaf.gameObject.CompareTag("Leaves"))
+            {
+                GameObject squirrel = Instantiate(squirrelPrefab);
+                squirrel.transform.position = maybeLeaf.position;
+                Squirrel squirsquirrelrel = squirrel.GetComponentInChildren<Squirrel>();
+                Physics.Raycast(squirrel.transform.position, Vector3.down, out var hit, 1000, groundMask);
+                Debug.DrawLine(squirrel.transform.position,hit.point,Color.green, 1000);
+                squirsquirrelrel.floorHeight = hit.point.y;
+            }
         }
     }
     
