@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlantMan : MonoBehaviour
@@ -9,6 +10,7 @@ public class PlantMan : MonoBehaviour
     [SerializeField] float[] leafScaleValues = new []{1f,1f,1f,1f,1f,1f};
     [SerializeField] Color[] leafColorValues = new Color[8];
     [SerializeField] private GameObject[] regrowableTrees = new GameObject[8];
+    [SerializeField] private GameObject squirrelPrefab;
     public Sprite[] leafParticles = new Sprite[8];
     
     public GameObject nutPrefab;
@@ -25,7 +27,6 @@ public class PlantMan : MonoBehaviour
     private Camera mainCam;
     
     
-    // Start is called before the first frame update
     void Start()
     {
         cutMan = GetComponent<CutMan>();
@@ -33,7 +34,6 @@ public class PlantMan : MonoBehaviour
         mainCam = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (shakeTimer > 0)
@@ -65,6 +65,13 @@ public class PlantMan : MonoBehaviour
         var newPartShape = newPart.shape;
         newPartShape.mesh = newTreePiece.GetComponent<MeshFilter>().mesh;
         newPart.Play();
+
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Finland") && Random.Range(0,4) == 3)
+        {
+            Transform[] leaves = newTreePiece.transform.GetComponentsInChildren<Transform>();
+            
+            // Instantiate(squirrelPrefab, )
+        }
     }
     
     public IEnumerator SeedSpawn(Transform tree, GraphicRaycaster gRaycaster)
