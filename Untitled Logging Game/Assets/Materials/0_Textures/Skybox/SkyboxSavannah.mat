@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BackTex:
-        m_Texture: {fileID: 2800000, guid: ba9b539565bb63d4683af248fc9b4691, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5a53fbea3efe1db49ab0a15660c5de20, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LeftTex:
-        m_Texture: {fileID: 2800000, guid: b3246b2156fba4c4b86f23ddbc7a120e, type: 3}
+        m_Texture: {fileID: 2800000, guid: ba9b539565bb63d4683af248fc9b4691, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RightTex:
-        m_Texture: {fileID: 2800000, guid: 5a53fbea3efe1db49ab0a15660c5de20, type: 3}
+        m_Texture: {fileID: 2800000, guid: b3246b2156fba4c4b86f23ddbc7a120e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
