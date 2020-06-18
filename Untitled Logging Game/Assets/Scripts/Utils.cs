@@ -193,9 +193,9 @@ public class Utils : MonoBehaviour
     {
         Vector3 centroid = new Vector3();
 
-        for (int i = 0; i < mesh.triangles.Length; i++)
+        foreach(Vector3 position in mesh.vertices)
         {
-            centroid += mesh.vertices[mesh.triangles[i]];
+            centroid += position;
         }
 
         centroid /= mesh.triangles.Length;
@@ -233,5 +233,7 @@ public class Utils : MonoBehaviour
         return verts;
         #endif
     }
+
+    
 
 }

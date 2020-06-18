@@ -36,8 +36,8 @@ public class IntersectionQueryComparer : IComparer<IntersectionQuery>
 
     public int Compare(IntersectionQuery intersectionPoint1, IntersectionQuery intersectionPoint2)
     {
-        float x = Vector3.Dot(baseDirection, (world.MultiplyPoint(intersectionPoint1.intersectionPosition) - basePosition));
-        float y = Vector3.Dot(baseDirection, (world.MultiplyPoint(intersectionPoint2.intersectionPosition) - basePosition));
+        float x = Vector3.Dot(baseDirection, (world.MultiplyPoint(intersectionPoint1.intersectionPosition) - basePosition).normalized);
+        float y = Vector3.Dot(baseDirection, (world.MultiplyPoint(intersectionPoint2.intersectionPosition) - basePosition).normalized);
 
         return x.CompareTo(y);
     }
