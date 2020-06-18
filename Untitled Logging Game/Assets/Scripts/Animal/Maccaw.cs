@@ -16,7 +16,7 @@ namespace Animal
                 if(idleTimer <= idleTime)
                 {
                     idleTime = 0;
-                    mouth.clip = soundMan.foxSounds[Random.Range(0, 4)];
+                    mouth.clip = soundMan.maccawSounds[Random.Range(0, 7)];
                     mouth.time = 0;
                     mouth.Play();
                 }
@@ -38,7 +38,7 @@ namespace Animal
         {
             if(timer > 0)
                 yield return new WaitForSeconds(timer-.2f);
-            mouth.clip = soundMan.foxSounds[Random.Range(5, 8)];
+            mouth.clip = soundMan.maccawSounds[Random.Range(7, 13)];
             mouth.time = 0;
             mouth.Play();
             if(timer > 0)

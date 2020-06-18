@@ -30,6 +30,9 @@ namespace Animal
                 else
                 {
                     animator.SetBool("land", true);
+                    mouth.clip = soundMan.squirrelSounds[0];
+                    mouth.time = 0;
+                    mouth.Play();
                     StartCoroutine(LandCompleter(1.8f));
                 }
             }
@@ -41,7 +44,7 @@ namespace Animal
         IEnumerator LandCompleter(float timer)
         {
             yield return new WaitForSeconds(timer-1f);
-            mouth.clip = soundMan.foxSounds[Random.Range(5, 8)];
+            mouth.clip = soundMan.squirrelSounds[Random.Range(6, 11)];
             mouth.time = 0;
             mouth.Play();
             yield return new WaitForSeconds(1f);
