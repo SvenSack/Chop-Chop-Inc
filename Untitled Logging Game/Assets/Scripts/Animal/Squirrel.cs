@@ -12,7 +12,7 @@ namespace Animal
         public override void Start()
         {
             base.Start();
-            SnapToCamera();
+            SnapToCamera(true);
         }
 
         public override void Update()

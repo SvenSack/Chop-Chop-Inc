@@ -37,13 +37,14 @@ namespace Animal
         }
 
 
-        public void SnapToCamera()
+        public void SnapToCamera(bool action)
         {
             Vector3 cameraPosition = camera.transform.position;
-            Vector3 lookAtPosition = new Vector3(cameraPosition.x, transform.position.y, cameraPosition.y);
+            Vector3 lookAtPosition = new Vector3(cameraPosition.x, transform.position.y, cameraPosition.z);
 
             transform.LookAt(lookAtPosition);
-            waiting = false;
+            if(action)
+                waiting = false;
         }
         
         public void PerformMotion()

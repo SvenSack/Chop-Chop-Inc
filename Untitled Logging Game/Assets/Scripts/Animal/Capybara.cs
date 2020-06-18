@@ -38,6 +38,9 @@ namespace Animal
                 if(!waiting)
                 tireTime += Time.deltaTime;
             }
+            
+            if(waiting)
+                SnapToCamera(false);
 
             
             if(!isTurning && !laying && (isRunning && running || !isRunning) && !waiting)

@@ -67,7 +67,7 @@ public class CameraMan : MonoBehaviour
         plantMan.currentTreeSpots = plantMan.currentTreeSpots.Union(treesToPlantEach[currentLocation]).ToList<Transform>();
         foreach (var animal in animalsToMeetEach[currentLocation])
         {
-            animal.SnapToCamera();
+            animal.SnapToCamera(true);
         }
     }
 }
