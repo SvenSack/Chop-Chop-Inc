@@ -21,14 +21,13 @@ namespace Animal
             var position = transform.position;
             if(!landed)
             {
-                if (position.y > floorHeight)
+                if (position.y >= floorHeight)
                 {
                     transform.position += new Vector3(0, -speed * Time.deltaTime, 0);
-                    if (position.y < floorHeight)
-                        position.y = floorHeight;
                 }
                 else
                 {
+                    position.y = floorHeight;
                     animator.SetBool("land", true);
                     mouth.clip = soundMan.squirrelSounds[0];
                     mouth.time = 0;
@@ -38,7 +37,7 @@ namespace Animal
             }
             
             if(running)
-                PerformMotion();
+                PerformMotion(true);
         }
         
         IEnumerator LandCompleter(float timer)

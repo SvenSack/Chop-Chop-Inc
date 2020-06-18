@@ -44,7 +44,7 @@ namespace Animal
 
             
             if(!isTurning && !laying && (isRunning && running || !isRunning) && !waiting)
-                PerformMotion();
+                PerformMotion(true);
             
             
             if((!laying && !running) && !isTurning)

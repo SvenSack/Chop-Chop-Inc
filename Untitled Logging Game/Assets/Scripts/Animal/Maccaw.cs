@@ -30,7 +30,7 @@ namespace Animal
                 SnapToCamera(false);
 
             if(isFlying && flying && !waiting)
-                PerformMotion();
+                PerformMotion(false);
         }
 
         

@@ -31,7 +31,7 @@ namespace Animal
 
             
             if(!isTurning && !isShocked && !waiting)
-                PerformMotion();
+                PerformMotion(true);
             
             
             if(!animator.GetBool("scared") && !isTurning)
