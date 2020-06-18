@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouth: {fileID: 5318756855815849886}
-  soundProximity: 10
+  soundProximity: 20
   idleTimer: 20
   idleTime: 0
   animator: {fileID: 7703950504534133767}
   soundMan: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
   directionIsLeft: 1
-  walkSpeed: 0.5
+  walkSpeed: 1
   spriteTrans: {fileID: 0}
   isTurning: 0
   turnTime: 2

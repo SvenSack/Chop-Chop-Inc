@@ -19,7 +19,7 @@ namespace Animal
                 if(idleTimer <= idleTime)
                 {
                     idleTime = 0;
-                    mouth.clip = soundMan.foxSounds[Random.Range(0, 4)];
+                    mouth.clip = soundMan.capybaraSounds[Random.Range(0, 9)];
                     mouth.time = 0;
                     mouth.Play();
                 }
@@ -38,10 +38,13 @@ namespace Animal
                 if(!waiting)
                 tireTime += Time.deltaTime;
             }
+            
+            if(waiting)
+                SnapToCamera(false);
 
             
             if(!isTurning && !laying && (isRunning && running || !isRunning) && !waiting)
-                PerformMotion();
+                PerformMotion(true);
             
             
             if((!laying && !running) && !isTurning)
@@ -53,7 +56,7 @@ namespace Animal
         {
             if(timer > 0)
                 yield return new WaitForSeconds(timer-.2f);
-            mouth.clip = soundMan.foxSounds[Random.Range(5, 8)];
+            mouth.clip = soundMan.capybaraSounds[Random.Range(9, 16)];
             mouth.time = 0;
             mouth.Play();
             if(timer > 0)

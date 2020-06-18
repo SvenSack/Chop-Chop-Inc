@@ -10,8 +10,10 @@ public class SoundMan : MonoBehaviour
     private AudioSource chainsawSoundSource;
     private Coroutine cueCutLoop;
     
-    public AudioClip[] foxSounds = new AudioClip[4];
-    public AudioClip[] squirrelSounds = new AudioClip[10];
+    public AudioClip[] foxSounds = new AudioClip[15];
+    public AudioClip[] squirrelSounds = new AudioClip[11];
+    public AudioClip[] capybaraSounds = new AudioClip[16];
+    public AudioClip[] maccawSounds = new AudioClip[14];
 
     public AudioClip[] treeFall = new AudioClip[2];
 
