@@ -23,7 +23,7 @@ public class CameraMan : MonoBehaviour
     [SerializeField] private List<AnimalSprite> animalsForRegion2;
     [SerializeField] private List<AnimalSprite> animalsForRegion3;
     public List<AnimalSprite>[] animalsToMeetEach;
-    private int currentLocation = -1;
+    public int currentLocation = -1;
     public Camera mainCam;
     public float zoomTime = 5f;
     private CutMan cutMan;

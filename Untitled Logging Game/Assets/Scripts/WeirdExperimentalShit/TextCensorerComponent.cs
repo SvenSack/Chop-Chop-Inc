@@ -87,6 +87,7 @@ public class TextCensorer
             var stream = File.Create(censoredWordsFilePath);
             stream.Close();
             wordsToCheck.Concat(defaultCensored.ToList());
+            return;
         }
 
         using (var reader = new StreamReader(File.Open(censoredWordsFilePath, FileMode.Open)))
