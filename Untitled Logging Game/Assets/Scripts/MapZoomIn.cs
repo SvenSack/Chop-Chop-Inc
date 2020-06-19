@@ -15,6 +15,7 @@ public class MapZoomIn : MonoBehaviour
     public Transform defaultZoom;
     private SceneMan sceneMan;
     public GameObject[] mapButtons = new GameObject[3];
+    public GameObject[] mapPins = new GameObject[3];
     public GameObject[] mainMenu = new GameObject[3];
     public GameObject nameSelector;
     public Transform nameZoom;
@@ -28,12 +29,15 @@ public class MapZoomIn : MonoBehaviour
             but.SetActive(false);
         }
         nameSelector.SetActive(false);
+        mapPins[1].SetActive(false);
+        mapPins[2].SetActive(false);
     }
 
     public void Zoom1()
     {
         mainCam.transform.LeanMove(zooms[0].transform.position, zoomTime);
         mainCam.transform.LeanRotate(zooms[0].rotation.eulerAngles, zoomTime);
+        mapButtons[2].SetActive(false);
         StartCoroutine(LoadScene(sceneLoads[0]));
     }
     
@@ -75,10 +79,8 @@ public class MapZoomIn : MonoBehaviour
     {
         mainCam.transform.LeanMove(defaultZoom.transform.position, zoomTime);
         mainCam.transform.LeanRotate(defaultZoom.rotation.eulerAngles, zoomTime);
-        foreach (var but in mapButtons)
-        {
-            but.SetActive(true);
-        }
+        mapButtons[0].SetActive(true);
+        mapPins[0].SetActive(true);
         
         nameSelector.SetActive(false);
     }
@@ -108,10 +110,33 @@ public class MapZoomIn : MonoBehaviour
     IEnumerator ReturnToMap(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        if(sceneMan.prevScene != "")
+        {
+            foreach (var but in mapButtons)
+            {
+                but.SetActive(true);
+            }
+            foreach (var part in mainMenu)
+            {
+                part.SetActive(false);   
+            }
+
+            foreach (var pin in mapPins)
+            {
+                pin.SetActive(true);
+            }
+            
+            nameField.text = sceneMan.playerName;
+            nameSelector.SetActive(false);
+            
+            ZoomOut();
+        }
         if (sceneMan.prevScene == sceneLoads[0])
         {
             mainCam.transform.position = zooms[0].position;
             mainCam.transform.rotation = zooms[0].rotation;
+            mapButtons[2].SetActive(false);
+            mapPins[2].SetActive(false);
         }
         else if (sceneMan.prevScene == sceneLoads[1])
         {
@@ -123,22 +148,7 @@ public class MapZoomIn : MonoBehaviour
             mainCam.transform.position = zooms[2].position;
             mainCam.transform.rotation = zooms[2].rotation;
         }
-        if(sceneMan.prevScene != "")
-        {
-            foreach (var but in mapButtons)
-            {
-                but.SetActive(true);
-            }
-            foreach (var part in mainMenu)
-            {
-                part.SetActive(false);   
-            }
-            
-            nameField.text = sceneMan.playerName;
-            nameSelector.SetActive(false);
-            
-            ZoomOut();
-        }
+        
         // Debug.Log("Zoom me out, scotty !");
     }
     
