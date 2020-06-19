@@ -26,7 +26,10 @@ public class PlantMan : MonoBehaviour
     
     [SerializeField] GameObject fallParticleObject;
 
+    [SerializeField] private GameObject plantPopUp;
+
     private CutMan cutMan;
+    private CameraMan camMan;
     private Camera mainCam;
     
     
@@ -35,6 +38,8 @@ public class PlantMan : MonoBehaviour
         cutMan = GetComponent<CutMan>();
         groundMask = LayerMask.GetMask("Ground");
         mainCam = Camera.main;
+        camMan = FindObjectOfType<CameraMan>();
+        plantPopUp.SetActive(false);
     }
 
     void Update()
@@ -45,6 +50,11 @@ public class PlantMan : MonoBehaviour
 
     public void plantSeed(int treeIndex)
     {
+        if (currentTreeSpots.Count == 0 && camMan.currentLocation == 3)
+        {
+            plantPopUp.SetActive(true);
+            cutMan.mayCut = false;
+        }
         GameObject newTree = Instantiate(regrowableTrees[treeIndex], currentTreeSpots[0]);
         newTree.transform.localScale = new Vector3(.1f,.1f,.1f);
         newTree.transform.LeanScale(new Vector3(.4f, .4f, .4f), 2f);
