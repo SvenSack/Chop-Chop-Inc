@@ -37,6 +37,7 @@ public class HighScoreManager : MonoBehaviour
 
         inputField = FindObjectOfType<InputField>();
 
+        LoadCurrentLevelScore();
     }
 
 
