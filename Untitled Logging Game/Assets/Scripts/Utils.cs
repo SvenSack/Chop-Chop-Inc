@@ -6,6 +6,7 @@ using Unity.Collections;
 
 public class Utils : MonoBehaviour
 {
+   
 
     static public T SelectRandomObjectFromCollection<T, TCollection>(TCollection Collection) where TCollection : ICollection<T>
     {
