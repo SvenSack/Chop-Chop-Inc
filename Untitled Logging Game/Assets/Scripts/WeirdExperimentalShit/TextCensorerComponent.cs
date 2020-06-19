@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Linq;
+using TMPro;
 
 public class TextCensorerComponent : MonoBehaviour
 {
     
     private static string fileName = "CensoredWords.txt";
 
-    public Text textToCheck;
+    public TextMeshProUGUI textToCheck;
     public InputField inputField;
 
     public bool CensorCheckOnUpdate =false;

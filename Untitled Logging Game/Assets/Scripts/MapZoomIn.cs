@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +16,9 @@ public class MapZoomIn : MonoBehaviour
     private SceneMan sceneMan;
     public GameObject[] mapButtons = new GameObject[3];
     public GameObject[] mainMenu = new GameObject[3];
+    public GameObject nameSelector;
+    public Transform nameZoom;
+    public TextMeshProUGUI nameField;
 
     private void Awake()
     {
@@ -23,6 +27,7 @@ public class MapZoomIn : MonoBehaviour
         {
             but.SetActive(false);
         }
+        nameSelector.SetActive(false);
     }
 
     public void Zoom1()
@@ -46,6 +51,26 @@ public class MapZoomIn : MonoBehaviour
         StartCoroutine(LoadScene(sceneLoads[2]));
     }
 
+    public void ZoomName()
+    {
+        mainCam.transform.LeanMove(nameZoom.transform.position, zoomTime);
+        mainCam.transform.LeanRotate(nameZoom.rotation.eulerAngles, zoomTime);
+        
+
+        foreach (var part in mainMenu)
+        {
+            part.SetActive(false);   
+        }
+
+        StartCoroutine(CompleteNameLoad(zoomTime));
+    }
+
+    IEnumerator CompleteNameLoad(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        nameSelector.SetActive(true);
+    }
+
     public void ZoomMap()
     {
         mainCam.transform.LeanMove(defaultZoom.transform.position, zoomTime);
@@ -54,11 +79,8 @@ public class MapZoomIn : MonoBehaviour
         {
             but.SetActive(true);
         }
-
-        foreach (var part in mainMenu)
-        {
-         part.SetActive(false);   
-        }
+        
+        nameSelector.SetActive(false);
     }
 
     public void ZoomOut()
@@ -111,6 +133,10 @@ public class MapZoomIn : MonoBehaviour
             {
                 part.SetActive(false);   
             }
+            
+            nameField.text = sceneMan.playerName;
+            nameSelector.SetActive(false);
+            
             ZoomOut();
         }
         // Debug.Log("Zoom me out, scotty !");
