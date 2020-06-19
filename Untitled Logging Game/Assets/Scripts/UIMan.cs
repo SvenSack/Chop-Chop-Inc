@@ -74,9 +74,4 @@ public class UIMan : MonoBehaviour
         target.SetActive(false);
         cutMan.mayCut = true;
     }
-
-    public void HelpButton()
-    {
-        Debug.Log("I would like to help, but I dont know how");
-    }
 }
