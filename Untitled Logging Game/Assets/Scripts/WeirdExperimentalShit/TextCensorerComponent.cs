@@ -85,8 +85,16 @@ public class TextCensorer
         Debug.Log("LoadCensoredWords");
         if (!File.Exists(censoredWordsFilePath))
         {
-            var stream = File.Create(censoredWordsFilePath);
-            stream.Close();
+            using (var writer = new StreamWriter(File.Open(censoredWordsFilePath, FileMode.Create)))
+            {
+                GameDataWriter dataWriter = new GameDataWriter(writer);
+
+                foreach(var word in defaultCensored)
+                {
+                    dataWriter.Write(word);
+                }
+
+            }
             wordsToCheck = wordsToCheck.Concat(defaultCensored.ToList()).ToList();
             return;
         }
