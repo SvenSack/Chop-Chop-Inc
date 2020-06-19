@@ -10,6 +10,7 @@ public class UIMan : MonoBehaviour
     public int plantedTrees;
     
     public string mapScene;
+    private CutMan cutMan;
 
     private SceneMan sceneMan;
     [SerializeField] private Slider scoreSlider;
@@ -19,6 +20,7 @@ public class UIMan : MonoBehaviour
     private void Awake()
     {
         sceneMan = FindObjectOfType<SceneMan>();
+        cutMan = FindObjectOfType<CutMan>();
     }
 
     // Start is called before the first frame update
@@ -65,6 +67,12 @@ public class UIMan : MonoBehaviour
     {
         sceneMan.prevScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(mapScene, LoadSceneMode.Single);
+    }
+
+    public void ClosePopUp(GameObject target)
+    {
+        target.SetActive(false);
+        cutMan.mayCut = true;
     }
 
     public void HelpButton()

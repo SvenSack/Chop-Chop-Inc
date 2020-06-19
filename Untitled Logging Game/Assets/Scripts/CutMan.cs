@@ -16,6 +16,8 @@ public class CutMan : MonoBehaviour
     private Vector2 cutStart;
     private Vector2 cutUpdate;
     private bool isCutting;
+
+    public bool mayCut = true;
     
     [SerializeField] GraphicRaycaster gRaycaster = null;
     [SerializeField] EventSystem eventSystem = null;
@@ -59,6 +61,8 @@ public class CutMan : MonoBehaviour
     private GameObject trailMan;
     private PlantMan plantMan;
 
+    [SerializeField] private GameObject burnPopUp;
+
     private void Awake()
     {
         soundMan = FindObjectOfType<SoundMan>();
@@ -84,6 +88,7 @@ public class CutMan : MonoBehaviour
 
         trailMan = GameObject.FindGameObjectWithTag("TrailMan");
         plantMan = GetComponent<PlantMan>();
+        burnPopUp.SetActive(false);
     }
 
     // Update is called once per frame
@@ -96,7 +101,7 @@ public class CutMan : MonoBehaviour
         }
         
         
-        if (Input.GetMouseButtonDown(0)) // try initiating cut
+        if (Input.GetMouseButtonDown(0) && mayCut) // try initiating cut
         {
             if(cutRoutine == null)
                 cutRoutine = StartCoroutine(InitiateCut());
@@ -419,6 +424,11 @@ public class CutMan : MonoBehaviour
 
                         if (!checker)
                         {
+                            if (camMan.currentLocation == 3)
+                            {
+                                burnPopUp.SetActive(true);
+                                mayCut = false;
+                            }
                             camMan.MoveOn();
                             currentTargetIndices.Clear();
                         }
