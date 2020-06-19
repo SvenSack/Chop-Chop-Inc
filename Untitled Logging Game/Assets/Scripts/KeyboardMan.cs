@@ -20,10 +20,13 @@ public class KeyboardMan : MonoBehaviour
     public TextMeshProUGUI targetTextBox;
     [SerializeField] private Sprite pressedShiftSprite;
     [SerializeField] private Sprite unPressedShiftSprite;
+    private SceneMan sceneMan;
 
     private void Start()
     {
         currentShift = ShiftState.FirstCase;
+        sceneMan = FindObjectOfType<SceneMan>();
+        targetTextBox.text = sceneMan.playerName;
     }
 
     public void keyBoardLetterKey(Button button)
@@ -76,5 +79,11 @@ public class KeyboardMan : MonoBehaviour
     public void KeyBoardSpaceKey()
     {
         targetTextBox.text = targetTextBox.text.Substring(0, targetTextBox.text.Length - 1);
+    }
+
+    public void KeyboardConfirmKey()
+    {
+        sceneMan.playerName = targetTextBox.text;
+        FindObjectOfType<MapZoomIn>().ZoomMap();
     }
 }

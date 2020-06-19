@@ -21,6 +21,70 @@
             </e>
           </e>
         </e>
+        <e p="Delete After" t="Include">
+          <e p="MA_TextureAtlasser-master" t="Include">
+            <e p="Assets" t="Include">
+              <e p="MA_ToolBox" t="Include">
+                <e p="MA_TextureAtlasserPro" t="Include">
+                  <e p="Scripts" t="Include">
+                    <e p="Data" t="Include">
+                      <e p="Editor" t="Include">
+                        <e p="MA_TextureAtlasserProSettingsEditor.cs" t="Include" />
+                      </e>
+                      <e p="MA_ModelGroup.cs" t="Include" />
+                      <e p="MA_TextureAtlasserProAtlas.cs" t="Include" />
+                      <e p="MA_TextureAtlasserProExportSettings.cs" t="Include" />
+                      <e p="MA_TextureAtlasserProQuad.cs" t="Include" />
+                      <e p="MA_TextureAtlasserProSettings.cs" t="Include" />
+                      <e p="MA_TextureGroup.cs" t="Include" />
+                    </e>
+                    <e p="Editor" t="Include">
+                      <e p="Utils" t="Include">
+                        <e p="MA_TextureAtlasserProGuiLoader.cs" t="Include" />
+                        <e p="MA_TextureAtlasserProUtils.cs" t="Include" />
+                      </e>
+                      <e p="Views" t="Include">
+                        <e p="MA_TextureAtlasserProDebugView.cs" t="Include" />
+                        <e p="MA_TextureAtlasserProInspectorView.cs" t="Include" />
+                        <e p="MA_TextureAtlasserProMenuView.cs" t="Include" />
+                        <e p="MA_TextureAtlasserProViewBase.cs" t="Include" />
+                        <e p="MA_TextureAtlasserProWorkView.cs" t="Include" />
+                      </e>
+                      <e p="Windows" t="Include">
+                        <e p="MA_TextureAtlasserProCreateExportWindow.cs" t="Include" />
+                        <e p="MA_TextureAtlasserProCreateWindow.cs" t="Include" />
+                        <e p="MA_TextureAtlasserProExportWindow.cs" t="Include" />
+                        <e p="MA_TextureAtlasserProWindow.cs" t="Include" />
+                      </e>
+                    </e>
+                  </e>
+                </e>
+                <e p="MA_Utilities" t="Include">
+                  <e p="EditorUtils" t="Include">
+                    <e p="MA_EditorGridUtils.cs" t="Include" />
+                    <e p="MA_EditorRectUtils.cs" t="Include" />
+                    <e p="MA_EditorZoomUtils.cs" t="Include" />
+                  </e>
+                  <e p="MeshUtils" t="Include">
+                    <e p="MA_MeshUtils.cs" t="Include" />
+                  </e>
+                  <e p="PrefabUtils" t="Include">
+                    <e p="MA_PrefabUtils.cs" t="Include" />
+                  </e>
+                  <e p="StringUtils" t="Include">
+                    <e p="MA_StringUtils.cs" t="Include" />
+                  </e>
+                  <e p="TextureUtils" t="Include">
+                    <e p="MA_TextureUtils.cs" t="Include" />
+                  </e>
+                </e>
+              </e>
+            </e>
+            <e p="ProjectSettings" t="Include">
+              <e p="ProjectVersion.txt" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="Editor" t="Include">
           <e p="ProceduralPlacementEditor.cs" t="Include" />
         </e>
@@ -51,6 +115,7 @@
           </e>
           <e p="AudioCleanup.cs" t="Include" />
           <e p="BillboardOrienter.cs" t="Include" />
+          <e p="BurnDownActivator.cs" t="Include" />
           <e p="CameraMan.cs" t="Include" />
           <e p="CutMan.cs" t="Include" />
           <e p="CutTarget.cs" t="Include" />
@@ -72,6 +137,7 @@
             <e p="HighScoreView.cs" t="Include" />
             <e p="PlayerScoreData.cs" t="Include" />
           </e>
+          <e p="GameObjectActivator.cs" t="Include" />
           <e p="KeyboardMan.cs" t="Include" />
           <e p="MapButtonGlow.cs" t="Include" />
           <e p="MapZoomIn.cs" t="Include" />
@@ -95,6 +161,7 @@
           <e p="SceneMan.cs" t="Include" />
           <e p="ScoreboardSceneManager.cs" t="Include" />
           <e p="SoundMan.cs" t="Include" />
+          <e p="TerrainLayerSwitcher.cs" t="Include" />
           <e p="TreeFallParticle.cs" t="Include" />
           <e p="TutorialMan.cs" t="Include" />
           <e p="UIMan.cs" t="Include" />
