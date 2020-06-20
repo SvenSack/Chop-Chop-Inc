@@ -42,6 +42,8 @@ public class NutMover : MonoBehaviour
             }
             else
             {
+                uiMan.seedCombo = 0;
+                uiMan.seedComboText.fontSize = 0;
                 Destroy(gameObject);
             }
         }
