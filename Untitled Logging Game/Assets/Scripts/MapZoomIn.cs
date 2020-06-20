@@ -81,6 +81,7 @@ public class MapZoomIn : MonoBehaviour
         mainCam.transform.LeanRotate(defaultZoom.rotation.eulerAngles, zoomTime);
         mapButtons[0].SetActive(true);
         mapPins[0].SetActive(true);
+        FlipFocusMaterial(mapPins[0]);
         
         nameSelector.SetActive(false);
     }
@@ -135,6 +136,8 @@ public class MapZoomIn : MonoBehaviour
         {
             mainCam.transform.position = zooms[0].position;
             mainCam.transform.rotation = zooms[0].rotation;
+            mapButtons[0].SetActive(false);
+            FlipFocusMaterial(mapPins[1]);
             mapButtons[2].SetActive(false);
             mapPins[2].SetActive(false);
         }
@@ -142,6 +145,9 @@ public class MapZoomIn : MonoBehaviour
         {
             mainCam.transform.position = zooms[1].position;
             mainCam.transform.rotation = zooms[1].rotation;
+            mapButtons[0].SetActive(false);
+            mapButtons[1].SetActive(false);
+            FlipFocusMaterial(mapPins[2]);
         }
         else if (sceneMan.prevScene == sceneLoads[2])
         {
@@ -165,5 +171,10 @@ public class MapZoomIn : MonoBehaviour
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         StartCoroutine(ReturnToMap(.01f));
+    }
+
+    private void FlipFocusMaterial(GameObject pinParent)
+    {
+        pinParent.GetComponentInChildren<Light>().intensity = 0.003f;
     }
 }
