@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,7 @@ public class HighScoreManager : MonoBehaviour
     private string currentPlayerName = "Unfilled";
     private LevelScoreData[] currentPlayerScores = new LevelScoreData[maxLevel];
 
-    private InputField inputField;
+    [SerializeField] private TextMeshProUGUI inputField;
 
     private int loginCount;
 
@@ -34,8 +35,6 @@ public class HighScoreManager : MonoBehaviour
 
         savePath = Path.Combine(Application.persistentDataPath, fileName);
         currentPlayerDataPath = Path.Combine(Application.persistentDataPath, currentPlayerData);
-
-        inputField = FindObjectOfType<InputField>();
 
         LoadCurrentLevelScore();
     }
@@ -244,7 +243,7 @@ public class HighScoreManager : MonoBehaviour
         return playerScoreData;
     }
 
-    public void OnEditEnd(string str)
+    public void AssignPlayerName()
     {
         if(inputField)
         {

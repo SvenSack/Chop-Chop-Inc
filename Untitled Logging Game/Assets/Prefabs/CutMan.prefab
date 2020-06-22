@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9ed6df47abeb645b6b9cc9b89eac95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mayCut: 1
   gRaycaster: {fileID: 0}
   eventSystem: {fileID: 0}
   marginOfError: 0.1
@@ -111,6 +112,7 @@ MonoBehaviour:
   currentTargetIndices: 0000000002000000
   debugMode: 1
   cutDelay: 0.1
+  burnPopUp: {fileID: 0}
 --- !u!114 &1950965387885546965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,9 +129,9 @@ MonoBehaviour:
   - 0.01
   - 1
   - 0.01
+  - 2
   - 1
-  - 0.3
-  - 1
+  - 2
   - 1
   - 1
   leafColorValues:
@@ -177,3 +179,4 @@ MonoBehaviour:
   currentTreeSpots: []
   fallParticleObject: {fileID: 6611483207489948961, guid: f7c4759f4dac49e4c99c5d2588a5cd55,
     type: 3}
+  plantPopUp: {fileID: 0}
