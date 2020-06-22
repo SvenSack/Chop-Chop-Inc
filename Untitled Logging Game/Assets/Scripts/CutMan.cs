@@ -352,6 +352,7 @@ public class CutMan : MonoBehaviour
         isCutting = false;
         chainsawOn = false;
         comboText.text = comboText.text.Replace((comboCount) + "x", 0 + "x");
+        
         comboCount = 0;
         comboText.fontSize = 0;
         trailMan.GetComponent<TrailRenderer>().emitting = false;
@@ -552,7 +553,7 @@ public class CutMan : MonoBehaviour
             Transform tempTrans = cutTargets[currentIndex].transform.parent;
 
 
-            float offSet = Random.Range(maxRot, -maxRot);
+            float offSet = Random.Range(maxRot+5, -(maxRot+5));
             tempTrans.rotation = Quaternion.Euler(0, 0, offSet);
 
             if (!cutTargets[currentIndex].goesLeft)
