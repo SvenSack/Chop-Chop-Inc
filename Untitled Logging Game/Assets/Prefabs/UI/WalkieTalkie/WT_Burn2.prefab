@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 145249388105393217, guid: cf767d3c92d4083409e58ae72175e30c,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Ik ben onder de indruk! Hahaha! Waarom leg je de kettingzaag niet even
+        weg en dan verbranden we het bos.
+      objectReference: {fileID: 0}
+    - target: {fileID: 145249388105393217, guid: cf767d3c92d4083409e58ae72175e30c,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: "Der Wahnsinn! Hahaha! Wie w\xE4rs wenn wir der S\xE4ge ne Pause g\xF6nnen
+        und den Rest abfackeln?"
+      objectReference: {fileID: 0}
     - target: {fileID: 1209623358733463035, guid: cf767d3c92d4083409e58ae72175e30c,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -61,7 +73,7 @@ PrefabInstance:
     - target: {fileID: 7752683930290596160, guid: cf767d3c92d4083409e58ae72175e30c,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (6)
+      value: WT_Burn2
       objectReference: {fileID: 0}
     - target: {fileID: 8082325992545088250, guid: cf767d3c92d4083409e58ae72175e30c,
         type: 3}

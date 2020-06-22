@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2390322989870294755, guid: 6ac9367df6757c2439f307f64d260d8b,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Het is maar goed dat dat beest een pantser heeft want wij hebben zojuist
+        zijn huis verwoest! Hahaha!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2390322989870294755, guid: 6ac9367df6757c2439f307f64d260d8b,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: "Gut das der n Panzer hat, weil wir haben grad sein Zuhause zerst\xF6rt!
+        Hahaha!"
+      objectReference: {fileID: 0}
     - target: {fileID: 3738365501561433945, guid: 6ac9367df6757c2439f307f64d260d8b,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -51,7 +63,7 @@ PrefabInstance:
     - target: {fileID: 5241967183230135266, guid: 6ac9367df6757c2439f307f64d260d8b,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (12)
+      value: WT_Armadillo
       objectReference: {fileID: 0}
     - target: {fileID: 5981366618934489176, guid: 6ac9367df6757c2439f307f64d260d8b,
         type: 3}

@@ -93,10 +93,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24
+  m_fontSize: 34.05
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -169,9 +169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a36005f7dee7534c8fcfd22c7d2afaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DutchReplacementText: '[DUTCH]'
-  GermanReplacementText: '[GERMAN]'
-  checkTextSwitchOnStartOnly: 0
+  DutchReplacementText: Hier blijven
+  GermanReplacementText: Hier bleiben
+  checkTextSwitchOnStartOnly: 1
 --- !u!1 &3227315385847986018
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,10 +265,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 28
+  m_fontSize: 36.15
   m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -311,7 +311,7 @@ MonoBehaviour:
     spaceCount: 13
     wordCount: 13
     linkCount: 0
-    lineCount: 3
+    lineCount: 4
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -341,9 +341,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a36005f7dee7534c8fcfd22c7d2afaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DutchReplacementText: '[DUTCH]'
-  GermanReplacementText: '[GERMAN]'
-  checkTextSwitchOnStartOnly: 0
+  DutchReplacementText: Je hebt een hoop nieuwe bomen geplant, wat wil je nu doen?
+  GermanReplacementText: "Du hast alle B\xE4ume wieder nachgepflanzt, was m\xF6chtest
+    du jetzt tun?"
+  checkTextSwitchOnStartOnly: 1
 --- !u!1 &4491482856110374442
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,10 +839,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -914,6 +915,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a36005f7dee7534c8fcfd22c7d2afaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DutchReplacementText: '[DUTCH]'
-  GermanReplacementText: '[GERMAN]'
-  checkTextSwitchOnStartOnly: 0
+  DutchReplacementText: Ga naar volgende locatie
+  GermanReplacementText: Woanders hingehen
+  checkTextSwitchOnStartOnly: 1

@@ -49,6 +49,16 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 45.45
       objectReference: {fileID: 0}
+    - target: {fileID: 2064047836833072432, guid: 807c89cf03722cb408d90800a05f47c4,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Hey! Ik had je aangenomen om bomen om te hakken! Niet om ze te planten!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064047836833072432, guid: 807c89cf03722cb408d90800a05f47c4,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: "Hey! Ich bezahl dich f\xFCrs B\xE4ume f\xE4llen, nicht um sie zu pflanzen!"
+      objectReference: {fileID: 0}
     - target: {fileID: 5012605736779930196, guid: 807c89cf03722cb408d90800a05f47c4,
         type: 3}
       propertyPath: m_Material
@@ -167,7 +177,7 @@ PrefabInstance:
     - target: {fileID: 8446483420579465265, guid: 807c89cf03722cb408d90800a05f47c4,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (3)
+      value: WT_ComboPlant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 807c89cf03722cb408d90800a05f47c4, type: 3}

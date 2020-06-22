@@ -20,7 +20,7 @@ PrefabInstance:
     - target: {fileID: 3128807931909943049, guid: c4f737455e5c71442aee1e3f5a827335,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (5)
+      value: WT_Burn1
       objectReference: {fileID: 0}
     - target: {fileID: 3519249070440674483, guid: c4f737455e5c71442aee1e3f5a827335,
         type: 3}
@@ -126,6 +126,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825841495924695560, guid: c4f737455e5c71442aee1e3f5a827335,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Dat zijn veel bomen! Iedereen heeft zijn talenten, en jij bent een erg
+        getalenteerde houthakker! Hahaha! Wat dacht je ervan om de rest van het bos
+        te verbranden?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825841495924695560, guid: c4f737455e5c71442aee1e3f5a827335,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: "Das waren ne Menge B\xE4ume! Jeder hat ein Talent, und deins ist offensichtlich
+        B\xE4ume zu f\xE4llen! Wie w\xE4rs jetzt mit einem Feuer um den Rest schneller
+        freizumachen ?"
       objectReference: {fileID: 0}
     - target: {fileID: 5779702443803782066, guid: c4f737455e5c71442aee1e3f5a827335,
         type: 3}

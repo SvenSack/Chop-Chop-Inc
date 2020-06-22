@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1075329472983208053, guid: 636b2087ad225184a98d66ac3bfc24a4,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (4)
+      value: WT_BigTree
       objectReference: {fileID: 0}
     - target: {fileID: 1536138878421552079, guid: 636b2087ad225184a98d66ac3bfc24a4,
         type: 3}
@@ -126,6 +126,18 @@ PrefabInstance:
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7457751029231705460, guid: 636b2087ad225184a98d66ac3bfc24a4,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Grotere bomen zoals deze moet je meerdere keren hakken. Maar dat is
+        geen probleem voor jou, toch?
+      objectReference: {fileID: 0}
+    - target: {fileID: 7457751029231705460, guid: 636b2087ad225184a98d66ac3bfc24a4,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: "F\xFCr diese gr\xF6\xDFeren B\xE4ume brauchst du mehrere Schnitte,
+        aber das sollte doch kein Problem sein, oder ?"
       objectReference: {fileID: 0}
     - target: {fileID: 8480898815269213390, guid: 636b2087ad225184a98d66ac3bfc24a4,
         type: 3}
