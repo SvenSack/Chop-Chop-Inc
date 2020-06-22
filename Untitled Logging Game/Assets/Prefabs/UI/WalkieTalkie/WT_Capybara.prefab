@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1688571658750948609
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2634136736560618072, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634136736560618072, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634136736560618072, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634136736560618072, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634136736560618072, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634136736560618072, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_textInfo.materialCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634136736560618072, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_text
+      value: "What is that thing? A capybara? I thought that\u2019s just a really
+        big, fat mouse. Look at him go. Hahaha!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634136736560618072, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 27.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904079369246580451, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkieTalkieInstance (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032031586432863366, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032031586432863366, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7bf0cf19bac15564099389cd224233cd, type: 3}

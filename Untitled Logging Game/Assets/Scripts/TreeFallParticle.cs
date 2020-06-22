@@ -9,6 +9,7 @@ public class TreeFallParticle : MonoBehaviour
 
     public AudioSource fallSound;
     private SoundMan soundMan;
+    private UIMan uiMan;
     
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class TreeFallParticle : MonoBehaviour
         }
         
         soundMan = FindObjectOfType<SoundMan>();
+        uiMan = FindObjectOfType<UIMan>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -54,6 +56,7 @@ public class TreeFallParticle : MonoBehaviour
                 if (Vector3.Distance(fox.transform.position, landingPoint) < 5f)
                 {
                     fox.Scare(landingPoint);
+                    uiMan.TryVoiceLine(6);
                 }
             }
             foreach (var capy in capys)
@@ -61,6 +64,7 @@ public class TreeFallParticle : MonoBehaviour
                 if (Vector3.Distance(capy.transform.position, landingPoint) < 5f)
                 {
                     capy.Scare(landingPoint);
+                    uiMan.TryVoiceLine(8);
                 }
             }
             foreach (var maccaw in maccis)
@@ -68,6 +72,7 @@ public class TreeFallParticle : MonoBehaviour
                 if (Vector3.Distance(maccaw.transform.position, landingPoint) < 10f)
                 {
                     maccaw.Scare(landingPoint);
+                    uiMan.TryVoiceLine(9);
                 }
             }
         }

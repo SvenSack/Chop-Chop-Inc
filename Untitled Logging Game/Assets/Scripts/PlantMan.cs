@@ -31,6 +31,7 @@ public class PlantMan : MonoBehaviour
     private CutMan cutMan;
     private CameraMan camMan;
     private Camera mainCam;
+    private UIMan uiMan;
     
     
     void Start()
@@ -40,6 +41,7 @@ public class PlantMan : MonoBehaviour
         mainCam = Camera.main;
         camMan = FindObjectOfType<CameraMan>();
         plantPopUp.SetActive(false);
+        uiMan = FindObjectOfType<UIMan>();
     }
 
     void Update()
@@ -91,6 +93,7 @@ public class PlantMan : MonoBehaviour
                 Physics.Raycast(squirrel.transform.position, Vector3.down, out var hit, 1000, groundMask);
                 Debug.DrawLine(squirrel.transform.position,hit.point,Color.green, 1000);
                 squirsquirrelrel.floorHeight = hit.point.y;
+                uiMan.TryVoiceLine(7);
             }
         }
     }
