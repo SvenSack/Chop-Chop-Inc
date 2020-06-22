@@ -5,31 +5,37 @@ using UnityEngine.UI;
 
 public class TextInstance : MonoBehaviour
 {
-   [SerializeField] private Text score;
     [SerializeField] private Text name;
+    [SerializeField] private Text comboCutCount;
+    [SerializeField] private Text comboPlantCount;
+    [SerializeField] private Text plantCount;
+    [SerializeField] private Text cutCount;
 
-    public void Intialize()
-    {
-        foreach(Transform child in transform)
-        {
-            if(child.tag == "score")
-            {
-                score = child.GetComponent<Text>();
-            }
-            else if(child.tag == "name")
-            {
-                name = child.GetComponent<Text>();
-            }
-        }
-    }
+    public float score;
 
     public Text GetName()
     {
         return name;
     }
 
-    public Text GetScore()
+    public Text GetComboCut()
     {
-        return score;
+        return comboCutCount;
     }
+
+    public Text GetComboPlant()
+    {
+        return comboPlantCount;
+    }
+
+    public Text GetCutCount()
+    {
+        return cutCount;
+    }
+
+    public Text GetPlantCount()
+    {
+        return plantCount;
+    }
+
 }

@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 // using UnityEditor.UI;
 
-public class HighScoreView : MonoBehaviour
+public class HighScoreView : UIPlacable
 {
-    public GameObject canvasObject;
-    public GameObject textInstanceObject;
+    
 
     public HighScoreManager highScoreManager;
 
-    [Range(0,1.0f)]
-    public float shiftPercentageX;
-    [Range(0, 1.0f)]
-    public float shiftPercentageY;
+    Vector2 shiftAmount = new Vector2(0, -100);
+    Vector2 initialPosition;
 
     [SerializeField] private string scoreText = "Score : ";
     [SerializeField] private string nameText = "Name : ";
+
+    float slotEntryTime = 1.0f;
 
     void Start()
     {
@@ -27,37 +26,28 @@ public class HighScoreView : MonoBehaviour
     {
         Debug.Log("Initialize HighScoreView");
 
-        Canvas canvas = FindObjectOfType<Canvas>();
-        canvasObject = canvas.gameObject;
-
-        RectTransform canvasRect = canvasObject.GetComponent<RectTransform>();
-        float width = canvasRect.rect.width;
-        float height = canvasRect.rect.height;
-
-        Debug.Log("Canvas width and height " + width + "," + height);
-
         highScoreManager = FindObjectOfType<HighScoreManager>();
 
-        Vector2 topLeft = new Vector2(0, height);
-
-        Vector2 shiftInWidth = new Vector2(width, 0) * shiftPercentageX;
-        Vector2 shiftInHeight = new Vector2(0, height) * shiftPercentageY;
+        Vector2 position = CalculateUIPosition();
+        initialPosition = position;
 
 
-        Vector2 position = topLeft + shiftInWidth - shiftInHeight;
 
-        Vector2 shiftAmount = new Vector2(0, -100);
-
-        foreach(PlayerGameData data in highScoreManager.GetScoreData())
+        foreach (PlayerGameData data in highScoreManager.GetScoreData())
         {
             Debug.Log("loaded score data");
 
             GameObject textInstanceObj = Instantiate(textInstanceObject);
             TextInstance textInstance = textInstanceObj.GetComponent<TextInstance>();
-            textInstance.Intialize();
 
+            textInstance.score = data.Score;
             textInstance.GetName().text = data.Name;
-            textInstance.GetScore().text = data.Score.ToString();
+            textInstance.GetComboCut().text = data.highestComboCut.ToString();
+            textInstance.GetComboPlant().text = data.highestComboPlant.ToString();
+            textInstance.GetCutCount().text = data.treesCut.ToString();
+            textInstance.GetPlantCount().text = data.treesPlanted.ToString();
+
+            Debug.Log("data.treesCut" + data.treesCut);
 
             RectTransform textRect = textInstanceObj.GetComponent<RectTransform>();
             textRect.anchoredPosition = position;
@@ -68,5 +58,103 @@ public class HighScoreView : MonoBehaviour
             textInstance.gameObject.transform.parent = canvasObject.gameObject.transform;
         }
     }
+
+    public void SlotCurrentScore()
+    {
+        LevelScoreData data = highScoreManager.CalculateTotalScoreData();
+
+        float score = data.score;
+        //---------------------- Get all score blocks------------------//
+        List<Transform> scoreBlocks = new List<Transform>();
+        foreach(Transform child in canvasObject.transform)
+        {
+            if(child.tag == "scoreBlock")
+            {
+                scoreBlocks.Add(child);
+            }
+        }
+
+
+
+        //------------------------ Find which index to slot to -----------------------//
+        bool isInBetweenBlocks = false;
+        int slotIndex = 0;
+
+        for (int i = 0; i < scoreBlocks.Count-1; i++)
+        {
+            TextInstance currenttTextInstance = scoreBlocks[i].GetComponent<TextInstance>();
+
+            if (score < currenttTextInstance.score)
+            {
+                slotIndex = i + 1;
+                isInBetweenBlocks = true;
+                break;
+            }
+        }
+        Debug.Log("score " + score);
+        Debug.Log("isInBetweenBlocks " + isInBetweenBlocks);
+
+        //------------------------- Instantiate new score block-----------------------//
+        RectTransform rect = scoreBlocks[slotIndex].GetComponent<RectTransform>();
+
+        GameObject newScoreBlock = Instantiate(textInstanceObject);
+        TextInstance textInstance = newScoreBlock.GetComponent<TextInstance>();
+        textInstance.score = data.score;
+        textInstance.GetName().text = highScoreManager.currentPlayerName;
+        textInstance.GetComboCut().text = data.highestComboCut.ToString();
+        textInstance.GetComboPlant().text = data.highestComboPlant.ToString();
+        textInstance.GetCutCount().text = data.treesCut.ToString();
+        textInstance.GetPlantCount().text = data.treesPlanted.ToString();
+
+
+
+
+
+
+        //----------------------------- Move to correct positions---------------------//
+        var newScoreBlockRect = newScoreBlock.GetComponent<RectTransform>();
+        newScoreBlockRect.anchoredPosition = GetNewScoreBlockInitialPosition();
+        newScoreBlock.transform.SetParent(canvasObject.transform);
+
+
+        RectTransform canvasRect = canvasObject.GetComponent<RectTransform>();
+
+        float height = canvasRect.rect.height;
+
+
+        Vector2 defaultPosition = Vector2.zero;
+
+        defaultPosition.x = initialPosition.x;
+        defaultPosition.y = -(height - initialPosition.y) + (shiftAmount.y * scoreBlocks.Count);
+
+
+        Vector2 targetPosition = isInBetweenBlocks ? rect.anchoredPosition : defaultPosition;
+
+        LeanTween.move(newScoreBlockRect, targetPosition, slotEntryTime);
+
+        //------------------Shift all score blocks below new scoe block-----------------//
+
+        if (!isInBetweenBlocks) { return; }
+
+        for (int i = slotIndex; i < scoreBlocks.Count; i++)
+        {
+            RectTransform belowSlotRect = scoreBlocks[i].GetComponent<RectTransform>();
+            Vector2 position = belowSlotRect.anchoredPosition;
+
+
+            LeanTween.move(belowSlotRect, position + shiftAmount, slotEntryTime);
+        }
+
+
+
+
+
+    }
+
+    public Vector2 GetNewScoreBlockInitialPosition()
+    {
+        return initialPosition - shiftAmount * 2;
+    }
+
 
 }
