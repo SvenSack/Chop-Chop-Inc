@@ -100,6 +100,16 @@ public class HighScoreManager : MonoBehaviour
         currentPlayerScores[currentLevel] = scoreData;
     }
 
+    public void SetLevelDifficulty(float difficulty)
+    {
+        currentPlayerScores[currentLevel].difficulty = difficulty;
+    }
+
+    public float GetLevelDifficulty(int level)
+    {
+        return currentPlayerScores[level].difficulty;
+    }
+
     public void AddPlayerScoreData(PlayerGameData scoreData)
     {
         playerScoreData.Add(scoreData);
