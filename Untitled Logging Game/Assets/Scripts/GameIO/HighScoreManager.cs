@@ -117,14 +117,24 @@ public class HighScoreManager : MonoBehaviour
 
     public void AddCurrentPlayerScoreData()
     {
-        float sum = 0;
-        foreach(var levelData in currentPlayerScores)
+        LevelScoreData data =  CalculateTotalScoreData();
+
+        PlayerGameData scoreData = new PlayerGameData(currentPlayerName, data.score,3);
+        scoreData.SetLevelGameData(data);
+
+        playerScoreData.Add(scoreData);
+    }
+
+    public LevelScoreData CalculateTotalScoreData()
+    {
+        LevelScoreData result = new LevelScoreData();
+
+        foreach(LevelScoreData data in currentPlayerScores)
         {
-            sum += levelData.score;
+            result += data;
         }
 
-        PlayerGameData scoreData = new PlayerGameData(currentPlayerName, sum);
-        playerScoreData.Add(scoreData);
+        return result;
     }
 
     //--------------------------------- Saving related stuff ------------------------------------------//

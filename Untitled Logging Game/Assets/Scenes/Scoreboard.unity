@@ -160,9 +160,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345030249}
+  - component: {fileID: 345030250}
   - component: {fileID: 345030248}
   - component: {fileID: 345030247}
-  - component: {fileID: 345030250}
   m_Layer: 0
   m_Name: ScoreSceneManager
   m_TagString: Untagged
@@ -179,17 +179,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 345030246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615172604e7e0cf4abb6af21d74900bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 57b1c8563d78b414590419da385df7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasObject: {fileID: 0}
-  textInstanceObject: {fileID: 2934305784019344992, guid: fe6f53f1b1c9e5349a334a4ce1172240,
-    type: 3}
-  highScoreManager: {fileID: 0}
-  shiftPercentageX: 0.2
-  shiftPercentageY: 0.1
-  scoreText: 'Score : '
-  nameText: 'Name : '
+  currentLevel: -1
 --- !u!114 &345030248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +192,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 345030246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa5f43ef17b810548a6b51066b323008, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fb852a35e043a4458129b6d9647eebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &345030249
@@ -225,9 +218,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 345030246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffc4ca629734ca54faca983db62a1823, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b36c1b29d2474e42831f6add3a1a317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasObject: {fileID: 536690627}
+  textInstanceObject: {fileID: 2934305784019344992, guid: 134cfc6e3492afc45a79922d92d0f71a,
+    type: 3}
+  highScoreManager: {fileID: 0}
+  shiftPercentageX: 0.1
+  shiftPercentageY: 0.1
+  scoreText: 'Score : '
+  nameText: 'Name : '
 --- !u!1 &536690627
 GameObject:
   m_ObjectHideFlags: 0
