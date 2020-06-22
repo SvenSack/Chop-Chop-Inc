@@ -445,7 +445,7 @@ public class CutMan : MonoBehaviour
         UpdateScoreCombo();
         StartCoroutine("InitiateStopCut");
         isCutting = false;
-        foreach (var part in cutParticleInstance.GetComponents<ParticleSystem>())
+        foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
         {
             part.Stop(false, ParticleSystemStopBehavior.StopEmitting);
         }
