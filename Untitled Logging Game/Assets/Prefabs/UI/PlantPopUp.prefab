@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5714889162205967703}
   - component: {fileID: 5549020787642340196}
   - component: {fileID: 2823655638669918146}
+  - component: {fileID: 7716712385821123442}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -156,6 +157,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7716712385821123442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2934987534233746754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a36005f7dee7534c8fcfd22c7d2afaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DutchReplacementText: '[DUTCH]'
+  GermanReplacementText: '[GERMAN]'
+  checkTextSwitchOnStartOnly: 0
 --- !u!1 &3227315385847986018
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +183,7 @@ GameObject:
   - component: {fileID: 6785911500499592996}
   - component: {fileID: 2408711949486459523}
   - component: {fileID: 2221431259767687461}
+  - component: {fileID: 8260366223941777559}
   m_Layer: 5
   m_Name: MessageText
   m_TagString: Untagged
@@ -312,6 +329,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8260366223941777559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3227315385847986018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a36005f7dee7534c8fcfd22c7d2afaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DutchReplacementText: '[DUTCH]'
+  GermanReplacementText: '[GERMAN]'
+  checkTextSwitchOnStartOnly: 0
 --- !u!1 &4491482856110374442
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +756,7 @@ GameObject:
   - component: {fileID: 8008643960170902046}
   - component: {fileID: 5281982398503315257}
   - component: {fileID: 6955224715112880545}
+  - component: {fileID: 2308306398660295677}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -869,3 +902,18 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2308306398660295677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8575003034845695828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a36005f7dee7534c8fcfd22c7d2afaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DutchReplacementText: '[DUTCH]'
+  GermanReplacementText: '[GERMAN]'
+  checkTextSwitchOnStartOnly: 0
