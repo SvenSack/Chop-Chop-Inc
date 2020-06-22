@@ -45,6 +45,7 @@ public class CurrentHighScoreViewer : UIPlacable
         {
             button.onClick.AddListener(highScoreView.SlotCurrentScore);
             button.onClick.AddListener(MoveViewerInstanceUp);
+            button.onClick.AddListener(highScoreManager.AddCurrentPlayerScoreDataToDisk);
              
         }
 

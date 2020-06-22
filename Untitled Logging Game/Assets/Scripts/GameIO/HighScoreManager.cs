@@ -55,7 +55,7 @@ public class HighScoreManager : MonoBehaviour
             //SetPlayerScore(3, 4, 5, 6, 7,1);
 
 
-            AddCurrentPlayerScoreData();
+            AddCurrentPlayerScoreDataToDisk();
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -115,7 +115,7 @@ public class HighScoreManager : MonoBehaviour
         playerScoreData.Add(scoreData);
     }
 
-    public void AddCurrentPlayerScoreData()
+    public void AddCurrentPlayerScoreDataToDisk()
     {
         LevelScoreData data =  CalculateTotalScoreData();
 
@@ -298,7 +298,7 @@ public class HighScoreManager : MonoBehaviour
         Debug.Log("Adding player name " + currentPlayerName);
         currentPlayerScores[currentLevel].score = Random.Range(0, 40.0f);
 
-        AddCurrentPlayerScoreData();
+        AddCurrentPlayerScoreDataToDisk();
         SaveScoresToFile();
     }
 
