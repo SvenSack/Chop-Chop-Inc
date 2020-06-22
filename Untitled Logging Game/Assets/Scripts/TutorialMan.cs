@@ -8,9 +8,9 @@ public class TutorialMan : MonoBehaviour
 {
     private int tutorialIndex;
     public GameObject[] tutorialSlides = new GameObject[4];
-    [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private GameObject zoe;
     [SerializeField] private Transform zoeGoal;
+    [SerializeField] private GameObject button;
     public bool isFirstLevel;
     private bool lastStep;
     private bool active;
@@ -25,7 +25,7 @@ public class TutorialMan : MonoBehaviour
 
         zoeOrigin = zoe.transform.position;
         zoe.SetActive(false);
-        buttonText.transform.parent.gameObject.SetActive(false);
+        button.SetActive(false);
         
         if(isFirstLevel)
             TutorialActivate();
@@ -54,12 +54,12 @@ public class TutorialMan : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
             tutorialSlides[tutorialIndex].SetActive(true);
-            buttonText.transform.parent.gameObject.SetActive(true);
+            button.SetActive(true);
         }
         else
         {
             tutorialSlides[tutorialIndex].SetActive(false);
-            buttonText.transform.parent.gameObject.SetActive(false);
+            button.SetActive(false);
             yield return new WaitForSeconds(delay);
             zoe.SetActive(false);
         }
@@ -77,11 +77,9 @@ public class TutorialMan : MonoBehaviour
             {
                 tutorialSlides[tutorialIndex].SetActive(true);
                 lastStep = true;
-                buttonText.text = "Close";
             }
             else
             {
-                buttonText.text = "Next";
                 lastStep = false;
                 tutorialSlides[tutorialIndex-1].SetActive(false);
                 tutorialIndex = 0;

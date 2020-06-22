@@ -63,6 +63,7 @@ public class CutMan : MonoBehaviour
 
     [SerializeField] private GameObject burnPopUp;
 
+
     private void Awake()
     {
         soundMan = FindObjectOfType<SoundMan>();
@@ -368,6 +369,7 @@ public class CutMan : MonoBehaviour
         comboText.text = temp;
         if (comboCount > 3)
         {
+            uiMan.TryVoiceLine(2);
             cutDifficulty += .05f;
             maxRot += +1;
             forgivingness = forgivingness*.95f;
@@ -428,6 +430,7 @@ public class CutMan : MonoBehaviour
                             if (camMan.currentLocation == 3)
                             {
                                 burnPopUp.SetActive(true);
+                                uiMan.TryVoiceLine(Random.Range(4,6), 10f);
                                 mayCut = false;
                             }
                             camMan.MoveOn();

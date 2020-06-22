@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4711231131262740433
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1795805449040504120, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 88
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795805449040504120, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795805449040504120, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795805449040504120, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795805449040504120, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795805449040504120, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_text
+      value: Is that actually a caracal? You better get one under a tree for me to
+        take home. Hahaha!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795805449040504120, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5985896063600030694, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5985896063600030694, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7184817513334448515, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkieTalkieInstance (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c6042135057b0b14cac56c65decf7398, type: 3}

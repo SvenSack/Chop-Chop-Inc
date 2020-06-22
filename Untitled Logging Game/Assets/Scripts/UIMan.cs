@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,10 @@ public class UIMan : MonoBehaviour
     [SerializeField] private Slider scoreSlider;
     [SerializeField] private TextMeshProUGUI[] scoreValues;
     [SerializeField] private TextMeshProUGUI locationText;
+    [SerializeField] private GameObject[] walkieTalkiePrefabs;
+    private int[] voiceLineLicenses;
+    [SerializeField] private Transform walkieTalkiePlace;
+    [SerializeField] private GameObject walkieTalkieInstance;
     public int seedCombo;
     public TextMeshProUGUI seedComboText;
     private float seedComboTimeOut;
@@ -46,6 +51,7 @@ public class UIMan : MonoBehaviour
     void Start()
     {
         locationText.text = SceneManager.GetActiveScene().name;
+        voiceLineLicenses = new[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1 };
     }
 
     private void AdjustSlider()
@@ -88,6 +94,7 @@ public class UIMan : MonoBehaviour
                 string temp = seedComboText.text;
                 temp = temp.Replace((seedCombo - 1) + "x", seedCombo + "x");
                 seedComboText.text = temp;
+                TryVoiceLine(1);
             }
         }
     }
@@ -102,5 +109,49 @@ public class UIMan : MonoBehaviour
     {
         target.SetActive(false);
         cutMan.mayCut = true;
+    }
+
+    public void TryVoiceLine(int voiceLineIndex)
+    {
+        if (voiceLineLicenses[voiceLineIndex] > 0)
+        {
+            voiceLineLicenses[voiceLineIndex] -= 1;
+            if (walkieTalkieInstance != null)
+            {
+                Destroy(walkieTalkieInstance);
+                StopCoroutine("RemoveVoiceLine");
+                // stop playing sound
+            }
+
+            walkieTalkieInstance = Instantiate(walkieTalkiePrefabs[voiceLineIndex], walkieTalkiePlace.parent);
+            walkieTalkieInstance.transform.position = walkieTalkiePlace.position;
+            StartCoroutine(RemoveVoiceLine(5f));
+            // play sound
+        }
+    }
+    
+    public void TryVoiceLine(int voiceLineIndex, float displayTime)
+    {
+        if (voiceLineLicenses[voiceLineIndex] > 0)
+        {
+            voiceLineLicenses[voiceLineIndex] -= 1;
+            if (walkieTalkieInstance != null)
+            {
+                Destroy(walkieTalkieInstance);
+                StopCoroutine("RemoveVoiceLine");
+                // stop playing sound
+            }
+
+            walkieTalkieInstance = Instantiate(walkieTalkiePrefabs[voiceLineIndex], walkieTalkiePlace.parent);
+            walkieTalkieInstance.transform.position = walkieTalkiePlace.position;
+            StartCoroutine(RemoveVoiceLine(displayTime));
+            // play sound
+        }
+    }
+
+    IEnumerator RemoveVoiceLine(float displayTime)
+    {
+        yield return new WaitForSeconds(displayTime);
+        Destroy(walkieTalkieInstance);
     }
 }
