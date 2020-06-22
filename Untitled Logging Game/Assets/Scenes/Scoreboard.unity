@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 345030250}
   - component: {fileID: 345030248}
   - component: {fileID: 345030247}
+  - component: {fileID: 345030251}
   m_Layer: 0
   m_Name: ScoreSceneManager
   m_TagString: Untagged
@@ -221,14 +222,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b36c1b29d2474e42831f6add3a1a317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shiftPercentageX: 0.1
+  shiftPercentageY: 0.1
   canvasObject: {fileID: 536690627}
   textInstanceObject: {fileID: 2934305784019344992, guid: 134cfc6e3492afc45a79922d92d0f71a,
     type: 3}
   highScoreManager: {fileID: 0}
-  shiftPercentageX: 0.1
-  shiftPercentageY: 0.1
   scoreText: 'Score : '
   nameText: 'Name : '
+--- !u!114 &345030251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345030246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4259262033541fe429335fcea9fa9956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shiftPercentageX: 0.6
+  shiftPercentageY: -0.05
+  canvasObject: {fileID: 536690627}
+  textInstanceObject: {fileID: 7224454659134518246, guid: a002cba2747b3a948a8c7d367b218366,
+    type: 3}
+  highScoreManager: {fileID: 345030247}
+  highScoreView: {fileID: 345030250}
 --- !u!1 &536690627
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +324,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

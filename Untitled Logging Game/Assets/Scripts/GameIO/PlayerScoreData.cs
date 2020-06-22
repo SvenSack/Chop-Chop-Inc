@@ -36,8 +36,8 @@ public class PlayerGameData
     public int highestComboPlant;
 
     //automatically set
-    private string Time;
-    private string Date;
+    public string Time;
+    public string Date;
 
     public PlayerGameData(string name, float score,int achievedLevel = -1)
     {

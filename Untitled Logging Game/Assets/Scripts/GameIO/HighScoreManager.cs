@@ -52,10 +52,10 @@ public class HighScoreManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             Debug.Log("Saving");
-            SetPlayerScore(3, 4, 5, 6, 7,1);
+            //SetPlayerScore(3, 4, 5, 6, 7,1);
 
 
-            SaveCurrentLevelDataToFile();
+            AddCurrentPlayerScoreData();
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -123,6 +123,8 @@ public class HighScoreManager : MonoBehaviour
         scoreData.SetLevelGameData(data);
 
         playerScoreData.Add(scoreData);
+
+        SaveScoresToFile();
     }
 
     public LevelScoreData CalculateTotalScoreData()

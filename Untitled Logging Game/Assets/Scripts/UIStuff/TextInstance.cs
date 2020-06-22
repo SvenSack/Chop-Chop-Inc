@@ -25,7 +25,7 @@ public class TextInstance : MonoBehaviour
 
     public Text GetComboPlant()
     {
-        return comboCutCount;
+        return comboPlantCount;
     }
 
     public Text GetCutCount()

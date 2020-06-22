@@ -12,10 +12,12 @@ public class UIPlacable : MonoBehaviour
     public GameObject canvasObject;
     public GameObject textInstanceObject;
 
+    private Canvas canvas;
+
 
     public Vector2 CalculateUIPosition()
     {
-        Canvas canvas = FindObjectOfType<Canvas>();
+        canvas = FindObjectOfType<Canvas>();
         canvasObject = canvas.gameObject;
 
         RectTransform canvasRect = canvasObject.GetComponent<RectTransform>();
