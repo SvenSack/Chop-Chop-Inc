@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2795118479735847295, guid: d03de47b8b50f4e48bfa40e0b74e59fe,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Wat ben je aan het doen? Deze bomen hakken zichzelf niet om. We moeten
+        dit bos ruimen!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795118479735847295, guid: d03de47b8b50f4e48bfa40e0b74e59fe,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: "Was tust du denn? Ich seh keine B\xE4ume fallen, wir m\xFCssen doch
+        den Wald r\xE4umen!"
+      objectReference: {fileID: 0}
     - target: {fileID: 3749023450493563077, guid: d03de47b8b50f4e48bfa40e0b74e59fe,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -56,7 +68,7 @@ PrefabInstance:
     - target: {fileID: 5717695810201465982, guid: d03de47b8b50f4e48bfa40e0b74e59fe,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (1) Variant
+      value: WT_NoCut
       objectReference: {fileID: 0}
     - target: {fileID: 6117144302068690884, guid: d03de47b8b50f4e48bfa40e0b74e59fe,
         type: 3}

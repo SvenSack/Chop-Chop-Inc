@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 731428185229159554, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Is dat een caracal? Vang er een onder een boom voor me zodat ik hem
+        mee naar huis kan nemen. Hahaha!
+      objectReference: {fileID: 0}
+    - target: {fileID: 731428185229159554, guid: c6042135057b0b14cac56c65decf7398,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: Ist das wirklich ein Karakal? Du erledigst besser einen von denen, ich
+        will den mit nach Hause nehmen. Hahaha!
+      objectReference: {fileID: 0}
     - target: {fileID: 1795805449040504120, guid: c6042135057b0b14cac56c65decf7398,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -56,7 +68,7 @@ PrefabInstance:
     - target: {fileID: 7184817513334448515, guid: c6042135057b0b14cac56c65decf7398,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (9)
+      value: WT_Caracal
       objectReference: {fileID: 0}
     - target: {fileID: 8649366668802914873, guid: c6042135057b0b14cac56c65decf7398,
         type: 3}

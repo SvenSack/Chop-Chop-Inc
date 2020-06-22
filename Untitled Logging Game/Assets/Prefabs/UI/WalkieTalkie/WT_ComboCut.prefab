@@ -125,7 +125,7 @@ PrefabInstance:
     - target: {fileID: 4251792299297164178, guid: 8c24029c5fb250f4491c410125e31269,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (2)
+      value: WT_ComboCut
       objectReference: {fileID: 0}
     - target: {fileID: 4638431007476961065, guid: 8c24029c5fb250f4491c410125e31269,
         type: 3}
@@ -167,6 +167,18 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 26.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949943302032557715, guid: 8c24029c5fb250f4491c410125e31269,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Hahaha! Goed bezig! Ik kan al kale grond zien. Tegen de tijd dat we
+        genoeg hout hebben, kunnen we de rest verbranden!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949943302032557715, guid: 8c24029c5fb250f4491c410125e31269,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: " Hahaha! Gute Arbeit! Ich seh schon Waldboden, nicht mehr lange und
+        wir k\xF6nnen den Rest anz\xFCnden!"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c24029c5fb250f4491c410125e31269, type: 3}

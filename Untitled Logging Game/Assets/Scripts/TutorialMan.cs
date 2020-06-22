@@ -15,6 +15,7 @@ public class TutorialMan : MonoBehaviour
     private bool lastStep;
     private bool active;
     private Vector3 zoeOrigin;
+    private CutMan cutMan;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class TutorialMan : MonoBehaviour
         zoeOrigin = zoe.transform.position;
         zoe.SetActive(false);
         button.SetActive(false);
+        cutMan = FindObjectOfType<CutMan>();
         
         if(isFirstLevel)
             TutorialActivate();
@@ -38,12 +40,14 @@ public class TutorialMan : MonoBehaviour
             zoe.SetActive(true);
             zoe.LeanMove(zoeGoal.position, 3f);
             StartCoroutine(ZoeDelay(3f));
+            cutMan.mayCut = false;
             active = true;
         }
         else
         {
             zoe.LeanMove(zoeOrigin, 3f);
             StartCoroutine(ZoeDelay(3f));
+            cutMan.mayCut = true;
             active = false;
         }
     }

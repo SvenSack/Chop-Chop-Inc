@@ -48,6 +48,18 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 27.25
       objectReference: {fileID: 0}
+    - target: {fileID: 3910005058335364066, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Wat is dat ding? Een capibara? Ik dacht dat het een grote dikke muis
+        was. Zie hem gaan. Hahaha!
+      objectReference: {fileID: 0}
+    - target: {fileID: 3910005058335364066, guid: 7bf0cf19bac15564099389cd224233cd,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: "Was is das denn f\xFCr ein Ding? Ein Wasserschwein? Ich dachte erst
+        das w\xE4r nur ne fette Maus. Schau wie er rennt. Hahaha!"
+      objectReference: {fileID: 0}
     - target: {fileID: 4930623306100131161, guid: 7bf0cf19bac15564099389cd224233cd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -156,7 +168,7 @@ PrefabInstance:
     - target: {fileID: 6904079369246580451, guid: 7bf0cf19bac15564099389cd224233cd,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (11)
+      value: WT_Capybara
       objectReference: {fileID: 0}
     - target: {fileID: 8032031586432863366, guid: 7bf0cf19bac15564099389cd224233cd,
         type: 3}

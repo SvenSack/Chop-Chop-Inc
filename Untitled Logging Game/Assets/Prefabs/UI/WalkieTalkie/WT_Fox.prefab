@@ -115,7 +115,7 @@ PrefabInstance:
     - target: {fileID: 1938296709560450441, guid: a7580953f6ebffb4f8e81c3260aea2e7,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (7)
+      value: WT_Fox
       objectReference: {fileID: 0}
     - target: {fileID: 3044859000931708908, guid: a7580953f6ebffb4f8e81c3260aea2e7,
         type: 3}
@@ -167,6 +167,18 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 28.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319593199025549448, guid: a7580953f6ebffb4f8e81c3260aea2e7,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Hahaha! Moet je die vos zien, hij werd bijna geplet onder de boom! Blijf
+        zo doorgaan en misschien lukt het je bij de volgende.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319593199025549448, guid: a7580953f6ebffb4f8e81c3260aea2e7,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: ' Hahaha! Den Fuchs hast du beinahe mit dem Baum erwischt! Mach weiter
+        so, dann kriegst du sicher einen!'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7580953f6ebffb4f8e81c3260aea2e7, type: 3}

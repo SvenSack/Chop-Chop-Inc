@@ -20,7 +20,7 @@ PrefabInstance:
     - target: {fileID: 2509699846372542034, guid: d46d232f33286a442abdc032ed3830db,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (10)
+      value: WT_Squirrel
       objectReference: {fileID: 0}
     - target: {fileID: 4136871714559925736, guid: d46d232f33286a442abdc032ed3830db,
         type: 3}
@@ -126,6 +126,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5424350247757777747, guid: d46d232f33286a442abdc032ed3830db,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: Moet je die eekhoorn weg zien rennen! Hij piept als een malle. Hahaha!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5424350247757777747, guid: d46d232f33286a442abdc032ed3830db,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: "Schau, da rennt ein Eichh\xF6rnchen! Der quiekt ja wie verr\xFCckt,
+        hahaha!"
       objectReference: {fileID: 0}
     - target: {fileID: 6452070889636250345, guid: d46d232f33286a442abdc032ed3830db,
         type: 3}

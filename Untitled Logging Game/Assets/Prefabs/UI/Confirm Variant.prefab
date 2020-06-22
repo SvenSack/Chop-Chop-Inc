@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a36005f7dee7534c8fcfd22c7d2afaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DutchReplacementText: '[DUTCH]'
-  GermanReplacementText: '[GERMAN]'
+  DutchReplacementText: Ok
+  GermanReplacementText: "Best\xE4tigen"
   checkTextSwitchOnStartOnly: 0
 --- !u!1001 &7161864003511556974
 PrefabInstance:
@@ -137,6 +137,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Confirm Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5144627915436825475, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.0800018
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144627915436825475, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -13.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144627915436825475, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.22999954
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144627915436825475, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -11.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6401963645579216711, guid: d16e3d257b218b8499bc4082abf31536,
         type: 3}
       propertyPath: m_Sprite
@@ -181,12 +201,17 @@ PrefabInstance:
     - target: {fileID: 7000169965740304966, guid: d16e3d257b218b8499bc4082abf31536,
         type: 3}
       propertyPath: m_fontSize
-      value: 16
+      value: 18.9
       objectReference: {fileID: 0}
     - target: {fileID: 7000169965740304966, guid: d16e3d257b218b8499bc4082abf31536,
         type: 3}
       propertyPath: m_fontSizeBase
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7000169965740304966, guid: d16e3d257b218b8499bc4082abf31536,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7472083106939375695, guid: d16e3d257b218b8499bc4082abf31536,
         type: 3}

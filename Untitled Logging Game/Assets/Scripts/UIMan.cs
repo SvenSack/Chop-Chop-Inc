@@ -51,7 +51,7 @@ public class UIMan : MonoBehaviour
     void Start()
     {
         locationText.text = SceneManager.GetActiveScene().name;
-        voiceLineLicenses = new[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1 };
+        voiceLineLicenses = new[] {20, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1 };
     }
 
     private void AdjustSlider()

@@ -104,6 +104,7 @@ public class CutMan : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0) && mayCut) // try initiating cut
         {
+            
             if(cutRoutine == null)
                 cutRoutine = StartCoroutine(InitiateCut());
             else

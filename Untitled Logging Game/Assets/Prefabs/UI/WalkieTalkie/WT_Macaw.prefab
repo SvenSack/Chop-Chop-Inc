@@ -115,7 +115,7 @@ PrefabInstance:
     - target: {fileID: 1369726378253033957, guid: e2a3b9f6cbc4d144b8ecce6c9cf238b9,
         type: 3}
       propertyPath: m_Name
-      value: WalkieTalkieInstance (8)
+      value: WT_Macaw
       objectReference: {fileID: 0}
     - target: {fileID: 2568612360617390976, guid: e2a3b9f6cbc4d144b8ecce6c9cf238b9,
         type: 3}
@@ -167,6 +167,18 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831886091193019620, guid: e2a3b9f6cbc4d144b8ecce6c9cf238b9,
+        type: 3}
+      propertyPath: DutchReplacementText
+      value: "Wauw! Er vliegen zoveel ara\u2019s weg, misschien kan ik er een vangen
+        voor mijn collectie. Hahaha!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831886091193019620, guid: e2a3b9f6cbc4d144b8ecce6c9cf238b9,
+        type: 3}
+      propertyPath: GermanReplacementText
+      value: "Wow! So viele Aras die da wegfliegen, ich sollte mir einen fangen f\xFCr
+        meine Sammlung. Hahaha!"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2a3b9f6cbc4d144b8ecce6c9cf238b9, type: 3}

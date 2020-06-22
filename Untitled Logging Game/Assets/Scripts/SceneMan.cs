@@ -11,8 +11,9 @@ public class SceneMan : MonoBehaviour
     public string playerName = "";
 
     private float idleTimer;
-    public float idleTime = 30f;
-    private bool isIdle;
+    public float idleTime = 40f;
+    private UIMan uiMan;
+    
 
     void Awake() {
         if(!instance )
@@ -27,29 +28,22 @@ public class SceneMan : MonoBehaviour
 
     private void Update()
     {
-        if (isIdle)
-        {
-            if (idleTimer >= idleTime)
-            {
-                // reset game
-            }
-            else
-            {
-                idleTimer += Time.deltaTime;
-            }
-        }
-    }
+        if (Input.GetMouseButton(0))
+            idleTime = 0;
 
-    public void setIdle(bool newValue)
-    {
-        if (newValue)
+        if (uiMan == null && prevScene != "")
+            uiMan = FindObjectOfType<UIMan>();
+        
+        if (idleTimer >= idleTime)
         {
-            isIdle = newValue;
+            // ask raphael how exactly we are doing the reset, then do that
         }
         else
         {
-            isIdle = newValue;
-            idleTimer = 0;
+            idleTimer += Time.deltaTime;
+            if(idleTimer > idleTime/2 && prevScene != "")
+                uiMan.TryVoiceLine(0);
         }
+        
     }
 }
