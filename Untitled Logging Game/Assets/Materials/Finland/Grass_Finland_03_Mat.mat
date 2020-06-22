@@ -10,7 +10,7 @@ Material:
   m_Name: Grass_Finland_03_Mat
   m_Shader: {fileID: -6465566751694194690, guid: 429cd1b11538cc146bb1f64dc0c98c67,
     type: 3}
-  m_ShaderKeywords: BOOLEAN_9338859E_ON _ALPHATEST_ON _EMISSION
+  m_ShaderKeywords: BOOLEAN_9338859E_ON BOOLEAN_F897B26C_ON _ALPHATEST_ON _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
@@ -63,9 +63,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - BOOLEAN_9338859E: 1
-    - BOOLEAN_F897B26C: 0
-    - Vector1_122420E9: 0
-    - Vector1_164BF680: 1
+    - BOOLEAN_F897B26C: 1
+    - Vector1_122420E9: 0.09
+    - Vector1_164BF680: 0
     - Vector1_8136081E: 1
     - Vector1_843B530E: 0.05
     - Vector1_CBEECB0E: 0.5
@@ -93,7 +93,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
-    - Color_DBF5581F: {r: 1, g: 1, b: 1, a: 0}
+    - Color_DBF5581F: {r: 0, g: 0, b: 0, a: 1}
     - _BaseColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
