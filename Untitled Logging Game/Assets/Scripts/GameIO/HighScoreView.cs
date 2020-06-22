@@ -82,9 +82,9 @@ public class HighScoreView : UIPlacable
 
         for (int i = 0; i < scoreBlocks.Count-1; i++)
         {
-            TextInstance textInstance = scoreBlocks[i].GetComponent<TextInstance>();
+            TextInstance currenttTextInstance = scoreBlocks[i].GetComponent<TextInstance>();
 
-            if (score < textInstance.score)
+            if (score < currenttTextInstance.score)
             {
                 slotIndex = i + 1;
                 isInBetweenBlocks = true;
@@ -98,6 +98,18 @@ public class HighScoreView : UIPlacable
         RectTransform rect = scoreBlocks[slotIndex].GetComponent<RectTransform>();
 
         GameObject newScoreBlock = Instantiate(textInstanceObject);
+        TextInstance textInstance = newScoreBlock.GetComponent<TextInstance>();
+        textInstance.score = data.score;
+        textInstance.GetName().text = highScoreManager.currentPlayerName;
+        textInstance.GetComboCut().text = data.highestComboCut.ToString();
+        textInstance.GetComboPlant().text = data.highestComboPlant.ToString();
+        textInstance.GetCutCount().text = data.treesCut.ToString();
+        textInstance.GetPlantCount().text = data.treesPlanted.ToString();
+
+
+
+
+
 
         //----------------------------- Move to correct positions---------------------//
         var newScoreBlockRect = newScoreBlock.GetComponent<RectTransform>();

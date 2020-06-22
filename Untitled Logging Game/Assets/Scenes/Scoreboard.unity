@@ -249,6 +249,8 @@ MonoBehaviour:
     type: 3}
   highScoreManager: {fileID: 345030247}
   highScoreView: {fileID: 345030250}
+  shiftAmount: {x: 0, y: 500}
+  shiftTime: 1
 --- !u!1 &536690627
 GameObject:
   m_ObjectHideFlags: 0

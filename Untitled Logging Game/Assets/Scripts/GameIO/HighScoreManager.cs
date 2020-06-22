@@ -18,7 +18,7 @@ public class HighScoreManager : MonoBehaviour
     private string savePath;
     private string currentPlayerDataPath;
 
-    private string currentPlayerName = "Unfilled";
+    public string currentPlayerName = "Unfilled";
     private LevelScoreData[] currentPlayerScores = new LevelScoreData[maxLevel];
 
     private InputField inputField;
@@ -135,7 +135,7 @@ public class HighScoreManager : MonoBehaviour
         {
             result += data;
         }
-
+        Debug.Log("CalculateTotalScoreData result trree cut " + result.treesCut);
         return result;
     }
 
@@ -244,7 +244,11 @@ public class HighScoreManager : MonoBehaviour
             for (int i = 0; i < maxLevel; i++)
             {
                 string levelDataStr = dataReader.ReadString();
+                Debug.Log("Loaded " + levelDataStr);
                 LevelScoreData scoreData = JsonUtility.FromJson<LevelScoreData>(levelDataStr);
+                currentPlayerScores[i] = scoreData;
+
+
             }
         }
     }

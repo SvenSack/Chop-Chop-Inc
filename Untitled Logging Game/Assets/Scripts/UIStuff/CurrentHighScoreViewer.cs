@@ -10,6 +10,9 @@ public class CurrentHighScoreViewer : UIPlacable
 
     private GameObject highScoreViewerInstance;
 
+    public Vector2 shiftAmount = new Vector2(500, 0);
+    public float shiftTime = 1.0f;
+
     public void Initialize()
     {
         highScoreManager = FindObjectOfType<HighScoreManager>();
@@ -41,9 +44,20 @@ public class CurrentHighScoreViewer : UIPlacable
         if(button)
         {
             button.onClick.AddListener(highScoreView.SlotCurrentScore);
+            button.onClick.AddListener(MoveViewerInstanceUp);
+             
         }
 
 
+
+    }
+
+    public void MoveViewerInstanceUp()
+    {
+        var rect = highScoreViewerInstance.GetComponent<RectTransform>();
+        Vector2 oldPosition = rect.anchoredPosition;
+
+        LeanTween.move(rect, oldPosition + shiftAmount, shiftTime);
 
     }
 
