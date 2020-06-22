@@ -31,7 +31,7 @@ namespace Animal
 
             
             if(!isTurning && !isShocked && !waiting)
-                PerformMotion();
+                PerformMotion(true);
             
             
             if(!animator.GetBool("scared") && !isTurning)
@@ -44,11 +44,11 @@ namespace Animal
         
         IEnumerator ScareCompleter(float timer)
         {
-            yield return new WaitForSeconds(timer-1.7f);
-            mouth.clip = soundMan.foxSounds[Random.Range(5, 8)];
+            yield return new WaitForSeconds(timer-1.4f);
+            mouth.clip = soundMan.foxSounds[Random.Range(5, 15)];
             mouth.time = 0;
             mouth.Play();
-            yield return new WaitForSeconds(timer-1.4f);
+            yield return new WaitForSeconds(timer-1.0f);
             PatchworkFlip(.1f);
             yield return new WaitForSeconds(0.3f);
             walkSpeed = walkSpeed * 3;

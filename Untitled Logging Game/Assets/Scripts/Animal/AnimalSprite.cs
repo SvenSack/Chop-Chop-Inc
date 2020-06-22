@@ -19,15 +19,17 @@ namespace Animal
         [HideInInspector] public bool isTurning;
         [SerializeField] public float turnTime = 2f;
         public bool waiting = true;
+        public LayerMask groundMask;
 
         protected Camera camera;
 
-        void Start()
+        public virtual void Start()
         {
             soundMan = FindObjectOfType<SoundMan>();
             camera = Camera.main;
             spriteTrans = transform.GetComponentInChildren<SpriteRenderer>().transform;
             cameraPosition = camera.transform.position;
+            groundMask = LayerMask.GetMask("Ground");
         }
 
         // Update is called once per frame
@@ -37,22 +39,59 @@ namespace Animal
         }
 
 
-        public void SnapToCamera()
+        public void SnapToCamera(bool action)
         {
             Vector3 cameraPosition = camera.transform.position;
-            Vector3 lookAtPosition = new Vector3(cameraPosition.x, transform.position.y, cameraPosition.y);
+            Vector3 lookAtPosition = new Vector3(cameraPosition.x, transform.position.y, cameraPosition.z);
 
             transform.LookAt(lookAtPosition);
-            waiting = false;
+            if(action)
+                waiting = false;
         }
         
-        public void PerformMotion()
+        public void PerformMotion(bool doTerrain)
         {
-            Vector3 targetVec = transform.right;
-            if (!directionIsLeft)
-                targetVec = targetVec * -1;
-            var position = transform.position;
-            position = Vector3.MoveTowards(position, position + targetVec, walkSpeed * Time.deltaTime);
+            Vector3 position;
+            if (doTerrain)
+            {
+                Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 100f, groundMask);
+                Debug.DrawRay(hit.point, hit.normal, Color.cyan, 2f);
+                Debug.DrawRay(hit.point, transform.up, Color.blue, 2f);
+                Vector3 currentRot = transform.rotation.eulerAngles;
+                float walkAngle = Vector3.Angle(transform.position, hit.normal) - 90f;
+                transform.rotation = Quaternion.Slerp(transform.rotation,
+                    Quaternion.Euler(new Vector3(currentRot.x, currentRot.y, walkAngle)), 1*(walkAngle/5f));
+                Vector3 targetVec = transform.right;
+                if (!directionIsLeft)
+                    targetVec = targetVec * -1;
+                position = transform.position;
+                float margin1 = .05f * transform.localScale.x;
+                float margin2 = .1f * transform.localScale.x;
+                if (hit.distance > margin1 && hit.distance < margin2)
+                    position = Vector3.MoveTowards(position, position + targetVec, walkSpeed * Time.deltaTime);
+                else
+                {
+                    if (hit.distance > margin1)
+                    {
+                        position = Vector3.MoveTowards(position, position + targetVec + (transform.up * -1),
+                            walkSpeed * Time.deltaTime);
+                    }
+                    else
+                    {
+                        position = Vector3.MoveTowards(position, position + targetVec + transform.up,
+                            walkSpeed * Time.deltaTime);
+                    }
+                }
+            }
+            else
+            {
+                Vector3 targetVec = transform.right;
+                if (!directionIsLeft)
+                    targetVec = targetVec * -1;
+                position = transform.position;
+                position = Vector3.MoveTowards(position, position + targetVec, walkSpeed * Time.deltaTime);
+            }
+
             transform.position = position;
         }
 
@@ -60,14 +99,9 @@ namespace Animal
         {
             
             Vector3 viewPoint = camera.WorldToScreenPoint(transform.position);
-            if ( !(viewPoint.z > 0 && viewPoint.x > 1 && viewPoint.x < Screen.width) )
+            if ( !(viewPoint.z > 0 && viewPoint.x > 10 && viewPoint.x < Screen.width-10) )
             {
-                Vector3 targetRot = spriteTrans.rotation.eulerAngles;
-                targetRot.y += 180;
-                directionIsLeft = !directionIsLeft;
-                isTurning = true;
-                StartCoroutine(TurnCompleter(turnTime));
-                spriteTrans.LeanRotate(targetRot, turnTime);
+                Flip();
             }
         }
 
@@ -77,6 +111,16 @@ namespace Animal
             targetRot.y += 180;
             directionIsLeft = !directionIsLeft;
             spriteTrans.LeanRotate(targetRot, time);
+        }
+
+        private void Flip()
+        {
+            Vector3 targetRot = spriteTrans.rotation.eulerAngles;
+            targetRot.y += 180;
+            directionIsLeft = !directionIsLeft;
+            isTurning = true;
+            StartCoroutine(TurnCompleter(turnTime));
+            spriteTrans.LeanRotate(targetRot, turnTime);
         }
 
         public IEnumerator TurnCompleter(float timer)

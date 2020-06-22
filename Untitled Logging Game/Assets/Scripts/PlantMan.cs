@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Animal;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class PlantMan : MonoBehaviour
 {
@@ -9,6 +13,7 @@ public class PlantMan : MonoBehaviour
     [SerializeField] float[] leafScaleValues = new []{1f,1f,1f,1f,1f,1f};
     [SerializeField] Color[] leafColorValues = new Color[8];
     [SerializeField] private GameObject[] regrowableTrees = new GameObject[8];
+    [SerializeField] private GameObject squirrelPrefab;
     public Sprite[] leafParticles = new Sprite[8];
     
     public GameObject nutPrefab;
@@ -21,19 +26,22 @@ public class PlantMan : MonoBehaviour
     
     [SerializeField] GameObject fallParticleObject;
 
+    [SerializeField] private GameObject plantPopUp;
+
     private CutMan cutMan;
+    private CameraMan camMan;
     private Camera mainCam;
     
     
-    // Start is called before the first frame update
     void Start()
     {
         cutMan = GetComponent<CutMan>();
         groundMask = LayerMask.GetMask("Ground");
         mainCam = Camera.main;
+        camMan = FindObjectOfType<CameraMan>();
+        plantPopUp.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (shakeTimer > 0)
@@ -42,6 +50,11 @@ public class PlantMan : MonoBehaviour
 
     public void plantSeed(int treeIndex)
     {
+        if (currentTreeSpots.Count == 0 && camMan.currentLocation == 3)
+        {
+            plantPopUp.SetActive(true);
+            cutMan.mayCut = false;
+        }
         GameObject newTree = Instantiate(regrowableTrees[treeIndex], currentTreeSpots[0]);
         newTree.transform.localScale = new Vector3(.1f,.1f,.1f);
         newTree.transform.LeanScale(new Vector3(.4f, .4f, .4f), 2f);
@@ -65,6 +78,21 @@ public class PlantMan : MonoBehaviour
         var newPartShape = newPart.shape;
         newPartShape.mesh = newTreePiece.GetComponent<MeshFilter>().mesh;
         newPart.Play();
+
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Finland") && Random.Range(0,4) == 3)
+        {
+            Transform[] leaves = newTreePiece.transform.GetComponentsInChildren<Transform>();
+            Transform maybeLeaf = leaves[Random.Range(0, leaves.Length)];
+            if (maybeLeaf.gameObject.CompareTag("Leaves"))
+            {
+                GameObject squirrel = Instantiate(squirrelPrefab);
+                squirrel.transform.position = maybeLeaf.position;
+                Squirrel squirsquirrelrel = squirrel.GetComponentInChildren<Squirrel>();
+                Physics.Raycast(squirrel.transform.position, Vector3.down, out var hit, 1000, groundMask);
+                Debug.DrawLine(squirrel.transform.position,hit.point,Color.green, 1000);
+                squirsquirrelrel.floorHeight = hit.point.y;
+            }
+        }
     }
     
     public IEnumerator SeedSpawn(Transform tree, GraphicRaycaster gRaycaster)

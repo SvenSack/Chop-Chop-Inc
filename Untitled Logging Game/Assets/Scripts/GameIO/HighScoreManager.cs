@@ -7,14 +7,19 @@ public delegate void OnGameCompleted();
 
 public class HighScoreManager : MonoBehaviour
 {
+    public int currentLevel = 0;
+    private static readonly int maxLevel = 3;
+
     private List<PlayerGameData> playerScoreData = new List<PlayerGameData>();
 
-    private static string fileName = "Scores.txt";
+    private static readonly string fileName = "Scores.txt";
+    private static readonly string currentPlayerData = "CurrentPlayer.txt";
 
     private string savePath;
+    private string currentPlayerDataPath;
 
-    private string currentPlayerName = "John Doe";
-    private float currentPlayerScore;
+    private string currentPlayerName = "Unfilled";
+    private LevelScoreData[] currentPlayerScores = new LevelScoreData[maxLevel];
 
     private InputField inputField;
 
@@ -22,8 +27,24 @@ public class HighScoreManager : MonoBehaviour
 
     void Awake()
     {
+        for (int i = 0; i < currentPlayerScores.Length; i++)
+        {
+            currentPlayerScores[i] = new LevelScoreData();
+        }
+
         savePath = Path.Combine(Application.persistentDataPath, fileName);
+        currentPlayerDataPath = Path.Combine(Application.persistentDataPath, currentPlayerData);
+
         inputField = FindObjectOfType<InputField>();
+
+        LoadCurrentLevelScore();
+    }
+
+
+    private void OnApplicationQuit()
+    {
+        loginCount++;
+        ResetLevelDataInFile();
     }
 
     private void Update()
@@ -31,7 +52,10 @@ public class HighScoreManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             Debug.Log("Saving");
-            SaveScoresToFile();
+            SetPlayerScore(3, 4, 5, 6, 7,1);
+
+
+            SaveCurrentLevelDataToFile();
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -63,9 +87,27 @@ public class HighScoreManager : MonoBehaviour
         LoadScoresInFile();
     }
 
-    public void SetPlayerScore(float newScore)
+    public void SetPlayerScore(int treesCut, int treesPlanted, float score, int highestComboCut, int highestComboPlant,float difficulty)
     {
-        currentPlayerScore = newScore;
+        LevelScoreData scoreData = new LevelScoreData
+            (treesCut,
+            treesPlanted,
+            score,
+            highestComboCut,
+            highestComboPlant,
+            difficulty);
+
+        currentPlayerScores[currentLevel] = scoreData;
+    }
+
+    public void SetLevelDifficulty(float difficulty)
+    {
+        currentPlayerScores[currentLevel].difficulty = difficulty;
+    }
+
+    public float GetLevelDifficulty(int level)
+    {
+        return currentPlayerScores[level].difficulty;
     }
 
     public void AddPlayerScoreData(PlayerGameData scoreData)
@@ -75,13 +117,19 @@ public class HighScoreManager : MonoBehaviour
 
     public void AddCurrentPlayerScoreData()
     {
-        PlayerGameData scoreData = new PlayerGameData(currentPlayerName, currentPlayerScore);
+        float sum = 0;
+        foreach(var levelData in currentPlayerScores)
+        {
+            sum += levelData.score;
+        }
+
+        PlayerGameData scoreData = new PlayerGameData(currentPlayerName, sum);
         playerScoreData.Add(scoreData);
     }
 
+    //--------------------------------- Saving related stuff ------------------------------------------//
     public void SaveScoresToFile()
     {
-
         playerScoreData.Sort(new PlayerScoreComparer());
 
         using (var writer = new StreamWriter(File.Open(savePath, FileMode.Create)))
@@ -101,8 +149,47 @@ public class HighScoreManager : MonoBehaviour
         }
     }
 
+    public void SaveCurrentLevelDataToFile()
+    {
+        SaveLevelDataToFile(currentPlayerScores);
+    }
+
+    public void ResetLevelDataInFile()
+    {
+        LevelScoreData[] emptyScoreData = new LevelScoreData[maxLevel];
+
+        for (int i = 0; i < emptyScoreData.Length; i++)
+        {
+            emptyScoreData[i] = new LevelScoreData();
+        }
+
+        SaveLevelDataToFile(emptyScoreData);
+
+    }
+
+    public void SaveLevelDataToFile(LevelScoreData[] scoreArray)
+    {
+        using (var writer = new StreamWriter(File.Open(currentPlayerDataPath, FileMode.Create)))
+        {
+            GameDataWriter dataWriter = new GameDataWriter(writer);
+
+            for (int i = 0; i < maxLevel; i++)
+            {
+                string jsonScoreData = JsonUtility.ToJson(scoreArray[i]);
+                dataWriter.Write(jsonScoreData);
+            }
+        }
+    }
+
+    
+    //------------------------------------- Loading related stuff ------------------------------------------//
     public void LoadScoresInFile()
     {
+        if(!File.Exists(savePath))
+        {
+            SaveScoresToFile();
+        }
+
         using (var reader = new StreamReader(File.Open(savePath, FileMode.Open)))
         {
             Debug.Log("Loading Scores");
@@ -128,6 +215,30 @@ public class HighScoreManager : MonoBehaviour
         }
     }
 
+
+    public void LoadCurrentLevelScore()
+    {
+        if(!File.Exists(currentPlayerDataPath))
+        {
+            ResetLevelDataInFile();
+        }
+
+        using (var reader = new StreamReader(File.Open(currentPlayerDataPath, FileMode.Open)))
+        {
+            Debug.Log("Loading Scores");
+
+            GameDataReader dataReader = new GameDataReader(reader);
+
+            for (int i = 0; i < maxLevel; i++)
+            {
+                string levelDataStr = dataReader.ReadString();
+                LevelScoreData scoreData = JsonUtility.FromJson<LevelScoreData>(levelDataStr);
+            }
+        }
+    }
+
+
+
     public List<PlayerGameData> GetScoreData()
     {
         return playerScoreData;
@@ -144,8 +255,6 @@ public class HighScoreManager : MonoBehaviour
         {
             Debug.LogError("No InputField found!");
         }
-         
-        
     }
 
     public void DEBUG_AddRandomPlayerData()
@@ -171,7 +280,7 @@ public class HighScoreManager : MonoBehaviour
     public void DEBUG_AddAndSaveCurrentPlayerData()
     {
         Debug.Log("Adding player name " + currentPlayerName);
-        currentPlayerScore = Random.Range(0, 40.0f);
+        currentPlayerScores[currentLevel].score = Random.Range(0, 40.0f);
 
         AddCurrentPlayerScoreData();
         SaveScoresToFile();

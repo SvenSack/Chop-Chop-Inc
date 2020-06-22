@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -10,15 +11,35 @@ public class UIMan : MonoBehaviour
     public int plantedTrees;
     
     public string mapScene;
+    private CutMan cutMan;
 
     private SceneMan sceneMan;
     [SerializeField] private Slider scoreSlider;
     [SerializeField] private TextMeshProUGUI[] scoreValues;
     [SerializeField] private TextMeshProUGUI locationText;
+    public int seedCombo;
+    public TextMeshProUGUI seedComboText;
+    private float seedComboTimeOut;
+
+    private void Update()
+    {
+        if (seedComboText.fontSize != 0)
+        {
+            seedComboTimeOut += Time.deltaTime;
+            if (seedComboTimeOut > 4)
+            {
+                seedComboText.text = seedComboText.text.Replace((seedCombo) + "x", 0 + "x");
+                seedCombo = 0;
+                seedComboTimeOut = 0;
+                seedComboText.fontSize = 0;
+            }
+        }
+    }
 
     private void Awake()
     {
         sceneMan = FindObjectOfType<SceneMan>();
+        cutMan = FindObjectOfType<CutMan>();
     }
 
     // Start is called before the first frame update
@@ -57,7 +78,17 @@ public class UIMan : MonoBehaviour
         {
             plantedTrees++;
             scoreValues[0].text = "" + plantedTrees;
+            seedCombo += 1;
+            seedComboTimeOut = 0;
             AdjustSlider();
+            if (seedCombo > 1)
+            {
+                if (seedComboText.fontSize == 0)
+                    seedComboText.fontSize = 36;
+                string temp = seedComboText.text;
+                temp = temp.Replace((seedCombo - 1) + "x", seedCombo + "x");
+                seedComboText.text = temp;
+            }
         }
     }
     
@@ -67,8 +98,9 @@ public class UIMan : MonoBehaviour
         SceneManager.LoadScene(mapScene, LoadSceneMode.Single);
     }
 
-    public void HelpButton()
+    public void ClosePopUp(GameObject target)
     {
-        Debug.Log("I would like to help, but I dont know how");
+        target.SetActive(false);
+        cutMan.mayCut = true;
     }
 }

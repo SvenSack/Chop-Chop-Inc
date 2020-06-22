@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Linq;
+using TMPro;
 
 public class TextCensorerComponent : MonoBehaviour
 {
     
     private static string fileName = "CensoredWords.txt";
 
-    public Text textToCheck;
+    public TextMeshProUGUI textToCheck;
     public InputField inputField;
 
     public bool CensorCheckOnUpdate =false;
@@ -81,11 +82,21 @@ public class TextCensorer
 
     public void LoadCensoredWords(string censoredWordsFilePath)
     {
-        if(!File.Exists(censoredWordsFilePath))
+        Debug.Log("LoadCensoredWords");
+        if (!File.Exists(censoredWordsFilePath))
         {
-            var stream = File.Create(censoredWordsFilePath);
-            stream.Close();
-            wordsToCheck.Concat(defaultCensored.ToList());
+            using (var writer = new StreamWriter(File.Open(censoredWordsFilePath, FileMode.Create)))
+            {
+                GameDataWriter dataWriter = new GameDataWriter(writer);
+
+                foreach(var word in defaultCensored)
+                {
+                    dataWriter.Write(word);
+                }
+
+            }
+            wordsToCheck = wordsToCheck.Concat(defaultCensored.ToList()).ToList();
+            return;
         }
 
         using (var reader = new StreamReader(File.Open(censoredWordsFilePath, FileMode.Open)))

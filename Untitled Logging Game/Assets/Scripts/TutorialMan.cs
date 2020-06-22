@@ -11,6 +11,7 @@ public class TutorialMan : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private GameObject zoe;
     [SerializeField] private Transform zoeGoal;
+    public bool isFirstLevel;
     private bool lastStep;
     private bool active;
     private Vector3 zoeOrigin;
@@ -25,6 +26,9 @@ public class TutorialMan : MonoBehaviour
         zoeOrigin = zoe.transform.position;
         zoe.SetActive(false);
         buttonText.transform.parent.gameObject.SetActive(false);
+        
+        if(isFirstLevel)
+            TutorialActivate();
     }
 
     public void TutorialActivate()
