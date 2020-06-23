@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class UIMan : MonoBehaviour
+public class UIMan : MonoBehaviour,IObservable
 {
 
     public int cutTrees;
@@ -20,7 +20,7 @@ public class UIMan : MonoBehaviour
     private CutMan cutMan;
 
     private SceneMan sceneMan;
-    [SerializeField] private Slider scoreSlider;
+    [SerializeField] public Slider scoreSlider;
     [SerializeField] private TextMeshProUGUI[] scoreValues;
     [SerializeField] private TextMeshProUGUI locationText;
     [SerializeField] private GameObject[] walkieTalkiePrefabs;
@@ -30,6 +30,21 @@ public class UIMan : MonoBehaviour
     public int seedCombo;
     public TextMeshProUGUI seedComboText;
     private float seedComboTimeOut;
+
+    public MoodSetter[] moodSetters;
+
+    public void AddObserver(IObserver observer)
+    {
+
+    }
+
+    public void Notify()
+    {
+        foreach(MoodSetter moodSetter in moodSetters)
+        {
+            moodSetter.ObserverUpdate();
+        }
+    }
 
     private void Update()
     {
@@ -75,6 +90,8 @@ public class UIMan : MonoBehaviour
                 result = 0;
         }
         scoreSlider.value = result;
+        Notify();
+
     }
 
     public void IncreaseScore(bool isCut)
