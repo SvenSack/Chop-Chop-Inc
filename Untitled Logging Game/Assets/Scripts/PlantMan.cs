@@ -68,6 +68,9 @@ public class PlantMan : MonoBehaviour
 
     public void TreeFell(GameObject newTreePiece, CuttableTreeScript target)
     {
+        TreeFallParticle temp = newTreePiece.GetComponentInChildren<TreeFallParticle>();
+        if (target.leafParticleIndex == 3 || target.leafParticleIndex == 5)
+            temp.isPalm = true;
         Transform[] Leaves = newTreePiece.GetComponentsInChildren<Transform>();
         List<ParticleSystem> leafs = new List<ParticleSystem>();
         foreach (var leaf in Leaves)
@@ -82,20 +85,34 @@ public class PlantMan : MonoBehaviour
                     newPart.textureSheetAnimation.SetSprite(0,leafParticles[newPartIndex]);
                     var mainModule = newPart.main;
                     mainModule.startColor = leafColorValues[newPartIndex];
-                    if (leafScaleValues[newPartIndex] != 1)
+                    if (leafScaleValues[newPartIndex] != 1 && !temp.isPalm)
                     {
-                        var newPartMain = newPart.main;
-                        newPartMain.startSizeMultiplier = leafScaleValues[newPartIndex];
+                        mainModule.startSizeMultiplier = leafScaleValues[newPartIndex];
                     }
                     var newPartShape = newPart.shape;
-                    newPartShape.mesh = leaf.GetComponent<MeshFilter>().mesh;
-                    newPartShape.scale = newTreePiece.transform.localScale;
-                    newPart.Play();
+                    if (!temp.isPalm)
+                    {
+                        newPartShape.mesh = leaf.GetComponent<MeshFilter>().mesh;
+                        newPartShape.scale = newTreePiece.transform.localScale;
+                        newPart.Play();
+                        mainModule.stopAction = ParticleSystemStopAction.Destroy;
+                    }
+                    else
+                    {
+                        newPart.Pause();
+                        /* HELLO DARKNESS MY OLD FRIEND
+                        var newPartEmission = newPart.emission;
+                        newPartShape.shapeType = ParticleSystemShapeType.Circle;
+                        newPartShape.scale = new Vector3(.01f,.01f,.01f);
+                        newPartEmission.rateOverTime = 0;
+                        newPartEmission.SetBurst(0,new ParticleSystem.Burst(0, 1));
+                        mainModule.startRotation = 0;
+                        mainModule.startRotation3D = true;*/
+                    }
                     leafs.Add(newPart);
                 }
             }
         }
-        TreeFallParticle temp = newTreePiece.GetComponentInChildren<TreeFallParticle>();
         temp.leaves = leafs.ToArray();
         ParticleSystem newSyst = Instantiate(fallParticleObject, newTreePiece.transform)
             .GetComponentInChildren<ParticleSystem>();

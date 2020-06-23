@@ -28,6 +28,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
+  scareDistance: 30
 --- !u!1001 &8795590590056783365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38,7 +39,7 @@ PrefabInstance:
     - target: {fileID: 2051670183548715896, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
       propertyPath: m_Name
-      value: Caracal
+      value: Caracal Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2051670183548715898, guid: 17e75d814fb9f3740b8c70a3b18e7a0a,
         type: 3}
