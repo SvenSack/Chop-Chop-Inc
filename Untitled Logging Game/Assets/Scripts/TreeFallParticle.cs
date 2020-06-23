@@ -69,7 +69,7 @@ public class TreeFallParticle : MonoBehaviour
             }
             foreach (var maccaw in maccis)
             {
-                if (Vector3.Distance(maccaw.transform.position, landingPoint) < 10f)
+                if (Vector3.Distance(maccaw.transform.position, landingPoint) < 15f)
                 {
                     maccaw.Scare(landingPoint);
                     uiMan.TryVoiceLine(9);

@@ -79,6 +79,7 @@ public class PlantMan : MonoBehaviour
         }
         var newPartShape = newPart.shape;
         newPartShape.mesh = newTreePiece.GetComponent<MeshFilter>().mesh;
+        newPartShape.scale = newTreePiece.transform.localScale;
         newPart.Play();
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Finland") && Random.Range(0,4) == 3)

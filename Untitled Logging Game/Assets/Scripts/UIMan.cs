@@ -10,6 +10,11 @@ public class UIMan : MonoBehaviour
 
     public int cutTrees;
     public int plantedTrees;
+    private int cutTreesThisLvl;
+    private int plantedTreesThisLvl;
+    private int highestCutCombo;
+    private int highestPlantCombo;
+    private float score;
     
     public string mapScene;
     private CutMan cutMan;
@@ -77,12 +82,18 @@ public class UIMan : MonoBehaviour
         if (isCut)
         {
             cutTrees++;
+            cutTreesThisLvl++;
+            score += 1 * cutMan.comboCount*cutMan.cutDifficulty;
             scoreValues[1].text = "" + cutTrees;
             AdjustSlider();
+            if (cutMan.comboCount > highestCutCombo)
+                highestCutCombo = cutMan.comboCount;
         }
         else
         {
             plantedTrees++;
+            plantedTreesThisLvl++;
+            score += 2 * seedCombo;
             scoreValues[0].text = "" + plantedTrees;
             seedCombo += 1;
             seedComboTimeOut = 0;
@@ -94,6 +105,8 @@ public class UIMan : MonoBehaviour
                 string temp = seedComboText.text;
                 temp = temp.Replace((seedCombo - 1) + "x", seedCombo + "x");
                 seedComboText.text = temp;
+                if (seedCombo > highestPlantCombo)
+                    highestPlantCombo = seedCombo;
                 TryVoiceLine(1);
             }
         }
@@ -101,6 +114,9 @@ public class UIMan : MonoBehaviour
     
     public void BackToMap()
     {
+        HighScoreManager hSM = FindObjectOfType<HighScoreManager>();
+        hSM.SetPlayerScore(cutTreesThisLvl,plantedTreesThisLvl,score,highestCutCombo,highestPlantCombo,cutMan.cutDifficulty);
+        hSM.SaveCurrentLevelDataToFile();
         sceneMan.prevScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(mapScene, LoadSceneMode.Single);
     }

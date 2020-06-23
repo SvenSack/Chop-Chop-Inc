@@ -90,6 +90,8 @@ public class CutMan : MonoBehaviour
         trailMan = GameObject.FindGameObjectWithTag("TrailMan");
         plantMan = GetComponent<PlantMan>();
         burnPopUp.SetActive(false);
+        HighScoreManager hsM = FindObjectOfType<HighScoreManager>();
+        cutDifficulty = hsM.GetLevelDifficulty(hsM.currentLevel - 1);
     }
 
     // Update is called once per frame
@@ -354,7 +356,12 @@ public class CutMan : MonoBehaviour
         isCutting = false;
         chainsawOn = false;
         comboText.text = comboText.text.Replace((comboCount) + "x", 0 + "x");
-        
+        if (comboCount < 3)
+        {
+            cutDifficulty -= .05f;
+            maxRot = cutDifficulty*20f;
+            forgivingness = 5-cutDifficulty*2;
+        }
         comboCount = 0;
         comboText.fontSize = 0;
         trailMan.GetComponent<TrailRenderer>().emitting = false;
@@ -372,8 +379,8 @@ public class CutMan : MonoBehaviour
         {
             uiMan.TryVoiceLine(2);
             cutDifficulty += .05f;
-            maxRot += +1;
-            forgivingness = forgivingness*.95f;
+            maxRot = cutDifficulty*20f;
+            forgivingness = 5-cutDifficulty*2;
         }
     }
 

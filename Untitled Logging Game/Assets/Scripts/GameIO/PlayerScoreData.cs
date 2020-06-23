@@ -25,10 +25,19 @@ public class PlayerGameData
 {
     public string Name;
     public float Score;
-    public string Time;
-    public string Date;
+   
     public int AchievedLevel;
     public string FeedBack;
+
+    public int treesCut;
+    public int treesPlanted;
+
+    public int highestComboCut;
+    public int highestComboPlant;
+
+    //automatically set
+    public string Time;
+    public string Date;
 
     public PlayerGameData(string name, float score,int achievedLevel = -1)
     {
@@ -40,6 +49,16 @@ public class PlayerGameData
 
         Time = now.TimeOfDay.ToString();
         Date = now.Date.ToString();
+
+    }
+
+    public void SetLevelGameData(LevelScoreData data)
+    {
+        treesCut = data.treesCut;
+        treesPlanted = data.treesPlanted;
+
+        highestComboCut = data.highestComboCut;
+        highestComboPlant = data.highestComboPlant;
 
     }
 
@@ -92,4 +111,22 @@ public class LevelScoreData
         this.difficulty = difficulty;
 
     }
+
+    public static LevelScoreData operator +(LevelScoreData a,LevelScoreData b)
+    {
+        LevelScoreData result = new LevelScoreData();
+
+        result.highestComboCut = a.highestComboCut + b.highestComboCut;
+        result.highestComboPlant = a.highestComboPlant + b.highestComboPlant;
+
+        result.treesCut = a.treesCut + b.treesCut;
+        result.treesPlanted = a.treesPlanted + b.treesPlanted;
+
+        result.score = a.score + b.score;
+
+        return result;
+
+
+    }
+
 }

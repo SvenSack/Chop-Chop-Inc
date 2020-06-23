@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,10 +19,10 @@ public class HighScoreManager : MonoBehaviour
     private string savePath;
     private string currentPlayerDataPath;
 
-    private string currentPlayerName = "Unfilled";
+    public string currentPlayerName = "Unfilled";
     private LevelScoreData[] currentPlayerScores = new LevelScoreData[maxLevel];
 
-    private InputField inputField;
+    [SerializeField] private TextMeshProUGUI inputField;
 
     private int loginCount;
 
@@ -34,8 +35,6 @@ public class HighScoreManager : MonoBehaviour
 
         savePath = Path.Combine(Application.persistentDataPath, fileName);
         currentPlayerDataPath = Path.Combine(Application.persistentDataPath, currentPlayerData);
-
-        inputField = FindObjectOfType<InputField>();
 
         LoadCurrentLevelScore();
     }
@@ -52,10 +51,10 @@ public class HighScoreManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             Debug.Log("Saving");
-            SetPlayerScore(3, 4, 5, 6, 7,1);
+            //SetPlayerScore(3, 4, 5, 6, 7,1);
 
 
-            SaveCurrentLevelDataToFile();
+            AddCurrentPlayerScoreDataToDisk();
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -115,16 +114,28 @@ public class HighScoreManager : MonoBehaviour
         playerScoreData.Add(scoreData);
     }
 
-    public void AddCurrentPlayerScoreData()
+    public void AddCurrentPlayerScoreDataToDisk()
     {
-        float sum = 0;
-        foreach(var levelData in currentPlayerScores)
-        {
-            sum += levelData.score;
-        }
+        LevelScoreData data =  CalculateTotalScoreData();
 
-        PlayerGameData scoreData = new PlayerGameData(currentPlayerName, sum);
+        PlayerGameData scoreData = new PlayerGameData(currentPlayerName, data.score,3);
+        scoreData.SetLevelGameData(data);
+
         playerScoreData.Add(scoreData);
+
+        SaveScoresToFile();
+    }
+
+    public LevelScoreData CalculateTotalScoreData()
+    {
+        LevelScoreData result = new LevelScoreData();
+
+        foreach(LevelScoreData data in currentPlayerScores)
+        {
+            result += data;
+        }
+        Debug.Log("CalculateTotalScoreData result trree cut " + result.treesCut);
+        return result;
     }
 
     //--------------------------------- Saving related stuff ------------------------------------------//
@@ -232,7 +243,11 @@ public class HighScoreManager : MonoBehaviour
             for (int i = 0; i < maxLevel; i++)
             {
                 string levelDataStr = dataReader.ReadString();
+                Debug.Log("Loaded " + levelDataStr);
                 LevelScoreData scoreData = JsonUtility.FromJson<LevelScoreData>(levelDataStr);
+                currentPlayerScores[i] = scoreData;
+
+
             }
         }
     }
@@ -244,7 +259,7 @@ public class HighScoreManager : MonoBehaviour
         return playerScoreData;
     }
 
-    public void OnEditEnd(string str)
+    public void AssignPlayerName()
     {
         if(inputField)
         {
@@ -282,7 +297,7 @@ public class HighScoreManager : MonoBehaviour
         Debug.Log("Adding player name " + currentPlayerName);
         currentPlayerScores[currentLevel].score = Random.Range(0, 40.0f);
 
-        AddCurrentPlayerScoreData();
+        AddCurrentPlayerScoreDataToDisk();
         SaveScoresToFile();
     }
 
