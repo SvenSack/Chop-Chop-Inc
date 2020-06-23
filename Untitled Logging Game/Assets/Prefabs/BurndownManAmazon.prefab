@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &414280377215015050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4820961994814043918}
+  - component: {fileID: 414280377215015052}
+  - component: {fileID: 414280377215015053}
+  m_Layer: 0
+  m_Name: BurndownManAmazon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4820961994814043918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414280377215015050}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &414280377215015052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414280377215015050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af33d98f19aabfd45b46eca000b8d012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrain: {fileID: 0}
+--- !u!114 &414280377215015053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414280377215015050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50869336655f2da46beb2a7c7ef350d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: cfbaba7385eb1e546b74a7d29d3a7a4d,
+    type: 2}
+  oldTerrainLayer: {fileID: 8574412962073106934, guid: 4a0f158d7282ecd4e99101c8d2e07f4d,
+    type: 2}
+  layerSwitcher: {fileID: 414280377215015052}
+  indexToSwitch: 00000000
+  stumpReplacementOptions:
+  - {fileID: 6914813962911470358, guid: 318c3de5016b53041b0717eb7fedb562, type: 3}
+  - {fileID: 6036664975292473151, guid: d825620bbcfe6f84dbac6051d5dca57b, type: 3}
+  stumpShiftAmount:
+  - 0
+  - 0
+  burnDownDetailDensity: 0

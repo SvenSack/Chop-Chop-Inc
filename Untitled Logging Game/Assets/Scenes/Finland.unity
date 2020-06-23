@@ -58565,8 +58565,28 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1817954820230965469, guid: 79ccd075366433f4ea1e8a41ad981294,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817954820230965469, guid: 79ccd075366433f4ea1e8a41ad981294,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 101783938350814005}
+    - target: {fileID: 1817954820230965469, guid: 79ccd075366433f4ea1e8a41ad981294,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817954820230965469, guid: 79ccd075366433f4ea1e8a41ad981294,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817954820230965469, guid: 79ccd075366433f4ea1e8a41ad981294,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ActivateBurnDown
       objectReference: {fileID: 0}
     - target: {fileID: 3037522177835145913, guid: 79ccd075366433f4ea1e8a41ad981294,
         type: 3}
@@ -119693,14 +119713,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50869336655f2da46beb2a7c7ef350d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: 3946d3f653a46a445aad652cab73d2b2,
+  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: bb3bfdbbee8e5d2498e262f507bc467c,
     type: 2}
   oldTerrainLayer: {fileID: 8574412962073106934, guid: 2c79619b4e4670c46931c73551bb55e2,
     type: 2}
-  layerSwitchers:
-  - {fileID: 101783938350814006}
-  indexToSwitch: 02000000
-  stumpReplacementOptions: []
+  layerSwitcher: {fileID: 0}
+  indexToSwitch: 00000000
+  stumpReplacementOptions:
+  - {fileID: 1718828524468030560, guid: 01821d3236884d948964fba795d57243, type: 3}
+  stumpShiftAmount:
+  - 0
 --- !u!114 &101783938350814006
 MonoBehaviour:
   m_ObjectHideFlags: 0
