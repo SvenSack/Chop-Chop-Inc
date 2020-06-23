@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Animal;
 using Unity.Mathematics;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,6 +26,7 @@ public class PlantMan : MonoBehaviour
     public List<Transform> currentTreeSpots;
     
     [SerializeField] GameObject fallParticleObject;
+    [SerializeField] private GameObject leafFallParticleObject;
 
     [SerializeField] private GameObject plantPopUp;
 
@@ -66,21 +68,41 @@ public class PlantMan : MonoBehaviour
 
     public void TreeFell(GameObject newTreePiece, CuttableTreeScript target)
     {
-        GameObject newPartI = Instantiate(fallParticleObject, newTreePiece.transform);
-        ParticleSystem newPart = newPartI.transform.GetChild(0).GetComponent<ParticleSystem>();
-        int newPartIndex = target.leafParticleIndex;
-        newPart.textureSheetAnimation.SetSprite(0,leafParticles[newPartIndex]);
-        var mainModule = newPart.main;
-        mainModule.startColor = leafColorValues[newPartIndex];
-        if (leafScaleValues[newPartIndex] != 1)
+        Transform[] Leaves = newTreePiece.GetComponentsInChildren<Transform>();
+        List<ParticleSystem> leafs = new List<ParticleSystem>();
+        foreach (var leaf in Leaves)
         {
-            var newPartMain = newPart.main;
-            newPartMain.startSizeMultiplier = leafScaleValues[newPartIndex];
+            if (leaf.gameObject.CompareTag("Leaves"))
+            {
+                if (Random.Range(0, 4) == 0)
+                {
+                    GameObject newParter = Instantiate(leafFallParticleObject, leaf);
+                    ParticleSystem newPart = newParter.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    int newPartIndex = target.leafParticleIndex;
+                    newPart.textureSheetAnimation.SetSprite(0,leafParticles[newPartIndex]);
+                    var mainModule = newPart.main;
+                    mainModule.startColor = leafColorValues[newPartIndex];
+                    if (leafScaleValues[newPartIndex] != 1)
+                    {
+                        var newPartMain = newPart.main;
+                        newPartMain.startSizeMultiplier = leafScaleValues[newPartIndex];
+                    }
+                    var newPartShape = newPart.shape;
+                    newPartShape.mesh = leaf.GetComponent<MeshFilter>().mesh;
+                    newPartShape.scale = newTreePiece.transform.localScale;
+                    newPart.Play();
+                    leafs.Add(newPart);
+                }
+            }
         }
-        var newPartShape = newPart.shape;
-        newPartShape.mesh = newTreePiece.GetComponent<MeshFilter>().mesh;
-        newPartShape.scale = newTreePiece.transform.localScale;
-        newPart.Play();
+        TreeFallParticle temp = newTreePiece.GetComponentInChildren<TreeFallParticle>();
+        temp.leaves = leafs.ToArray();
+        ParticleSystem newSyst = Instantiate(fallParticleObject, newTreePiece.transform)
+            .GetComponentInChildren<ParticleSystem>();
+        var newSystShape = newSyst.shape;
+        newSystShape.scale = newSystShape.scale * newTreePiece.transform.localScale.x;
+        temp.dust = newSyst;
+        
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Finland") && Random.Range(0,4) == 3)
         {

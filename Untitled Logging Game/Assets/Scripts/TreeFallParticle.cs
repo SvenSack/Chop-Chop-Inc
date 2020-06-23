@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class TreeFallParticle : MonoBehaviour
 {
-    private ParticleSystem leaves;
-    private ParticleSystem dust;
+    public ParticleSystem[] leaves;
+    public ParticleSystem dust;
     private bool inAir = true;
 
     public AudioSource fallSound;
@@ -14,13 +14,6 @@ public class TreeFallParticle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ParticleSystem[] temp = transform.GetComponentsInChildren<ParticleSystem>();
-
-        if(temp.Length >= 2)
-        {
-            leaves = temp[0];
-            dust = temp[1];
-        }
         
         soundMan = FindObjectOfType<SoundMan>();
         uiMan = FindObjectOfType<UIMan>();
@@ -30,14 +23,21 @@ public class TreeFallParticle : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
+            
+            Vector3 landingPoint = other.GetContact(0).point;
             if (inAir)
             {
-                if(leaves != null)
+                /*if(leaves != null)
                 {
-                    leaves.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-                }
+                    foreach (var leaf in leaves)
+                    {
+                        leaf.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                    }
+                }*/
                 if(dust != null)
                 {
+                    dust.transform.rotation = Quaternion.Euler(other.GetContact(0).normal);
+                    dust.transform.position = landingPoint;
                     dust.Play();
                 }
             
@@ -51,7 +51,6 @@ public class TreeFallParticle : MonoBehaviour
             Maccaw[] maccis = FindObjectsOfType<Maccaw>();
             Armadillo[] dillos = FindObjectsOfType<Armadillo>();
             Caracal[] cars = FindObjectsOfType<Caracal>();
-            Vector3 landingPoint = other.GetContact(0).point;
             Debug.DrawLine(landingPoint, landingPoint+Vector3.up*10, Color.red, 1000f);
             foreach (var fox in foxes)
             {
