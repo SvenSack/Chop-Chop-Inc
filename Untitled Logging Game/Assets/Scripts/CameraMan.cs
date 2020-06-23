@@ -49,6 +49,7 @@ public class CameraMan : MonoBehaviour
         currentLocation++;
         if(currentLocation < zoomLocations.Length)
         {
+            FindObjectOfType<UIMan>().allowMovement = false;
             mainCam.transform.LeanMove(zoomLocations[currentLocation].position, zoomTime);
             mainCam.transform.LeanRotate(zoomLocations[currentLocation].rotation.eulerAngles, zoomTime);
             StartCoroutine(SetTargets(zoomTime));
@@ -69,5 +70,6 @@ public class CameraMan : MonoBehaviour
         {
             animal.SnapToCamera(true);
         }
+        FindObjectOfType<UIMan>().allowMovement = true;
     }
 }

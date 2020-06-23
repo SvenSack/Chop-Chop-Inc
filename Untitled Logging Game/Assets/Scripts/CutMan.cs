@@ -575,7 +575,7 @@ public class CutMan : MonoBehaviour
 
     }
 
-    private void MoveArea()
+    public void MoveArea()
     {
         foreach (var tar in 
             FindObjectsOfType<CutTarget>())

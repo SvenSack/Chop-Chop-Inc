@@ -31,6 +31,8 @@ public class UIMan : MonoBehaviour,IObservable
     public int seedCombo;
     public TextMeshProUGUI seedComboText;
     private float seedComboTimeOut;
+    [SerializeField] private GameObject keepMovingButton;
+    public bool allowMovement = true;
 
     List<IObserver> observers = new List<IObserver>();
 
@@ -188,5 +190,13 @@ public class UIMan : MonoBehaviour,IObservable
     {
         yield return new WaitForSeconds(displayTime);
         Destroy(walkieTalkieInstance);
+    }
+
+    public void KeepWalking()
+    {
+        if (allowMovement)
+        {
+            cutMan.MoveArea();
+        }
     }
 }
