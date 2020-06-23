@@ -119717,12 +119717,12 @@ MonoBehaviour:
     type: 2}
   oldTerrainLayer: {fileID: 8574412962073106934, guid: 2c79619b4e4670c46931c73551bb55e2,
     type: 2}
-  layerSwitcher: {fileID: 0}
   indexToSwitch: 00000000
   stumpReplacementOptions:
   - {fileID: 1718828524468030560, guid: 01821d3236884d948964fba795d57243, type: 3}
   stumpShiftAmount:
   - 0
+  burnDownDetailDensity: 0
 --- !u!114 &101783938350814006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119736,6 +119736,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 546722549}
+--- !u!114 &101783938350814007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101783938350814004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090b3a35cc8ead441914a6fe327807be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectToPlace: {fileID: 6021354062318187382, guid: d94d4d2295522294f9fa3a8bd4dfe09f,
+    type: 3}
+  screenSpaceShiftInX: 40
+  screenSpaceShiftInY: 5
+  screenSpaceShiftInZ: 5
+  allowedWorldShift: {x: 20, y: 0, z: 20}
+  objectSpecificYShift: 0
+  maxZDistance: 800
+  density: 0.05
+  terrain: {fileID: 546722549}
+  minChildScale: 0.5
+  maxChildScale: 2.5
 --- !u!4 &393146883705929777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1554269093266031036, guid: 101f76564093cc844825579a1c5c4670,

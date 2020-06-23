@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -64557,6 +64557,7 @@ GameObject:
   - component: {fileID: 7395347853614461351}
   - component: {fileID: 2448026468723154469}
   - component: {fileID: 2448026468723154468}
+  - component: {fileID: 2448026468723154470}
   m_Layer: 0
   m_Name: BurndownMan
   m_TagString: Untagged
@@ -64580,7 +64581,6 @@ MonoBehaviour:
     type: 2}
   oldTerrainLayer: {fileID: 8574412962073106934, guid: 4a0f158d7282ecd4e99101c8d2e07f4d,
     type: 2}
-  layerSwitcher: {fileID: 2448026468723154469}
   indexToSwitch: 00000000
   stumpReplacementOptions:
   - {fileID: 6914813962911470358, guid: 318c3de5016b53041b0717eb7fedb562, type: 3}
@@ -64602,6 +64602,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 1553001556}
+--- !u!114 &2448026468723154470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2448026468723154467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090b3a35cc8ead441914a6fe327807be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectToPlace: {fileID: 6021354062318187382, guid: d94d4d2295522294f9fa3a8bd4dfe09f,
+    type: 3}
+  screenSpaceShiftInX: 40
+  screenSpaceShiftInY: 5
+  screenSpaceShiftInZ: 5
+  allowedWorldShift: {x: 20, y: 0, z: 20}
+  objectSpecificYShift: 0
+  maxZDistance: 800
+  density: 0.05
+  terrain: {fileID: 1553001556}
+  minChildScale: 0.5
+  maxChildScale: 2.5
 --- !u!23 &2449212598487054938
 MeshRenderer:
   m_ObjectHideFlags: 0
