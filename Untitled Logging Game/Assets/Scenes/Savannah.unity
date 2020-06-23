@@ -9203,13 +9203,14 @@ GameObject:
   m_Component:
   - component: {fileID: 550655228}
   - component: {fileID: 550655229}
+  - component: {fileID: 550655230}
   m_Layer: 0
   m_Name: Lifeless
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &550655228
 Transform:
   m_ObjectHideFlags: 0
@@ -9239,8 +9240,22 @@ MonoBehaviour:
   isGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
+  weight: 0.5
   sharedProfile: {fileID: 11400000, guid: 7b8d429444fc43d4e8421ca8f4c08a33, type: 2}
+--- !u!114 &550655230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550655227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f70dbf7fb113ccb4fb090d1abc184619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiman: {fileID: 2103286524}
+  reverseVolumeSet: 0
 --- !u!1 &594939440
 GameObject:
   m_ObjectHideFlags: 0
@@ -12100,6 +12115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1643624100}
   - component: {fileID: 1643624101}
+  - component: {fileID: 1643624102}
   m_Layer: 0
   m_Name: Heat
   m_TagString: Untagged
@@ -12136,8 +12152,22 @@ MonoBehaviour:
   isGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
+  weight: 0.5
   sharedProfile: {fileID: 11400000, guid: 2e5eb7f2815f2344d8a83028a7593387, type: 2}
+--- !u!114 &1643624102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643624099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f70dbf7fb113ccb4fb090d1abc184619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiman: {fileID: 2103286524}
+  reverseVolumeSet: 1
 --- !u!1 &1651578714
 GameObject:
   m_ObjectHideFlags: 0
@@ -16745,6 +16775,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &2103286524 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3723679924335626749, guid: cd2bdf465c0481c4eb9302d9be74e944,
+    type: 3}
+  m_PrefabInstance: {fileID: 1743298806}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d84e2aa0dec1cc34e851965f2cc03255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2131026543
 PrefabInstance:
   m_ObjectHideFlags: 0

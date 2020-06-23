@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -31,18 +32,18 @@ public class UIMan : MonoBehaviour,IObservable
     public TextMeshProUGUI seedComboText;
     private float seedComboTimeOut;
 
-    public MoodSetter[] moodSetters;
+    List<IObserver> observers = new List<IObserver>();
 
     public void AddObserver(IObserver observer)
     {
-
+        observers.Add(observer);
     }
 
     public void Notify()
     {
-        foreach(MoodSetter moodSetter in moodSetters)
+        foreach(var observer in observers)
         {
-            moodSetter.ObserverUpdate();
+            observer.ObserverUpdate();
         }
     }
 

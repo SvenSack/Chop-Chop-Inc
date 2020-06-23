@@ -27,6 +27,7 @@ public class MoodSetter : MonoBehaviour,IObserver
     public void Start()
     {
         volume = GetComponent<Volume>();
+        uiman.AddObserver(this);
 
         if(reverseVolumeSet)
         {
