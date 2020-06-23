@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 69c88dc2a63eae0469632c5d83f91b54
+guid: 351c367f12ceba24bb7637e617c1d4eb
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -25,32 +25,32 @@ ScriptedImporter:
       lightmapFlags: 4
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: 8473215084559306064, guid: 69c88dc2a63eae0469632c5d83f91b54,
+        texture: {fileID: 8473215084559306064, guid: 351c367f12ceba24bb7637e617c1d4eb,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _BumpMap
-        texture: {fileID: 6510170783424759710, guid: 69c88dc2a63eae0469632c5d83f91b54,
+        texture: {fileID: 6510170783424759710, guid: 351c367f12ceba24bb7637e617c1d4eb,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _EmissionMap
-        texture: {fileID: 8734887681252001475, guid: 69c88dc2a63eae0469632c5d83f91b54,
+        texture: {fileID: 8734887681252001475, guid: 351c367f12ceba24bb7637e617c1d4eb,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {fileID: 8473215084559306064, guid: 69c88dc2a63eae0469632c5d83f91b54,
+        texture: {fileID: 8473215084559306064, guid: 351c367f12ceba24bb7637e617c1d4eb,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
-        texture: {fileID: -3080828929211408018, guid: 69c88dc2a63eae0469632c5d83f91b54,
+        texture: {fileID: -3080828929211408018, guid: 351c367f12ceba24bb7637e617c1d4eb,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _OcclusionMap
-        texture: {fileID: -859423155341887600, guid: 69c88dc2a63eae0469632c5d83f91b54,
+        texture: {fileID: -859423155341887600, guid: 351c367f12ceba24bb7637e617c1d4eb,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -250,11 +250,11 @@ ScriptedImporter:
       textureFormatMode: 0
       normalCompressed: 0
       bGenerateOnLoad: 1
-    material: {fileID: 8999676466967722699, guid: 69c88dc2a63eae0469632c5d83f91b54,
+    material: {fileID: 8999676466967722699, guid: 351c367f12ceba24bb7637e617c1d4eb,
       type: 3}
     generatedTextures:
-    - {fileID: 8473215084559306064, guid: 69c88dc2a63eae0469632c5d83f91b54, type: 3}
-    - {fileID: 6510170783424759710, guid: 69c88dc2a63eae0469632c5d83f91b54, type: 3}
-    - {fileID: -3080828929211408018, guid: 69c88dc2a63eae0469632c5d83f91b54, type: 3}
-    - {fileID: -859423155341887600, guid: 69c88dc2a63eae0469632c5d83f91b54, type: 3}
-    - {fileID: 8734887681252001475, guid: 69c88dc2a63eae0469632c5d83f91b54, type: 3}
+    - {fileID: 8473215084559306064, guid: 351c367f12ceba24bb7637e617c1d4eb, type: 3}
+    - {fileID: 6510170783424759710, guid: 351c367f12ceba24bb7637e617c1d4eb, type: 3}
+    - {fileID: -3080828929211408018, guid: 351c367f12ceba24bb7637e617c1d4eb, type: 3}
+    - {fileID: -859423155341887600, guid: 351c367f12ceba24bb7637e617c1d4eb, type: 3}
+    - {fileID: 8734887681252001475, guid: 351c367f12ceba24bb7637e617c1d4eb, type: 3}
