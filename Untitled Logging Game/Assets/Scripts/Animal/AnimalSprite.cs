@@ -20,6 +20,7 @@ namespace Animal
         [SerializeField] public float turnTime = 2f;
         public bool waiting = true;
         public LayerMask groundMask;
+        public float scareDistance = 10;
 
         protected Camera camera;
 

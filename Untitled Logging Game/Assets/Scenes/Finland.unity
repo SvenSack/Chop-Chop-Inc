@@ -58588,6 +58588,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ActivateBurnDown
       objectReference: {fileID: 0}
+    - target: {fileID: 1817954820230965469, guid: 79ccd075366433f4ea1e8a41ad981294,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1692674472}
     - target: {fileID: 3037522177835145913, guid: 79ccd075366433f4ea1e8a41ad981294,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -58722,6 +58727,40 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1060537004}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1060537007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5222638085873958417, guid: 79ccd075366433f4ea1e8a41ad981294,
+    type: 3}
+  m_PrefabInstance: {fileID: 1060537004}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1060537008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060537007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1692674471}
+          m_MethodName: ClosePopUp
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1060537006}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1061200988
 GameObject:
   m_ObjectHideFlags: 0
@@ -93185,12 +93224,18 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1692674468}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1692674472}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d84e2aa0dec1cc34e851965f2cc03255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1692674472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1232331338775315053, guid: cd2bdf465c0481c4eb9302d9be74e944,
+    type: 3}
+  m_PrefabInstance: {fileID: 1692674468}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1693830165
 GameObject:
   m_ObjectHideFlags: 0
@@ -119713,7 +119758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50869336655f2da46beb2a7c7ef350d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: bb3bfdbbee8e5d2498e262f507bc467c,
+  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: 0903b5e4b60bf3b449caf7f4c5787c0c,
     type: 2}
   oldTerrainLayer: {fileID: 8574412962073106934, guid: 2c79619b4e4670c46931c73551bb55e2,
     type: 2}

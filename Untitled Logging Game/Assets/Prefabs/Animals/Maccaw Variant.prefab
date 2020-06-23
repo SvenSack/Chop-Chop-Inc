@@ -25,6 +25,10 @@ MonoBehaviour:
   isTurning: 0
   turnTime: 2
   waiting: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  scareDistance: 20
 --- !u!1001 &1173060878499320670
 PrefabInstance:
   m_ObjectHideFlags: 0
