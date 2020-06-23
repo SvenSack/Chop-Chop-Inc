@@ -18,7 +18,11 @@ public class UIPlacable : MonoBehaviour
     {
 
         var rect = gameObject.GetComponent<RectTransform>();
-        rect.anchoredPosition = CalculateUIPosition();
+        if(rect)
+        {
+            rect.anchoredPosition = CalculateUIPosition();
+        }
+        
 
     }
 
