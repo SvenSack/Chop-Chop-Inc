@@ -49,6 +49,8 @@ public class TreeFallParticle : MonoBehaviour
             Fox[] foxes = FindObjectsOfType<Fox>();
             Capybara[] capys = FindObjectsOfType<Capybara>();
             Maccaw[] maccis = FindObjectsOfType<Maccaw>();
+            Armadillo[] dillos = FindObjectsOfType<Armadillo>();
+            Caracal[] cars = FindObjectsOfType<Caracal>();
             Vector3 landingPoint = other.GetContact(0).point;
             Debug.DrawLine(landingPoint, landingPoint+Vector3.up*10, Color.red, 1000f);
             foreach (var fox in foxes)
@@ -73,6 +75,22 @@ public class TreeFallParticle : MonoBehaviour
                 {
                     maccaw.Scare(landingPoint);
                     uiMan.TryVoiceLine(9);
+                }
+            }
+            foreach (var car in cars)
+            {
+                if (Vector3.Distance(car.transform.position, landingPoint) < 15f)
+                {
+                    car.Scare(landingPoint);
+                    uiMan.TryVoiceLine(11);
+                }
+            }
+            foreach (var dillo in dillos)
+            {
+                if (Vector3.Distance(dillo.transform.position, landingPoint) < 30f)
+                {
+                    dillo.Scare(landingPoint);
+                    uiMan.TryVoiceLine(10);
                 }
             }
         }
