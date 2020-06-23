@@ -99,7 +99,6 @@ public class HighScoreView : UIPlacable
         Debug.Log("isInBetweenBlocks " + isInBetweenBlocks);
 
         //------------------------- Instantiate new score block-----------------------//
-        RectTransform rect = scoreBlocks[slotIndex].GetComponent<RectTransform>();
 
         GameObject newScoreBlock = Instantiate(textInstanceObject);
         TextInstance textInstance = newScoreBlock.GetComponent<TextInstance>();
@@ -132,7 +131,9 @@ public class HighScoreView : UIPlacable
         defaultPosition.y = -(height - initialPosition.y) + (shiftAmount.y * scoreBlocks.Count);
 
 
-        Vector2 targetPosition = isInBetweenBlocks ? rect.anchoredPosition : defaultPosition;
+        Vector2 targetPosition = isInBetweenBlocks ? 
+            scoreBlocks[slotIndex].GetComponent<RectTransform>().anchoredPosition : 
+            defaultPosition;
 
         LeanTween.move(newScoreBlockRect, targetPosition, slotEntryTime);
 
@@ -148,10 +149,6 @@ public class HighScoreView : UIPlacable
 
             LeanTween.move(belowSlotRect, position + shiftAmount, slotEntryTime);
         }
-
-
-
-
 
     }
 
