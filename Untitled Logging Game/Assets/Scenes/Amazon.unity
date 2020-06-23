@@ -549,6 +549,40 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7667401}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7667404 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5222638085873958417, guid: 79ccd075366433f4ea1e8a41ad981294,
+    type: 3}
+  m_PrefabInstance: {fileID: 7667401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7667405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7667404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1972975132}
+          m_MethodName: ClosePopUp
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 7667403}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8884802
 GameObject:
   m_ObjectHideFlags: 0
@@ -9567,12 +9601,42 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 419182925}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 419182927}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af33d98f19aabfd45b46eca000b8d012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &419182927 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6901300063556897096, guid: 5e8205d56f85742438107d17737c0dfe,
+    type: 3}
+  m_PrefabInstance: {fileID: 419182925}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &419182928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419182927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090b3a35cc8ead441914a6fe327807be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectToPlace: {fileID: 6021354062318187382, guid: d94d4d2295522294f9fa3a8bd4dfe09f,
+    type: 3}
+  screenSpaceShiftInX: 40
+  screenSpaceShiftInY: 5
+  screenSpaceShiftInZ: 5
+  allowedWorldShift: {x: 20, y: 0, z: 20}
+  objectSpecificYShift: 0
+  maxZDistance: 800
+  density: 0.05
+  terrain: {fileID: 1553001556}
+  minChildScale: 0.5
+  maxChildScale: 2.5
 --- !u!1 &420668249
 GameObject:
   m_ObjectHideFlags: 0
@@ -64784,9 +64848,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50869336655f2da46beb2a7c7ef350d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: cfbaba7385eb1e546b74a7d29d3a7a4d,
+  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: 6de9f1359be6ca742b033be66e526d7b,
     type: 2}
-  oldTerrainLayer: {fileID: 8574412962073106934, guid: 4a0f158d7282ecd4e99101c8d2e07f4d,
+  oldTerrainLayer: {fileID: 8574412962073106934, guid: b686e4a564eb2bb48a3a98222663ad47,
     type: 2}
   indexToSwitch: 00000000
   stumpReplacementOptions:
