@@ -100,14 +100,6 @@ public class PlantMan : MonoBehaviour
                     else
                     {
                         newPart.Pause();
-                        /* HELLO DARKNESS MY OLD FRIEND
-                        var newPartEmission = newPart.emission;
-                        newPartShape.shapeType = ParticleSystemShapeType.Circle;
-                        newPartShape.scale = new Vector3(.01f,.01f,.01f);
-                        newPartEmission.rateOverTime = 0;
-                        newPartEmission.SetBurst(0,new ParticleSystem.Burst(0, 1));
-                        mainModule.startRotation = 0;
-                        mainModule.startRotation3D = true;*/
                     }
                     leafs.Add(newPart);
                 }
@@ -117,6 +109,8 @@ public class PlantMan : MonoBehaviour
         ParticleSystem newSyst = Instantiate(fallParticleObject, newTreePiece.transform)
             .GetComponentInChildren<ParticleSystem>();
         var newSystShape = newSyst.shape;
+        if(SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Finland"))
+            newSyst.transform.parent.localScale = new Vector3(8,8,8);
         newSystShape.scale = newSystShape.scale * newTreePiece.transform.localScale.x;
         temp.dust = newSyst;
         

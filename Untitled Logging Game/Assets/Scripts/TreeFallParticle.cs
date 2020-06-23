@@ -33,17 +33,6 @@ public class TreeFallParticle : MonoBehaviour
                     foreach (var leaf in leaves)
                     {
                         GameObject dadLeaf = leaf.transform.parent.parent.gameObject;
-                        /* IVE COME TO TALK WITH YOU AGAIN
-                        leaf.Play();
-                        leaf.transform.SetParent(null);
-                        leaf.transform.localScale = new Vector3(2,2,2);
-                        var mainModule = leaf.main;
-                        mainModule.stopAction = ParticleSystemStopAction.Destroy;
-                        mainModule.startRotationX = leaf.transform.rotation.eulerAngles.x;
-                        mainModule.startRotationY = leaf.transform.rotation.eulerAngles.y;
-                        mainModule.startRotationZ = leaf.transform.rotation.eulerAngles.z;
-                        Destroy(dadLeaf);
-                        */
                         dadLeaf.transform.SetParent(null);
                         Rigidbody rb = dadLeaf.AddComponent<Rigidbody>();
                         MeshCollider mc = dadLeaf.AddComponent<MeshCollider>();
