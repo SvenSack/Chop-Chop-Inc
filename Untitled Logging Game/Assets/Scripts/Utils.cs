@@ -8,13 +8,15 @@ public class Utils : MonoBehaviour
 {
    
 
-    static public T SelectRandomObjectFromCollection<T, TCollection>(TCollection Collection) where TCollection : ICollection<T>
+    static public T SelectRandomObjectFromCollection<T, TCollection>(TCollection Collection,out int selectIndex) where TCollection : ICollection<T>
     {
         T[] collectionArray = new T[Collection.Count];
 
         Collection.CopyTo(collectionArray, 0);
 
         int selectedObject = Random.Range(0, collectionArray.Length);
+
+        selectIndex = selectedObject;
 
         return collectionArray[selectedObject];
 

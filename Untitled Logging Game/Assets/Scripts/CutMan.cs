@@ -91,7 +91,7 @@ public class CutMan : MonoBehaviour
         plantMan = GetComponent<PlantMan>();
         burnPopUp.SetActive(false);
         HighScoreManager hsM = FindObjectOfType<HighScoreManager>();
-        cutDifficulty = hsM.GetLevelDifficulty(hsM.currentLevel - 1);
+        cutDifficulty = hsM.GetLevelDifficulty(hsM.currentLevel -1 > 0 ? hsM.currentLevel - 1 : 0);
     }
 
     // Update is called once per frame
