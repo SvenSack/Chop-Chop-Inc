@@ -7,11 +7,14 @@ public class CurrentHighScoreViewer : UIPlacable
 {
     public HighScoreManager highScoreManager;
     public HighScoreView highScoreView;
+    public PlayerLevelTeleporter levelTeleporter;
 
     private GameObject highScoreViewerInstance;
 
     public Vector2 shiftAmount = new Vector2(500, 0);
     public float shiftTime = 1.0f;
+
+    public float teleportTime = 1.2f;
 
     public void Initialize()
     {
@@ -45,7 +48,11 @@ public class CurrentHighScoreViewer : UIPlacable
         {
             button.onClick.AddListener(highScoreView.SlotCurrentScore);
             button.onClick.AddListener(MoveViewerInstanceUp);
+
             button.onClick.AddListener(highScoreManager.AddCurrentPlayerScoreDataToDisk);
+            button.onClick.AddListener(highScoreManager.ResetLevelDataInFile);
+            button.onClick.AddListener(DestroyAllDontDestroyOnLoad);
+            button.onClick.AddListener(TeleportBackToMap);
              
         }
 
@@ -61,5 +68,21 @@ public class CurrentHighScoreViewer : UIPlacable
         LeanTween.move(rect, oldPosition + shiftAmount, shiftTime);
 
     }
+
+    public void DestroyAllDontDestroyOnLoad()
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("DDOL");
+
+        foreach(GameObject toDestroy in objects)
+        {
+            Destroy(toDestroy);
+        }
+    }
+
+    public void TeleportBackToMap()
+    {
+        levelTeleporter.TeleportPlayerIn(teleportTime);
+    }
+
 
 }

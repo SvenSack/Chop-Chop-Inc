@@ -164,6 +164,7 @@ GameObject:
   - component: {fileID: 345030248}
   - component: {fileID: 345030247}
   - component: {fileID: 345030251}
+  - component: {fileID: 345030252}
   m_Layer: 0
   m_Name: ScoreSceneManager
   m_TagString: Untagged
@@ -252,8 +253,23 @@ MonoBehaviour:
     type: 3}
   highScoreManager: {fileID: 345030247}
   highScoreView: {fileID: 345030250}
+  levelTeleporter: {fileID: 345030252}
   shiftAmount: {x: 0, y: 500}
   shiftTime: 1
+  teleportTime: 1.2
+--- !u!114 &345030252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345030246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57af278391342a24689b217c4ea54d54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneName: Map
 --- !u!1 &536690627
 GameObject:
   m_ObjectHideFlags: 0
