@@ -14,6 +14,8 @@ public class SoundMan : MonoBehaviour
     public AudioClip[] squirrelSounds = new AudioClip[11];
     public AudioClip[] capybaraSounds = new AudioClip[16];
     public AudioClip[] maccawSounds = new AudioClip[14];
+    public AudioClip[] armadilloSounds = new AudioClip[11];
+    public AudioClip[] caracalSounds = new AudioClip[10];
 
     public AudioClip[] treeFall = new AudioClip[2];
 
