@@ -119713,16 +119713,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50869336655f2da46beb2a7c7ef350d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: bb3bfdbbee8e5d2498e262f507bc467c,
+  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: 0903b5e4b60bf3b449caf7f4c5787c0c,
     type: 2}
   oldTerrainLayer: {fileID: 8574412962073106934, guid: 2c79619b4e4670c46931c73551bb55e2,
     type: 2}
-  layerSwitcher: {fileID: 0}
+  layerSwitcher: {fileID: 101783938350814006}
   indexToSwitch: 00000000
   stumpReplacementOptions:
   - {fileID: 1718828524468030560, guid: 01821d3236884d948964fba795d57243, type: 3}
   stumpShiftAmount:
   - 0
+  burnDownDetailDensity: 0
 --- !u!114 &101783938350814006
 MonoBehaviour:
   m_ObjectHideFlags: 0

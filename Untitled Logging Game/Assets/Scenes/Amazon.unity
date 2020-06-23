@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -9438,6 +9438,141 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 416939644}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &419182925
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: indexToSwitch.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: stumpReplacementOptions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: stumpShiftAmount.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: burnDownDetailDensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: terrainLayerOnSwitch
+      value: 
+      objectReference: {fileID: 8574412962073106934, guid: 6de9f1359be6ca742b033be66e526d7b,
+        type: 2}
+    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: oldTerrainLayer
+      value: 
+      objectReference: {fileID: 8574412962073106934, guid: b686e4a564eb2bb48a3a98222663ad47,
+        type: 2}
+    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: layerSwitcher
+      value: 
+      objectReference: {fileID: 419182926}
+    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: stumpReplacementOptions.Array.data[0]
+      value: 
+      objectReference: {fileID: 6914813962911470358, guid: 318c3de5016b53041b0717eb7fedb562,
+        type: 3}
+    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: stumpReplacementOptions.Array.data[1]
+      value: 
+      objectReference: {fileID: 6036664975292473151, guid: d825620bbcfe6f84dbac6051d5dca57b,
+        type: 3}
+    - target: {fileID: 2448026467533274179, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_Name
+      value: BurndownMan (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599004364015062060, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: terrain
+      value: 
+      objectReference: {fileID: 1553001556}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e8205d56f85742438107d17737c0dfe, type: 3}
+--- !u!114 &419182926 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5599004364015062060, guid: 5e8205d56f85742438107d17737c0dfe,
+    type: 3}
+  m_PrefabInstance: {fileID: 419182925}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af33d98f19aabfd45b46eca000b8d012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &420668249
 GameObject:
   m_ObjectHideFlags: 0
@@ -42871,7 +43006,6 @@ Transform:
   - {fileID: 336336687}
   - {fileID: 1780435622}
   - {fileID: 752328466}
-  - {fileID: 1597043978}
   - {fileID: 644027373}
   - {fileID: 2013275186}
   - {fileID: 807087596}
@@ -42893,6 +43027,7 @@ Transform:
   - {fileID: 45696747}
   - {fileID: 1531899029}
   - {fileID: 637501016}
+  - {fileID: 1597043978}
   - {fileID: 872227083}
   - {fileID: 1126295957}
   - {fileID: 1585339443}
