@@ -17,6 +17,8 @@ public class HighScoreView : UIPlacable
 
     float slotEntryTime = 1.0f;
 
+    public int maxDisplayCount = 10;
+
     void Start()
     {
         
@@ -32,9 +34,10 @@ public class HighScoreView : UIPlacable
         initialPosition = position;
 
 
-
+        int i = 0;
         foreach (PlayerGameData data in highScoreManager.GetScoreData())
         {
+            if(i > maxDisplayCount) { break; }
             Debug.Log("loaded score data");
 
             GameObject textInstanceObj = Instantiate(textInstanceObject);
@@ -56,6 +59,7 @@ public class HighScoreView : UIPlacable
             position += shiftAmount;
 
             textInstance.gameObject.transform.parent = canvasObject.gameObject.transform;
+            i++;
         }
     }
 
