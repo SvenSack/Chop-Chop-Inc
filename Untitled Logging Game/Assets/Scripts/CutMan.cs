@@ -289,35 +289,23 @@ public class CutMan : MonoBehaviour
         rec.GetWorldCorners(corners);
         currentR = Vector3.Lerp(corners[2], corners[3], 0.5f);
         currentL = Vector3.Lerp(corners[0], corners[1],0.5f);
-        float width = Vector3.Distance(currentR,currentL);
         switch (target.GetComponentInChildren<CutTarget>().goesLeft)
         { 
             case true:
-                float dist = Vector2.Distance(currentR, Input.mousePosition);
-                if (dist < width / 3)
-                {
-                    soundMan.StartCut();
-                    currentCut = target;
-                    soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
-                    chainsawOn = true;
-                    Debug.DrawLine(currentR, Input.mousePosition,Color.cyan,1000);
-                    return true;
-                }
-                Debug.Log("Discarded left with width of " + width + " and distance of " + dist);
-                break;
+                soundMan.StartCut();
+                currentCut = target;
+                soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
+                chainsawOn = true;
+                // Debug.DrawLine(currentR, Input.mousePosition,Color.cyan,1000);
+                return true;
             case false:
-                float dist1 = Vector2.Distance(currentL, Input.mousePosition);
-                if (dist1 < width / 3)
-                {
-                    soundMan.StartCut();
-                    currentCut = target;
-                    soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
-                    chainsawOn = true;
-                    Debug.DrawLine(currentL, Input.mousePosition, Color.cyan,1000);
-                    return true;
-                }
-                Debug.Log("Discarded right with width of " + width + " and distance of " + dist1);
-                break;
+                soundMan.StartCut();
+                currentCut = target;
+                soundMan.chainsawSoundObject.transform.position = GetMouseWorld();
+                chainsawOn = true;
+                // Debug.DrawLine(currentL, Input.mousePosition, Color.cyan,1000);
+                return true;
+            
         }
 
         return false;
