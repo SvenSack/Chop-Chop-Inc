@@ -76,6 +76,13 @@ public class UIMan : MonoBehaviour,IObservable
     {
         locationText.text = SceneManager.GetActiveScene().name;
         voiceLineLicenses = new[] {20, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1 };
+        HighScoreManager hSM = FindObjectOfType<HighScoreManager>();
+        LevelScoreData scoreData = hSM.CalculateTotalScoreData();
+        cutTrees = scoreData.treesCut;
+        plantedTrees = scoreData.treesPlanted;
+        scoreValues[1].text = "" + cutTrees;
+        scoreValues[0].text = "" + plantedTrees;
+        AdjustSlider();
     }
 
     private void AdjustSlider()

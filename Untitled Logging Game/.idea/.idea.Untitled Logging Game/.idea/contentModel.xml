@@ -132,6 +132,7 @@
             <e p="SortingAlgorithmRelated.cs" t="Include" />
           </e>
           <e p="DebugDrawerInterface.cs" t="Include" />
+          <e p="EmissionSetter.cs" t="Include" />
           <e p="GameIO" t="Include">
             <e p="GameDataReader.cs" t="Include" />
             <e p="GameDataWriter.cs" t="Include" />
@@ -140,11 +141,14 @@
             <e p="PlayerScoreData.cs" t="Include" />
           </e>
           <e p="GameObjectActivator.cs" t="Include" />
+          <e p="IObservable.cs" t="Include" />
+          <e p="IObserver.cs" t="Include" />
           <e p="KeyboardMan.cs" t="Include" />
           <e p="LanguageSwitcher.cs" t="Include" />
           <e p="LanguageSwitchManager.cs" t="Include" />
           <e p="MapButtonGlow.cs" t="Include" />
           <e p="MapZoomIn.cs" t="Include" />
+          <e p="MoodSetter.cs" t="Include" />
           <e p="NutMover.cs" t="Include" />
           <e p="ObjectPlacer" t="Include">
             <e p="GameObjectBrush.cs" t="Include" />
