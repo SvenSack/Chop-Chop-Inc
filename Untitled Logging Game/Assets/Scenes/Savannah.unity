@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 7666789}
   - component: {fileID: 7666788}
   - component: {fileID: 7666787}
+  - component: {fileID: 7666791}
   m_Layer: 15
   m_Name: Sun
   m_TagString: Untagged
@@ -215,6 +216,21 @@ Transform:
   m_Father: {fileID: 1817997638}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -84.894005, z: 0}
+--- !u!114 &7666791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7666786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a874317caa5994f9addc420858dbc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: fa4853aab274d0d49a519a9d14f4119d, type: 2}
+  uiMan: {fileID: 814171413}
+  reverseEmisssion: 1
 --- !u!1 &28542666
 GameObject:
   m_ObjectHideFlags: 0
@@ -11067,13 +11083,14 @@ GameObject:
   - component: {fileID: 1305039270}
   - component: {fileID: 1305039269}
   - component: {fileID: 1305039268}
+  - component: {fileID: 1305039271}
   m_Layer: 15
   m_Name: LifelessSun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1305039267
 Transform:
   m_ObjectHideFlags: 0
@@ -11149,6 +11166,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305039266}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1305039271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305039266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a874317caa5994f9addc420858dbc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: d246d1702459b364a96de4443c044191, type: 2}
+  uiMan: {fileID: 814171413}
+  reverseEmisssion: 0
 --- !u!1 &1347180954
 GameObject:
   m_ObjectHideFlags: 0
@@ -16284,6 +16316,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082028013831641778, guid: cd2bdf465c0481c4eb9302d9be74e944,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082028013831641778, guid: cd2bdf465c0481c4eb9302d9be74e944,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082028013831641778, guid: cd2bdf465c0481c4eb9302d9be74e944,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082028013831641778, guid: cd2bdf465c0481c4eb9302d9be74e944,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 814171413}
+    - target: {fileID: 3082028013831641778, guid: cd2bdf465c0481c4eb9302d9be74e944,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Notify
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082028013831641778, guid: cd2bdf465c0481c4eb9302d9be74e944,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4553005660592824671, guid: cd2bdf465c0481c4eb9302d9be74e944,
         type: 3}

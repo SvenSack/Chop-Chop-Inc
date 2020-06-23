@@ -41,6 +41,7 @@ public class UIMan : MonoBehaviour,IObservable
 
     public void Notify()
     {
+        Debug.Log("Notify");
         foreach(var observer in observers)
         {
             observer.ObserverUpdate();
