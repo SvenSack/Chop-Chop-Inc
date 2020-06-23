@@ -7,8 +7,8 @@ namespace Animal
     public class AnimalSprite : MonoBehaviour
     {
         public AudioSource mouth;
-        public float soundProximity = 10f;
-        public float idleTimer = 20f;
+        public float soundProximity = 40f;
+        public float idleTimer = 10f;
         [HideInInspector] public float idleTime;
         public Animator animator;
         [HideInInspector] public SoundMan soundMan;
