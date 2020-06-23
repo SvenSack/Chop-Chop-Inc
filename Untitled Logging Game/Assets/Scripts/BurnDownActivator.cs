@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(TerrainLayerSwitcher))]
+[RequireComponent(typeof(TerrainLayerSwitcher),typeof(ViewBasedObjectPlacer))]
 public class BurnDownActivator : MonoBehaviour
 {
     private delegate void OnBurnDownActivated();
@@ -12,7 +12,8 @@ public class BurnDownActivator : MonoBehaviour
     public TerrainLayer terrainLayerOnSwitch;
     public TerrainLayer oldTerrainLayer;
 
-    public TerrainLayerSwitcher layerSwitcher;
+    TerrainLayerSwitcher layerSwitcher;
+    ViewBasedObjectPlacer viewBasedObjectPlacer;
 
     public int[] indexToSwitch;
 
@@ -29,15 +30,19 @@ public class BurnDownActivator : MonoBehaviour
 
     private void Start()
     {
-        BurnDownActivated += ReplaceGroundTexture;
-        BurnDownActivated += ReplaceUnCuttableTreesWithStump;
-        BurnDownActivated += setNewTerrainDensity;
-      
+        
+
+        viewBasedObjectPlacer = GetComponent<ViewBasedObjectPlacer>();
         layerSwitcher = GetComponent<TerrainLayerSwitcher>();
 
         FindUncuttableTrees();
 
         defaultDetailDensity = layerSwitcher.terrain.detailObjectDensity;
+
+        BurnDownActivated += ReplaceGroundTexture;
+        BurnDownActivated += ReplaceUnCuttableTreesWithStump;
+        BurnDownActivated += setNewTerrainDensity;
+        BurnDownActivated += viewBasedObjectPlacer.RandomViewBasedObjectPlace;
     }
 
     public void ActivateBurnDown()
