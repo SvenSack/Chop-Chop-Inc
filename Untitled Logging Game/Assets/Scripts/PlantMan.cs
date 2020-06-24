@@ -34,6 +34,7 @@ public class PlantMan : MonoBehaviour
     private CameraMan camMan;
     private Camera mainCam;
     private UIMan uiMan;
+    private SoundMan soundMan;
     
     
     void Start()
@@ -44,6 +45,7 @@ public class PlantMan : MonoBehaviour
         camMan = FindObjectOfType<CameraMan>();
         plantPopUp.SetActive(false);
         uiMan = FindObjectOfType<UIMan>();
+        soundMan = FindObjectOfType<SoundMan>();
     }
 
     void Update()
@@ -176,6 +178,7 @@ public class PlantMan : MonoBehaviour
                     }
                 }
 
+                AudioSource sound = soundMan.TreeShake(tree);
                 GameObject newNut = Instantiate(nutPrefab, gRaycaster.transform);
                 newNut.transform.position = mainCam.WorldToScreenPoint(nutPosition);
                 NutMover newNutMove = newNut.GetComponent<NutMover>();
@@ -187,6 +190,9 @@ public class PlantMan : MonoBehaviour
                 tree.LeanRotateZ(currentZ - 4, .3f);
                 yield return new WaitForSeconds(.3f);
                 tree.LeanRotateZ(currentZ, .2f);
+                yield return new WaitForSeconds(.2f);
+                sound.Stop();
+                sound.gameObject.GetComponent<AudioCleanup>().enabled = true;
             }
         }
     }
