@@ -431,7 +431,7 @@ public class CutMan : MonoBehaviour
 
                         if (!checker)
                         {
-                            if (camMan.currentLocation == 3)
+                            if (camMan.currentLocation == camMan.zoomLocations.Length - 1)
                             {
                                 burnPopUp.SetActive(true);
                                 uiMan.TryVoiceLine(Random.Range(4,6), 10f);

@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 3a5de3f83a4974941bdc212a91fe933b,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -64896,7 +64896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50869336655f2da46beb2a7c7ef350d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: 6de9f1359be6ca742b033be66e526d7b,
+  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: cfbaba7385eb1e546b74a7d29d3a7a4d,
     type: 2}
   oldTerrainLayer: {fileID: 8574412962073106934, guid: b686e4a564eb2bb48a3a98222663ad47,
     type: 2}
@@ -64907,7 +64907,7 @@ MonoBehaviour:
   stumpShiftAmount:
   - 0
   - 0
-  burnDownDetailDensity: 0
+  burnDownDetailDensity: 0.245
 --- !u!114 &2448026468723154469
 MonoBehaviour:
   m_ObjectHideFlags: 0

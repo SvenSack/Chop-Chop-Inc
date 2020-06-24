@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -738,7 +738,7 @@ RectTransform:
   - {fileID: 1361799792}
   - {fileID: 979615153}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4933,7 +4933,7 @@ PrefabInstance:
     - target: {fileID: 7389052034242717050, guid: ec8a01a599a98634196f10273be9a9e1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7389052034242717050, guid: ec8a01a599a98634196f10273be9a9e1,
         type: 3}
@@ -5002,7 +5002,7 @@ PrefabInstance:
     - target: {fileID: 1404863128329094199, guid: e06c22e9372846b41a9ba7d9e0221a5e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1404863128329094199, guid: e06c22e9372846b41a9ba7d9e0221a5e,
         type: 3}
@@ -9090,7 +9090,7 @@ PrefabInstance:
     - target: {fileID: 1815073053308379078, guid: 778ab9097965c3b47b98b4118d2c682b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1815073053308379078, guid: 778ab9097965c3b47b98b4118d2c682b,
         type: 3}
@@ -9178,7 +9178,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &550655227
 GameObject:
@@ -10477,7 +10477,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1120205260
 PrefabInstance:
@@ -10564,7 +10564,7 @@ PrefabInstance:
     - target: {fileID: 5762498314335207108, guid: ebcc37a588a7f4646be6722f804cdf7c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5762498314335207108, guid: ebcc37a588a7f4646be6722f804cdf7c,
         type: 3}
@@ -12238,153 +12238,6 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1001 &1564366953
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: stumpReplacementOptions.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: indexToSwitch.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: stumpShiftAmount.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: terrainLayerOnSwitch
-      value: 
-      objectReference: {fileID: 8574412962073106934, guid: f4576ea30e2363d45afbd896326b3a3c,
-        type: 2}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: oldTerrainLayer
-      value: 
-      objectReference: {fileID: 8574412962073106934, guid: 3b784a6688ac32245bae5b6ab336716d,
-        type: 2}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: layerSwitcher
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: burnDownDetailDensity
-      value: 0.106
-      objectReference: {fileID: 0}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: stumpReplacementOptions.Array.data[0]
-      value: 
-      objectReference: {fileID: 4662721464464803663, guid: cda2e873d436ec04c820237d0f78cdbd,
-        type: 3}
-    - target: {fileID: 2448026467533274179, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_Name
-      value: BurndownMan
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599004364015062060, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: terrain
-      value: 
-      objectReference: {fileID: 1087891360}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5e8205d56f85742438107d17737c0dfe, type: 3}
---- !u!1 &1564366954 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6901300063556897096, guid: 5e8205d56f85742438107d17737c0dfe,
-    type: 3}
-  m_PrefabInstance: {fileID: 1564366953}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1564366956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564366954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 090b3a35cc8ead441914a6fe327807be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameObjectToPlace: {fileID: 6021354062318187382, guid: d94d4d2295522294f9fa3a8bd4dfe09f,
-    type: 3}
-  screenSpaceShiftInX: 40
-  screenSpaceShiftInY: 5
-  screenSpaceShiftInZ: 5
-  allowedWorldShift: {x: 20, y: 0, z: 20}
-  objectSpecificYShift: 0
-  maxZDistance: 500
-  density: 0.08
-  terrain: {fileID: 1087891360}
-  minChildScale: 0.5
-  maxChildScale: 2.5
 --- !u!1001 &1620955455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12704,7 +12557,7 @@ PrefabInstance:
     - target: {fileID: 3396301816994033211, guid: d94d4d2295522294f9fa3a8bd4dfe09f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3396301816994033211, guid: d94d4d2295522294f9fa3a8bd4dfe09f,
         type: 3}
@@ -17276,7 +17129,7 @@ Transform:
   - {fileID: 1475404317}
   - {fileID: 1648289279}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2131026543
 PrefabInstance:
@@ -17400,7 +17253,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1001 &2270993728413967452
 PrefabInstance:
@@ -17576,6 +17429,7 @@ GameObject:
   - component: {fileID: 2448026467455005609}
   - component: {fileID: 2448026467455005608}
   - component: {fileID: 2448026467455005607}
+  - component: {fileID: 2448026467455005610}
   m_Layer: 0
   m_Name: BurndownManSavannah
   m_TagString: Untagged
@@ -17597,7 +17451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: c1509c1fe0a7b6a498191da977ff33a3,
     type: 2}
-  oldTerrainLayer: {fileID: 8574412962073106934, guid: 76fbee35a18187d4d8af677c72bedde2,
+  oldTerrainLayer: {fileID: 8574412962073106934, guid: 3b784a6688ac32245bae5b6ab336716d,
     type: 2}
   indexToSwitch: 00000000
   stumpReplacementOptions:
@@ -17632,6 +17486,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2448026467455005610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2448026467455005606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090b3a35cc8ead441914a6fe327807be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectToPlace: {fileID: 6021354062318187382, guid: d94d4d2295522294f9fa3a8bd4dfe09f,
+    type: 3}
+  screenSpaceShiftInX: 50
+  screenSpaceShiftInY: 5
+  screenSpaceShiftInZ: 5
+  allowedWorldShift: {x: 20, y: 0, z: 20}
+  objectSpecificYShift: 0
+  maxZDistance: 800
+  density: 0.05
+  terrain: {fileID: 1087891360}
+  minChildScale: 0.5
+  maxChildScale: 3
 --- !u!4 &2690374329293460973 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6697057137882839513, guid: b577cd419a6e96e498c3ecd936df66a3,

@@ -147,8 +147,15 @@ public class UIMan : MonoBehaviour,IObservable
         HighScoreManager hSM = FindObjectOfType<HighScoreManager>();
         hSM.SetPlayerScore(cutTreesThisLvl,plantedTreesThisLvl,score,highestCutCombo,highestPlantCombo,cutMan.cutDifficulty);
         hSM.SaveCurrentLevelDataToFile();
-        sceneMan.prevScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(mapScene, LoadSceneMode.Single);
+        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Savannah"))
+        {
+            sceneMan.prevScene = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(mapScene, LoadSceneMode.Single);
+        }
+        else
+        {
+            SceneManager.LoadScene("Scoreboard", LoadSceneMode.Single);
+        }
     }
 
     public void ClosePopUp(GameObject target)

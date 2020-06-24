@@ -119689,117 +119689,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145345156}
   m_Mesh: {fileID: 6074573021976540338, guid: 5ae47d27ddcd0f043b7bb2a01fc08067, type: 3}
---- !u!1001 &101783938350814003
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: layerSwitchers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: indexToSwitch.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: terrainLayerOnSwitch
-      value: 
-      objectReference: {fileID: 8574412962073106934, guid: 3946d3f653a46a445aad652cab73d2b2,
-        type: 2}
-    - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: oldTerrainLayer
-      value: 
-      objectReference: {fileID: 8574412962073106934, guid: 2c79619b4e4670c46931c73551bb55e2,
-        type: 2}
-    - target: {fileID: 2448026467533274179, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_Name
-      value: BurndownMan
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7395347853256643527, guid: 5e8205d56f85742438107d17737c0dfe,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe, type: 3}
-  m_SourcePrefab: {fileID: 100100000, guid: 5e8205d56f85742438107d17737c0dfe, type: 3}
---- !u!1 &101783938350814004 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2448026467533274179, guid: 5e8205d56f85742438107d17737c0dfe,
-    type: 3}
-  m_PrefabInstance: {fileID: 101783938350814003}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &101783938350814005
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101783938350814004}
+  m_GameObject: {fileID: 2346578721008168816}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50869336655f2da46beb2a7c7ef350d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: 0903b5e4b60bf3b449caf7f4c5787c0c,
+  terrainLayerOnSwitch: {fileID: 8574412962073106934, guid: bb3bfdbbee8e5d2498e262f507bc467c,
     type: 2}
   oldTerrainLayer: {fileID: 8574412962073106934, guid: 2c79619b4e4670c46931c73551bb55e2,
     type: 2}
@@ -119815,7 +119717,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101783938350814004}
+  m_GameObject: {fileID: 2346578721008168816}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af33d98f19aabfd45b46eca000b8d012, type: 3}
@@ -119828,7 +119730,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101783938350814004}
+  m_GameObject: {fileID: 2346578721008168816}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 090b3a35cc8ead441914a6fe327807be, type: 3}
@@ -120089,6 +119991,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f7c25a28d4a1b34daa922d9ceb8d6b4, type: 3}
+--- !u!1 &2346578721008168816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7478251659726078196}
+  - component: {fileID: 101783938350814005}
+  - component: {fileID: 101783938350814006}
+  - component: {fileID: 101783938350814007}
+  m_Layer: 0
+  m_Name: BurndownMan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1001 &2922871152264871171
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120777,6 +120698,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96f7893a338b2c642820522eae177282, type: 3}
+--- !u!4 &7478251659726078196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2346578721008168816}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7844852469923797396
 PrefabInstance:
   m_ObjectHideFlags: 0
