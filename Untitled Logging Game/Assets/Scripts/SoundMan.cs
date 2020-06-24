@@ -19,6 +19,10 @@ public class SoundMan : MonoBehaviour
 
     public AudioClip[] treeFall = new AudioClip[2];
 
+    public AudioClip[] treeRustle =  new AudioClip[2];
+
+    public AudioClip burnSound;
+
     void Awake() {
         if(!instance )
             instance = this;
@@ -28,6 +32,14 @@ public class SoundMan : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject) ;
+    }
+
+    public void StartBurn()
+    {
+        var aud = GenerateAudio(burnSound);
+        aud.transform.position = Camera.main.transform.position;
+        aud.Play();
+        aud.loop = true;
     }
 
     public void StartCut()
@@ -58,6 +70,14 @@ public class SoundMan : MonoBehaviour
         //    Debug.LogError("chainsaw[3]/ chainsaw[1]/chainsawSoundSource.clip is null ");
         //}
             
+    }
+
+    public AudioSource TreeShake(Transform treeToShake)
+    {
+        var ret = GenerateAudio(treeRustle[0]);
+        ret.transform.position = treeToShake.position;
+        ret.Play();
+        return ret;
     }
 
     public void StopCut()

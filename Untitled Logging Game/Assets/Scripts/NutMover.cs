@@ -12,6 +12,8 @@ public class NutMover : MonoBehaviour
     private Image nut;
     private UIMan uiMan;
     private PlantMan plantMan;
+    public AudioSource nutDrop;
+    private bool nutLanded;
     
     // Start is called before the first frame update
     void Start()
@@ -31,10 +33,18 @@ public class NutMover : MonoBehaviour
             transform.position += new Vector3(0,-speed*Time.deltaTime,0);
             // Debug.Log(nutPosition.y);
             if (nutPosition.y < floorHeight)
+            {
                 nutPosition.y = floorHeight;
+            }
         }
         else
         {
+            if (!nutLanded)
+            {
+                nutLanded = true;
+                nutDrop.Play();
+                Debug.Log("nut goes tok");
+            }
             if (fade > 0)
             {
                 fade -= 1 * Time.deltaTime;

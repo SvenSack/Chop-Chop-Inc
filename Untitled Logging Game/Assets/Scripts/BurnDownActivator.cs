@@ -48,6 +48,7 @@ public class BurnDownActivator : MonoBehaviour
     public void ActivateBurnDown()
     {
         BurnDownActivated.Invoke();
+        FindObjectOfType<SoundMan>().StartBurn();
     }
 
     private void ReplaceGroundTexture()
