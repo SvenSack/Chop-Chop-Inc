@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 // using UnityEditor.UI;
 
-public class HighScoreView : UIPlacable
+public class HighScoreView : MonoBehaviour
 {
-    
+
 
     public HighScoreManager highScoreManager;
 
-    Vector2 shiftAmount = new Vector2(0, -100);
-    Vector2 initialPosition;
+    public Transform dad;
 
-    [SerializeField] private string scoreText = "Score : ";
-    [SerializeField] private string nameText = "Name : ";
+    float slotEntryTime = 2.0f;
 
-    float slotEntryTime = 1.0f;
+    public int maxDisplayCount = 9;
 
-    public int maxDisplayCount = 10;
+    public GameObject textInstanceObject;
+
+
+    public Transform[] spots = new Transform[10];
 
     void Start()
     {
-        
+
     }
 
     public void Initialize()
@@ -30,19 +31,14 @@ public class HighScoreView : UIPlacable
 
         highScoreManager = FindObjectOfType<HighScoreManager>();
 
-        Vector2 position = CalculateUIPosition();
-        
-        GameObject toDest = Instantiate(textInstanceObject);
-        RectTransform textRectDest = toDest.GetComponent<RectTransform>();
-        textRectDest.anchoredPosition = position;
-        initialPosition = textRectDest.anchoredPosition;
-
-        Destroy(toDest);
-
         int i = 0;
         foreach (PlayerGameData data in highScoreManager.GetScoreData())
         {
-            if(i > maxDisplayCount) { break; }
+            if (i > maxDisplayCount)
+            {
+                break;
+            }
+
             Debug.Log("loaded score data");
 
             GameObject textInstanceObj = Instantiate(textInstanceObject);
@@ -57,17 +53,15 @@ public class HighScoreView : UIPlacable
 
             Debug.Log("data.treesCut" + data.treesCut);
 
-            RectTransform textRect = textInstanceObj.GetComponent<RectTransform>();
-            textRect.anchoredPosition = position;
-            Debug.Log("textRect.anchoredPosition " + textRect.anchoredPosition);
-
-
-
-            position += shiftAmount;
-
-            textInstance.gameObject.transform.parent = canvasObject.gameObject.transform;
+            textInstance.gameObject.transform.SetParent(dad);
+            textInstance.transform.position = spots[i].position;
             i++;
         }
+    }
+
+    private int SortByScore(Transform t1, Transform t2)
+    {
+        return t1.GetComponent<TextInstance>().score.CompareTo(t2.GetComponent<TextInstance>().score);
     }
 
     public void SlotCurrentScore()
@@ -75,36 +69,6 @@ public class HighScoreView : UIPlacable
         LevelScoreData data = highScoreManager.CalculateTotalScoreData();
 
         float score = data.score;
-        //---------------------- Get all score blocks------------------//
-        List<Transform> scoreBlocks = new List<Transform>();
-        foreach(Transform child in canvasObject.transform)
-        {
-            if(child.tag == "scoreBlock")
-            {
-                scoreBlocks.Add(child);
-            }
-        }
-
-
-
-        //------------------------ Find which index to slot to -----------------------//
-        bool isInBetweenBlocks = false;
-        int slotIndex = 0;
-
-        for (int i = 0; i < scoreBlocks.Count; i++)
-        {
-            TextInstance currenttTextInstance = scoreBlocks[i].GetComponent<TextInstance>();
-            Debug.Log(" score v currenttTextInstance.score " + score +"," +currenttTextInstance.score);
-
-            if (score > currenttTextInstance.score)
-            {
-                slotIndex = i;
-                isInBetweenBlocks = true;
-                break;
-            }
-        }
-        Debug.Log("score " + score);
-        
 
         //------------------------- Instantiate new score block-----------------------//
 
@@ -116,77 +80,39 @@ public class HighScoreView : UIPlacable
         textInstance.GetComboPlant().text = data.highestComboPlant.ToString();
         textInstance.GetCutCount().text = data.treesCut.ToString();
         textInstance.GetPlantCount().text = data.treesPlanted.ToString();
+        newScoreBlock.transform.position = new Vector3(spots[0].position.x, Screen.height+newScoreBlock.GetComponent<RectTransform>().rect.height,0);
+        newScoreBlock.transform.SetParent(dad);
 
 
+        //---------------------- Get all score blocks------------------//
+        List<Transform> scoreBlocks = new List<Transform>();
+        foreach (Transform child in dad)
+        {
+            if (child.tag == "scoreBlock")
+            {
+                scoreBlocks.Add(child);
+            }
+        }
+
+        //------------------------ Find which index to slot to -----------------------//
+        scoreBlocks.Sort(SortByScore);
+        int slot = 0;
+        for (int j = 0; j < scoreBlocks.Count; j++)
+        {
+            if (scoreBlocks[j] == newScoreBlock.transform)
+            {
+                slot = j;
+                break;
+            }
+        }
 
 
 
 
         //----------------------------- Move to correct positions---------------------//
-        var newScoreBlockRect = newScoreBlock.GetComponent<RectTransform>();
-        newScoreBlockRect.anchoredPosition = GetNewScoreBlockInitialPosition();
-        newScoreBlock.transform.SetParent(canvasObject.transform);
-
-
-        RectTransform canvasRect = canvasObject.GetComponent<RectTransform>();
-
-        float height = canvasRect.rect.height * canvas.scaleFactor;
-        Debug.Log("initialPosition " + initialPosition);
-        Debug.Log("canvasRect.rect.height " + height);
-
-
-        Vector2 defaultPosition = Vector2.zero;
-        defaultPosition.x = newScoreBlockRect.anchoredPosition.x;
-
-        if (scoreBlocks.Count == 0)
+        for (int i = slot; i < scoreBlocks.Count; i++)
         {
-            defaultPosition.y = -(height - initialPosition.y);
+            scoreBlocks[i].LeanMove(spots[i].position, slotEntryTime);
         }
-        else
-        {
-            defaultPosition.y = scoreBlocks[scoreBlocks.Count - 1].GetComponent<RectTransform>().anchoredPosition.y + shiftAmount.y ;
-        }
-        
-
-
-        Vector2 targetPosition = isInBetweenBlocks ? 
-            scoreBlocks[slotIndex].GetComponent<RectTransform>().anchoredPosition : 
-            defaultPosition;
-
-        LeanTween.move(newScoreBlockRect, targetPosition, slotEntryTime);
-
-        Debug.Log("targetPosition " + targetPosition);
-        if(isInBetweenBlocks)
-        {
-            Debug.Log("using anchor");
-            
-        }
-        else
-        {
-            Debug.Log("using default");
-        }
-
-        
-
-        //------------------Shift all score blocks below new scoe block-----------------//
-
-        if (!isInBetweenBlocks) { return; }
-
-        for (int i = slotIndex; i < scoreBlocks.Count; i++)
-        {
-            RectTransform belowSlotRect = scoreBlocks[i].GetComponent<RectTransform>();
-            Vector2 position = belowSlotRect.anchoredPosition;
-
-
-            LeanTween.move(belowSlotRect, position + shiftAmount, slotEntryTime);
-        }
-
     }
-
-    public Vector2 GetNewScoreBlockInitialPosition()
-    {
-        return initialPosition - shiftAmount * 2;
-    }
-
-
 }

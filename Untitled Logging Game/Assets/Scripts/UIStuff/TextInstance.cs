@@ -1,39 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TextInstance : MonoBehaviour
 {
-    [SerializeField] private Text name;
-    [SerializeField] private Text comboCutCount;
-    [SerializeField] private Text comboPlantCount;
-    [SerializeField] private Text plantCount;
-    [SerializeField] private Text cutCount;
+    [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private TextMeshProUGUI comboCutCount;
+    [SerializeField] private TextMeshProUGUI comboPlantCount;
+    [SerializeField] private TextMeshProUGUI plantCount;
+    [SerializeField] private TextMeshProUGUI cutCount;
 
     public float score;
 
-    public Text GetName()
+    public TextMeshProUGUI GetName()
     {
         return name;
     }
 
-    public Text GetComboCut()
+    public TextMeshProUGUI GetComboCut()
     {
         return comboCutCount;
     }
 
-    public Text GetComboPlant()
+    public TextMeshProUGUI GetComboPlant()
     {
         return comboPlantCount;
     }
 
-    public Text GetCutCount()
+    public TextMeshProUGUI GetCutCount()
     {
         return cutCount;
     }
 
-    public Text GetPlantCount()
+    public TextMeshProUGUI GetPlantCount()
     {
         return plantCount;
     }

@@ -1,41 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CurrentHighScoreViewer : UIPlacable
+public class CurrentHighScoreViewer : MonoBehaviour
 {
     public HighScoreManager highScoreManager;
-    public HighScoreView highScoreView;
     public PlayerLevelTeleporter levelTeleporter;
-
-    private GameObject highScoreViewerInstance;
-
-    public Vector2 shiftAmount = new Vector2(500, 0);
-    public float shiftTime = 1.0f;
+    public GameObject textInstanceObject;
 
     public float teleportTime = 1.2f;
 
-    private Button button;
+    public Button button;
+
+    public TextMeshProUGUI plantCount;
+    public TextMeshProUGUI cutCount;
+    public TextMeshProUGUI plantCombo;
+    public TextMeshProUGUI cutCombo;
+    
 
     public void Initialize()
     {
         highScoreManager = FindObjectOfType<HighScoreManager>();
 
-        Vector2 position = CalculateUIPosition();
+        // Vector2 position = CalculateUIPosition();
 
         LevelScoreData data = highScoreManager.CalculateTotalScoreData();
 
         //instantiate score preview
-        GameObject highScoreViewerInstance = Instantiate(textInstanceObject);
-        this.highScoreViewerInstance = highScoreViewerInstance;
+        // GameObject highScoreViewerInstance = Instantiate(textInstanceObject);
+        // this.highScoreViewerInstance = highScoreViewerInstance;
 
-        TextInstance textInstance = highScoreViewerInstance.GetComponent<TextInstance>();
+        /* TextInstance textInstance = highScoreViewerInstance.GetComponent<TextInstance>();
 
-        textInstance.GetComboCut().text = data.highestComboCut.ToString();
-        textInstance.GetComboPlant().text = data.highestComboPlant.ToString();
-        textInstance.GetCutCount().text = data.treesCut.ToString();
-        textInstance.GetPlantCount().text = data.treesPlanted.ToString();
+        
 
         var rect = highScoreViewerInstance.GetComponent<RectTransform>();
 
@@ -58,19 +57,18 @@ public class CurrentHighScoreViewer : UIPlacable
             button.onClick.AddListener(DestroyAllDontDestroyOnLoad);
             button.onClick.AddListener(TeleportBackToMap);
              
-        }
+        }*/
 
-
+        cutCombo.text = data.highestComboCut.ToString();
+        plantCombo.text = data.highestComboPlant.ToString();
+        cutCount.text = data.treesCut.ToString();
+        plantCount.text = data.treesPlanted.ToString();
 
     }
 
     public void MoveViewerInstanceUp()
     {
-        var rect = highScoreViewerInstance.GetComponent<RectTransform>();
-        Vector2 oldPosition = rect.anchoredPosition;
-
-        LeanTween.move(rect, oldPosition + shiftAmount, shiftTime);
-
+        textInstanceObject.transform.LeanMove(new Vector3(textInstanceObject.transform.position.x, Screen.height+textInstanceObject.GetComponent<RectTransform>().rect.height,0), 3f);
     }
 
     public void DestroyAllDontDestroyOnLoad()
