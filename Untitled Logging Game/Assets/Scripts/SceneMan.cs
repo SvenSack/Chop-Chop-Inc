@@ -1,6 +1,7 @@
 ﻿
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneMan : MonoBehaviour
 {
@@ -29,14 +30,24 @@ public class SceneMan : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButton(0))
-            idleTime = 0;
+            idleTimer = 0;
 
         if (uiMan == null && prevScene != "")
             uiMan = FindObjectOfType<UIMan>();
         
         if (idleTimer >= idleTime)
         {
-            // ask raphael how exactly we are doing the reset, then do that
+            idleTimer = 0;
+            Debug.Log("back to menu with you, Y E E T");
+            FindObjectOfType<HighScoreManager>().ResetLevelDataInFile();
+            // the following is a manual method call because f.u. I am lazy right now
+            GameObject[] objects = GameObject.FindGameObjectsWithTag("DDOL");
+
+            foreach(GameObject toDestroy in objects)
+            {
+                Destroy(toDestroy);
+            }
+            SceneManager.LoadScene("Map");
         }
         else
         {
