@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -28,6 +29,7 @@ public class UIMan : MonoBehaviour,IObservable
     private int[] voiceLineLicenses;
     [SerializeField] private Transform walkieTalkiePlace;
     [SerializeField] private GameObject walkieTalkieInstance;
+    [SerializeField] private AudioSource talkie;
     public int seedCombo;
     public TextMeshProUGUI seedComboText;
     private float seedComboTimeOut;
@@ -164,13 +166,13 @@ public class UIMan : MonoBehaviour,IObservable
             {
                 Destroy(walkieTalkieInstance);
                 StopCoroutine("RemoveVoiceLine");
-                // stop playing sound
             }
 
             walkieTalkieInstance = Instantiate(walkieTalkiePrefabs[voiceLineIndex], walkieTalkiePlace.parent);
             walkieTalkieInstance.transform.position = walkieTalkiePlace.position;
-            StartCoroutine(RemoveVoiceLine(5f));
-            // play sound
+            StartCoroutine(RemoveVoiceLine(6f));
+            talkie.time = 0;
+            talkie.Play();
         }
     }
     
@@ -183,13 +185,13 @@ public class UIMan : MonoBehaviour,IObservable
             {
                 Destroy(walkieTalkieInstance);
                 StopCoroutine("RemoveVoiceLine");
-                // stop playing sound
             }
 
             walkieTalkieInstance = Instantiate(walkieTalkiePrefabs[voiceLineIndex], walkieTalkiePlace.parent);
             walkieTalkieInstance.transform.position = walkieTalkiePlace.position;
             StartCoroutine(RemoveVoiceLine(displayTime));
-            // play sound
+            talkie.time = 0;
+            talkie.Play();
         }
     }
 
