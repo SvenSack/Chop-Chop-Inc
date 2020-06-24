@@ -37,6 +37,8 @@ public class HighScoreManager : MonoBehaviour
         currentPlayerDataPath = Path.Combine(Application.persistentDataPath, currentPlayerData);
 
         LoadCurrentLevelScore();
+
+        currentPlayerName = PlayerPrefs.GetString("playerName", "Unfilled");
     }
 
 
@@ -44,6 +46,7 @@ public class HighScoreManager : MonoBehaviour
     {
         loginCount++;
         ResetLevelDataInFile();
+        SaveScoresToFile();
     }
 
     private void Update()
@@ -264,6 +267,7 @@ public class HighScoreManager : MonoBehaviour
         if(inputField)
         {
             currentPlayerName = inputField.text;
+            PlayerPrefs.SetString("playerName", currentPlayerName);
             Debug.Log("currentPlayerName  " + currentPlayerName);
         }
         else

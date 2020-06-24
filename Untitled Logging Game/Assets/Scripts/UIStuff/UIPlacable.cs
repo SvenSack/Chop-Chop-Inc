@@ -12,7 +12,7 @@ public class UIPlacable : MonoBehaviour
     public GameObject canvasObject;
     public GameObject textInstanceObject;
 
-    private Canvas canvas;
+    protected Canvas canvas;
 
     private void Start()
     {
@@ -30,10 +30,11 @@ public class UIPlacable : MonoBehaviour
     {
         canvas = FindObjectOfType<Canvas>();
         canvasObject = canvas.gameObject;
+        
 
         RectTransform canvasRect = canvasObject.GetComponent<RectTransform>();
-        float width = canvasRect.rect.width;
-        float height = canvasRect.rect.height;
+        float width = canvasRect.rect.width * canvas.scaleFactor;
+        float height = canvasRect.rect.height * canvas.scaleFactor;
 
         Vector2 topLeft = new Vector2(0, height);
 
