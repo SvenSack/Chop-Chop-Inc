@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -45291,7 +45291,7 @@ PrefabInstance:
     - target: {fileID: 2752898339449565172, guid: f693b64ac0cde6a4cbf9c71297307310,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.78
+      value: 7.32
       objectReference: {fileID: 0}
     - target: {fileID: 2752898339449565172, guid: f693b64ac0cde6a4cbf9c71297307310,
         type: 3}
@@ -45306,11 +45306,16 @@ PrefabInstance:
     - target: {fileID: 2752898339449565172, guid: f693b64ac0cde6a4cbf9c71297307310,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.42
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 3806297436829296300, guid: f693b64ac0cde6a4cbf9c71297307310,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3806297436829296300, guid: f693b64ac0cde6a4cbf9c71297307310,
+        type: 3}
+      propertyPath: treeHP
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5240558954099053968, guid: f693b64ac0cde6a4cbf9c71297307310,
@@ -52619,6 +52624,7 @@ MonoBehaviour:
   DebugObjectTest: {fileID: 0}
   leafParticleIndex: 4
   cutForceMultiplier: 0
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
@@ -87563,6 +87569,7 @@ MonoBehaviour:
   DebugObjectTest: {fileID: 0}
   leafParticleIndex: 5
   cutForceMultiplier: 0.4
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
@@ -88594,6 +88601,7 @@ MonoBehaviour:
   DebugObjectTest: {fileID: 0}
   leafParticleIndex: 4
   cutForceMultiplier: 0
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
@@ -99401,6 +99409,7 @@ MonoBehaviour:
   DebugObjectTest: {fileID: 0}
   leafParticleIndex: 3
   cutForceMultiplier: 0
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}

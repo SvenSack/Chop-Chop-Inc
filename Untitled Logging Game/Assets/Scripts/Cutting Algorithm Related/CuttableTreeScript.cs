@@ -209,6 +209,7 @@ public class CuttableTreeScript : MonoBehaviour
 
     public int leafParticleIndex;
     public float cutForceMultiplier;
+    [Range(-1, 3)] public int treeHP = -1;
 
     public bool isFirstTree = false;
 

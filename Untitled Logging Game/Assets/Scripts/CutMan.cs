@@ -76,7 +76,13 @@ public class CutMan : MonoBehaviour
         cutTargets = new CutTarget[trees.Length];
         for (int i = 0; i < treeHps.Length; i++)
         {
-            treeHps[i] = Random.Range(1, 4);
+            int hp = trees[i].treeHP;
+            if(hp == -1)
+                treeHps[i] = Random.Range(1, 4);
+            else
+            {
+                treeHps[i] = hp;
+            }
         }
 
         mainCam = Camera.main;
