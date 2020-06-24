@@ -16,6 +16,8 @@ public class CurrentHighScoreViewer : UIPlacable
 
     public float teleportTime = 1.2f;
 
+    private Button button;
+
     public void Initialize()
     {
         highScoreManager = FindObjectOfType<HighScoreManager>();
@@ -42,14 +44,16 @@ public class CurrentHighScoreViewer : UIPlacable
         textInstance.gameObject.transform.SetParent(canvasObject.gameObject.transform);
 
 
-        var button = highScoreViewerInstance.GetComponentInChildren<Button>();
+        button = highScoreViewerInstance.GetComponentInChildren<Button>();
 
         if(button)
         {
+            button.onClick.AddListener(DeactivateButton);
             button.onClick.AddListener(highScoreView.SlotCurrentScore);
             button.onClick.AddListener(MoveViewerInstanceUp);
 
             button.onClick.AddListener(highScoreManager.AddCurrentPlayerScoreDataToDisk);
+
             button.onClick.AddListener(highScoreManager.ResetLevelDataInFile);
             button.onClick.AddListener(DestroyAllDontDestroyOnLoad);
             button.onClick.AddListener(TeleportBackToMap);
@@ -84,5 +88,10 @@ public class CurrentHighScoreViewer : UIPlacable
         levelTeleporter.TeleportPlayerIn(teleportTime);
     }
 
+
+    public void DeactivateButton()
+    {
+        button.interactable = false;
+    }
 
 }
