@@ -63,6 +63,8 @@ public class CutMan : MonoBehaviour
 
     [SerializeField] private GameObject burnPopUp;
 
+    [SerializeField] private Transform cutDad;
+
 
     private void Awake()
     {
@@ -499,7 +501,7 @@ public class CutMan : MonoBehaviour
                 if ((Vector3.Distance(trees[i].transform.position, mainCam.transform.position) < cutTargetDistance
                     && !multiCam ) || currentTargetIndices.Contains(i))
                 {
-                    cutTargets[i] = Instantiate(cutTargetPrefab, gRaycaster.transform).GetComponentInChildren<CutTarget>();
+                    cutTargets[i] = Instantiate(cutTargetPrefab, cutDad).GetComponentInChildren<CutTarget>();
                     cutTargets[i].target = trees[i];
                     cutTargets[i].goesLeft = defaultCutDirection;
                     cutTargets[i].setLifeTime = forgivingness * 3;
