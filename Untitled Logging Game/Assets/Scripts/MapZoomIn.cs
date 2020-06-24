@@ -175,6 +175,6 @@ public class MapZoomIn : MonoBehaviour
 
     private void FlipFocusMaterial(GameObject pinParent)
     {
-        pinParent.GetComponentInChildren<Light>().intensity = 0.003f;
+        pinParent.GetComponentInChildren<Light>().intensity += 0.003f;
     }
 }
