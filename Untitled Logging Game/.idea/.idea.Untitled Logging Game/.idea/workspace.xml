@@ -186,11 +186,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/NutMover.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="212">
-              <caret line="38" column="9" lean-forward="true" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
+              <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
               <folding>
                 <marker date="1592989161628" expanded="false" signature="6:100" ph="..." />
                 <marker date="1592989161628" expanded="true" signature="139:1822" ph="{...}" />
@@ -241,31 +241,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/SoundMan.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="662">
-              <caret line="67" column="54" selection-start-line="67" selection-start-column="54" selection-end-line="67" selection-end-column="54" />
+            <state relative-caret-position="497">
+              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
               <folding>
-                <marker date="1592987923830" expanded="false" signature="6:44" ph="..." />
-                <marker date="1592987923830" expanded="true" signature="83:4062" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="812:991" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="865:944" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="1019:1573" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="1066:1397" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="1410:1493" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="1603:1995" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="1618:1714" ph="/* if(chainsaw[3] != null &amp;&amp; chainsaw[1] != null &amp;&amp; chainsawSoundSource.clip != null) ... */" />
-                <marker date="1592987923830" expanded="true" signature="1842:1976" ph="/* } ... */" />
-                <marker date="1592987923830" expanded="true" signature="2052:2207" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="2234:2723" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="2333:2493" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="2506:2717" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="2780:2951" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="3047:3568" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="3612:3810" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="3722:3804" ph="{...}" />
-                <marker date="1592987923830" expanded="true" signature="3860:4060" ph="{...}" />
+                <marker date="1592989918666" expanded="false" signature="6:44" ph="..." />
+                <marker date="1592989918666" expanded="true" signature="83:4265" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="845:1024" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="898:977" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="1053:1194" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="1222:1776" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="1269:1600" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="1613:1696" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="1806:2198" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="1821:1917" ph="/* if(chainsaw[3] != null &amp;&amp; chainsaw[1] != null &amp;&amp; chainsawSoundSource.clip != null) ... */" />
+                <marker date="1592989918666" expanded="true" signature="2045:2179" ph="/* } ... */" />
+                <marker date="1592989918666" expanded="true" signature="2255:2410" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="2437:2926" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="2536:2696" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="2709:2920" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="2983:3154" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="3250:3771" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="3815:4013" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="3925:4007" ph="{...}" />
+                <marker date="1592989918666" expanded="true" signature="4063:4263" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -456,14 +457,14 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/SceneMan.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/MapZoomIn.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AudioCleanup.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/SoundMan.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/SoundMan.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlantMan.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NutMover.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SoundMan.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SoundMan.cs" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="138" />
     <option name="y" value="115" />
     <option name="width" value="1437" />
@@ -549,12 +550,12 @@
       <workItem from="1592659802688" duration="4150000" />
       <workItem from="1592815716374" duration="6135000" />
       <workItem from="1592902598071" duration="5796000" />
-      <workItem from="1592985154664" duration="4155000" />
+      <workItem from="1592985154664" duration="4706000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="263635000" />
+    <option name="totallyTimeSpent" value="264186000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1547,34 +1548,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/SoundMan.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="662">
-          <caret line="67" column="54" selection-start-line="67" selection-start-column="54" selection-end-line="67" selection-end-column="54" />
-          <folding>
-            <marker date="1592987923830" expanded="false" signature="6:44" ph="..." />
-            <marker date="1592987923830" expanded="true" signature="83:4062" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="812:991" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="865:944" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="1019:1573" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="1066:1397" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="1410:1493" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="1603:1995" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="1618:1714" ph="/* if(chainsaw[3] != null &amp;&amp; chainsaw[1] != null &amp;&amp; chainsawSoundSource.clip != null) ... */" />
-            <marker date="1592987923830" expanded="true" signature="1842:1976" ph="/* } ... */" />
-            <marker date="1592987923830" expanded="true" signature="2052:2207" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="2234:2723" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="2333:2493" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="2506:2717" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="2780:2951" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="3047:3568" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="3612:3810" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="3722:3804" ph="{...}" />
-            <marker date="1592987923830" expanded="true" signature="3860:4060" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlantMan.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="377">
@@ -1609,7 +1582,7 @@
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/NutMover.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
-          <caret line="38" column="9" lean-forward="true" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
+          <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
           <folding>
             <marker date="1592989161628" expanded="false" signature="6:100" ph="..." />
             <marker date="1592989161628" expanded="true" signature="139:1822" ph="{...}" />
@@ -1622,6 +1595,35 @@
             <marker date="1592989161628" expanded="true" signature="1369:1492" ph="{...}" />
             <marker date="1592989161628" expanded="true" signature="1509:1661" ph="{...}" />
             <marker date="1592989161628" expanded="true" signature="1704:1820" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/SoundMan.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <marker date="1592989918666" expanded="false" signature="6:44" ph="..." />
+            <marker date="1592989918666" expanded="true" signature="83:4265" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="845:1024" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="898:977" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="1053:1194" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="1222:1776" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="1269:1600" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="1613:1696" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="1806:2198" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="1821:1917" ph="/* if(chainsaw[3] != null &amp;&amp; chainsaw[1] != null &amp;&amp; chainsawSoundSource.clip != null) ... */" />
+            <marker date="1592989918666" expanded="true" signature="2045:2179" ph="/* } ... */" />
+            <marker date="1592989918666" expanded="true" signature="2255:2410" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="2437:2926" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="2536:2696" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="2709:2920" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="2983:3154" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="3250:3771" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="3815:4013" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="3925:4007" ph="{...}" />
+            <marker date="1592989918666" expanded="true" signature="4063:4263" ph="{...}" />
           </folding>
         </state>
       </provider>
