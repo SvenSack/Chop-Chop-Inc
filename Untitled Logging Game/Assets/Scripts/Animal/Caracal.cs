@@ -30,7 +30,7 @@ namespace Animal
                 SnapToCamera(false);
 
             
-            if(!isTurning && (isRunning && running || !isRunning) && !waiting)
+            if(!isTurning && isRunning && running && !waiting)
                 PerformMotion(true);
         }
 
@@ -38,25 +38,25 @@ namespace Animal
         IEnumerator WakeCompleter(float timer)
         {
             if(timer > 0)
-                yield return new WaitForSeconds(timer-.2f);
+                yield return new WaitForSeconds(timer-.4f);
             mouth.clip = soundMan.caracalSounds[Random.Range(0, 5)];
             mouth.time = 0;
             mouth.Play();
             if(timer > 0)
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.4f);
             running = true;
         }
 
         public void Scare(Vector3 positionOfScaryness)
         {
-          
+          Debug.Log("cat want run");
             if(camera.WorldToScreenPoint(transform.position).x < camera.WorldToScreenPoint(positionOfScaryness).x && directionIsLeft)
             {
                 PatchworkFlip(.3f);
             }
             if(!animator.GetBool("running"))
             {
-                    StartCoroutine(WakeCompleter(0.5f));
+                StartCoroutine(WakeCompleter(1f));
                 animator.SetBool("running", true);
             }
         }

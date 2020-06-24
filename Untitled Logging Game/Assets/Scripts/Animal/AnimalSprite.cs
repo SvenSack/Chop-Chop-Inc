@@ -95,7 +95,7 @@ namespace Animal
 
             transform.position = position;
             Vector3 viewPoint = camera.WorldToScreenPoint(transform.position);
-            if (!(viewPoint.z > 0 && viewPoint.x > 5 && viewPoint.x < Screen.width - 5))
+            if (!(viewPoint.z > 0 && viewPoint.x > -10 && viewPoint.x < Screen.width +10))
             {
                 Destroy(gameObject);
             }
