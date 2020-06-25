@@ -9504,7 +9504,7 @@ PrefabInstance:
         type: 3}
       propertyPath: terrainLayerOnSwitch
       value: 
-      objectReference: {fileID: 8574412962073106934, guid: 6de9f1359be6ca742b033be66e526d7b,
+      objectReference: {fileID: 8574412962073106934, guid: cfbaba7385eb1e546b74a7d29d3a7a4d,
         type: 2}
     - target: {fileID: 101783937054032581, guid: 5e8205d56f85742438107d17737c0dfe,
         type: 3}
@@ -32827,11 +32827,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7634148454917649341, guid: 75d4d9e3df86032498d24749a28e0c17,
-        type: 3}
-      propertyPath: cutForceMultiplier
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9142708851123414915, guid: 75d4d9e3df86032498d24749a28e0c17,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -36446,6 +36441,12 @@ PrefabInstance:
       propertyPath: cutDad
       value: 
       objectReference: {fileID: 1285413089}
+    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
+        type: 3}
+      propertyPath: treeSpecificForces
+      value: 
+      objectReference: {fileID: 11400000, guid: 06c1b92c3769fbb43b328afa2c4c64ed,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebcc37a588a7f4646be6722f804cdf7c, type: 3}
 --- !u!1 &1531335640
@@ -38021,7 +38022,7 @@ PrefabInstance:
     - target: {fileID: 7073464315040797935, guid: c5251e2033c25c04a8af0f21487aed1f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: 7073464315040797935, guid: c5251e2033c25c04a8af0f21487aed1f,
         type: 3}
@@ -52680,6 +52681,7 @@ MonoBehaviour:
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
+  treeTypeID: 0
 --- !u!1 &190432987075876053
 GameObject:
   m_ObjectHideFlags: 0
@@ -87639,6 +87641,7 @@ MonoBehaviour:
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
+  treeTypeID: 0
 --- !u!1 &6685166014519334933
 GameObject:
   m_ObjectHideFlags: 0
@@ -88671,6 +88674,7 @@ MonoBehaviour:
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
+  treeTypeID: 0
 --- !u!33 &6905697381768736910
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99479,6 +99483,7 @@ MonoBehaviour:
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
+  treeTypeID: 0
 --- !u!1 &8882801066125040767
 GameObject:
   m_ObjectHideFlags: 0
