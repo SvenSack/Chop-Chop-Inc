@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Profiling;
 using Random = UnityEngine.Random;
 
 public class CutMan : MonoBehaviour
@@ -65,9 +66,15 @@ public class CutMan : MonoBehaviour
 
     [SerializeField] private Transform cutDad;
 
+    public TreeSpecificForces treeSpecificForces;
+
+    private Camera camera;
+
 
     private void Awake()
     {
+        camera = Camera.main;
+
         soundMan = FindObjectOfType<SoundMan>();
         uiMan = FindObjectOfType<UIMan>();
         trunkMask = LayerMask.GetMask("Trunks");
@@ -157,7 +164,9 @@ public class CutMan : MonoBehaviour
                 {
                     isCutting = true;
                     soundMan.ToggleWood();
+                    //Profiler.BeginSample("cutParticleInstance = Instantiate(cutParticleObject);");
                     cutParticleInstance = Instantiate(cutParticleObject);
+                    //Profiler.EndSample();
                     if(currentTarget.goesLeft)
                         cutParticleInstance.transform.rotation = Quaternion.Euler(0,0,180);
                     foreach (var part in cutParticleInstance.GetComponentsInChildren<ParticleSystem>())
@@ -231,9 +240,21 @@ public class CutMan : MonoBehaviour
         Debug.DrawLine(new Vector3(start.x, start.y , 100), new Vector3(start.x, start.y , -100), Color.magenta, 1000f);
         Debug.DrawLine(new Vector3(finish.x, finish.y , 100), new Vector3(finish.x, finish.y , -100), Color.green, 1000f);
 
+
+        Vector3 forceDirection = (target.transform.position - camera.transform.position).normalized;
+        forceDirection *= treeSpecificForces.treeSeperationforces[target.leafParticleIndex];
+
         
         GameObject newTree = target.CutAt(targetLocation, cutNormal, cutForce);
         cutFailing = false;
+
+        Rigidbody rb = newTree.GetComponent<Rigidbody>();
+
+        if(rb)
+        {
+            rb.AddForce(forceDirection);
+        }
+
         return newTree;
     }
 

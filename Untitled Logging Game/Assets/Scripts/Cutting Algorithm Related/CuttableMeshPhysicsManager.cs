@@ -27,13 +27,15 @@ public class CuttableMeshPhysicsManager : MonoBehaviour
 
         }
 
-        
+        //gameObject.GetComponent<BoxCollider>();
 
         cutCollider.convex = true;
 
         if(rigidbodyNeeded)
         {
             rb = gameObject.AddComponent<Rigidbody>();
+            //rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
         }
     }
 
@@ -42,7 +44,7 @@ public class CuttableMeshPhysicsManager : MonoBehaviour
         rb.AddForceAtPosition(direction * magnitude, position);
     }
 
-
+    //public void Upd
 
     public float GetMaxCylinderRadius(Mesh mesh,Vector3 centerPoint,Vector3 centerMinPoint,Vector3 meshDirection)
     {

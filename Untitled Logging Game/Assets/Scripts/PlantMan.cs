@@ -6,6 +6,7 @@ using Unity.Properties;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Profiling;
 using Random = UnityEngine.Random;
 
 public class PlantMan : MonoBehaviour
@@ -70,16 +71,30 @@ public class PlantMan : MonoBehaviour
 
     public void TreeFell(GameObject newTreePiece, CuttableTreeScript target)
     {
-        TreeFallParticle temp = newTreePiece.GetComponentInChildren<TreeFallParticle>();
+        Profiler.BeginSample("TreeFell");
+
+        
+
+            TreeFallParticle temp = newTreePiece.GetComponentInChildren<TreeFallParticle>();
         if (target.leafParticleIndex == 3 || target.leafParticleIndex == 5)
             temp.isPalm = true;
         Transform[] Leaves = newTreePiece.GetComponentsInChildren<Transform>();
         List<ParticleSystem> leafs = new List<ParticleSystem>();
+
+        
+        
         foreach (var leaf in Leaves)
         {
+            if (target.leafParticleIndex == 4) { break; }
+
             if (leaf.gameObject.CompareTag("Leaves"))
             {
-                if (Random.Range(0, 4) == 0)
+                int topRange = 4;
+                if (target.leafParticleIndex == 2 ||  target.leafParticleIndex == 4 || target.leafParticleIndex == 6 || target.leafParticleIndex == 7)
+                {
+                    topRange = 15;
+                }
+                if (Random.Range(0, topRange) == 0)
                 {
                     GameObject newParter = Instantiate(leafFallParticleObject, leaf);
                     ParticleSystem newPart = newParter.transform.GetChild(0).GetComponent<ParticleSystem>();
@@ -132,6 +147,8 @@ public class PlantMan : MonoBehaviour
                 uiMan.TryVoiceLine(7);
             }
         }
+
+        Profiler.EndSample();
     }
     
     public IEnumerator SeedSpawn(Transform tree, GraphicRaycaster gRaycaster)

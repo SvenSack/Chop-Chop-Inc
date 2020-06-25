@@ -8,6 +8,16 @@ using Unity.Jobs;
 using System;
 
 
+public struct ForceApplicationInfo
+{
+    public Vector3 force;
+    public Vector3 position;
+}
+public struct AdditionalSplittingParams
+{
+    public List<ForceApplicationInfo> additionalForces;
+}
+
 public struct ConnectionTypeToCentroid
 {
     public TriangleConnectionType tct;
@@ -219,6 +229,9 @@ public class CuttableTreeScript : MonoBehaviour
 
     public PreAllocator nativeArrayAllocator;
 
+    // a way to identify one cuttable mesh from another
+    public int treeTypeID = 0;
+
 
     private void Start()
     {
@@ -271,8 +284,10 @@ public class CuttableTreeScript : MonoBehaviour
     /// <param name="seperationForce"> The scalar value of the force that has a direction parallel to the cutting plane normal which is 
     /// added to the newly created mesh after it is split. </param>
     /// <returns></returns>
-    public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce)
+    public GameObject CutAt(Vector3 position, Vector3 normal, float seperationForce
+        ,AdditionalSplittingParams otherSplittingParams = new AdditionalSplittingParams())
     {
+        Profiler.BeginSample("[cut] CutAt");
         normal.Normalize();
 
         Profiler.BeginSample("[cut] MatrixMath");
@@ -371,6 +386,15 @@ public class CuttableTreeScript : MonoBehaviour
         if(intersectionVertexCount == 0) { centerPoint = transform.position; }
         otherMeshPhysicsManager.AddForceAt(seperationForce * cutForceMultiplier, normal.normalized, centerPoint);
 
+        if(otherSplittingParams.additionalForces != null)
+        {
+            foreach (var forceInfo in otherSplittingParams.additionalForces)
+            {
+                otherMeshPhysicsManager.AddForceAt(forceInfo.force.magnitude, forceInfo.force, forceInfo.position);
+            }
+        }
+        
+
         //---------------------- clear up or dispose of natuve queues-------------------//
         if (nativeArrayAllocator)
         {
@@ -392,6 +416,8 @@ public class CuttableTreeScript : MonoBehaviour
 
         bottomHoleCover.tag = "hole";
         upperHoleCover.tag = "hole";
+
+        Profiler.EndSample();
 
         return newTree;
     }

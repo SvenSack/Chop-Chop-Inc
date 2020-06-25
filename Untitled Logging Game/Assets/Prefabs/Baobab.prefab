@@ -33120,10 +33120,12 @@ MonoBehaviour:
   debugSphereSize: 1
   DebugObjectTest: {fileID: 0}
   leafParticleIndex: 7
-  cutForceMultiplier: 0.05
+  cutForceMultiplier: 0.03
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
+  treeTypeID: 0
 --- !u!114 &2738344489364720082
 MonoBehaviour:
   m_ObjectHideFlags: 0

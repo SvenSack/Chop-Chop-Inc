@@ -8797,6 +8797,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 9132422912207005635, guid: 266c28af71118f34e9d04e2d8a11f217,
+        type: 3}
+      propertyPath: cutForceMultiplier
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 9149560299460124384, guid: 266c28af71118f34e9d04e2d8a11f217,
         type: 3}
       propertyPath: m_Layer
@@ -10651,6 +10656,12 @@ PrefabInstance:
       propertyPath: cutDad
       value: 
       objectReference: {fileID: 2138848052}
+    - target: {fileID: 5762498314335207111, guid: ebcc37a588a7f4646be6722f804cdf7c,
+        type: 3}
+      propertyPath: treeSpecificForces
+      value: 
+      objectReference: {fileID: 11400000, guid: 06c1b92c3769fbb43b328afa2c4c64ed,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebcc37a588a7f4646be6722f804cdf7c, type: 3}
 --- !u!1001 &1126914696

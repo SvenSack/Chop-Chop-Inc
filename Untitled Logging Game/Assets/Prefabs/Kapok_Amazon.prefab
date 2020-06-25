@@ -30950,6 +30950,7 @@ GameObject:
   - component: {fileID: 1202221927098372366}
   - component: {fileID: 5935185900166452973}
   - component: {fileID: 7634148454917649341}
+  - component: {fileID: 1470102547724497474}
   m_Layer: 8
   m_Name: Trunk
   m_TagString: Trunks
@@ -31613,10 +31614,24 @@ MonoBehaviour:
   debugSphereSize: 1
   DebugObjectTest: {fileID: 0}
   leafParticleIndex: 4
-  cutForceMultiplier: 0
+  cutForceMultiplier: 0.035
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
+  treeTypeID: 0
+--- !u!114 &1470102547724497474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6147100354993196055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833eb2791ccf3b7428cb9dfa2049db3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6147458146084362458
 GameObject:
   m_ObjectHideFlags: 0

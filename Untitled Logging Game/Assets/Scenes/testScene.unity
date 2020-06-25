@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1036,7 +1036,7 @@ Transform:
   - {fileID: 16220659}
   - {fileID: 2074042947}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &52315027
 GameObject:
@@ -12392,6 +12392,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585090401}
   m_Mesh: {fileID: 3084384373005802235, guid: f150290e238138e469049b02db3bb828, type: 3}
+--- !u!1 &595051999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2731344833154609406, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1501094883}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &595052005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595051999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833eb2791ccf3b7428cb9dfa2049db3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &600756801
 GameObject:
   m_ObjectHideFlags: 0
@@ -14072,7 +14090,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &695445897
 GameObject:
@@ -18726,7 +18744,7 @@ PrefabInstance:
     - target: {fileID: 375780282055658734, guid: 9d2a951d808ec5543af917ca7aea3057,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6559911762627950718, guid: 9d2a951d808ec5543af917ca7aea3057,
         type: 3}
@@ -18771,6 +18789,7 @@ MonoBehaviour:
   DebugObjectTest: {fileID: 1089753566}
   leafParticleIndex: 0
   cutForceMultiplier: 0
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
@@ -19434,7 +19453,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947612996
 GameObject:
@@ -22589,13 +22608,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089753566}
-  m_LocalRotation: {x: -0.055973545, y: 0.010040973, z: 0.1762836, w: 0.9826954}
-  m_LocalPosition: {x: 108.727, y: 6.256, z: -12.064}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 105.64, y: 6.256, z: -7.87}
   m_LocalScale: {x: 0.4, y: 1, z: 0.4}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: -6.52, y: 0, z: 20.34}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1091009364
 GameObject:
   m_ObjectHideFlags: 0
@@ -22844,7 +22863,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1096493418
 GameObject:
@@ -25294,7 +25313,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1218114276
 GameObject:
@@ -31300,6 +31319,85 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501056438}
   m_Mesh: {fileID: 5738895887531403227, guid: f150290e238138e469049b02db3bb828, type: 3}
+--- !u!1001 &1501094883
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 105.91819
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.629345
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029109697548688234, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826417462111752020, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: DebugObjectTest
+      value: 
+      objectReference: {fileID: 1089753566}
+    - target: {fileID: 1826417462111752020, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4040705273597946233, guid: 2376620ffd8fa1b4eba88e64c9d4f38a,
+        type: 3}
+      propertyPath: m_Name
+      value: Kapok_AmazonNOCUT
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2376620ffd8fa1b4eba88e64c9d4f38a, type: 3}
 --- !u!1 &1503380663
 GameObject:
   m_ObjectHideFlags: 0
@@ -34074,11 +34172,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628536453}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 107.38924, y: 4.26, z: -8.67}
+  m_LocalPosition: {x: 104.68, y: -1.56, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1632796351
 GameObject:
@@ -36368,6 +36466,7 @@ MonoBehaviour:
   DebugObjectTest: {fileID: 1089753566}
   leafParticleIndex: 4
   cutForceMultiplier: 0
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
@@ -44123,7 +44222,7 @@ RectTransform:
   - {fileID: 2005883932}
   - {fileID: 188079480}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -46397,7 +46496,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2124998692
 GameObject:
@@ -61330,7 +61429,7 @@ Transform:
   - {fileID: 8148592488898143202}
   - {fileID: 1930787043246754561}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2739048551073587605
 MeshFilter:
@@ -65357,6 +65456,7 @@ MonoBehaviour:
   DebugObjectTest: {fileID: 1089753566}
   leafParticleIndex: 0
   cutForceMultiplier: 0
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
@@ -66281,6 +66381,7 @@ MonoBehaviour:
   DebugObjectTest: {fileID: 1089753566}
   leafParticleIndex: 4
   cutForceMultiplier: 0
+  treeHP: -1
   isFirstTree: 1
   cutMaterial: {fileID: 0}
   nativeArrayAllocator: {fileID: 0}
@@ -92588,7 +92689,7 @@ Transform:
   - {fileID: 3873695572741164757}
   - {fileID: 8221885472893046533}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9150055790688910670
 GameObject:

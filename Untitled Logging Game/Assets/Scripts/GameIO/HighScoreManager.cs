@@ -46,7 +46,7 @@ public class HighScoreManager : MonoBehaviour
     {
         loginCount++;
         ResetLevelDataInFile();
-        SaveScoresToFile();
+        //SaveScoresToFile();
     }
 
     private void Update()
@@ -158,6 +158,7 @@ public class HighScoreManager : MonoBehaviour
             foreach (PlayerGameData scoreData in playerScoreData)
             {
                 string jsonScoreData = JsonUtility.ToJson(scoreData);
+                Debug.Log("Saving " + jsonScoreData);
                 dataWriter.Write(jsonScoreData);
             }
         }
