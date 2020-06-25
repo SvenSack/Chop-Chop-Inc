@@ -153,7 +153,7 @@ public class PlantMan : MonoBehaviour
     
     public IEnumerator SeedSpawn(Transform tree, GraphicRaycaster gRaycaster)
     {
-        if (cutMan.currentTargetIndices.Contains(int.Parse(tree.parent.name)) && shakeTimer <= 0 && currentTreeSpots.Count > 0)
+        if (cutMan.trees.Contains(tree.GetComponent<CuttableTreeScript>()) && shakeTimer <= 0 && currentTreeSpots.Count > 0)
         {
             shakeTimer = 1;
             Transform[] leaves = tree.gameObject.GetComponentsInChildren<Transform>();
@@ -175,11 +175,13 @@ public class PlantMan : MonoBehaviour
                 int newPartIndex = 0;
                 foreach (var loc in locations)
                 {
+                    newPartIndex = tree.GetComponent<CuttableTreeScript>().leafParticleIndex;
+					if(newPartIndex == 3 || newPartIndex == 5)
+						break;
                     if (loc.gameObject.CompareTag("Leaves"))
                     {
                         GameObject tempObj = Instantiate(treeShakeParticles, loc);
                         ParticleSystem tempPart = tempObj.GetComponentInChildren<ParticleSystem>();
-                        newPartIndex = tree.GetComponent<CuttableTreeScript>().leafParticleIndex;
                         tempPart.textureSheetAnimation.SetSprite(0, leafParticles[newPartIndex]);
                         var mainModule = tempPart.main;
                         mainModule.startColor = leafColorValues[newPartIndex];
