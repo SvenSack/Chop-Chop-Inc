@@ -11,13 +11,14 @@ public enum Language
 
 public class LanguageSwitchManager : MonoBehaviour
 {
-
+    bool isOnMapScene = false;
     void Start()
     {
-        if(!PlayerPrefs.HasKey("language"))
+        if(isOnMapScene)
         {
-            PlayerPrefs.SetInt("language",(int)Language.Dutch);
+            PlayerPrefs.SetInt("language", (int)Language.Dutch);
         }
+       
     }
 
     public void SwitchLanguageTo(Language language)
@@ -38,5 +39,10 @@ public class LanguageSwitchManager : MonoBehaviour
     public void SwitchLanguageToEnglish()
     {
         SwitchLanguageTo(Language.English);
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("language", (int)Language.Dutch);
     }
 }
